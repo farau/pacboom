@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PacBoom</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="shortcut icon" href="./img/explode.gif" type="image/png">
+    <style>
+        /* Body styles for black background with stars */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+            background-image: url('./img/asfalt-light.png'); /* Utilisation de url() pour spécifier le chemin de l'image */
+            background-size: cover;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            background-color: #000;
+            border-bottom: 1px solid #fff;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        /* Twitter login button styles */
+        #twitterLoginBtn {
+            color: #fff;
+        }
+
+        /* Game Canvas styles */
+        #backgroundCanvas, #gameCanvas, #explosionCanvas {
+            display: block;
+            margin: 0 auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            max-width: 100%; /* Make canvas responsive */
+        }
+
+
+        /* Concept description styles */
+        #conceptDescription {
+            color: #fff;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        /* Styles pour la modal Game Over */
+        #gameOverModal {
+            display: none; /* Par défaut, la modale est cachée */
+            position: fixed; /* Positionnement fixe par rapport à la fenêtre du navigateur */
+            top: 50%; /* Position au centre de l'écran en haut */
+            left: 50%; /* Position au centre de l'écran à gauche */
+            transform: translate(-50%, -50%); /* Centrer la modale */
+            /*background-color: rgba(0, 0, 0, 0.7); /* Couleur de fond semi-transparente */
+            padding: 20px; /* Espacement intérieur de la modale */
+            border-radius: 10px; /* Coins arrondis pour la modale */
+        }
+
+        #gameOverModal .modal-content {
+            border: 2px solid #ddd; /* Bordure grise */
+            border-radius: 10px; /* Coins arrondis */
+            color: #fff; /* Texte blanc */
+        }
+
+        #gameOverModal .modal-header {
+            border-bottom: 1px solid #fff; /* Bordure grise en bas de l'en-tête */
+            background-color: #050000; /* Couleur de fond noir */
+        }
+
+        #gameOverModal .modal-title {
+            color: #d0d0d0; /* Couleur du titre */
+        }
+
+        #gameOverModal .modal-body {
+            padding: 20px;
+            background-color: #050000; /* Couleur de fond noir */
+        }
+
+        /* Styles pour le bouton START */
+        #startButton {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #4CAF50; /* Couleur de fond verte */
+            color: #fff; /* Texte blanc */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #startButton:hover {
+            background-color: #45a049; /* Couleur de fond verte plus foncée au survol */
+        }
+
+        /* Style pour le bouton désactivé */
+        .btn-disabled {
+            pointer-events: none; /* Désactiver les événements de clic */
+            opacity: 0.5; /* Réduire l'opacité pour indiquer que le bouton est désactivé */
+        }
+
+        .footer {
+            color: #fff; /* Couleur du texte */
+            padding: 20px 0; /* Espacement intérieur du footer */
+            border-top: 1px solid #fff; /* Bordure supérieure blanche */
+        }
+
+        /* Styling for logout button */
+        #disconnectBtn {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            background-color: #1da1f2;
+            padding: 8px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+
+        #disconnectBtn:hover {
+            background-color: #0d86c9;
+        }
+
+        .logout-text {
+            margin-right: 10px;
+        }
+
+        /* Styling for Font Awesome icon */
+        .fab.fa-twitter {
+            font-size: 20px;
+            color: #ffffff;
+        }
+        
+
+        @keyframes flashAnimation {
+            0% { background-color: white; }
+            50% { background-color: red; }
+            100% { background-color: white; }
+        }
+
+        .flash-effect {
+            animation: flashAnimation 0.5s linear;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">PacBoom</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Play</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <!-- Twitter Login Button -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="twitterLoginBtn">Connect with Twitter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html" id="disconnectBtn" style="display: none;">
+                            <span class="logout-text">Logout</span>
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="text-center mb-3">
+        <!-- Bouton "Start Game" -->
+        <button id="startGameBtn" class="btn btn-success mt-3">Start Game</button>
+    </div>
+    <!-- Game Canvas Container -->
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Colonne pour le canvas -->
+            <div class="col-md-6 order-1 order-md-0">
+                <canvas id="backgroundCanvas" width="500" height="500"></canvas>
+                <canvas id="gameCanvas" width="500" height="500"></canvas>
+                <canvas id="explosionCanvas" width="500" height="500"></canvas>
+            </div>
+
+            <!-- Colonne pour le texte -->
+            <div class="col-md-6 order-0 order-md-1" id="conceptDescription">
+                <p>
+                    Pacboom is designed for the community and to help recognize and fully endorse Pacmoon which is the master of Blast!
+                </p>
+                <p>Now say <b><i>PAC PAC and WAKA WAKA</i></b> because those words are the anthem of Pacmoon.</p>
+                <p>Everyone here loves Pacmoon and his beautiful community, isn't it ?</p>
+                <p>
+                    <h3>How to play ?</h3>
+                </p> <b>
+                <p>Try to achieve the best score to be fully-endorsed by Pacmoon and recognized as a real member of that beautiful community</p>
+                <ul>
+                    <li>
+                        <img src="img/ghost.png" alt="Ghost" style="width: 30px; height: 30px; margin-right: 10px;">
+                        Ghost : eat it to <b>get 100 points</b>
+                    </li>
+                    <li>
+                        <img src="img/pacmoon.png" alt="Pacmoon" style="width: 30px; height: 30px; margin-right: 10px;">
+                        Pacmoon : sometimes a Pacmoon can appear, just eat it because you love it and <b>get 200 points</b> !
+                    </li>
+                    <li>
+                        <img src="img/bobby.png" alt="Bobby" style="width: 30px; height: 30px; margin-right: 10px;">
+                        Bobby : this is the master, he appears to track his followers and see if everything is right in the Pacmoon ecosystem. Don't try to eat it or ... you will REGRET IT !
+                    </li>
+                </ul>
+
+                <p><u>Controls:</u></p>
+                <ul>
+                    <li>Arrows : to move Pacboom</li>
+                    <li>Space : to speed up Pacboom</li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Game Over Modal -->
+    <div class="modal" id="gameOverModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Game Over</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Your score: <span id="finalScore"></span></p>
+                    <!-- Twitter Share Button -->
+                    <a href="#" class="btn btn-primary" id="shareTwitterBtn">
+                        <i class="fab fa-twitter"></i> Share on Twitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer sticky-footer">
+        <div class="container text-center">
+            <p>&copy; 2024 PacBoom. For the PacMoon community.</p>
+            <p><a href="https://www.youtube.com/watch?v=qtZ0hl-unM4">Music by Arsenic1987</a></p>
+            <audio controls autoplay loop>
+                <source src="./sound/Pac-man theme remix - By Arsenic1987.mp3" type="audio/mp3">
+                Your browser doesn't support audio
+            </audio>
+        </div>
+    </footer>
+
+    <script>
+
+        function getCookie(name) {
+            const cookieValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
+            return cookieValue ? cookieValue[2] : null;
+        }
+        // Function to show the game over modal
+        function showGameOverModal(score) {
+            // Vérifier s'il y a du contenu précédent dans l'élément finalScore
+            const finalScoreElement = document.getElementById("finalScore");
+            if (finalScoreElement) {
+                finalScoreElement.textContent = ""; // Effacer le contenu précédent
+                finalScoreElement.textContent = score; // Afficher le nouveau score
+            }
+
+          
+            // Show the modal
+            $('#gameOverModal').modal('show');
+
+            // Event handler for the Twitter share button
+            document.getElementById("shareTwitterBtn").addEventListener("click", function(event) {
+                // URL for sharing on Twitter with the score
+                let tweetUrl = `https://twitter.com/intent/tweet?text=My+score+in+PacBoom+is+${finalScoreElement.textContent}+!&hashtags=PacBoom+%20&hashtags=PacMoon+%20@pacmoon_`;
+
+                // Open a new window to share on Twitter
+                window.open(tweetUrl, '_blank');
+            });
+
+
+            const isLoggedIn = document.cookie.includes('username');
+            console.log("GAME OVER MODAL OK");
+            if (isLoggedIn) {
+                // Envoyer le score au serveur via une requête fetch
+                fetch('/saveScore', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ score: score, username: getCookie("username")})
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Score successfully saved in the database.');
+                    } else {
+                        console.error('Failed to save the score in the database.');
+                    }
+                    })
+                    .catch(error => {
+                        console.error('Error while saving the score:', error);
+                });
+            } else {
+                console.log('User not registered. Score not added.');
+            }
+
+        }
+    </script>
+
+
+    <!-- JavaScript for game and Twitter login handling -->
+    <script type="module" src="./twitter.js"></script> <!-- Import twitter js -->
+    <script type="module" src="./ghosts.js"></script> <!-- Import ghosts module -->
+    <script type="module" src="./pacman.js"></script> <!-- Import pacman game module -->
+
+    <!-- Load jQuery and Bootstrap JS -->
+    <!-- Inclure Bootstrap JS (nécessaire pour les fonctionnalités Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

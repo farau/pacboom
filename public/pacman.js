@@ -1,0 +1,350 @@
+// Importer le fichier des fantômes
+// Assurez-vous d'importer avant d'utiliser les fonctions des fantômes
+// Ce script doit être inclus après le chargement du HTML, donc placé dans un fichier ou dans le balisage de la page.
+import("./ghosts.js");
+
+// Importer le fichier des fantômes
+import { initializeGhosts, drawGhosts, handleGhostInteractions, moveGhosts, ghosts } from "./ghosts.js";
+
+
+// Variables globales
+let backgroundCanvas;
+let gameCanvas;
+let backgroundCtx;
+let gameCtx;
+let pacmanX;
+let pacmanY;
+let pacmanSize = 20;
+let pacmanSpeed = 7; // Vitesse de déplacement de Pacman
+let pacmanDirection = "right"; // Direction initiale de Pacman
+let mouthAngle = 0.2; // Angle initial pour l'animation de bouche
+let mouthIncrement = 0.05; // Contrôle l'incrémentation de l'angle de la bouche
+let score = 0; // Définition et initialisation du score
+let gameLoop; // Déclaration de la variable gameLoop
+// Définir une variable pour garder une trace de l'état du bouton
+let isGameOver = false;
+
+
+function setScore(score_) {
+    score = score_;
+
+}
+
+// Déclaration des variables
+let isExploding = false;
+let explosionSize = 0;
+const maxExplosionSize = 50; // Taille maximale de l'explosion
+
+// Fonction pour gérer l'explosion
+function handleExplosion(ctx, x, y) {
+    ctx.fillStyle = "orange"; // Couleur de l'explosion
+    ctx.beginPath();
+    ctx.arc(x, y, explosionSize, 0, 2 * Math.PI); // Dessin du cercle d'explosion
+    ctx.closePath();
+    ctx.fill();
+
+    // Mettre à jour la taille de l'explosion
+    explosionSize += 2; // Augmenter la taille de l'explosion
+
+    // Réinitialiser l'explosion une fois la taille maximale atteinte
+    if (explosionSize > maxExplosionSize) {
+        isExploding = false; // Fin de l'explosion
+        explosionSize = 0; // Réinitialiser la taille de l'explosion
+    }
+}
+
+function getCookie(name) {
+    const cookieValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
+    return cookieValue ? cookieValue[2] : null;
+}
+
+// Définition de la fonction gameOver
+function gameOver() {
+    isGameOver = true; // Mettre à jour l'état du jeu à "game over"
+    // Autres actions à effectuer en cas de fin de jeu...
+    
+    // Gérer l'explosion si elle est en cours
+    handleExplosion(gameCtx, pacmanX, pacmanY);
+    resetGame();
+
+    // Fenetre de partage du score
+    showGameOverModal(score);
+
+
+
+
+    // Désactiver le gestionnaire d'événements sur le bouton "Start Game"
+    document.getElementById("startGameBtn").removeEventListener("click", startGame);
+    isRunning = false;
+
+}
+
+let isRunning = false;
+
+// Fonction pour initialiser le jeu
+function startGame() {
+    if (!isRunning) {
+        isRunning = true;
+        // Récupérer les références des canvas et des contextes
+        backgroundCanvas = document.getElementById("backgroundCanvas");
+        gameCanvas = document.getElementById("gameCanvas");
+        backgroundCtx = backgroundCanvas.getContext("2d");
+        gameCtx = gameCanvas.getContext("2d");
+
+        // Dessiner le fond (background) une seule fois
+        drawBackground();
+
+        // Initialiser la position de Pacman au centre du canvas de jeu
+        pacmanX = gameCanvas.width / 2;
+        pacmanY = gameCanvas.height / 2;
+
+        // Initialisation des fantômes
+        initializeGhosts(gameCtx, gameCanvas.width, gameCanvas.height);
+
+        // On remet le score à zéro
+        setScore(0);
+
+        // Démarrer la boucle de jeu
+        gameLoop = setInterval(updateGame, 50); // Appeler updateGame toutes les 50 ms (augmentation de la vitesse)
+
+    }
+}
+
+
+
+
+// Dessiner le fond du canvas avec des étoiles fixes
+function drawBackground() {
+    // Dessiner un fond noir
+    backgroundCtx.fillStyle = "black";
+    backgroundCtx.fillRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+
+    // Dessiner des étoiles fixes
+    backgroundCtx.fillStyle = "white";
+    for (let i = 0; i < 50; i++) {
+        let x = Math.random() * backgroundCanvas.width;
+        let y = Math.random() * backgroundCanvas.height;
+        backgroundCtx.fillRect(x, y, 2, 2); // Dessiner une étoile de taille 2x2
+    }
+}
+
+// Dessiner Pacman sur le canvas avec animation de bouche
+function drawPacman() {
+    // Calculer les angles de début et de fin pour l'animation de bouche
+    let startAngle, endAngle;
+
+    // Déterminer les angles en fonction de la direction de déplacement
+    switch (pacmanDirection) {
+        case "right":
+            startAngle = mouthAngle;
+            endAngle = 2 * Math.PI - mouthAngle;
+            break;
+        case "left":
+            startAngle = Math.PI + mouthAngle;
+            endAngle = Math.PI - mouthAngle;
+            break;
+        case "up":
+            startAngle = 3/2 * Math.PI + mouthAngle;
+            endAngle = 3/2 * Math.PI - mouthAngle;
+            break;
+        case "down":
+            startAngle = 1/2 * Math.PI + mouthAngle;
+            endAngle = 1/2 * Math.PI - mouthAngle;
+            break;
+        default:
+            break;
+    }
+
+   // Dessiner Pacman en fonction de la direction avec animation de bouche
+   gameCtx.fillStyle = "yellow";
+   gameCtx.beginPath();
+   gameCtx.arc(Math.floor(pacmanX), Math.floor(pacmanY), pacmanSize, startAngle, endAngle);
+   gameCtx.lineTo(Math.floor(pacmanX), Math.floor(pacmanY));
+   gameCtx.closePath();
+   gameCtx.fill();
+
+
+    // Mettre à jour l'angle de la bouche pour l'animation
+    mouthAngle += mouthIncrement;
+    if (mouthAngle >= 0.8 || mouthAngle <= 0.2) {
+        mouthIncrement = -mouthIncrement; // Inverser l'incrémentation pour changer de direction
+    }
+}
+
+
+// Variable globale pour stocker l'état de la touche "SPACE"
+let isSpacePressed = false;
+
+// Gestionnaire d'événement pour la pression de touche
+document.addEventListener("keydown", function(event) {
+    if (event.key === " ") { // Vérifie si la touche pressée est "SPACE"
+        event.preventDefault(); // Empêche le comportement par défaut de la touche "SPACE" (par exemple, défilement de la page)
+
+        // Vérifie si le jeu est en cours et que ce n'est pas en game over
+        if (isRunning && !isGameOver) {
+            isSpacePressed = true; // Marque la touche "SPACE" comme enfoncée
+        }
+    }
+    
+});
+
+
+// Gestionnaire d'événement pour le relâchement de touche
+document.addEventListener("keyup", function(event) {
+    if (event.key === " ") { // Vérifie si la touche relâchée est "SPACE"
+        isSpacePressed = false; // Marque la touche "SPACE" comme relâchée
+    }
+});
+
+
+// Fonction pour déplacer Pacman en fonction de la direction et de la vitesse
+function movePacman() {
+    let speedFactor = isSpacePressed ? 2 : 1; // Facteur de vitesse (x2 si "SPACE" est enfoncée, sinon x1)
+  
+    switch (pacmanDirection) {
+        case "right":
+            if (pacmanX + pacmanSize + pacmanSpeed * speedFactor <= gameCanvas.width) {
+                pacmanX += pacmanSpeed * speedFactor;
+            }
+            break;
+        case "left":
+            if (pacmanX - pacmanSpeed * speedFactor >= 0) {
+                pacmanX -= pacmanSpeed * speedFactor;
+            }
+            break;
+        case "down":
+            if (pacmanY + pacmanSize + pacmanSpeed * speedFactor <= gameCanvas.height) {
+                pacmanY += pacmanSpeed * speedFactor;
+            }
+            break;
+        case "up":
+            if (pacmanY - pacmanSpeed * speedFactor >= 0) {
+                pacmanY -= pacmanSpeed * speedFactor;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+// Fonction pour gérer les événements clavier
+function handleKeyPress(event) {
+    // Récupérer le code de la touche pressée
+    const key = event.key;
+
+    // Empêcher le comportement par défaut (défilement de la fenêtre)
+    if (key === 'ArrowDown' || key === 'ArrowUp') {
+        event.preventDefault();
+    }
+
+    if (key === ' ') { // Touche Espace (Space)
+        if (event.type === 'keydown') {
+            playMusic(); // Démarrer la musique lorsque la touche est enfoncée
+        } else if (event.type === 'keyup') {
+            stopMusic(); // Arrêter la musique lorsque la touche est relâchée
+        }
+    }
+}
+
+// Créer un nouvel élément audio
+const audio = new Audio("sound/pacman_extrapac.wav");
+
+// Fonction pour jouer la musique
+function playMusic() {
+    audio.loop = true; // Jouer en boucle
+    audio.play(); // Jouer la musique
+}
+
+// Fonction pour arrêter la musique
+function stopMusic() {
+    audio.pause(); // Mettre en pause la musique
+    audio.currentTime = 0; // Revenir au début de la piste
+}
+
+// Écouter les événements clavier sur la fenêtre
+window.addEventListener('keydown', handleKeyPress);
+window.addEventListener('keyup', handleKeyPress);
+
+
+function drawScore() {
+    // Dessiner le score dans le canvas
+    gameCtx.fillStyle = "white";
+    gameCtx.font = "16px Arial";
+    gameCtx.fillText("Score: " + score, 20, 30);
+}
+
+// Fonction pour mettre à jour le score
+function updateScore(points) {
+    score += points;
+}
+
+
+
+// Mettre à jour le jeu à chaque frame
+function updateGame() {
+    clearGameCanvas(); // Effacer seulement le canvas de jeu
+    movePacman();
+    moveGhosts(gameCanvas.width, gameCanvas.height); // Appeler moveGhosts avec les dimensions du canvas
+    
+    // Appel de la fonction de gestion des interactions avec les fantômes
+    handleGhostInteractions(gameCtx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame);   
+    drawPacman();
+    drawGhosts(gameCtx); // Appel de la fonction de dessin des fantômes
+    drawScore();
+}
+
+// Effacer seulement le canvas de jeu
+function clearGameCanvas() {
+    gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+}
+
+// Gérer les touches du clavier
+document.addEventListener("keydown", (event) => {
+    switch (event.key) {
+        case "ArrowRight":
+            pacmanDirection = "right";
+            break;
+        case "ArrowLeft":
+            pacmanDirection = "left";
+            break;
+        case "ArrowDown":
+            pacmanDirection = "down";
+            break;
+        case "ArrowUp":
+            pacmanDirection = "up";
+            break;
+        default:
+            break;
+    }
+});
+
+// Fonction pour réinitialiser le jeu
+function resetGame() {
+    clearInterval(gameLoop); // Arrêter la boucle de jeu
+    gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Effacer seulement le canvas de jeu
+    pacmanX = gameCanvas.width / 2; // Réinitialiser la position X de Pacman
+    pacmanY = gameCanvas.height / 2; // Réinitialiser la position Y de Pacman
+    mouthAngle = 0.2; // Réinitialiser l'angle de la bouche de Pacman
+    mouthIncrement = 0.05; // Réinitialiser l'incrémentation de l'angle de la bouche
+
+
+    isGameOver = false; // Réinitialiser l'état du jeu à "non game over"
+    // Réactiver le gestionnaire d'événements sur le bouton "Start Game"
+    document.getElementById("startGameBtn").addEventListener("click", startGame);
+    startGameBtn.classList.remove("btn-disabled");
+
+}
+
+
+// Récupérer le bouton "Start Game"
+const startGameBtn = document.getElementById("startGameBtn");
+
+// Gérer le clic sur le bouton
+startGameBtn.addEventListener("click", function() {
+    // Désactiver visuellement le bouton après le premier clic
+    startGameBtn.classList.add("btn-disabled");
+
+    // Démarrer le jeu ou effectuer d'autres actions ici...
+    startGame();
+    startGameBtn.classList.remove("btn-disabled");
+});
