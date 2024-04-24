@@ -72,10 +72,10 @@ module.exports = router;
 
 // Configuration de la connexion PostgreSQL
 const pool = new Pool({
-    user: 'postgres',
+    user: process.env.USR_DATABASE,
     host: 'localhost',
-    database: 'pacboom',
-    password: 'postgres',
+    database: 'pacmoon',
+    password: process.env.DB_PASSWORD,
     port: 5432 // Port par défaut de PostgreSQL
 });
 
