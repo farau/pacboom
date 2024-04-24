@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PacBoom</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="shortcut icon" href="./img/explode.gif" type="image/png">
+    <style>
+        /* Body styles for black background with stars */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+            background-image: url('./img/asfalt-light.png'); /* Utilisation de url() pour spécifier le chemin de l'image */
+            background-size: cover;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            background-color: #000;
+            border-bottom: 1px solid #fff;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        /* Twitter login button styles */
+        #twitterLoginBtn {
+            color: #fff;
+        }
+
+        /* Style pour le tableau de leaderboard */
+        .table {
+            color: #fff; /* Texte blanc dans le tableau */
+        }
+
+        /* Style pour l'en-tête du tableau */
+        .table thead th {
+            color: #fff; /* Texte blanc dans l'en-tête du tableau */
+            background-color: #333; /* Couleur de fond gris foncé pour l'en-tête */
+        }
+ 
+        .footer {
+            color: #fff; /* Couleur du texte */
+            padding: 20px 0; /* Espacement intérieur du footer */
+            border-top: 1px solid #fff; /* Bordure supérieure blanche */
+        }
+
+                /* Styling for logout button */
+                #disconnectBtn {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            background-color: #1da1f2;
+            padding: 8px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+
+        #disconnectBtn:hover {
+            background-color: #0d86c9;
+        }
+
+        .logout-text {
+            margin-right: 10px;
+        }
+
+        /* Styling for Font Awesome icon */
+        .fab.fa-twitter {
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Play</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">Why PacBoom ?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <!-- Twitter Login Button -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="twitterLoginBtn">Connect with Twitter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html" id="disconnectBtn" style="display: none;">
+                            <span class="logout-text">Logout</span>
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 text-center">
+        <h1 class="text-center">Why PacBoom and what is it ?</h1><br>
+            <p>
+                PacBoom has been created for the PAC community to recognize and fully endorse PacMoon, the master of Blast !
+            </p>
+            <p>PacBoom might be the brother of PacMoon, but nobody knows for sure; however, he sure likes to explode !</p>
+            <p>Now say <b><i>PAC PAC and WAKA WAKA</i></b> because those words are the anthem of Pacmoon.</p>
+            <p>Everyone here loves PacMoon and his beautiful community, isn't it ?</p>
+    </div>
+
+    
+
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 PacBoom. For the PacMoon community.</p>
+            <p><a href="https://www.youtube.com/watch?v=qtZ0hl-unM4">Music by Arsenic1987</a></p>
+            <audio controls autoplay loop>
+                <source src="./sound/Pac-man theme remix - By Arsenic1987.mp3" type="audio/mp3">
+                Your browser doesn't support audio
+            </audio>
+        </div>
+    </footer>
+
+
+    <script type="module" src="./twitter.js"></script> <!-- Import twitter js -->
+    <!-- Load jQuery and Bootstrap JS -->
+    <!-- Inclure Bootstrap JS (nécessaire pour les fonctionnalités Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

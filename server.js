@@ -192,10 +192,7 @@ app.post('/saveUser', async (req, res) => {
 
         if (checkUserResult.rows.length > 0) {
             // L'utilisateur existe déjà dans la base de données
-            console.log('User already registered.');
-            
             const existingUser = checkUserResult.rows[0];
-            console.log(existingUser);
             res.status(200).json(existingUser); // Retourner les informations de l'utilisateur existant
         } else {
             // Insérer l'utilisateur dans la base de données s'il n'existe pas déjà
@@ -221,21 +218,12 @@ app.post('/saveUser', async (req, res) => {
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
 // Route de rappel après l'authentification Twitter
-/*app.get('/auth/twitter/callback',
+app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   (req, res) => {
     // Authentification réussie, rediriger l'utilisateur vers la page principale
     const { username, screen_name, avatarUrl } = req.user;
     res.redirect(`/index.html?username=${username}&screen_name=${screen_name}&avatarUrl=${avatarUrl}`);
-  }
-);*/
-
-app.post('/auth/twitter/callback',
-  passport.authenticate('twitter', { failureRedirect: '/login' }),
-  (req, res) => {
-    // Authentification réussie, rediriger l'utilisateur vers la page principale
-    const { username, screen_name, avatarUrl } = req.user;
-    res.json({ username, screen_name, avatarUrl });
   }
 );
 

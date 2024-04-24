@@ -153,6 +153,12 @@
             animation: flashAnimation 0.5s linear;
         }
 
+        /* Centrer le bouton de déconnexion sur les petits écrans */
+        @media (max-width: 576px) {
+            #disconnectBtnContainer {
+                text-align: center;
+            }
+        }
     </style>
 </head>
 
@@ -161,7 +167,9 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/index.html">PacBoom</a>
+            <a class="navbar-brand" href="/index.html">
+                <img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo">
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -171,6 +179,9 @@
                         <a class="nav-link" href="index.html">Play</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="about.html">Why PacBoom ?</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="leaderboard.html">Leaderboard</a>
                     </li>
                     <!-- Twitter Login Button -->
@@ -178,7 +189,7 @@
                         <a class="nav-link" id="twitterLoginBtn">Connect with Twitter</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.html" id="disconnectBtn" style="display: none;">
+                        <a class="nav-link btn btn-primary btn-block" href="/index.html" id="disconnectBtn" style="display: none;">
                             <span class="logout-text">Logout</span>
                             <i class="fab fa-twitter"></i>
                         </a>
@@ -205,15 +216,10 @@
 
             <!-- Colonne pour le texte -->
             <div class="col-md-6 order-0 order-md-1" id="conceptDescription">
-                <p>
-                    Pacboom is designed for the community and to help recognize and fully endorse Pacmoon which is the master of Blast!
-                </p>
-                <p>Now say <b><i>PAC PAC and WAKA WAKA</i></b> because those words are the anthem of Pacmoon.</p>
-                <p>Everyone here loves Pacmoon and his beautiful community, isn't it ?</p>
-                <p>
-                    <h3>How to play ?</h3>
-                </p> <b>
-                <p>Try to achieve the best score to be fully-endorsed by Pacmoon and recognized as a real member of that beautiful community</p>
+                <h3>How to play ?</h3>
+                <br>
+                <p>Try to achieve the best score to be fully-endorsed by Pacmoon and recognized as a real member of that beautiful community !</p>
+                <p>Connect your Twitter account to have your place on the leaderboard !</p>
                 <ul>
                     <li>
                         <img src="img/ghost.png" alt="Ghost" style="width: 30px; height: 30px; margin-right: 10px;">
@@ -221,7 +227,7 @@
                     </li>
                     <li>
                         <img src="img/pacmoon.png" alt="Pacmoon" style="width: 30px; height: 30px; margin-right: 10px;">
-                        Pacmoon : sometimes a Pacmoon can appear, just eat it because you love it and <b>get 200 points</b> !
+                        Pacmoon : sometimes a Pacmoon can appear, just eat it because you love it and <b>get 300 points</b> !
                     </li>
                     <li>
                         <img src="img/bobby.png" alt="Bobby" style="width: 30px; height: 30px; margin-right: 10px;">
@@ -233,7 +239,7 @@
                 <ul>
                     <li>Arrows : to move Pacboom</li>
                     <li>Space : to speed up Pacboom</li>
-                </ul>
+                </ul><br><br><br><br><br>
                 
             </div>
         </div>
@@ -262,7 +268,7 @@
         </div>
     </div>
 
-    <footer class="footer sticky-footer">
+    <footer class="footer mt-10">
         <div class="container text-center">
             <p>&copy; 2024 PacBoom. For the PacMoon community.</p>
             <p><a href="https://www.youtube.com/watch?v=qtZ0hl-unM4">Music by Arsenic1987</a></p>
@@ -295,7 +301,7 @@
             // Event handler for the Twitter share button
             document.getElementById("shareTwitterBtn").addEventListener("click", function(event) {
                 // URL for sharing on Twitter with the score
-                let tweetUrl = `https://twitter.com/intent/tweet?text=My+score+in+PacBoom+is+${finalScoreElement.textContent}+!&hashtags=PacBoom+%20&hashtags=PacMoon+%20@pacmoon_`;
+                let tweetUrl = `https://twitter.com/intent/tweet?text=My+score+in+PacBoom+is+${finalScoreElement.textContent}+!&hashtags=PacBoom+&hashtags=PacMoon+&hashtags=Bobby+@pacmoon_`;
 
                 // Open a new window to share on Twitter
                 window.open(tweetUrl, '_blank');
@@ -303,7 +309,6 @@
 
 
             const isLoggedIn = document.cookie.includes('username');
-            console.log("GAME OVER MODAL OK");
             if (isLoggedIn) {
                 // Envoyer le score au serveur via une requête fetch
                 fetch('/saveScore', {

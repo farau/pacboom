@@ -90,7 +90,7 @@ function handleTwitterCallback() {
         //on affiche le bouton Logout par la suite
         disconnectBtn.style.display = 'block'; // Afficher le bouton si l'utilisateur est connecté
         
-
+        window.location.href = '/index.html';
     })
     .catch(error => {
         console.error("Erreur lors de l'enregistrement ou de la récupération des informations utilisateur:", error);
@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.search.includes('username') && window.location.search.includes('screen_name')) {
         // Appeler la fonction handleTwitterCallback() pour finaliser l'authentification
         handleTwitterCallback();
+        
     }
 
     // Vérifier si l'utilisateur est connecté (par exemple, en vérifiant l'existence du cookie)

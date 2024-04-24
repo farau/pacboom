@@ -194,7 +194,7 @@ export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacma
                         updateScore(100);
                     } else if (ghost.type === GhostType.BONUS) {
                         playGhostEatPacmoonSound();
-                        updateScore(1000); // Bonus de points pour les fantômes dorés
+                        updateScore(300); // Bonus de points pour les fantômes dorés
                     } else if (ghost.type === GhostType.BOMB) {
                         ghosts = [];
                         playGhostEatBomb();
