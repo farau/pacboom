@@ -74,7 +74,7 @@ module.exports = router;
 const pool = new Pool({
     user: process.env.USR_DATABASE,
     host: 'localhost',
-    database: 'pacmoon',
+    database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
     port: 5432 // Port par défaut de PostgreSQL
 });

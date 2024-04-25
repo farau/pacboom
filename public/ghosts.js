@@ -5,13 +5,15 @@ export const numGhosts = 3; // Nombre de fantômes
 const GhostType = {
     NORMAL: "normal",
     BONUS: "bonus",
-    BOMB: "bomb"
+    BOMB: "bomb",
+    BEEPLE: "beeple"
 };
 
 const GhostColor = {
     NORMAL: "red",
     BONUS: "gold",
-    BOMB: "blue"
+    BOMB: "blue",
+    BEEPLE: "green"
 };
 
 // Déclaration des variables
@@ -27,6 +29,9 @@ function loadGhostImages() {
 
     ghostImages.bomb = new Image();
     ghostImages.bomb.src = './img/bobby.png';
+
+    ghostImages.beeple = new Image();
+    ghostImages.beeple.src = './img/beeple.png';
 }
 
 // Définir la fonction pour charger et jouer le son du fantôme mangé
@@ -71,14 +76,17 @@ export function initializeGhosts(ctx, canvasWidth, canvasHeight) {
 
     for (let i = 0; i < numGhosts; i++) {
 
-        let randomNumber = Math.floor(Math.random() * 10) + 1;
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
         let ghostType, ghostColor;
-        if (randomNumber == 1) {
+        if (randomNumber <= 10) {
             ghostType = GhostType.BONUS;
             ghostColor = GhostColor.BONUS;
-        } else if (randomNumber == 6) {
+        } else if (randomNumber > 10 && randomNumber <= 15) {
             ghostType = GhostType.BOMB;
             ghostColor = GhostColor.BOMB;
+        } else if (randomNumber > 20 && randomNumber <= 23) {
+            ghostType = GhostType.BEEPLE;
+            ghostColor = GhostColor.BEEPLE;      
         } else {
             ghostType = GhostType.NORMAL;
             ghostColor = GhostColor.NORMAL;
@@ -168,34 +176,60 @@ function vibrateScreen() {
     }
 }
 
+let beepleBonus = false;
+let beepleAudio = null; // Instance audio pour la musique BEEPLE
+let beepleTimeoutId = null; // ID du timeout pour la durée du bonus BEEPLE
+
+// Fonction pour activer le bonus BEEPLE
+function activateBeepleBonus() {
+    // Arrêter l'audio BEEPLE existant s'il est en cours
+    if (beepleAudio && !beepleAudio.paused) {
+        beepleAudio.pause();
+        beepleAudio.currentTime = 0; // Rembobiner l'audio au début
+    }
+
+    // Activer le bonus BEEPLE
+    beepleBonus = true;
+ 
+    // Jouer la musique BEEPLE
+    beepleAudio = new Audio('./sound/pacman_eating.mp3');
+    beepleAudio.currentTime = 0; // Rembobiner l'audio au début
+    beepleAudio.play(); // Démarrer la lecture de l'audio
+
+    // Définir un timeout pour désactiver le bonus et arrêter la musique après la durée spécifiée
+    beepleTimeoutId = setTimeout(() => {
+        disableBeepleBonus(); // Désactiver le bonus BEEPLE après la durée spécifiée
+    }, 5000); // Durée de la musique BEEPLE (5 secondes)
+}
+
+// Fonction pour désactiver le bonus BEEPLE
+function disableBeepleBonus() {
+    beepleBonus = false; // Désactiver le bonus BEEPLE
+    if (beepleAudio && !beepleAudio.paused) {
+        beepleAudio.pause(); // Arrêter l'audio si encore en cours de lecture
+    }
+}
+
 // Gérer les interactions avec les fantômes
 export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame) {
     ghosts.forEach((ghost) => {
         if (ghost.isAlive) {
             let distance = Math.sqrt(Math.pow(pacmanX - ghost.x, 2) + Math.pow(pacmanY - ghost.y, 2));
-            
+
             if (distance < pacmanSize + ghost.size) {
-                let ghostDirection = Math.atan2(pacmanY - ghost.y, pacmanX - ghost.x);
+                ghost.isAlive = false; // Fantôme mangé par Pacman
 
-                // Calculer l'angle entre Pacman et le fantôme
-                let angleDifference = Math.abs(directionToAngle(pacmanDirection) - ghostDirection);
-
-                angleDifference = Math.min(angleDifference, 2 * Math.PI - angleDifference); // Normaliser l'angle
-                
-                // Vérifier la direction de Pacman par rapport au fantôme
-                if (1 == 2) {
-                    //ghosts = []; 
-                    //gameOver(); // Pacman est touché par l'arrière
-                } else {
-                    ghost.isAlive = false; // Fantôme mangé par Pacman
-                    
-                    if (ghost.type === GhostType.NORMAL) {
-                        playGhostEatSound();
-                        updateScore(100);
-                    } else if (ghost.type === GhostType.BONUS) {
-                        playGhostEatPacmoonSound();
-                        updateScore(300); // Bonus de points pour les fantômes dorés
-                    } else if (ghost.type === GhostType.BOMB) {
+                if (ghost.type === GhostType.NORMAL) {
+                    playGhostEatSound();
+                    updateScore(100);
+                } else if (ghost.type === GhostType.BONUS) {
+                    playGhostEatPacmoonSound();
+                    updateScore(300); // Bonus de points pour les fantômes dorés
+                } else if (ghost.type === GhostType.BOMB) {
+                    if (beepleBonus) {
+                        // Bonus BEEPLE actif : donner un bonus supplémentaire pour les fantômes de type BOMB
+                        updateScore(100); // Bonus de points avec Beeple Bonus !
+                    } else {
                         ghosts = [];
                         playGhostEatBomb();
                         displayExplosionAnimation(pacmanX, pacmanY, ctx);
@@ -203,7 +237,7 @@ export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacma
 
                         // Ajouter la classe de flash pour déclencher l'animation CSS
                         document.body.classList.add('flash-effect');
-                    
+
                         // Retirer la classe après l'animation pour réinitialiser l'effet
                         setTimeout(() => {
                             document.body.classList.remove('flash-effect');
@@ -212,48 +246,29 @@ export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacma
                         setTimeout(gameOver, 100);
                         return;
                     }
-                    // Ajouter un nouveau fantôme avec une vitesse basée sur le score actuel
-                    let newGhostSpeed = calculateGhostSpeed(score);
-                    
-                    let randomNumber = Math.floor(Math.random() * 10) + 1;
-                    let ghostType, ghostColor;
-                    if (randomNumber == 1) {
-                        ghostType = GhostType.BONUS;
-                        ghostColor = GhostColor.BONUS;
-
-                        //On crée un nouveau fantôme pour complexifier le jeu
-                        let newGhost = {
-                            x: Math.random() * ctx.canvas.width,
-                            y: Math.random() * ctx.canvas.height,
-                            size: 20,
-                            speed: newGhostSpeed,
-                            direction: Math.random() * 2 * Math.PI,
-                            isAlive: true,
-                            type: GhostType.NORMAL,
-                            color: GhostColor.NORMAL
-                        };    
-                        ghosts.push(newGhost);
-                    } else if (randomNumber == 6) {
-                        ghostType = GhostType.BOMB;
-                        ghostColor = GhostColor.BOMB;
-
-                        //On crée un nouveau fantôme pour complexifier le jeu
-                        let newGhost = {
-                            x: Math.random() * ctx.canvas.width,
-                            y: Math.random() * ctx.canvas.height,
-                            size: 20,
-                            speed: newGhostSpeed,
-                            direction: Math.random() * 2 * Math.PI,
-                            isAlive: true,
-                            type: GhostType.NORMAL,
-                            color: GhostColor.NORMAL
-                        };    
-                        ghosts.push(newGhost);
+                } else if (ghost.type === GhostType.BEEPLE) {
+                    // Bonus de points pour les fantômes BEEPLE
+                    updateScore(500);
+                    if (!beepleBonus) {
+                        // Activer le bonus BEEPLE si ce n'est pas déjà activé
+                        activateBeepleBonus();
                     } else {
-                        ghostType = GhostType.NORMAL;
-                        ghostColor = GhostColor.NORMAL;
+                        // Réinitialiser le délai du bonus BEEPLE lorsqu'un autre BEEPLE est mangé
+                        clearTimeout(beepleTimeoutId); // Annuler le timeout actuel
+                        activateBeepleBonus(); // Réactiver le bonus BEEPLE avec une nouvelle durée
                     }
+                }
 
+                // Ajouter un nouveau fantôme avec une vitesse basée sur le score actuel
+                let newGhostSpeed = calculateGhostSpeed(score);
+                
+                let randomNumber = Math.floor(Math.random() * 10) + 1;
+                let ghostType, ghostColor;
+                if (randomNumber == 1) {
+                    ghostType = GhostType.BONUS;
+                    ghostColor = GhostColor.BONUS;
+
+                    //On crée un nouveau fantôme pour complexifier le jeu
                     let newGhost = {
                         x: Math.random() * ctx.canvas.width,
                         y: Math.random() * ctx.canvas.height,
@@ -261,15 +276,72 @@ export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacma
                         speed: newGhostSpeed,
                         direction: Math.random() * 2 * Math.PI,
                         isAlive: true,
-                        type: ghostType,
-                        color: ghostColor
-                    };
+                        type: GhostType.NORMAL,
+                        color: GhostColor.NORMAL
+                    };    
                     ghosts.push(newGhost);
+                } else if (randomNumber == 6) {
+                    ghostType = GhostType.BOMB;
+                    ghostColor = GhostColor.BOMB;
 
+                    //On crée un nouveau fantôme pour complexifier le jeu
+                    let newGhost = {
+                        x: Math.random() * ctx.canvas.width,
+                        y: Math.random() * ctx.canvas.height,
+                        size: 20,
+                        speed: newGhostSpeed,
+                        direction: Math.random() * 2 * Math.PI,
+                        isAlive: true,
+                        type: GhostType.NORMAL,
+                        color: GhostColor.NORMAL
+                    };    
+                    ghosts.push(newGhost);
                 }
+
+                // Générer un nouveau fantôme de manière aléatoire
+                let newGhost = {
+                    x: Math.random() * ctx.canvas.width,
+                    y: Math.random() * ctx.canvas.height,
+                    size: 20,
+                    speed: newGhostSpeed,
+                    direction: Math.random() * 2 * Math.PI,
+                    isAlive: true,
+                    type: generateRandomGhostType(), // Générer un type de fantôme aléatoire
+                    color: generateRandomGhostColor() // Générer une couleur de fantôme aléatoire
+                };
+                ghosts.push(newGhost);
             }
         }
     });
+}
+
+// Fonction utilitaire pour générer un type de fantôme aléatoire
+function generateRandomGhostType() {
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    if (randomNumber <= 15) {
+        return GhostType.BONUS;
+    } else if (randomNumber > 15 && randomNumber <= 25) {
+        return GhostType.BOMB;
+    } else if (randomNumber > 25 && randomNumber <= 29) {
+        return GhostType.BEEPLE;
+    } else {
+        return GhostType.NORMAL;
+    }
+}
+
+// Fonction utilitaire pour générer une couleur de fantôme aléatoire
+function generateRandomGhostColor() {
+    let randomNumber = Math.floor(Math.random() * 3);
+    switch (randomNumber) {
+        case 0:
+            return GhostColor.NORMAL;
+        case 1:
+            return GhostColor.BONUS;
+        case 2:
+            return GhostColor.BOMB;
+        default:
+            return GhostColor.NORMAL;
+    }
 }
 
 // Fonction pour convertir la direction de Pacman en angle en radians
