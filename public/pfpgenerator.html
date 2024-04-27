@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PacBoom</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="shortcut icon" href="./img/explode.gif" type="image/png">
+    <style>
+        /* Body styles for black background with stars */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+            background-image: url('./img/asfalt-light.png'); /* Utilisation de url() pour spécifier le chemin de l'image */
+            background-size: cover;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            background-color: #000;
+            border-bottom: 1px solid #fff;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        /* Twitter login button styles */
+        #twitterLoginBtn {
+            color: #fff;
+        }
+
+        /* Style pour le tableau de leaderboard */
+        .table {
+            color: #fff; /* Texte blanc dans le tableau */
+        }
+
+        /* Style pour l'en-tête du tableau */
+        .table thead th {
+            color: #fff; /* Texte blanc dans l'en-tête du tableau */
+            background-color: #333; /* Couleur de fond gris foncé pour l'en-tête */
+        }
+ 
+        .footer {
+            color: #fff; /* Couleur du texte */
+            padding: 20px 0; /* Espacement intérieur du footer */
+            border-top: 1px solid #fff; /* Bordure supérieure blanche */
+        }
+
+        /* Styling for logout button */
+        #disconnectBtn {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            background-color: #1da1f2;
+            padding: 8px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+
+        #disconnectBtn:hover {
+            background-color: #0d86c9;
+        }
+
+        .logout-text {
+            margin-right: 10px;
+        }
+
+        /* Styling for Font Awesome icon */
+        .fab.fa-twitter {
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        canvas {
+            border: 1px solid white;
+            background-color: #222; /* Couleur de fond gris foncé pour le canvas */
+        }
+
+        #saveButton {
+            display: none;
+        }
+
+        .canvas-container {
+            text-align: center;
+        }
+
+        .canvas-container2 {
+            text-align: center;
+        }
+
+</style>
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Play</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">Why PacBoom ?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pfpgenerator.html">PFP Generator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <!-- Twitter Login Button -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="twitterLoginBtn">Connect with Twitter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pfpgenerator.html" id="disconnectBtn" style="display: none;">
+                            <span class="logout-text">Logout</span>
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-2">
+        <div class="row">
+            <!-- Colonne pour le canvas de dessin et les boutons -->
+            <div class="col-md-6 order-1 order-md-0 d-flex justify-content-center align-items-center mt-4">
+                <div class="canvas-container">
+                    <h3 class="mb-4">Generate a PacMoon PFP!<img src="img/pacman_thumbsup.png" height="50" width="50" "d-inline-block align-top" alt="Logo"></h3>
+                    <p>Every $PAC holder or member of the PacMoon community deserves to have its own profile picture !</p>
+                    <p>Generate yours and share it on social media !</p>
+                    
+                    <!-- Canvas de dessin principal -->
+                    <canvas id="drawingCanvas" width="400" height="400" class="border mb-3"></canvas>
+                    
+                    <!-- Boutons d'action -->
+                    <div class="d-grid gap-3">
+                        <button id="randomize" class="btn btn-primary mb-2 mx-auto">Random</button>
+                        <button id="shareTwitterBtn" class="btn btn-primary mb-2 mx-auto">Share on Twitter</button>
+                        <button id="saveButton" class="btn btn-primary mb-2 mx-auto">Save Metadata</button>
+                        <div id="successMessage" class="mt-3 mx-auto" style="color: green;"></div>
+                    </div>
+                    <p>One registration per Twitter account ! But you can continue to randomly generate profile photos and share them on social networks !</p>
+        
+                </div>
+            </div>
+    
+            <!-- Colonne pour le canvas de profil et les métadonnées -->
+            <div class="col-md-6 order-0 order-md-1 d-flex justify-content-center align-items-center mt-4">
+                <div class="canvas-container2">
+                    <h3 class="mb-4">Your Pacmoon profile picture</h3>
+                    <p class="mb-4">The PFP you set looks like this!</p>
+                    <!-- Canvas secondaire pour afficher la PFP -->
+                    <canvas id="secondaryCanvas" width="200" height="200" class="border mb-3"></canvas>
+            
+                    <div class="card bg-secondary">
+                        <div class="card-body">
+                            <h5 class="card-title">Your Metadata</h5>
+                            <div id="metadataContainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+    
+
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 PacBoom. For the PacMoon community.</p>
+            <p><a href="https://www.youtube.com/watch?v=XsYc9Xv6oMY">Music by Multiversal Music</a></p>
+            <audio controls autoplay loop>
+                <source src="./sound/Pac-Man Remix REMASTERED.mp3" type="audio/mp3">
+                Your browser doesn't support audio
+            </audio>
+        </div>
+    </footer>
+
+
+    <script>
+        function getCookie(name) {
+            const cookieValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
+            return cookieValue ? cookieValue[2] : null;
+        }
+
+    </script>
+
+
+    <script src="draw.js"></script>
+    <script type="module" src="./twitter.js"></script> <!-- Import twitter js -->
+    <!-- Load jQuery and Bootstrap JS -->
+    <!-- Inclure Bootstrap JS (nécessaire pour les fonctionnalités Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

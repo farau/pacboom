@@ -89,6 +89,14 @@ async function createTables() {
                 username VARCHAR(50) UNIQUE NOT NULL,
                 score INTEGER NOT NULL DEFAULT 0
             );
+            CREATE TABLE IF NOT EXISTS metadata (
+                id SERIAL PRIMARY KEY,
+                username VARCHAR(255) UNIQUE NOT NULL,
+                head VARCHAR(255),
+                eyes VARCHAR(255),
+                arm VARCHAR(255),
+                neck VARCHAR(255)
+            );
         `);
 
         console.log('Tables créées ou chargées avec succès');
@@ -110,6 +118,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Route pour servir la page pfpgenerator
+app.get('/pfpgenerator', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pfpgenerator.html'));
+});
+
 
 // Exemple de requête pour récupérer des données depuis PostgreSQL (liste des utilisateurs)
 app.get('/users', async (req, res) => {
@@ -124,6 +137,69 @@ app.get('/users', async (req, res) => {
         res.status(500).send('Erreur serveur');
     }
 });
+
+
+// Route pour sauvegarder lees metadata des users dans la base de données
+app.post('/saveMetadata', async (req, res) => {
+    const username = req.body.username;
+    const head = req.body.currentImages.head;
+    const eyes = req.body.currentImages.eyes;
+    const arm = req.body.currentImages.arm;
+    const neck = req.body.currentImages.neck;
+
+    // Check if username is provided
+    if (!username) {
+        return res.status(400).send('Username not provided.');
+    }
+
+    try {
+        // Insert the score and username into the database
+        const client = await pool.connect();
+        // Exécution de la requête SQL INSERT
+        await client.query(
+            'INSERT INTO metadata (username, head, eyes, arm, neck) VALUES ($1, $2, $3, $4, $5)',
+            [username, head, eyes, arm, neck]
+        );
+        client.release();
+
+        // Envoyer une réponse JSON avec un message de réussite
+        res.status(200).json({ message: 'Metadata inserted successfully' });
+
+    } catch (error) {
+        console.error('Error inserting metadata:', error);
+        // Envoyer une réponse JSON avec un message d'erreur
+        res.status(500).json({ error: 'Error inserting metadata' });
+    }
+});
+
+
+// Route pour récupérer les métadonnées de l'utilisateur
+app.post('/getMetadata', async (req, res) => {
+    const username = req.body.username; // Récupérer le nom d'utilisateur depuis la requête
+
+    const client = await pool.connect();
+    // Exécution de la requête SQL INSERT
+    // Requête SQL pour récupérer les métadonnées de l'utilisateur depuis la base de données
+    const query = `SELECT * FROM metadata WHERE username = $1`;
+    client.query(query, [username], (error, results) => {
+        if (error) {
+            console.error('Error retrieving metadata:', error);
+            res.status(500).json({ error: 'Error retrieving metadata' });
+        } else {
+            // Vérifier si des résultats ont été retournés
+            if (results.rows.length === 0) {
+                // Aucun enregistrement trouvé, renvoyer un message indiquant que les métadonnées ne sont pas disponibles
+                res.status(404).json(results.rows);
+            } else {
+                // Envoyer les métadonnées récupérées en réponse
+                res.status(200).json(results.rows[0]);
+            }
+        }
+    });
+
+    client.release();
+});
+
 
 // Route pour sauvegarder le score des users dans la base de données
 app.post('/saveScore', async (req, res) => {

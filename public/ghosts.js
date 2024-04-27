@@ -149,7 +149,7 @@ const explosionCtx = explosionCanvas.getContext("2d");
 // Fonction pour afficher l'animation d'explosion
 function displayExplosionAnimation(x, y, gameCtx) {
     const explosionImage = new Image();
-    explosionImage.src = './img/explode.gif'; 
+    explosionImage.src = './img/boom.gif'; 
 
     // Attendre le chargement de l'image avant de l'afficher
     explosionImage.onload = () => {
