@@ -348,3 +348,84 @@ startGameBtn.addEventListener("click", function() {
     startGame();
     startGameBtn.classList.remove("btn-disabled");
 });
+
+
+// Vérifier si la largeur de l'écran est inférieure à une certaine valeur (typiquement une largeur de smartphone)
+const isSmartphone = window.innerWidth < 768; // Vous pouvez ajuster cette valeur selon vos besoins
+
+// Attacher les gestionnaires d'événements tactiles uniquement si c'est un smartphone
+if (isSmartphone) {
+    // Gestionnaire d'événement pour touchstart (au début du toucher)
+    document.addEventListener("touchstart", handleTouchStart);
+
+    // Gestionnaire d'événement pour touchmove (mouvement du toucher)
+    document.addEventListener("touchmove", handleTouchMove);
+
+    // Gestionnaire d'événement pour touchend (fin du toucher)
+    document.addEventListener("touchend", handleTouchEnd);
+}
+
+// Fonction pour gérer le mouvement du doigt
+function handleTouchMove(event) {
+    if (!initialX || !initialY) {
+        return;
+    }
+
+    // Récupérer les coordonnées du mouvement actuel du doigt
+    const currentX = event.touches[0].clientX;
+    const currentY = event.touches[0].clientY;
+
+    // Calculer les différences entre les coordonnées initiales et actuelles
+    const deltaX = currentX - initialX;
+    const deltaY = currentY - initialY;
+
+    // Calculer la valeur absolue des différences pour déterminer la direction dominante
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    // Déterminer la direction en fonction du mouvement dominant
+    if (absDeltaX > absDeltaY) {
+        // Mouvement horizontal dominant
+        if (deltaX > 0) {
+            pacmanDirection = "right";
+        } else {
+            pacmanDirection = "left";
+        }
+    } else {
+        // Mouvement vertical dominant
+        if (deltaY > 0) {
+            pacmanDirection = "down";
+        } else {
+            pacmanDirection = "up";
+        }
+    }
+
+    // Réinitialiser les coordonnées du toucher initial pour le prochain mouvement
+    initialX = null;
+    initialY = null;
+
+    // Empêcher le défilement de la page pendant les mouvements tactiles
+    event.preventDefault();
+}
+
+// Gestionnaire d'événement pour le début du maintien du doigt sur l'écran tactile
+document.addEventListener("touchstart", function(event) {
+    // Vérifier si l'écran est petit (par exemple, smartphone)
+    if (window.innerWidth <= 768) {
+        // Accélérer le mouvement de Pacman
+        isSpacePressed = true;
+        // Jouer la musique
+        playMusic();
+    }
+});
+
+// Gestionnaire d'événement pour la fin du maintien du doigt sur l'écran tactile
+document.addEventListener("touchend", function(event) {
+    // Vérifier si l'écran est petit (par exemple, smartphone)
+    if (window.innerWidth <= 768) {
+        // Arrêter d'accélérer le mouvement de Pacman
+        isSpacePressed = false;
+        // Arrêter de jouer la musique
+        stopMusic();
+    }
+});
