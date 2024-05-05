@@ -47,14 +47,18 @@
             top: 0;
             left: 0;
             max-width: 100%; /* Make canvas responsive */
+            pointer-events: none;
+            z-index: 1;
         }
 
 
         /* Concept description styles */
         #conceptDescription {
+            position: relative;
             color: #fff;
+            z-index: 2;
             text-align: left;
-            margin-top: 20px;
+            margin-top: auto; /* Place le texte en bas de la page */
         }
 
         /* Styles pour la modal Game Over */
@@ -211,14 +215,18 @@
     <div class="container mt-5">
         <div class="row">
             <!-- Colonne pour le canvas -->
-            <div class="col-md-6 order-1 order-md-0">
-                <canvas id="backgroundCanvas" width="500" height="500"></canvas>
-                <canvas id="gameCanvas" width="500" height="500"></canvas>
-                <canvas id="explosionCanvas" width="500" height="500"></canvas>
+            <div class="col-md-6 order-0 order-md-0 position-relative" >
+                <div id="canvasContainer" style="height: 500px;">
+                    <canvas id="backgroundCanvas" width="500" height="500"></canvas>
+                    <canvas id="gameCanvas" width="500" height="500"></canvas>
+                    <canvas id="explosionCanvas" width="500" height="500"></canvas>
+                </div>
+
+                
             </div>
 
             <!-- Colonne pour le texte -->
-            <div class="col-md-6 order-0 order-md-1" id="conceptDescription">
+            <div class="col-md-6 order-1 order-md-1 mt-0" id="conceptDescription" style="margin-top: 500px;">
                 <h3 class="text-center">How to play ?</h3>
                 <br>
                 <p>Try to achieve the best score to be fully-endorsed by Pacmoon and recognized as a real member of that beautiful community !</p>
