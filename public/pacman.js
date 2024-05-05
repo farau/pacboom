@@ -10,6 +10,7 @@ import { initializeGhosts, drawGhosts, handleGhostInteractions, moveGhosts, ghos
 // Variables globales
 let backgroundCanvas;
 let gameCanvas;
+let fullCanvas;
 let backgroundCtx;
 let gameCtx;
 let pacmanX;
@@ -67,6 +68,9 @@ function gameOver() {
     handleExplosion(gameCtx, pacmanX, pacmanY);
     resetGame();
 
+    // Désactiver le mode plein écran
+    exitFullscreen();
+
     // Fenetre de partage du score
     showGameOverModal(score);
 
@@ -88,6 +92,7 @@ function startGame() {
         // Récupérer les références des canvas et des contextes
         backgroundCanvas = document.getElementById("backgroundCanvas");
         gameCanvas = document.getElementById("gameCanvas");
+        fullCanvas = document.getElementById("canvasContainer");
         backgroundCtx = backgroundCanvas.getContext("2d");
         gameCtx = gameCanvas.getContext("2d");
 
@@ -327,6 +332,25 @@ function resetGame() {
     mouthAngle = 0.2; // Réinitialiser l'angle de la bouche de Pacman
     mouthIncrement = 0.05; // Réinitialiser l'incrémentation de l'angle de la bouche
 
+    //On remet à zéro tout ce qui concerne le mode tactile
+    stopMusic();
+
+    //On réinitialise isSmartphone pour vérifier que la taille d'écran n'a pas changé
+    isSmartphone = window.innerWidth < 768;
+    if (isSmartphone) {
+        // Gestionnaire d'événement pour touchstart (au début du toucher)
+        document.removeEventListener("touchstart", handleTouchStart);
+
+        // Gestionnaire d'événement pour touchmove (mouvement du toucher)
+        document.removeEventListener("touchmove", handleTouchMove, { passive: false });
+
+        // Gestionnaire d'événement pour touchend (fin du toucher)
+        document.removeEventListener("touchend", handleTouchEnd);
+    }
+    isSpacePressed = false;
+    isMusicPlaying = false;
+    initialX = null;
+    initialY = null;
 
     isGameOver = false; // Réinitialiser l'état du jeu à "non game over"
     // Réactiver le gestionnaire d'événements sur le bouton "Start Game"
@@ -338,6 +362,9 @@ function resetGame() {
 
 // Récupérer le bouton "Start Game"
 const startGameBtn = document.getElementById("startGameBtn");
+// Vérifier si la largeur de l'écran est inférieure à une certaine valeur (typiquement une largeur de smartphone)
+const isSmartphone = window.innerWidth < 768; // Vous pouvez ajuster cette valeur selon vos besoins
+
 
 // Gérer le clic sur le bouton
 startGameBtn.addEventListener("click", function() {
@@ -346,6 +373,18 @@ startGameBtn.addEventListener("click", function() {
 
     // Démarrer le jeu ou effectuer d'autres actions ici...
     startGame();
+    // Attacher les gestionnaires d'événements tactiles uniquement si c'est un smartphone
+    if (isSmartphone) {
+        enterFullscreen(fullCanvas);
+        // Gestionnaire d'événement pour touchstart (au début du toucher)
+        document.addEventListener("touchstart", handleTouchStart);
+
+        // Gestionnaire d'événement pour touchmove (mouvement du toucher)
+        document.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+        // Gestionnaire d'événement pour touchend (fin du toucher)
+        document.addEventListener("touchend", handleTouchEnd);
+    }
     startGameBtn.classList.remove("btn-disabled");
 });
 
@@ -353,21 +392,42 @@ startGameBtn.addEventListener("click", function() {
 // Variable pour stocker les coordonnées initiales du toucher
 let initialX = null;
 let initialY = null;
+let isMusicPlaying = false; // Variable de contrôle pour vérifier si la musique est en cours de lecture
 
 // Fonction pour gérer le début du toucher
 function handleTouchStart(event) {
+
     // Récupérer les coordonnées initiales du toucher
     initialX = event.touches[0].clientX;
     initialY = event.touches[0].clientY;
+
+    // Vérifier si l'écran est petit (par exemple, smartphone) et si le toucher est à l'intérieur du canvas
+    if (window.innerWidth <= 768 && !isMusicPlaying && isTouchInsideCanvas(initialX, initialY)) {
+        // Accélérer le mouvement de Pacman
+        isSpacePressed = true;
+        // Jouer la musique
+        playMusic();
+        isMusicPlaying = true; // Mettre à jour la variable de contrôle
+    }
 }
 
 function handleTouchEnd(event) {
+
     // Réinitialiser les coordonnées du toucher initial
     initialX = null;
     initialY = null;
+
+    
+    if (window.innerWidth <= 768) {
+        // Arrêter d'accélérer le mouvement de Pacman
+        isSpacePressed = false;
+        // Arrêter de jouer la musique
+        stopMusic();
+        isMusicPlaying = false; // Mettre à jour la variable de contrôle
+    }
 }
 
-// Fonction pour gérer le mouvement du doigt
+// Gestionnaire pour le mouvement tactile
 function handleTouchMove(event) {
     if (!initialX || !initialY) {
         return;
@@ -377,24 +437,23 @@ function handleTouchMove(event) {
     const currentX = event.touches[0].clientX;
     const currentY = event.touches[0].clientY;
 
-    // Calculer les différences entre les coordonnées initiales et actuelles
+    // Vérifier si les coordonnées sont à l'intérieur du canvas
+    const rect = gameCanvas.getBoundingClientRect();
+    const canvasX = currentX - rect.left;
+    const canvasY = currentY - rect.top;
+
+    // Calculer la différence entre les coordonnées initiales et actuelles
     const deltaX = currentX - initialX;
     const deltaY = currentY - initialY;
 
-    // Calculer la valeur absolue des différences pour déterminer la direction dominante
-    const absDeltaX = Math.abs(deltaX);
-    const absDeltaY = Math.abs(deltaY);
-
-    // Déterminer la direction en fonction du mouvement dominant
-    if (absDeltaX > absDeltaY) {
-        // Mouvement horizontal dominant
+    // Déterminer la direction en fonction du mouvement horizontal et vertical
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
         if (deltaX > 0) {
             pacmanDirection = "right";
         } else {
             pacmanDirection = "left";
         }
     } else {
-        // Mouvement vertical dominant
         if (deltaY > 0) {
             pacmanDirection = "down";
         } else {
@@ -405,45 +464,39 @@ function handleTouchMove(event) {
     // Réinitialiser les coordonnées du toucher initial pour le prochain mouvement
     initialX = null;
     initialY = null;
-
-    // Empêcher le défilement de la page pendant les mouvements tactiles
-    event.preventDefault();
-}
-
-// Vérifier si la largeur de l'écran est inférieure à une certaine valeur (typiquement une largeur de smartphone)
-const isSmartphone = window.innerWidth < 768; // Vous pouvez ajuster cette valeur selon vos besoins
-
-// Attacher les gestionnaires d'événements tactiles uniquement si c'est un smartphone
-if (isSmartphone) {
-    // Gestionnaire d'événement pour touchstart (au début du toucher)
-    document.addEventListener("touchstart", handleTouchStart);
-
-    // Gestionnaire d'événement pour touchmove (mouvement du toucher)
-    document.addEventListener("touchmove", handleTouchMove, { passive: false });
-
-    // Gestionnaire d'événement pour touchend (fin du toucher)
-    document.addEventListener("touchend", handleTouchEnd);
 }
 
 
-// Gestionnaire d'événement pour le début du maintien du doigt sur l'écran tactile
-document.addEventListener("touchstart", function(event) {
-    // Vérifier si l'écran est petit (par exemple, smartphone)
-    if (window.innerWidth <= 768) {
-        // Accélérer le mouvement de Pacman
-        isSpacePressed = true;
-        // Jouer la musique
-        playMusic();
-    }
-});
 
-// Gestionnaire d'événement pour la fin du maintien du doigt sur l'écran tactile
-document.addEventListener("touchend", function(event) {
-    // Vérifier si l'écran est petit (par exemple, smartphone)
-    if (window.innerWidth <= 768) {
-        // Arrêter d'accélérer le mouvement de Pacman
-        isSpacePressed = false;
-        // Arrêter de jouer la musique
-        stopMusic();
+// Fonction pour vérifier si les coordonnées tactiles sont à l'intérieur du canvas
+function isTouchInsideCanvas(x, y) {
+    const rect = gameCanvas.getBoundingClientRect();
+    const canvasX = x - rect.left;
+    const canvasY = y - rect.top;
+    return canvasX >= 0 && canvasY >= 0 && canvasX <= gameCanvas.width && canvasY <= gameCanvas.height;
+}
+
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) { /* Firefox */
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { /* IE/Edge */
+        element.msRequestFullscreen();
     }
-});
+}
+
+// Fonction pour désactiver le mode plein écran
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) { /* Firefox */
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE/Edge */
+        document.msExitFullscreen();
+    }
+}
