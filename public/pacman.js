@@ -350,19 +350,21 @@ startGameBtn.addEventListener("click", function() {
 });
 
 
-// Vérifier si la largeur de l'écran est inférieure à une certaine valeur (typiquement une largeur de smartphone)
-const isSmartphone = window.innerWidth < 768; // Vous pouvez ajuster cette valeur selon vos besoins
+// Variable pour stocker les coordonnées initiales du toucher
+let initialX = null;
+let initialY = null;
 
-// Attacher les gestionnaires d'événements tactiles uniquement si c'est un smartphone
-if (isSmartphone) {
-    // Gestionnaire d'événement pour touchstart (au début du toucher)
-    document.addEventListener("touchstart", handleTouchStart);
+// Fonction pour gérer le début du toucher
+function handleTouchStart(event) {
+    // Récupérer les coordonnées initiales du toucher
+    initialX = event.touches[0].clientX;
+    initialY = event.touches[0].clientY;
+}
 
-    // Gestionnaire d'événement pour touchmove (mouvement du toucher)
-    document.addEventListener("touchmove", handleTouchMove);
-
-    // Gestionnaire d'événement pour touchend (fin du toucher)
-    document.addEventListener("touchend", handleTouchEnd);
+function handleTouchEnd(event) {
+    // Réinitialiser les coordonnées du toucher initial
+    initialX = null;
+    initialY = null;
 }
 
 // Fonction pour gérer le mouvement du doigt
@@ -407,6 +409,22 @@ function handleTouchMove(event) {
     // Empêcher le défilement de la page pendant les mouvements tactiles
     event.preventDefault();
 }
+
+// Vérifier si la largeur de l'écran est inférieure à une certaine valeur (typiquement une largeur de smartphone)
+const isSmartphone = window.innerWidth < 768; // Vous pouvez ajuster cette valeur selon vos besoins
+
+// Attacher les gestionnaires d'événements tactiles uniquement si c'est un smartphone
+if (isSmartphone) {
+    // Gestionnaire d'événement pour touchstart (au début du toucher)
+    document.addEventListener("touchstart", handleTouchStart);
+
+    // Gestionnaire d'événement pour touchmove (mouvement du toucher)
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    // Gestionnaire d'événement pour touchend (fin du toucher)
+    document.addEventListener("touchend", handleTouchEnd);
+}
+
 
 // Gestionnaire d'événement pour le début du maintien du doigt sur l'écran tactile
 document.addEventListener("touchstart", function(event) {
