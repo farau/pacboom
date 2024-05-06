@@ -517,6 +517,11 @@ function unblockPageScroll() {
 }
 
 // Empêcher la sélection de texte sur le canvas
-document.getElementById("fullCanvas").addEventListener("selectstart", function(event) {
+document.getElementById("gameCanvas").addEventListener("selectstart", function(event) {
+    event.preventDefault();
+});
+
+// Empêcher la sélection de texte sur le canvas
+document.getElementById("backgroundCanvas").addEventListener("selectstart", function(event) {
     event.preventDefault();
 });
