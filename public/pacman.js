@@ -515,3 +515,8 @@ function blockPageScroll() {
 function unblockPageScroll() {
     document.body.classList.remove('no-scroll'); // Supprime la classe 'no-scroll' du corps
 }
+
+// Empêcher la sélection de texte sur le canvas
+document.getElementById("fullCanvas").addEventListener("selectstart", function(event) {
+    event.preventDefault();
+});
