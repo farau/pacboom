@@ -68,9 +68,6 @@ function gameOver() {
     handleExplosion(gameCtx, pacmanX, pacmanY);
     resetGame();
 
-    // Désactiver le mode plein écran
-    exitFullscreen();
-
     // Fenetre de partage du score
     showGameOverModal(score);
 
@@ -375,7 +372,6 @@ startGameBtn.addEventListener("click", function() {
     if (isSmartphone) {
         blockPageScroll(); // Bloque le défilement de la page
 
-        enterFullscreen(fullCanvas);
         // Gestionnaire d'événement pour touchstart (au début du toucher)
         document.addEventListener("touchstart", handleTouchStart);
 
@@ -461,50 +457,6 @@ function handleTouchMove(event) {
     initialY = null;
 }
 
-
-function enterFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { /* Firefox */
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { /* Chrome, Safari, and Opera */
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { /* IE/Edge */
-        element.msRequestFullscreen();
-    } else if (element.webkitEnterFullscreen) { /* Older versions of Safari */
-        element.webkitEnterFullscreen();
-    } else if (element.webkitEnterFullScreen) { /* Older versions of Safari */
-        element.webkitEnterFullScreen();
-    } else if (element.mozFullScreen) { /* Firefox for older versions */
-        element.mozFullScreen();
-    } else if (element.msFullscreenElement) { /* IE/Edge */
-        element.msFullscreenElement();
-    } else if (element.webkitIsFullScreen) { /* Older versions of Safari */
-        element.webkitIsFullScreen();
-    } else if (element.webkitFullScreen) { /* Older versions of Safari */
-        element.webkitFullScreen();
-    }
-}
-
-
-// Fonction pour désactiver le mode plein écran
-function exitFullscreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) { /* Firefox */
-        document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) { /* Chrome, Safari, and Opera */
-        document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { /* IE/Edge */
-        document.msExitFullscreen();
-    } else if (document.webkitCancelFullScreen) { /* Older versions of Safari */
-        document.webkitCancelFullScreen();
-    } else if (document.webkitCancelFullscreen) { /* Older versions of Safari */
-        document.webkitCancelFullscreen();
-    } else if (document.mozCancelFullScreen) { /* Firefox for older versions */
-        document.mozCancelFullScreen();
-    }
-}
 
 // Fonction pour bloquer le défilement de la page
 function blockPageScroll() {
