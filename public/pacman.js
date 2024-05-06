@@ -335,8 +335,6 @@ function resetGame() {
     //On remet à zéro tout ce qui concerne le mode tactile
     stopMusic();
 
-    //On réinitialise isSmartphone pour vérifier que la taille d'écran n'a pas changé
-    isSmartphone = window.innerWidth < 768;
     if (isSmartphone) {
         // Gestionnaire d'événement pour touchstart (au début du toucher)
         document.removeEventListener("touchstart", handleTouchStart);
@@ -481,12 +479,25 @@ function enterFullscreen(element) {
         element.requestFullscreen();
     } else if (element.mozRequestFullScreen) { /* Firefox */
         element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    } else if (element.webkitRequestFullscreen) { /* Chrome, Safari, and Opera */
         element.webkitRequestFullscreen();
     } else if (element.msRequestFullscreen) { /* IE/Edge */
         element.msRequestFullscreen();
+    } else if (element.webkitEnterFullscreen) { /* Older versions of Safari */
+        element.webkitEnterFullscreen();
+    } else if (element.webkitEnterFullScreen) { /* Older versions of Safari */
+        element.webkitEnterFullScreen();
+    } else if (element.mozFullScreen) { /* Firefox for older versions */
+        element.mozFullScreen();
+    } else if (element.msFullscreenElement) { /* IE/Edge */
+        element.msFullscreenElement();
+    } else if (element.webkitIsFullScreen) { /* Older versions of Safari */
+        element.webkitIsFullScreen();
+    } else if (element.webkitFullScreen) { /* Older versions of Safari */
+        element.webkitFullScreen();
     }
 }
+
 
 // Fonction pour désactiver le mode plein écran
 function exitFullscreen() {
@@ -494,9 +505,15 @@ function exitFullscreen() {
         document.exitFullscreen();
     } else if (document.mozCancelFullScreen) { /* Firefox */
         document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+    } else if (document.webkitExitFullscreen) { /* Chrome, Safari, and Opera */
         document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) { /* IE/Edge */
         document.msExitFullscreen();
+    } else if (document.webkitCancelFullScreen) { /* Older versions of Safari */
+        document.webkitCancelFullScreen();
+    } else if (document.webkitCancelFullscreen) { /* Older versions of Safari */
+        document.webkitCancelFullscreen();
+    } else if (document.mozCancelFullScreen) { /* Firefox for older versions */
+        document.mozCancelFullScreen();
     }
 }
