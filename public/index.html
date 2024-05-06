@@ -168,6 +168,11 @@
         .no-scroll {
             overflow: hidden;
         }
+        /* Empêcher la sélection de texte sur la page */
+        body {
+            user-select: none;
+        }
+
     </style>
 </head>
 
@@ -256,11 +261,16 @@
                 </ul>
 
                 <p><u>Controls:</u></p>
+                <P>Desktop</P>
                 <ul>
                     <li>Arrows : to move Pacboom</li>
                     <li>Space : to speed up Pacboom</li>
-                </ul><br><br><br><br><br>
-                
+                </ul>
+                <P>Smartphone</P>
+                <ul>
+                    <li>Slide your finger in the desired direction to move Pacboom</li>
+                    <li>Keep pressing to speed up Pacboom</li>
+                </ul>
             </div>
         </div>
     </div>
