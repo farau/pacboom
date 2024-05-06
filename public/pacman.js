@@ -63,7 +63,7 @@ function getCookie(name) {
 function gameOver() {
     isGameOver = true; // Mettre à jour l'état du jeu à "game over"
     // Autres actions à effectuer en cas de fin de jeu...
-    
+
     // Gérer l'explosion si elle est en cours
     handleExplosion(gameCtx, pacmanX, pacmanY);
     resetGame();
@@ -73,9 +73,6 @@ function gameOver() {
 
     // Fenetre de partage du score
     showGameOverModal(score);
-
-
-
 
     // Désactiver le gestionnaire d'événements sur le bouton "Start Game"
     document.getElementById("startGameBtn").removeEventListener("click", startGame);
@@ -89,6 +86,7 @@ let isRunning = false;
 function startGame() {
     if (!isRunning) {
         isRunning = true;
+        
         // Récupérer les références des canvas et des contextes
         backgroundCanvas = document.getElementById("backgroundCanvas");
         gameCanvas = document.getElementById("gameCanvas");
@@ -336,6 +334,8 @@ function resetGame() {
     stopMusic();
 
     if (isSmartphone) {
+        unblockPageScroll(); // Débloque le défilement de la page
+
         // Gestionnaire d'événement pour touchstart (au début du toucher)
         document.removeEventListener("touchstart", handleTouchStart);
 
@@ -373,6 +373,8 @@ startGameBtn.addEventListener("click", function() {
     startGame();
     // Attacher les gestionnaires d'événements tactiles uniquement si c'est un smartphone
     if (isSmartphone) {
+        blockPageScroll(); // Bloque le défilement de la page
+
         enterFullscreen(fullCanvas);
         // Gestionnaire d'événement pour touchstart (au début du toucher)
         document.addEventListener("touchstart", handleTouchStart);
@@ -400,7 +402,7 @@ function handleTouchStart(event) {
     initialY = event.touches[0].clientY;
 
     // Vérifier si l'écran est petit (par exemple, smartphone) et si le toucher est à l'intérieur du canvas
-    if (window.innerWidth <= 768 && !isMusicPlaying && isTouchInsideCanvas(initialX, initialY)) {
+    if (window.innerWidth <= 768 && !isMusicPlaying) {
         // Accélérer le mouvement de Pacman
         isSpacePressed = true;
         // Jouer la musique
@@ -435,11 +437,6 @@ function handleTouchMove(event) {
     const currentX = event.touches[0].clientX;
     const currentY = event.touches[0].clientY;
 
-    // Vérifier si les coordonnées sont à l'intérieur du canvas
-    const rect = gameCanvas.getBoundingClientRect();
-    const canvasX = currentX - rect.left;
-    const canvasY = currentY - rect.top;
-
     // Calculer la différence entre les coordonnées initiales et actuelles
     const deltaX = currentX - initialX;
     const deltaY = currentY - initialY;
@@ -464,15 +461,6 @@ function handleTouchMove(event) {
     initialY = null;
 }
 
-
-
-// Fonction pour vérifier si les coordonnées tactiles sont à l'intérieur du canvas
-function isTouchInsideCanvas(x, y) {
-    const rect = gameCanvas.getBoundingClientRect();
-    const canvasX = x - rect.left;
-    const canvasY = y - rect.top;
-    return canvasX >= 0 && canvasY >= 0 && canvasX <= gameCanvas.width && canvasY <= gameCanvas.height;
-}
 
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
@@ -516,4 +504,14 @@ function exitFullscreen() {
     } else if (document.mozCancelFullScreen) { /* Firefox for older versions */
         document.mozCancelFullScreen();
     }
+}
+
+// Fonction pour bloquer le défilement de la page
+function blockPageScroll() {
+    document.body.classList.add('no-scroll'); // Ajoute la classe 'no-scroll' au corps
+}
+
+// Fonction pour débloquer le défilement de la page
+function unblockPageScroll() {
+    document.body.classList.remove('no-scroll'); // Supprime la classe 'no-scroll' du corps
 }
