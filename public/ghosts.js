@@ -320,9 +320,9 @@ function generateRandomGhostType() {
     let randomNumber = Math.floor(Math.random() * 100) + 1;
     if (randomNumber <= 15) {
         return GhostType.BONUS;
-    } else if (randomNumber > 15 && randomNumber <= 25) {
+    } else if (randomNumber > 15 && randomNumber <= 35) {
         return GhostType.BOMB;
-    } else if (randomNumber > 25 && randomNumber <= 29) {
+    } else if (randomNumber > 35 && randomNumber <= 39) {
         return GhostType.BEEPLE;
     } else {
         return GhostType.NORMAL;
