@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PacBoom</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="shortcut icon" href="./img/explode.gif" type="image/png">
+    <style>
+        /* Body styles for black background with stars */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+            background-image: url('./img/asfalt-light.png'); /* Utilisation de url() pour spécifier le chemin de l'image */
+            background-size: cover;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            background-color: #000;
+            border-bottom: 1px solid #fff;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        /* Twitter login button styles */
+        #twitterLoginBtn {
+            color: #fff;
+        }
+
+        /* Style pour le tableau de leaderboard */
+        .table {
+            color: #fff; /* Texte blanc dans le tableau */
+        }
+
+        /* Style pour l'en-tête du tableau */
+        .table thead th {
+            color: #fff; /* Texte blanc dans l'en-tête du tableau */
+            background-color: #333; /* Couleur de fond gris foncé pour l'en-tête */
+        }
+ 
+        .footer {
+            color: #fff; /* Couleur du texte */
+            padding: 20px 0; /* Espacement intérieur du footer */
+            border-top: 1px solid #fff; /* Bordure supérieure blanche */
+        }
+
+                /* Styling for logout button */
+                #disconnectBtn {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            background-color: #1da1f2;
+            padding: 8px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+
+        #disconnectBtn:hover {
+            background-color: #0d86c9;
+        }
+
+        .logout-text {
+            margin-right: 10px;
+        }
+
+        /* Styling for Font Awesome icon */
+        .fab.fa-twitter {
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Play</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">Why PacBoom ?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pfpgenerator.html">PFP Generator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pacfidelity.html">PAC Fidelity</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <!-- Twitter Login Button -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="twitterLoginBtn">Connect with Twitter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/leaderboard.html" id="disconnectBtn" style="display: none;">
+                            <span class="logout-text">Logout</span>
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 mb-5">
+        <h1 class="text-center"><img src="img/pacmoon-anime.gif" height="50" width="50" class="d-inline-block align-top" alt="Logo"> PAC Fidelity <img src="img/pacmoon-anime.gif" height="50" width="50" class="d-inline-block align-top" alt="Logo"></h1>
+        <p class="lead text-center">Are you a true member of the Pacmoon community? Let's assess your PAC fidelity!</p>
+        <h2 class="mt-5 mb-3">What is the PAC Fidelity Program?</h2>
+        <p>The PAC Fidelity Program is a way to measure your engagement with the Pacmoon community. Here are some details about the program:</p>
+        <ul>
+            <li>Points are updated once a day.</li>
+            <li>Points are calculated based on the tweets you've made about Pacmoon and your interactions with the PAC community.</li>
+            <li>The more points you have, the higher the rarity of your Pacmoon PFP will be!</li>
+            <li>Additional benefits will be available depending on the rarity of your Pacmoon PFP! Perhaps $PAC rewards?</li>
+            <li>And most importantly, this tool can be used by <b>Social Validators</b> to gauge the engagement of the PAC community!</li>
+        </ul>
+        <h2 class="mt-3 mb-3">How to register?</h2>
+        <ol>
+            <li>Connect your Twitter account.</li>
+            <li>Register your Pacmoon PFP <a href="http://localhost:3000/pfpgenerator.html">here</a>.</li>
+            <li>Then, simply be active on Twitter to accumulate points.</li>
+        </ol>
+    
+        <br><br><br>
+        <table class="table table-striped mt-6">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+            </tbody>
+        </table>
+    </div>
+
+    
+
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <p>&copy; 2024 PacBoom. For the PacMoon community.</p>
+            <p><a href="https://www.youtube.com/watch?v=qtZ0hl-unM4">Music by Arsenic1987</a></p>
+            <audio controls autoplay loop>
+                <source src="./sound/Pac-man theme remix - By Arsenic1987.mp3" type="audio/mp3">
+                Your browser doesn't support audio
+            </audio>
+        </div>
+    </footer>
+
+    <script>
+        
+        async function getLeaderboardData() {
+            try {
+                // Exécutez la requête SQL pour agréger les scores par utilisateur
+                const response = await fetch('/getFidelityboard');
+                const leaderboardData = await response.json();
+                // Retournez les données du leaderboard agrégées par utilisateur
+                return leaderboardData;
+            } catch (error) {
+                console.error('Erreur lors de la récupération du leaderboard :', error);
+                throw error; // Rejeter l'erreur pour la gérer à un niveau supérieur
+            }
+        }
+        // Script JavaScript pour afficher le leaderboard
+        document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const leaderboardData = await getLeaderboardData();
+
+            const leaderboardBody = document.getElementById('leaderboardBody');
+            leaderboardBody.innerHTML = ''; // Effacer le contenu existant du tableau
+
+            // Parcourir les données du leaderboard et générer les lignes HTML
+            leaderboardData.forEach((user, index) => {
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${user.username}</td>
+                        <td>${user.pac_fidelity}</td>
+                    </tr>
+                `;
+                leaderboardBody.innerHTML += row;
+            });
+        } catch (error) {
+            console.error('Erreur lors de la récupération du leaderboard :', error);
+            // Gérer les erreurs ici (par exemple, afficher un message d'erreur)
+        }
+    });
+    </script>
+
+    <script type="module" src="./twitter.js"></script> <!-- Import twitter js -->
+    <!-- Load jQuery and Bootstrap JS -->
+    <!-- Inclure Bootstrap JS (nécessaire pour les fonctionnalités Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

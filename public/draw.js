@@ -194,7 +194,14 @@ function getMetadata() {
     })
     .then(response => {
         if (response.ok) {
-            return response.json();
+            if (response.status === 204) {
+                // Aucune donnée n'est présente, vous pouvez gérer cela comme nécessaire
+                console.log('No metadata available.');
+                return null; // Ou toute autre action que vous souhaitez prendre
+            } else {
+                // Il y a des données dans la réponse, vous pouvez la traiter comme d'habitude
+                return response.json();
+            }
         } else {
             //throw new Error('Error retrieving metadata');
         }
@@ -203,6 +210,8 @@ function getMetadata() {
         // Mettre à jour l'interface utilisateur avec les métadonnées récupérées
         // Par exemple, remplacer le bouton Save Metadata par les métadonnées
         const metadataContainer = document.getElementById('metadataContainer');
+        const metadataCard = document.getElementById('metadataCard');
+
         metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
         if (metadata) {
             // Créer un tableau Bootstrap pour afficher les métadonnées
@@ -216,12 +225,18 @@ function getMetadata() {
                 { label: 'Head', value: metadata.head },
                 { label: 'Eyes', value: metadata.eyes },
                 { label: 'Arm', value: metadata.arm },
-                { label: 'Neck', value: metadata.neck }
+                { label: 'Neck', value: metadata.neck },
+                { label: 'Rarity', value: metadata.rarity }
             ];
             metadataRows.forEach(rowData => {
                 const row = document.createElement('tr');
                 const labelCell = document.createElement('td');
                 const valueCell = document.createElement('td');
+
+                // Définir la couleur du texte sur noir
+                labelCell.style.color = '#000000'; // Noir
+                valueCell.style.color = '#000000'; // Noir
+
                 labelCell.textContent = rowData.label;
                 valueCell.textContent = rowData.value;
                 row.appendChild(labelCell);
@@ -230,6 +245,28 @@ function getMetadata() {
             });
             table.appendChild(tbody);
             metadataContainer.appendChild(table);
+
+            // Changer la couleur de metadataContainer en fonction de la rareté
+            switch (metadata.rarity) {
+                case 'Uncommon':
+                    metadataCard.style.color = '#000000'; // Noir
+                    metadataCard.style.backgroundColor = '#8BC34A'; // Vert doux
+                    break;
+                case 'Rare':
+                    metadataCard.style.color = '#000000'; // Noir
+                    metadataCard.style.backgroundColor = '#42A5F5'; // Bleu doux
+                    break;
+                case 'Epic':
+                    metadataCard.style.color = '#000000'; // Noir
+                    metadataCard.style.backgroundColor = '#9575CD'; // Violet doux
+                    break;
+                case 'Legendary':
+                    metadataCard.style.color = '#000000'; // Noir
+                    metadataCard.style.backgroundColor = '#FFC107'; // Or doux
+                    break;
+                default:
+                    // Ne rien faire pour les autres cas
+            }
 
             // Afficher un message indiquant que les métadonnées ne peuvent pas être enregistrées à nouveau
             const cannotSaveMessage = document.createElement('p');
@@ -272,12 +309,22 @@ function displayPFPOnCanvas(metadata) {
         // Dessiner l'image de fond sur le canvas
         ctx2.drawImage(backgroundImage, 0, 0, 200, 200);    
         
-        drawImage2('./img/head/'+metadata.head+'.png');
-        drawImage2('./img/eyes/'+metadata.eyes+'.png');
-        drawImage2('./img/arm/'+metadata.arm+'.png');
-        drawImage2('./img/neck/'+metadata.neck+'.png');
+        // Dessiner les éléments du PFP s'ils ne sont pas vides
+        if (metadata.head) {
+            drawImage2('./img/head/'+metadata.head+'.png');
+        }
+        if (metadata.eyes) {
+            drawImage2('./img/eyes/'+metadata.eyes+'.png');
+        }
+        if (metadata.arm) {
+            drawImage2('./img/arm/'+metadata.arm+'.png');
+        }
+        if (metadata.neck) {
+            drawImage2('./img/neck/'+metadata.neck+'.png');
+        }
     };
 }
+
 
 function getMetadataAndDisplayPFP() {
     const username = getCookie('username');
@@ -306,5 +353,4 @@ function getMetadataAndDisplayPFP() {
     });
 }
 
-// Appeler la fonction pour récupérer les métadonnées et afficher la PFP sur le canvas secondaire
 

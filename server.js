@@ -9,6 +9,8 @@ const passport = require('passport');
 const TwitterStrategy = require('passport-twitter').Strategy;
 const session = require('express-session');
 const cors = require('cors');
+
+
 require('dotenv').config();
 
 // Middleware pour parser le corps de la requête en JSON
@@ -37,17 +39,24 @@ passport.use(new TwitterStrategy({
     includeScreenName: true
   },
   function(token, tokenSecret, profile, done) {
-    // Enregistrer le token et tokenSecret dans la session si nécessaire
+    // Sauvegarde des jetons d'accès dans la base de données
+    saveAccessToken(profile.username, profile.id)
+    .then(() => {
     // Extrait des informations pertinentes du profil Twitter
     const user = {
         username: profile.displayName,
         screen_name: profile.username,
-        avatarUrl: profile.photos[0].value
-      };
-      return done(null, user);
-  }
+        avatarUrl: profile.photos[0].value,
+        // Ajoutez d'autres informations utilisateur si nécessaire
+    };
+    return done(null, user);
+    })
+    .catch(err => {
+    console.error('Erreur lors de la sauvegarde des jetons d\'accès:', err);
+    return done(err);
+    });
+    }
 ));
-
 
 
 // Sérialisation et désérialisation de l'utilisateur
@@ -83,27 +92,48 @@ const pool = new Pool({
 async function createTables() {
     const client = await pool.connect();
     try {
-        await client.query(`
-            CREATE TABLE IF NOT EXISTS users (
-                id SERIAL PRIMARY KEY,
-                username VARCHAR(50) UNIQUE NOT NULL,
-                score INTEGER NOT NULL DEFAULT 0
-            );
-            CREATE TABLE IF NOT EXISTS metadata (
-                id SERIAL PRIMARY KEY,
-                username VARCHAR(255) UNIQUE NOT NULL,
-                head VARCHAR(255),
-                eyes VARCHAR(255),
-                arm VARCHAR(255),
-                neck VARCHAR(255)
-            );
-        `);
-
-        console.log('Tables créées ou chargées avec succès');
+      await client.query(`
+        CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(50) UNIQUE NOT NULL,
+            score INTEGER NOT NULL DEFAULT 0
+        );
+        
+        CREATE TABLE IF NOT EXISTS metadata (
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(50) UNIQUE REFERENCES users(username),
+            head VARCHAR(255),
+            eyes VARCHAR(255),
+            arm VARCHAR(255),
+            neck VARCHAR(255),
+            rarity VARCHAR(20) DEFAULT 'Common' CHECK (rarity IN ('Common', 'Uncommon', 'Rare', 'Epic', 'Legendary')),
+            CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
+        );
+        
+        CREATE TABLE IF NOT EXISTS user_access_tokens (
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(50) UNIQUE,
+            user_id BIGINT UNIQUE NOT NULL,
+            metadata_set BOOLEAN DEFAULT FALSE,
+            metadata_id INTEGER REFERENCES metadata(id),
+            pac_fidelity INTEGER NOT NULL DEFAULT 0,
+            CONSTRAINT fk_metadata_id FOREIGN KEY (metadata_id) REFERENCES metadata(id)
+        );
+        
+        CREATE TABLE IF NOT EXISTS score_twitter (
+            id SERIAL PRIMARY KEY,
+            user_id BIGINT NOT NULL REFERENCES user_access_tokens(user_id),
+            score INTEGER NOT NULL,
+            date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user_access_tokens(user_id) ON DELETE CASCADE
+        );  
+      `);
+  
+      console.log('Tables créées ou chargées avec succès');
     } catch (err) {
-        console.error('Erreur lors de la création des tables', err);
+      console.error('Erreur lors de la création des tables', err);
     } finally {
-        client.release();
+      client.release();
     }
 }
 
@@ -155,11 +185,21 @@ app.post('/saveMetadata', async (req, res) => {
     try {
         // Insert the score and username into the database
         const client = await pool.connect();
-        // Exécution de la requête SQL INSERT
+
+        // Exécution de la requête SQL UPDATE pour mettre à jour les métadonnées
         await client.query(
-            'INSERT INTO metadata (username, head, eyes, arm, neck) VALUES ($1, $2, $3, $4, $5)',
+            `UPDATE metadata 
+             SET head = $2, eyes = $3, arm = $4, neck = $5 
+             WHERE username = $1`,
             [username, head, eyes, arm, neck]
         );
+
+        // Mettre à jour la colonne metadata_id de user_access_tokens
+        await client.query(
+            'UPDATE user_access_tokens SET metadata_set = TRUE WHERE username = $1',
+            [username]
+        );
+
         client.release();
 
         // Envoyer une réponse JSON avec un message de réussite
@@ -173,31 +213,39 @@ app.post('/saveMetadata', async (req, res) => {
 });
 
 
+
 // Route pour récupérer les métadonnées de l'utilisateur
 app.post('/getMetadata', async (req, res) => {
     const username = req.body.username; // Récupérer le nom d'utilisateur depuis la requête
 
     const client = await pool.connect();
-    // Exécution de la requête SQL INSERT
-    // Requête SQL pour récupérer les métadonnées de l'utilisateur depuis la base de données
-    const query = `SELECT * FROM metadata WHERE username = $1`;
-    client.query(query, [username], (error, results) => {
+    // Exécution de la requête SQL SELECT pour vérifier si les métadonnées sont définies pour cet utilisateur
+    const query = `SELECT metadata_set FROM user_access_tokens WHERE username = $1`;
+    client.query(query, [username], async (error, results) => {
         if (error) {
             console.error('Error retrieving metadata:', error);
             res.status(500).json({ error: 'Error retrieving metadata' });
         } else {
             // Vérifier si des résultats ont été retournés
-            if (results.rows.length === 0) {
-                // Aucun enregistrement trouvé, renvoyer un message indiquant que les métadonnées ne sont pas disponibles
-                res.status(404).json(results.rows);
+            if (results.rows.length === 0 || !results.rows[0].metadata_set) {
+                // Aucun enregistrement trouvé ou metadata_set est faux, renvoyer un statut 204 pour indiquer que les métadonnées ne sont pas disponibles
+                console.log("Aucun enregistrement trouvé dans user_access_tokens pour l'utilisateur:", username);
+                res.status(204).send();
             } else {
-                // Envoyer les métadonnées récupérées en réponse
-                res.status(200).json(results.rows[0]);
+                // Metadata_set est vrai, récupérer les métadonnées depuis la table metadata
+                const metadataQuery = 'SELECT * FROM metadata WHERE username = $1';
+                try {
+                    const metadataResult = await client.query(metadataQuery, [username]);
+                    // Envoyer les métadonnées récupérées en réponse
+                    res.status(200).json(metadataResult.rows[0]);
+                } catch (metadataError) {
+                    console.error('Error retrieving metadata:', metadataError);
+                    res.status(500).json({ error: 'Error retrieving metadata' });
+                }
             }
         }
+        client.release();
     });
-
-    client.release();
 });
 
 
@@ -279,6 +327,22 @@ app.post('/saveUser', async (req, res) => {
             `;
             const insertUserResult = await pool.query(insertUserQuery, [handle]);
 
+            await pool.query(
+                'INSERT INTO metadata (username) VALUES ($1)',
+                [handle]
+            );
+
+            // Récupérer l'ID de l'enregistrement metadata mis à jour
+            const metadataQuery = `SELECT id FROM metadata WHERE username = $1`;
+            const metadataResult = await pool.query(metadataQuery, [handle]);
+            const metadataId = metadataResult.rows[0].id;
+
+            // Mettre à jour la colonne metadata_id de user_access_tokens
+            await pool.query(
+                'UPDATE user_access_tokens SET metadata_id = $1 WHERE username = $2',
+                [metadataId, handle]
+            );
+
             const newUser = insertUserResult.rows[0];
             res.json(newUser); // Retourner les informations du nouvel utilisateur inséré
         }
@@ -303,6 +367,48 @@ app.get('/auth/twitter/callback',
   }
 );
 
+
+// Fonction pour sauvegarder les jetons d'accès dans la base de données
+async function saveAccessToken(userName, userId) {
+    const client = await pool.connect();
+    try {
+        // Vérifier si l'utilisateur existe déjà dans la base de données
+        const checkUserQuery = `
+            SELECT * FROM user_access_tokens
+            WHERE username = $1;
+        `;
+        const checkUserResult = await pool.query(checkUserQuery, [userName]);
+
+        if (checkUserResult.rows.length > 0) {
+            // L'utilisateur existe déjà dans la base de données
+        } 
+        else {
+            await client.query('BEGIN');
+            await client.query('INSERT INTO user_access_tokens (username, user_id) VALUES ($1, $2)', [userName, userId]);
+            await client.query('COMMIT');
+        }
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+
+// Route pour récupérer les scores de fidélité (pac_fidelity) agrégés par utilisateur
+app.get('/getFidelityboard', async (req, res) => {
+    try {
+      // Exécutez la requête SQL pour agréger les scores par utilisateur
+      const result = await pool.query('SELECT username, pac_fidelity FROM user_access_tokens');
+  
+      // Renvoie les données du leaderboard agrégées par utilisateur au format JSON
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Erreur lors de la récupération du leaderboard de fidélité :', error);
+      res.status(500).send('Erreur lors de la récupération du leaderboard de fidélité');
+    }
+  });
 
 
 // Démarre le serveur Express
