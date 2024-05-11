@@ -1,9 +1,10 @@
-const { Pool } = require('pg');
-const fs = require('fs');
-require('dotenv').config(); //importe les config d'environnement
+import pkg from 'pg';
+const {Pool} = pkg;
+import * as fs from 'fs';
+import dotenv from 'dotenv';
+import cron from 'node-cron';
 
-const cron = require('node-cron');
-
+dotenv.config();
 // Configuration de la connexion PostgreSQL
 const pool = new Pool({
     user: process.env.USR_DATABASE,
@@ -29,7 +30,7 @@ async function getTweets(userId) {
 
   // Ajouter le paramètre tweet.fields pour spécifier les champs de tweet à inclure et exclure
   const tweetFields = 'public_metrics,referenced_tweets'; // Champs à inclure
-  const url = `https://api.twitter.com/2/users/${userId}/tweets?tweet.fields=${tweetFields}&expansions=attachments.media_keys,referenced_tweets.id&media.fields=public_metrics&max_results=20`;
+  const url = `https://api.twitter.com/2/users/${userId}/tweets?tweet.fields=${tweetFields}&expansions=attachments.media_keys,referenced_tweets.id&media.fields=public_metrics&max_results=15`;
   
   const response = await fetch(url, {
     method: 'GET',
@@ -184,12 +185,39 @@ async function insertScore(userIds, scores) {
       // Mise à jour de la colonne pac_fidelity dans la table user_access_tokens
 
       // Si on fait toujours le même score car on poste juste 1 ou 2 messages doit-on laisser la possibilité d'incrémenter l'unique score ?
-      // Règle 1: Si une personne fait moins de 15 posts mais qu'ils n'ont plus aucune visibilité on n'incrémente plus le score
+      // Règle 1: Si une personne fait moins de 15 posts mais qu'ils n'ont plus aucune visibilité on n'incrémente plus le score, 
+      //         cad si le score reste dans une marge de 20% avec l'ancien on n'incrémente pas car cela signifie que la personne ne tweet plus.
       // Règle 2: Si cette personne arrive néanmoins à atteindre du reach on augmente le score avec les anciens tweets. 
+      
+      // Récupérer l'ancien score
+      const oldScoreQuery = {
+        text: `
+          SELECT score
+          FROM score_twitter
+          WHERE user_id = $1
+          ORDER BY date DESC
+          LIMIT 1 OFFSET 1
+        `,
+        values: [user_id],
+      };
+
+      // Exécuter la requête pour récupérer l'ancien score
+      const oldScoreResult = await pool.query(oldScoreQuery);
+      const oldScore = oldScoreResult.rows[0].score;
+
+      // Mettre à jour pac_fidelity en fonction de la comparaison entre l'ancien score et $1
       const updateFidelityQuery = {
-        text: 'UPDATE user_access_tokens SET pac_fidelity = CASE WHEN pac_fidelity <> $1 THEN pac_fidelity + $1 ELSE pac_fidelity END WHERE user_id = $2',
-        values: [score, user_id],
-      };      
+        text: `
+          UPDATE user_access_tokens 
+          SET pac_fidelity = 
+            CASE 
+              WHEN $2 < ($1 * 0.8) OR $2 > ($1 * 1.2) THEN pac_fidelity + $1
+              ELSE pac_fidelity 
+            END 
+          WHERE user_id = $3;
+        `,
+        values: [score, oldScore, user_id],
+      };  
 
       // Exécution de la première requête pour l'insertion dans la table score_twitter
       await pool.query(insertScoreQuery);
@@ -225,16 +253,16 @@ function calculateScore(results) {
       let coeff_type = 0;
       switch (tweet.tweet_type) {
         case "Reply Tweet":
-          coeff_type = 1; // Définir une valeur pour les réponses
+          coeff_type = 0.1; // Définir une valeur pour les réponses
           break;
         case "Quote Tweet":
-          coeff_type = 2; // Définir une valeur pour les citations
+          coeff_type = 0.1; // Définir une valeur pour les citations
           break;
         case "Retweet":
-          coeff_type = 2; // Définir une valeur pour les retweets
+          coeff_type = 0.2; // Définir une valeur pour les retweets
           break;
         case "Original Tweet":
-          coeff_type = 15; // Définir une valeur pour les tweets originaux
+          coeff_type = 1; // Définir une valeur pour les tweets originaux
           break;
         default:
           coeff_type = 0; // Valeur par défaut pour les types de tweet inconnus
@@ -246,14 +274,14 @@ function calculateScore(results) {
       // Appliquez une pénalité si le tweet ne contient pas de mots-clés Pacmoon
       score_tweet = coeff_type*(x1+x2+x3);
       if (!tweet.contains_keywords) {
-        score_tweet /= 10; // Appliquez une pénalité d'1 unité
+        score_tweet /= 10; // Pénalité
       } 
       if (tweet.contains_keywords) {
-        score_tweet *= 3; // Appliquez une pénalité d'1 unité
+        score_tweet *= 2; // Multiplicateur
       } 
 
       score_tweet = Math.ceil(score_tweet);
-      //console.log('Score du tweet courant :', score_tweet);
+      console.log('Score du tweet courant :', score_tweet);
       scoreTotalCourant += score_tweet 
     });
     totalScore.push(scoreTotalCourant);
@@ -270,7 +298,6 @@ async function processResultsAndInsertScore(userIds) {
     writeToLog("######################## " + currentDate + " ########################");
     writeToLog("User Ids : " + userIds);
     writeToLog("Score : " + score);
-    writeToLog("##################################################################################################################");
     await insertScore(userIds, score);
   } catch (error) {
     console.error('Erreur lors du traitement des résultats et de l\'insertion du score en base de données :', error);
@@ -361,5 +388,3 @@ cron.schedule('0 0 * * *', () => {
 
 // Appelez la fonction pour récupérer les user_ids avec metadata = TRUE et exécuter processResultsAndInsertScore
 getUsersWithMetadataTrue();
-
-
