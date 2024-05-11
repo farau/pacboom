@@ -3,6 +3,7 @@ const {Pool} = pkg;
 import * as fs from 'fs';
 import dotenv from 'dotenv';
 import cron from 'node-cron';
+import fetch from 'node-fetch';
 
 dotenv.config();
 // Configuration de la connexion PostgreSQL
