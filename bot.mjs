@@ -31,7 +31,7 @@ async function getTweets(userId) {
 
   // Ajouter le paramètre tweet.fields pour spécifier les champs de tweet à inclure et exclure
   const tweetFields = 'public_metrics,referenced_tweets'; // Champs à inclure
-  const url = `https://api.twitter.com/2/users/${userId}/tweets?tweet.fields=${tweetFields}&expansions=attachments.media_keys,referenced_tweets.id&media.fields=public_metrics&max_results=15`;
+  const url = `https://api.twitter.com/2/users/${userId}/tweets?tweet.fields=${tweetFields}&expansions=attachments.media_keys,referenced_tweets.id&media.fields=public_metrics`;
   
   const response = await fetch(url, {
     method: 'GET',
@@ -197,7 +197,7 @@ async function insertScore(userIds, scores) {
           FROM score_twitter
           WHERE user_id = $1
           ORDER BY date DESC
-          LIMIT 1 OFFSET 1
+          LIMIT 1
         `,
         values: [user_id],
       };
@@ -209,7 +209,6 @@ async function insertScore(userIds, scores) {
       if (oldScoreResult.rows.length > 0) {
         oldScore = oldScoreResult.rows[0].score;
       }
-      
 
       // Mettre à jour pac_fidelity en fonction de la comparaison entre l'ancien score et $1
       const updateFidelityQuery = {
@@ -224,7 +223,7 @@ async function insertScore(userIds, scores) {
         `,
         values: [score, oldScore, user_id],
       };  
-
+      
       // Exécution de la première requête pour l'insertion dans la table score_twitter
       await pool.query(insertScoreQuery);
       console.log(`Score inséré en base de données avec succès pour l'utilisateur ${user_id}.`);
@@ -393,4 +392,5 @@ cron.schedule('0 0 * * *', () => {
 });
 
 // Appelez la fonction pour récupérer les user_ids avec metadata = TRUE et exécuter processResultsAndInsertScore
+//insertScore(['950154260917948416'], [500]);
 getUsersWithMetadataTrue();
