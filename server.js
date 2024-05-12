@@ -399,9 +399,9 @@ async function saveAccessToken(userName, userId) {
 // Route pour récupérer les scores de fidélité (pac_fidelity) agrégés par utilisateur
 app.get('/getFidelityboard', async (req, res) => {
     try {
-      // Exécutez la requête SQL pour agréger les scores par utilisateur
-      const result = await pool.query('SELECT username, pac_fidelity FROM user_access_tokens');
-  
+      // Exécutez la requête SQL pour recupérer les scores par utilisateur ayant configuré leur PFP
+      const result = await pool.query('SELECT username, pac_fidelity FROM user_access_tokens WHERE metadata_set = TRUE');
+
       // Renvoie les données du leaderboard agrégées par utilisateur au format JSON
       res.json(result.rows);
     } catch (error) {

@@ -201,10 +201,15 @@ async function insertScore(userIds, scores) {
         `,
         values: [user_id],
       };
-
       // Exécuter la requête pour récupérer l'ancien score
       const oldScoreResult = await pool.query(oldScoreQuery);
-      const oldScore = oldScoreResult.rows[0].score;
+      let oldScore = 0; // Valeur par défaut si aucun enregistrement n'est trouvé
+      
+      // Vérifier s'il y a un enregistrement pour l'utilisateur
+      if (oldScoreResult.rows.length > 0) {
+        oldScore = oldScoreResult.rows[0].score;
+      }
+      
 
       // Mettre à jour pac_fidelity en fonction de la comparaison entre l'ancien score et $1
       const updateFidelityQuery = {
