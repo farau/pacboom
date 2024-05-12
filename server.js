@@ -400,7 +400,7 @@ async function saveAccessToken(userName, userId) {
 app.get('/getFidelityboard', async (req, res) => {
     try {
       // Exécutez la requête SQL pour recupérer les scores par utilisateur ayant configuré leur PFP
-      const result = await pool.query('SELECT username, pac_fidelity FROM user_access_tokens WHERE metadata_set = TRUE');
+      const result = await pool.query('SELECT username, pac_fidelity FROM user_access_tokens WHERE metadata_set = TRUE ORDER BY pac_fidelity DESC');
 
       // Renvoie les données du leaderboard agrégées par utilisateur au format JSON
       res.json(result.rows);
