@@ -274,7 +274,13 @@ function calculateScore(results) {
       }
       let x1 = Math.sqrt(tweet.public_metrics.like_count);
       let x2 = tweet.public_metrics.retweet_count;
-      let x3 = Math.sqrt(tweet.public_metrics.impression_count);
+      let coeff_impression = 1;
+      if (tweet.public_metrics.impression_count > 10000 & tweet.public_metrics.impression_count < 100000) {
+        coeff_impression = 0.01;
+      } else if (tweet.public_metrics.impression_count > 100000) {
+        coeff_impression = 0.0001;
+      }
+      let x3 = coeff_impression*Math.sqrt(tweet.public_metrics.impression_count);
 
       // Appliquez une pénalité si le tweet ne contient pas de mots-clés Pacmoon
       score_tweet = coeff_type*(x1+x2+x3);
