@@ -686,6 +686,6 @@ app.get('/profile', verifyJWT, (req, res) => {
 
 // Démarre le serveur Express
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, 'localhost', () => {
     console.log(`Serveur démarré sur le port ${PORT}`);
 });
