@@ -9,7 +9,8 @@ const passport = require('passport');
 const TwitterStrategy = require('passport-twitter').Strategy;
 const session = require('express-session');
 const cors = require('cors');
-
+const jwt = require('jsonwebtoken');
+const { ethers} = require('ethers');
 
 require('dotenv').config();
 
@@ -40,7 +41,7 @@ passport.use(new TwitterStrategy({
   },
   function(token, tokenSecret, profile, done) {
     // Sauvegarde des jetons d'accès dans la base de données
-    saveAccessToken(profile.username, profile.id)
+    saveAccessToken(profile.username, profile.id, profile.photos[0].value)
     .then(() => {
     // Extrait des informations pertinentes du profil Twitter
     const user = {
@@ -92,15 +93,16 @@ const pool = new Pool({
 async function createTables() {
     const client = await pool.connect();
     try {
-      await client.query(`
+      await client.query(`        
         CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            username VARCHAR(50) UNIQUE NOT NULL,
+            id INTEGER PRIMARY KEY,
+            wallet_address VARCHAR(42) NOT NULL UNIQUE,
+            username VARCHAR(50) UNIQUE,
             score INTEGER NOT NULL DEFAULT 0
         );
         
         CREATE TABLE IF NOT EXISTS metadata (
-            id SERIAL PRIMARY KEY,
+            id INTEGER PRIMARY KEY,
             username VARCHAR(50) UNIQUE REFERENCES users(username),
             head VARCHAR(255),
             eyes VARCHAR(255),
@@ -114,9 +116,13 @@ async function createTables() {
             id SERIAL PRIMARY KEY,
             username VARCHAR(50) UNIQUE,
             user_id BIGINT UNIQUE NOT NULL,
+            user_wallet_id INTEGER REFERENCES users(id),
+            avatarUrl VARCHAR(250),
             metadata_set BOOLEAN DEFAULT FALSE,
             metadata_id INTEGER REFERENCES metadata(id),
             pac_fidelity INTEGER NOT NULL DEFAULT 0,
+
+            CONSTRAINT fk_user_wallet_id FOREIGN KEY (user_wallet_id) REFERENCES users(id),
             CONSTRAINT fk_metadata_id FOREIGN KEY (metadata_id) REFERENCES metadata(id)
         );
         
@@ -142,6 +148,7 @@ createTables();
 
 // Middleware pour servir les fichiers statiques (HTML, CSS, JavaScript, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Route pour servir la page d'accueil (index.html)
 app.get('/', (req, res) => {
@@ -229,7 +236,7 @@ app.post('/getMetadata', async (req, res) => {
             // Vérifier si des résultats ont été retournés
             if (results.rows.length === 0 || !results.rows[0].metadata_set) {
                 // Aucun enregistrement trouvé ou metadata_set est faux, renvoyer un statut 204 pour indiquer que les métadonnées ne sont pas disponibles
-                console.log("Aucun enregistrement trouvé dans user_access_tokens pour l'utilisateur:", username);
+                //console.log("Aucun enregistrement trouvé dans user_access_tokens pour l'utilisateur:", username);
                 res.status(204).send();
             } else {
                 // Metadata_set est vrai, récupérer les métadonnées depuis la table metadata
@@ -248,34 +255,86 @@ app.post('/getMetadata', async (req, res) => {
     });
 });
 
+// Route pour créer et renvoyer un JWT
+app.post('/create-jwt', (req, res) => {
+    // Dans cet exemple, nous supposons que vous avez déjà récupéré l'adresse MetaMask de l'utilisateur
+    const userAddress = req.body.userAddress;
+
+    // Remplacez 'votre_clé_secrète' par votre propre clé secrète sécurisée
+    const secretKey = process.env.SECRET_KEY;
+
+    // Créez le JWT en incluant l'adresse MetaMask de l'utilisateur
+    const token = jwt.sign({ address: userAddress }, secretKey, { expiresIn: '1h' }); // Expiration du JWT dans 1 heure
+    
+    // Renvoyez le JWT créé
+    res.json({ token });
+});
+
+// Middleware pour vérifier le JWT dans les en-têtes de la requête
+function verifyJWT(req, res, next) {
+    const jwtToken = req.headers.authorization; // Obtenez le JWT des en-têtes de la requête
+
+    // Vérifiez la validité et la signature du JWT
+    jwt.verify(jwtToken, process.env.SECRET_KEY, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: 'Token invalide' });
+        }
+        // Extraire l'adresse MetaMask de l'utilisateur
+        req.userAddress = decoded.address;
+        next();
+    });
+}
+
+// Route POST pour vérifier le JWT
+app.post('/verify-jwt', verifyJWT, (req, res) => {
+    // Si nous sommes arrivés ici, le JWT est valide et l'adresse de l'utilisateur est dans req.userAddress
+    res.status(200).json({ userAddress: req.userAddress });
+});
+
+
 
 // Route pour sauvegarder le score des users dans la base de données
-app.post('/saveScore', async (req, res) => {
+app.post('/saveScore', verifyJWT, async (req, res) => {
     try {
-        const { score, username } = req.body;
+        const { score } = req.body;
         
+        // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
+        const address = req.userAddress;
         // Check if username is provided
-        if (!username) {
-            return res.status(400).send('Username not provided.');
+        if (!address) {
+            return res.status(400).send('Address not provided.');
         }
 
         // Insert the score and username into the database
         const client = await pool.connect();
-        const result = await client.query(`
-            UPDATE users
-            SET score = CASE
-                        WHEN $2 > score THEN $2
-                        ELSE score
-                    END
-            WHERE username = $1
-            RETURNING *; 
-        `, [username, score]);
 
-        const newScore = result.rows[0];
-        client.release();
+        const username = await client.query(`
+            SELECT username FROM users
+            WHERE wallet_address = $1; 
+        `, [address]);
 
-        // Respond with success
-        res.status(201).json(newScore);
+        // Vérifier si un username est bien défini
+        if (username.rows.length === 0 || username.rows[0].username === null) {
+            // Aucun enregistrement trouvé ou metadata_set est faux, renvoyer un statut 204 pour indiquer que les métadonnées ne sont pas disponibles
+            //console.log("Aucun enregistrement trouvé dans user_access_tokens pour l'utilisateur:", username);
+            res.status(204).send();
+        } else {
+            const result = await client.query(`
+                UPDATE users
+                SET score = CASE
+                            WHEN $1 > score THEN $1
+                            ELSE score
+                        END
+                WHERE username = $2
+                RETURNING *; 
+            `, [score, username.rows[0].username]);
+
+            const newScore = result.rows[0];
+            client.release();
+
+            // Respond with success
+            res.status(201).json(newScore);
+        }
     } catch (error) {
         console.error('Error saving score to database:', error);
         res.status(500).send('Internal Server Error');
@@ -288,6 +347,7 @@ app.get('/getLeaderboard', async (req, res) => {
         const query = `
             SELECT username, score
             FROM users
+            WHERE username IS NOT NULL
             ORDER BY score DESC;
         `;
         const result = await pool.query(query);
@@ -303,52 +363,97 @@ app.get('/getLeaderboard', async (req, res) => {
 
 
 // Route POST pour enregistrer les données utilisateur dans la table users
-app.post('/saveUser', async (req, res) => {
-    const handle = req.user.screen_name;
+app.post('/linkTwitter', verifyJWT, async (req, res) => {
+    const handle = req.body.screen_name;
+    const address = req.body.address;
 
+    const client = await pool.connect();
+    
     try {
+        await client.query('BEGIN');
+
+        // Récupérer le dernier ID inséré dans la table users
+        const lastUserIdQuery = 'SELECT MAX(id) AS max_id FROM users';
+        const { rows } = await client.query(lastUserIdQuery);
+  
+        // Id courant user 
+        const currentUserId = parseInt(rows[0].max_id);
+
+
         // Vérifier si l'utilisateur existe déjà dans la base de données
         const checkUserQuery = `
-            SELECT * FROM users
-            WHERE username = $1;
+            SELECT * FROM users JOIN user_access_tokens ON users.id = user_access_tokens.user_wallet_id
+            WHERE user_access_tokens.username = $1;
         `;
-        const checkUserResult = await pool.query(checkUserQuery, [handle]);
+        const checkUserResult = await client.query(checkUserQuery, [handle]);
 
         if (checkUserResult.rows.length > 0) {
             // L'utilisateur existe déjà dans la base de données
             const existingUser = checkUserResult.rows[0];
+            //console.log("utilisateur déjà enregistré donc on retourne les infos twitter");
+            await client.query('COMMIT');
             res.status(200).json(existingUser); // Retourner les informations de l'utilisateur existant
         } else {
-            // Insérer l'utilisateur dans la base de données s'il n'existe pas déjà
-            const insertUserQuery = `
-                INSERT INTO users (username)
-                VALUES ($1)
-                RETURNING *;
+            //console.log("on insere l'username dans la table user ");
+
+            // Mettre à jour l'utilisateur dans la table users
+            const updateUserQuery = `
+                UPDATE users
+                SET username = $1
+                WHERE wallet_address = $2
+                RETURNING id;
             `;
-            const insertUserResult = await pool.query(insertUserQuery, [handle]);
+            const updateUserResult = await client.query(updateUserQuery, [handle, address]);
+            let usrId;
 
-            await pool.query(
-                'INSERT INTO metadata (username) VALUES ($1)',
-                [handle]
-            );
+            if (updateUserResult.rowCount === 0) {
+                // Si pas de user pouvant être update alors on crée un nouvel user.
+                // Insérer un nouvel utilisateur avec l'ID incrémenté
+                const insertUserQuery = `
+                    INSERT INTO users (id, wallet_address, username)
+                    VALUES ($1, $2, $3) RETURNING id;
+                `;
+                usrId = await client.query(insertUserQuery, [currentUserId, address, handle]);
+            } else {
+                usrId = updateUserResult.rows[0].id;
+            }
+            //console.log("Utilisateur inséré ou mis à jour : ", usrId);
+            
+            // Insérer dans la table metadata
+            const insertMetadataQuery = `
+                INSERT INTO metadata (id, username) 
+                VALUES ($1, $2)
+                ON CONFLICT (username) DO NOTHING
+                RETURNING id;
+            `;
+            const insertMetadataResult = await client.query(insertMetadataQuery, [usrId, handle]);
 
-            // Récupérer l'ID de l'enregistrement metadata mis à jour
-            const metadataQuery = `SELECT id FROM metadata WHERE username = $1`;
-            const metadataResult = await pool.query(metadataQuery, [handle]);
-            const metadataId = metadataResult.rows[0].id;
+            let metadataId;
+            if (insertMetadataResult.rowCount === 0) {
+                const selectMetadataQuery = `SELECT id FROM metadata WHERE username = $1`;
+                const selectMetadataResult = await client.query(selectMetadataQuery, [handle]);
+                metadataId = selectMetadataResult.rows[0].id;
+            } else {
+                metadataId = insertMetadataResult.rows[0].id;
+            }
 
             // Mettre à jour la colonne metadata_id de user_access_tokens
-            await pool.query(
-                'UPDATE user_access_tokens SET metadata_id = $1 WHERE username = $2',
-                [metadataId, handle]
-            );
+            const updateUserAccessTokensQuery = `
+                UPDATE user_access_tokens 
+                SET metadata_id = $1, user_wallet_id = $2 
+                WHERE username = $3;
+            `;
+            await client.query(updateUserAccessTokensQuery, [metadataId, usrId, handle]);
 
-            const newUser = insertUserResult.rows[0];
-            res.json(newUser); // Retourner les informations du nouvel utilisateur inséré
+            await client.query('COMMIT');
+            res.status(200).json({ userId: usrId, metadataId: metadataId }); // Retourner les informations du nouvel utilisateur inséré
         }
     } catch (err) {
+        await client.query('ROLLBACK');
         console.error('Erreur lors de l\'enregistrement de l\'utilisateur', err);
         res.status(500).send('Erreur serveur');
+    } finally {
+        client.release();
     }
 });
 
@@ -369,12 +474,14 @@ app.get('/auth/twitter/callback',
 
 
 // Fonction pour sauvegarder les jetons d'accès dans la base de données
-async function saveAccessToken(userName, userId) {
+async function saveAccessToken(userName, userId, avatarUrl) {
     const client = await pool.connect();
     try {
+
+        
         // Vérifier si l'utilisateur existe déjà dans la base de données
         const checkUserQuery = `
-            SELECT * FROM user_access_tokens
+            SELECT username, user_id, avatarUrl FROM user_access_tokens
             WHERE username = $1;
         `;
         const checkUserResult = await pool.query(checkUserQuery, [userName]);
@@ -384,7 +491,7 @@ async function saveAccessToken(userName, userId) {
         } 
         else {
             await client.query('BEGIN');
-            await client.query('INSERT INTO user_access_tokens (username, user_id) VALUES ($1, $2)', [userName, userId]);
+            await client.query('INSERT INTO user_access_tokens (username, user_id, avatarUrl) VALUES ($1, $2, $3)', [userName, userId, avatarUrl]);
             await client.query('COMMIT');
         }
     } catch (error) {
@@ -397,6 +504,7 @@ async function saveAccessToken(userName, userId) {
 
 
 // Route pour récupérer les scores de fidélité (pac_fidelity) agrégés par utilisateur
+/*
 app.get('/getFidelityboard', async (req, res) => {
     try {
       // Exécutez la requête SQL pour recupérer les scores par utilisateur ayant configuré leur PFP
@@ -409,6 +517,171 @@ app.get('/getFidelityboard', async (req, res) => {
       res.status(500).send('Erreur lors de la récupération du leaderboard de fidélité');
     }
   });
+*/
+
+// Route pour vérifier les infos Twitter d'un user et les récupérer si ils existent
+app.get('/getTwitterInfos', verifyJWT, async (req, res) => {
+    const { address } = req.query;
+
+    if (!address) {
+        return res.status(400).send('Adresse manquante');
+    }
+
+    try {
+
+        const checkUserQuery = `
+            SELECT user_access_tokens.username, avatarUrl FROM user_access_tokens 
+            JOIN users ON users.id = user_access_tokens.user_wallet_id 
+            WHERE users.wallet_address = $1;
+        `;
+        const result = await pool.query(checkUserQuery, [address]);
+
+        if (result.rows.length > 0) {
+            //console.log("user a déjà ses infos twitter enregistree");
+            return res.json(result.rows);
+        } else {
+            return res.status(204).send();
+        }
+
+    } catch (error) {
+        console.error('Erreur lors de la récupération des infos Twitter :', error);
+        return res.status(500).send('Erreur lors de la récupération des infos Twitter');
+    }
+});
+
+
+app.post('/save-user', verifyJWT, async (req, res) => {
+    const { wallet_address } = req.body; // Obtenez l'adresse du portefeuille depuis le corps de la requête
+    if (!wallet_address) {
+        return res.status(400).json({ error: 'Adresse de portefeuille manquante.' });
+    }
+    try {
+        // Récupérez le dernier ID inséré dans la table users
+        const lastUserIdQuery = 'SELECT MAX(id) AS max_id FROM users';
+        const { rows } = await pool.query(lastUserIdQuery);
+        let nextUserId = 1; // Valeur par défaut pour le premier utilisateur s'il n'y a pas encore d'enregistrement
+        if (rows.length > 0 && rows[0].max_id !== null) {
+            nextUserId = parseInt(rows[0].max_id) + 1; // Incrémente le dernier ID
+        }
+
+        // Insérez le nouvel utilisateur avec l'ID incrémenté
+        const insertUserQuery = `
+            INSERT INTO users (id, wallet_address) VALUES ($1, $2) ON CONFLICT (wallet_address) DO NOTHING RETURNING *`;
+        const result = await pool.query(insertUserQuery, [nextUserId, wallet_address]);
+        
+        if (result.rows.length === 0) {
+            return res.status(201).json({ message: 'Utilisateur déjà enregistré.' });
+        }
+        res.status(201).json({ message: 'Utilisateur loggué avec succès.' });
+    } catch (error) {
+        console.error('Erreur lors de l\'enregistrement de l\'utilisateur:', error);
+        res.status(500).json({ error: 'Erreur lors de l\'enregistrement de l\'utilisateur.' });
+    }
+});
+
+
+// Route pour vérifier si un utilisateur est déjà présent en BDD
+app.post('/check-user', verifyJWT, async (req, res) => {
+    const { wallet_address } = req.body;
+    if (!wallet_address) {
+        return res.status(400).json({ error: 'Adresse de portefeuille manquante.' });
+    }
+    try {
+        const result = await pool.query(
+            'SELECT * FROM users WHERE wallet_address = $1',
+            [wallet_address]
+        );
+        if (result.rows.length > 0) {
+            res.status(200).json({ exists: true });
+        } else {
+            res.status(200).json({ exists: false });
+        }
+    } catch (error) {
+        console.error('Erreur lors de la vérification de l\'utilisateur:', error);
+        res.status(500).json({ error: 'Erreur lors de la vérification de l\'utilisateur.' });
+    }
+});
+
+// Stockage temporaire des scores
+let scores = {};
+
+const GhostType = {
+    NORMAL: "normal",
+    BONUS: "bonus",
+    BOMB: "bomb",
+    BEEPLE: "beeple"
+};
+
+// Route pour initialiser le score à zéro pour un joueur donné
+app.post('/initialize-score', verifyJWT, (req, res) => {
+    const address = req.userAddress;
+    scores[address] = 0;
+    res.send({ score: scores[address] });
+});
+
+// Route pour récupérer le score d'un joueur donné
+app.get('/get-score', verifyJWT, (req, res) => {
+    const address = req.userAddress;
+    const score = scores[address] || 0;
+    res.send({ score });
+});
+
+// Route pour incrémenter le score d'un joueur
+app.post('/increment-score', verifyJWT, (req, res) => {
+    const address = req.userAddress;
+    const typeMonster = req.body.monster;
+
+    // Vérifier si le tokenId est présent dans la requête
+    if (!address) {
+        return res.status(400).json({ error: 'Log with Metamask is required' });
+        //peut-etre retourner une une adresse aleatoire ici pour laisser les joueurs non log test ?
+    }
+
+    // Vérifier si le score existe pour ce tokenId
+    if (!scores[address]) {
+        scores[address] = 0; // Initialiser le score à zéro si ce tokenId n'existe pas
+    }
+
+    // Attribuer le score en fonction du type de fantômes eat
+    if (typeMonster == GhostType.NORMAL) {
+        scores[address] += 100;
+    } else if (typeMonster == GhostType.BONUS) {
+        scores[address] += 300;
+    } else if (typeMonster == GhostType.BEEPLE) {
+        scores[address] += 500;
+    } else {
+    }
+    // Retourner le nouveau score
+    res.json({ score: scores[address] });
+});
+
+
+
+
+app.get('/profile', verifyJWT, (req, res) => {
+    const userAddress = req.userAddress;
+    if (!userAddress) {
+        return res.status(400).send('User not connected.');
+    }
+    if (!req.query.isUserConnected) {
+        return res.status(403).send('Accès refusé.');
+    }
+    res.send(`
+        <html>
+        <body>
+            <h1>Profile</h1>
+            <p>Wallet Address: ${userAddress}</p>
+            <button onclick="linkTwitter()">Link Twitter Account</button>
+            <script>
+                function linkTwitter() {
+                    // Add logic to link Twitter account
+                    alert('Functionality to link Twitter will be added here.');
+                }
+            </script>
+        </body>
+        </html>
+    `);
+});
 
 
 // Démarre le serveur Express

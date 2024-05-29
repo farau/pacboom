@@ -1,5 +1,6 @@
 export let ghosts = []; // Tableau pour stocker les fantômes
 export const numGhosts = 3; // Nombre de fantômes
+let score = 0; // Initialisation du score
 
 // Types de fantômes
 const GhostType = {
@@ -210,6 +211,32 @@ function disableBeepleBonus() {
     }
 }
 
+// Définition de la fonction pour incrémenter le score
+const incrementScore = (typeMonster) => {
+    return fetch('/increment-score', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('jwtToken')}`
+        },
+        body: JSON.stringify({ monster: typeMonster }) // Envoyer le type de monstre pour l'incrément du score
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to increment score');
+        }
+        return response.json();
+    })
+    .then(data => {
+        return data.score; // Retourner la nouvelle valeur du score
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'incrémentation du score:', error);
+        throw error; // Propager l'erreur
+    });
+};
+
+
 // Gérer les interactions avec les fantômes
 export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame) {
     ghosts.forEach((ghost) => {
@@ -218,17 +245,20 @@ export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacma
 
             if (distance < pacmanSize + ghost.size) {
                 ghost.isAlive = false; // Fantôme mangé par Pacman
+                let scoreIncrementPromise;
 
                 if (ghost.type === GhostType.NORMAL) {
                     playGhostEatSound();
-                    updateScore(100);
+                    // Utilisation de la fonction pour incrémenter le score avec un type de monstre spécifié
+                    // Par exemple, pour un monstre de type NORMAL
+                    scoreIncrementPromise = incrementScore(GhostType.NORMAL);
                 } else if (ghost.type === GhostType.BONUS) {
                     playGhostEatPacmoonSound();
-                    updateScore(300); // Bonus de points pour les fantômes dorés
+                    scoreIncrementPromise = incrementScore(GhostType.BONUS); // Bonus de points pour les fantômes dorés
                 } else if (ghost.type === GhostType.BOMB) {
                     if (beepleBonus) {
                         // Bonus BEEPLE actif : donner un bonus supplémentaire pour les fantômes de type BOMB
-                        updateScore(100); // Bonus de points avec Beeple Bonus !
+                        scoreIncrementPromise = incrementScore(GhostType.BEEPLE); // Bonus de points avec Beeple Bonus !
                     } else {
                         ghosts = [];
                         playGhostEatBomb();
@@ -248,7 +278,7 @@ export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacma
                     }
                 } else if (ghost.type === GhostType.BEEPLE) {
                     // Bonus de points pour les fantômes BEEPLE
-                    updateScore(500);
+                    scoreIncrementPromise = incrementScore(GhostType.BEEPLE);
                     if (!beepleBonus) {
                         // Activer le bonus BEEPLE si ce n'est pas déjà activé
                         activateBeepleBonus();
@@ -258,6 +288,14 @@ export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacma
                         activateBeepleBonus(); // Réactiver le bonus BEEPLE avec une nouvelle durée
                     }
                 }
+
+                // Attendre la résolution de la promesse pour mettre à jour le score
+                scoreIncrementPromise.then(newScore => {
+                    score = newScore;
+                    updateScore(score);
+                }).catch(error => {
+                    console.error('Erreur lors de l\'incrémentation du score:', error);
+                });
 
                 // Ajouter un nouveau fantôme avec une vitesse basée sur le score actuel
                 let newGhostSpeed = calculateGhostSpeed(score);

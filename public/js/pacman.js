@@ -25,7 +25,6 @@ let gameLoop; // Déclaration de la variable gameLoop
 // Définir une variable pour garder une trace de l'état du bouton
 let isGameOver = false;
 
-
 function setScore(score_) {
     score = score_;
 
@@ -54,10 +53,6 @@ function handleExplosion(ctx, x, y) {
     }
 }
 
-function getCookie(name) {
-    const cookieValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
-    return cookieValue ? cookieValue[2] : null;
-}
 
 // Définition de la fonction gameOver
 function gameOver() {
@@ -67,9 +62,21 @@ function gameOver() {
     // Gérer l'explosion si elle est en cours
     handleExplosion(gameCtx, pacmanX, pacmanY);
     resetGame();
+    
 
-    // Fenetre de partage du score
-    showGameOverModal(score);
+    if (score == 0) {
+        document.getElementById("transactionButton").style.display = "none";
+        showGameOverModalNotLogged();
+    } else {
+        // Fenetre de partage
+        document.getElementById("txHash").innerHTML = '';
+        document.getElementById("infosUser").innerHTML = '';
+        document.getElementById("transactionButton").disabled = false;
+        document.getElementById("transactionButton").style.display = "block";
+        document.getElementById("transactionButton").innerHTML = 'Claim PAC BOOM Points !';
+        showGameOverModal(score);
+    }
+
 
     // Désactiver le gestionnaire d'événements sur le bouton "Start Game"
     document.getElementById("startGameBtn").removeEventListener("click", startGame);
@@ -83,16 +90,15 @@ let isRunning = false;
 function startGame() {
     if (!isRunning) {
         isRunning = true;
-        
         // Récupérer les références des canvas et des contextes
         backgroundCanvas = document.getElementById("backgroundCanvas");
         gameCanvas = document.getElementById("gameCanvas");
         fullCanvas = document.getElementById("canvasContainer");
         backgroundCtx = backgroundCanvas.getContext("2d");
         gameCtx = gameCanvas.getContext("2d");
-
+        document.getElementById("transactionButton").disabled = true;
         // Dessiner le fond (background) une seule fois
-        drawBackground();
+        //drawBackground();
 
         // Initialiser la position de Pacman au centre du canvas de jeu
         pacmanX = gameCanvas.width / 2;
@@ -102,8 +108,25 @@ function startGame() {
         initializeGhosts(gameCtx, gameCanvas.width, gameCanvas.height);
 
         // On remet le score à zéro
-        setScore(0);
-
+        fetch('/initialize-score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem("jwtToken")}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to initialize score');
+            }
+            return response.json();
+        })
+        .then(data => {
+            score = data.score; // Affecte la valeur du score initialisé à zéro à la variable score
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'initialisation du score:', error);
+        });
         // Démarrer la boucle de jeu
         gameLoop = setInterval(updateGame, 50); // Appeler updateGame toutes les 50 ms (augmentation de la vitesse)
 
@@ -275,7 +298,7 @@ function drawScore() {
 
 // Fonction pour mettre à jour le score
 function updateScore(points) {
-    score += points;
+    score = points;
 }
 
 

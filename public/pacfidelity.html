@@ -7,87 +7,13 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="shortcut icon" href="./img/explode.gif" type="image/png">
-    <style>
-        /* Body styles for black background with stars */
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden; /* Hide horizontal scrollbar */
-            background-image: url('./img/asfalt-light.png'); /* Utilisation de url() pour spécifier le chemin de l'image */
-            background-size: cover;
-        }
-
-        /* Navigation bar styles */
-        .navbar {
-            background-color: #000;
-            border-bottom: 1px solid #fff;
-        }
-
-        .navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .navbar-nav .nav-link {
-            color: #fff;
-        }
-
-        /* Twitter login button styles */
-        #twitterLoginBtn {
-            color: #fff;
-        }
-
-        /* Style pour le tableau de leaderboard */
-        .table {
-            color: #fff; /* Texte blanc dans le tableau */
-        }
-
-        /* Style pour l'en-tête du tableau */
-        .table thead th {
-            color: #fff; /* Texte blanc dans l'en-tête du tableau */
-            background-color: #333; /* Couleur de fond gris foncé pour l'en-tête */
-        }
- 
-        .footer {
-            color: #fff; /* Couleur du texte */
-            padding: 20px 0; /* Espacement intérieur du footer */
-            border-top: 1px solid #fff; /* Bordure supérieure blanche */
-        }
-
-                /* Styling for logout button */
-                #disconnectBtn {
-            display: flex;
-            align-items: center;
-            color: #ffffff;
-            background-color: #1da1f2;
-            padding: 8px 12px;
-            border-radius: 20px;
-            text-decoration: none;
-        }
-
-        #disconnectBtn:hover {
-            background-color: #0d86c9;
-        }
-
-        .logout-text {
-            margin-right: 10px;
-        }
-
-        /* Styling for Font Awesome icon */
-        .fab.fa-twitter {
-            font-size: 20px;
-            color: #ffffff;
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" >
 </head>
 
 <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top w-100">
         <div class="container">
             <a class="navbar-brand" href="/index.html">
                 <img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo">
@@ -113,20 +39,29 @@
                         <a class="nav-link" href="leaderboard.html">Leaderboard</a>
                     </li>
                     <!-- Twitter Login Button -->
-                    <li class="nav-item">
-                        <a class="nav-link" id="twitterLoginBtn">Connect with Twitter</a>
+                    <li class="nav-item d-sm-block d-lg-inline">
+                        <a class="nav-link" id="twitterLoginBtn" style="display: none;">Link your Twitter</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/leaderboard.html" id="disconnectBtn" style="display: none;">
-                            <span class="logout-text">Logout</span>
-                            <i class="fab fa-twitter"></i>
-                        </a>
+                    <li class="nav-item d-sm-block d-lg-inline">
+                        <button id="connectWallet">Connect Wallet</button>
                     </li>
-                    
+                
                 </ul>
             </div>
         </div>
     </nav>
+
+    <div id="networkModal" class="network-modal">
+        <div class="network-modal-content">
+            <img src="img/logo.gif" height="50" class="d-inline-block align-top">
+            <p>Wrong network. Please change the network.</p>
+            <button id="changeNetworkButton">Change</button>
+        </div>
+    </div>
+
+    <!-- Background -->
+    <div id="particles-js"></div>
+
 
     <div class="container mt-5 mb-5">
         <h1 class="text-center"><img src="img/pacmoon-anime.gif" height="50" width="50" class="d-inline-block align-top" alt="Logo"> PAC Fidelity <img src="img/pacmoon-anime.gif" height="50" width="50" class="d-inline-block align-top" alt="Logo"></h1>
@@ -148,29 +83,40 @@
         </ol>
     
         <br><br><br>
+        <p class="text-center" style="color: #FCFC03;">COMING SOON ...</p>
         <table class="table table-striped mt-6">
             <thead>
-                <tr>
+                <tr class="white-text">
                     <th>Rank</th>
                     <th>Username</th>
                     <th>Score</th>
                 </tr>
             </thead>
-            <tbody id="leaderboardBody">
+            <tbody id="leaderboardBody" class="white-text">
             </tbody>
         </table>
     </div>
 
     
 
-    <footer class="footer mt-5">
-        <div class="container text-center">
-            <p>&copy; 2024 PacBoom. For the PacMoon community.</p>
-            <p><a href="https://www.youtube.com/watch?v=qtZ0hl-unM4">Music by Arsenic1987</a></p>
-            <audio controls autoplay loop>
-                <source src="./sound/Pac-man theme remix - By Arsenic1987.mp3" type="audio/mp3">
-                Your browser doesn't support audio
-            </audio>
+    <footer class="footer mt-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <!-- Partie gauche -->
+                    <p>&copy; 2024 PacBoom.</p> 
+                    <p>For the PacMoon community.</p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <!-- Partie centrale -->
+                </div>
+                <div class="col-sm-4">
+                    <!-- Partie droite avec le logo -->
+                    <div class="logo text-right">
+                        <img src="img/blast_logo.svg" alt="Logo Blast" style="max-width: 200px;">
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -214,12 +160,20 @@
     });
     </script>
 
-    <script type="module" src="./twitter.js"></script> <!-- Import twitter js -->
+    <script src="./js/config.js"></script> <!-- Import pacman game module -->
+    <script type="module" src="./js/metamask.js"></script> <!-- Import Metamask js -->
+    <script type="module" src="./js/twitter.js"></script> <!-- Import twitter js -->
     <!-- Load jQuery and Bootstrap JS -->
     <!-- Inclure Bootstrap JS (nécessaire pour les fonctionnalités Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="js/particles-config.js"></script> <!-- Fichier JavaScript de configuration -->
+    <script>
+        particlesJS.load('particles-js', 'img/particles.json', function() {
+        console.log('callback - particles-js config loaded');
+        });
+    </script>
 </body>
 </html>

@@ -5,190 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PacBoom</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="shortcut icon" href="./img/explode.gif" type="image/png">
-    <style>
-        /* Body styles for black background with stars */
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden; /* Hide horizontal scrollbar */
-            background-image: url('./img/asfalt-light.png'); /* Utilisation de url() pour spécifier le chemin de l'image */
-            background-size: cover;
-        }
+    <link rel="stylesheet" type="text/css" href="./css/style.css" >
 
-        /* Navigation bar styles */
-        .navbar {
-            background-color: #000;
-            border-bottom: 1px solid #fff;
-        }
-
-        .navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .navbar-nav .nav-link {
-            color: #fff;
-        }
-
-        /* Twitter login button styles */
-        #twitterLoginBtn {
-            color: #fff;
-        }
-
-        /* Game Canvas styles */
-        #backgroundCanvas, #gameCanvas, #explosionCanvas {
-            display: block;
-            margin: 0 auto;
-            position: absolute;
-            top: 0;
-            left: 0;
-            max-width: 100%; /* Make canvas responsive */
-            pointer-events: none;
-            z-index: 1;
-        }
-
-
-        /* Concept description styles */
-        #conceptDescription {
-            position: relative;
-            color: #fff;
-            z-index: 2;
-            text-align: left;
-            margin-top: auto; /* Place le texte en bas de la page */
-        }
-
-        /* Styles pour la modal Game Over */
-        #gameOverModal {
-            display: none; /* Par défaut, la modale est cachée */
-            position: fixed; /* Positionnement fixe par rapport à la fenêtre du navigateur */
-            top: 50%; /* Position au centre de l'écran en haut */
-            left: 50%; /* Position au centre de l'écran à gauche */
-            transform: translate(-50%, -50%); /* Centrer la modale */
-            /*background-color: rgba(0, 0, 0, 0.7); /* Couleur de fond semi-transparente */
-            padding: 20px; /* Espacement intérieur de la modale */
-            border-radius: 10px; /* Coins arrondis pour la modale */
-        }
-
-        #gameOverModal .modal-content {
-            border: 2px solid #ddd; /* Bordure grise */
-            border-radius: 10px; /* Coins arrondis */
-            color: #fff; /* Texte blanc */
-        }
-
-        #gameOverModal .modal-header {
-            border-bottom: 1px solid #fff; /* Bordure grise en bas de l'en-tête */
-            background-color: #050000; /* Couleur de fond noir */
-        }
-
-        #gameOverModal .modal-title {
-            color: #d0d0d0; /* Couleur du titre */
-        }
-
-        #gameOverModal .modal-body {
-            padding: 20px;
-            background-color: #050000; /* Couleur de fond noir */
-        }
-
-        /* Styles pour le bouton START */
-        #startButton {
-            padding: 10px 20px;
-            font-size: 20px;
-            background-color: #4CAF50; /* Couleur de fond verte */
-            color: #fff; /* Texte blanc */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #startButton:hover {
-            background-color: #45a049; /* Couleur de fond verte plus foncée au survol */
-        }
-
-        /* Style pour le bouton désactivé */
-        .btn-disabled {
-            pointer-events: none; /* Désactiver les événements de clic */
-            opacity: 0.5; /* Réduire l'opacité pour indiquer que le bouton est désactivé */
-        }
-
-        .footer {
-            color: #fff; /* Couleur du texte */
-            padding: 20px 0; /* Espacement intérieur du footer */
-            border-top: 1px solid #fff; /* Bordure supérieure blanche */
-        }
-
-        /* Styling for logout button */
-        #disconnectBtn {
-            display: flex;
-            align-items: center;
-            color: #ffffff;
-            background-color: #1da1f2;
-            padding: 8px 12px;
-            border-radius: 20px;
-            text-decoration: none;
-        }
-
-        #disconnectBtn:hover {
-            background-color: #0d86c9;
-        }
-
-        .logout-text {
-            margin-right: 10px;
-        }
-
-        /* Styling for Font Awesome icon */
-        .fab.fa-twitter {
-            font-size: 20px;
-            color: #ffffff;
-        }
-        
-
-        @keyframes flashAnimation {
-            0% { background-color: white; }
-            50% { background-color: red; }
-            100% { background-color: white; }
-        }
-
-        .flash-effect {
-            animation: flashAnimation 0.5s linear;
-        }
-
-        /* Centrer le bouton de déconnexion sur les petits écrans */
-        @media (max-width: 576px) {
-            #disconnectBtnContainer {
-                text-align: center;
-            }
-        }
-
-        /* Style pour bloquer le défilement de la page */
-        .no-scroll {
-            overflow: hidden;
-        }
-        /* Empêcher la sélection de texte sur la page */
-        body {
-            user-select: none;
-        }
-
-        #fullCanvas {
-            -webkit-touch-callout: none; /* Désactive la fenêtre contextuelle de sélection */
-            -webkit-user-select: none; /* Désactive la sélection de texte */
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-    </style>
 </head>
 
-<body>
-
+<body class="w-full">
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top w-100">
         <div class="container">
             <a class="navbar-brand" href="/index.html">
                 <img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo">
@@ -214,21 +38,29 @@
                         <a class="nav-link" href="leaderboard.html">Leaderboard</a>
                     </li>
                     <!-- Twitter Login Button -->
-                    <li class="nav-item">
-                        <a class="nav-link" id="twitterLoginBtn">Connect with Twitter</a>
+                    <li class="nav-item d-sm-block d-lg-inline">
+                        <a class="nav-link" id="twitterLoginBtn" style="display: none;">Link your Twitter</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary btn-block" href="/index.html" id="disconnectBtn" style="display: none;">
-                            <span class="logout-text">Logout</span>
-                            <i class="fab fa-twitter"></i>
-                        </a>
+                    <li class="nav-item d-sm-block d-lg-inline">
+                        <button id="connectWallet">Connect Wallet</button>
                     </li>
-                    
+                
                 </ul>
             </div>
         </div>
     </nav>
 
+    <!-- Background -->
+    <div id="particles-js"></div>
+
+    <div id="networkModal" class="network-modal">
+        <div class="network-modal-content">
+            <img src="img/logo.gif" height="50" class="d-inline-block align-top">
+            <p>Wrong network. Please change the network.</p>
+            <button id="changeNetworkButton">Change</button>
+        </div>
+    </div>
+    
     <div class="text-center mb-3">
         <!-- Bouton "Start Game" -->
         <button id="startGameBtn" class="btn btn-success mt-3">Start Game</button>
@@ -254,31 +86,31 @@
                 <p>Try to achieve the best score to be fully-endorsed by Pacmoon and recognized as a real member of that beautiful community !</p>
                 <p>Connect your Twitter account to have your place on the leaderboard !</p>
                 <ul>
-                    <li>
+                    <li class="mb-3">
                         <img src="img/ghost.png" alt="Ghost" style="width: 30px; height: 30px; margin-right: 10px;">
                         Ghost : eat it to <b>get 100 points</b>
                     </li>
-                    <li>
+                    <li class="mb-3">
                         <img src="img/pacmoon.png" alt="Pacmoon" style="width: 30px; height: 30px; margin-right: 10px;">
                         Pacmoon : sometimes a Pacmoon can appear, just eat it because you love it and <b>get 300 points</b> !
                     </li>
-                    <li>
+                    <li class="mb-3">
                         <img src="img/bobby.png" alt="Bobby" style="width: 30px; height: 30px; margin-right: 10px;">
                         Bobby : this is the master, he appears to track his followers and see if everything is right in the Pacmoon ecosystem. Don't try to eat it or ... you will REGRET IT !
                     </li>
-                    <li>
+                    <li class="mb-3">
                         <img src="img/beeple.png" alt="Beeple" style="width: 30px; height: 30px; margin-right: 10px;">
                         Beeple : the #1 in the leaderboard, enlightened by PacMoon. Eat it to get 500 points and the special ability to eat those Bobbies spamming the map ! But be careful, the ability doesn't last long !
                     </li>
                 </ul>
 
-                <p><u>Controls:</u></p>
-                <P>Desktop</P>
+                <h3 class="text-center mt-5">Controls</h3>
+                <p>Desktop</p>
                 <ul>
                     <li>Arrows : to move Pacboom</li>
                     <li>Space : to speed up Pacboom</li>
                 </ul>
-                <P>Smartphone</P>
+                <p>Smartphone</p>
                 <ul>
                     <li>Slide your finger in the desired direction to move Pacboom</li>
                     <li>Keep pressing to speed up Pacboom</li>
@@ -293,40 +125,98 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Game Over</h4>
+                <div class="modal-header text-center">
+                    <h4 class="modal-title mx-auto"><img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo"></h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <p>Your score: <span id="finalScore"></span></p>
+                    <p class="text-center">Your score: <span id="finalScore"></span></p>
                     <!-- Twitter Share Button -->
-                    <a href="#" class="btn btn-primary" id="shareTwitterBtn">
-                        <i class="fab fa-twitter"></i> Share on Twitter
-                    </a>
+                    <a href="#" class="btn btn-success d-block mx-auto mt-3" id="shareTwitterBtn">Share on Twitter</a>
+                    <button id="transactionButton" class="btn btn-success d-block mx-auto mt-3">Get your PAC BOOM points !</button>
+                    <p class="text-center">Don't close the modal until the transaction is finished!</p>
+                    <span id="txHash"></span><br/>
+                    <span id="infosUser" style="color: #FCFC03;" class="text-center"></span>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Not logged Modal -->
+    <div class="modal" id="gameOverModalNotLogged">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal header -->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title mx-auto"><img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo"></h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="text-center">Connect your wallet to score and claim PAC BOOM Points !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <footer class="footer mt-10">
-        <div class="container text-center">
-            <p>&copy; 2024 PacBoom. For the PacMoon community.</p>
-            <p><a href="https://www.youtube.com/watch?v=qtZ0hl-unM4">Music by Arsenic1987</a></p>
-            <audio controls autoplay loop>
-                <source src="./sound/Pac-man theme remix - By Arsenic1987.mp3" type="audio/mp3">
-                Your browser doesn't support audio
-            </audio>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <!-- Partie gauche -->
+                    <p>&copy; 2024 PacBoom.</p> 
+                    <p>For the PacMoon community.</p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <!-- Partie centrale avec la musique et le texte -->
+                    <p><a href="https://www.youtube.com/watch?v=qtZ0hl-unM4">Music by Arsenic1987</a></p>
+                    <audio controls autoplay loop>
+                        <source src="./sound/Pac-man theme remix - By Arsenic1987.mp3" type="audio/mp3">
+                        Your browser doesn't support audio
+                    </audio>
+                </div>
+                <div class="col-sm-4">
+                    <!-- Partie droite avec le logo -->
+                    <div class="logo text-right">
+                        <img src="img/blast_logo.svg" alt="Logo Blast" style="max-width: 200px;">
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
+    
 
+    <!-- JavaScript for game and Twitter login handling -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script type="module" src="./js/config.js"></script> <!-- Import ghosts module -->
+    <script type="module" src="./js/claim.js"></script> <!-- Import ghosts module -->
+    <script type="module" src="./js/ghosts.js"></script> <!-- Import ghosts module -->
+    <script type="module" src="./js/pacman.js"></script> <!-- Import pacman game module -->
+    <script src="./js/config.js"></script> <!-- Import pacman game module -->
+    <script type="module" src="./js/twitter.js"></script> <!-- Import twitter js -->
+    <script type="module" src="./js/metamask.js"></script> <!-- Import Metamask js -->
+    <!-- Load jQuery and Bootstrap JS -->
+    <!-- Inclure Bootstrap JS (nécessaire pour les fonctionnalités Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Background -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="js/particles-config.js"></script> <!-- Fichier JavaScript de configuration -->
     <script>
+    
+        particlesJS.load('particles-js', 'img/particles.json', function() {
+        });
 
         function getCookie(name) {
             const cookieValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
             return cookieValue ? cookieValue[2] : null;
         }
+
         // Function to show the game over modal
         function showGameOverModal(score) {
             // Vérifier s'il y a du contenu précédent dans l'élément finalScore
@@ -336,6 +226,7 @@
                 finalScoreElement.textContent = score; // Afficher le nouveau score
             }
 
+            document.getElementById("transactionButton").innerText = 'Claim PAC BOOM Points !';
           
             // Show the modal
             $('#gameOverModal').modal('show');
@@ -349,16 +240,15 @@
                 window.open(tweetUrl, '_blank');
             });
 
-
-            const isLoggedIn = document.cookie.includes('username');
-            if (isLoggedIn) {
+            if (localStorage.getItem("username") && localStorage.getItem("userAddress") && localStorage.getItem("jwtToken")) {
                 // Envoyer le score au serveur via une requête fetch
                 fetch('/saveScore', {
                     method: 'POST',
                     headers: {
+                        'Authorization': `${localStorage.getItem("jwtToken")}`, // Utilisez le JWT dans l'en-tête d'autorisation
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ score: score, username: getCookie("username")})
+                    body: JSON.stringify({ score: score, address: localStorage.getItem("userAddress")})
                 })
                 .then(response => {
                     if (response.ok) {
@@ -375,19 +265,14 @@
             }
 
         }
+
+        // Function to show the game over modal
+        function showGameOverModalNotLogged() {
+            console.log("on entre ici not logged modal");
+            // Show the modal
+            $('#gameOverModalNotLogged').modal('show');
+        }
     </script>
 
-
-    <!-- JavaScript for game and Twitter login handling -->
-    <script type="module" src="./twitter.js"></script> <!-- Import twitter js -->
-    <script type="module" src="./ghosts.js"></script> <!-- Import ghosts module -->
-    <script type="module" src="./pacman.js"></script> <!-- Import pacman game module -->
-
-    <!-- Load jQuery and Bootstrap JS -->
-    <!-- Inclure Bootstrap JS (nécessaire pour les fonctionnalités Bootstrap) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

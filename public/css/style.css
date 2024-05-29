@@ -1,0 +1,311 @@
+@import url(https://db.onlinewebfonts.com/c/b0b8a10e9c97391e66297c8b5398984f?family=Geom+Graphic+W03+Regular);
+
+/* Body styles for black background with stars */
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: "Geom Graphic W03 Regular";
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    /*background-image: url('../img/asfalt-light.png'); /* Utilisation de url() pour spécifier le chemin de l'image */
+    /*background-size: cover;
+    */
+    margin: 0;
+}
+
+
+/* Navigation bar styles */
+.navbar {
+    background-color: #000;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+}
+
+/* Twitter login button styles */
+#twitterLoginBtn {
+    color: #fff;
+}
+
+/* Game Canvas styles */
+#backgroundCanvas, #gameCanvas, #explosionCanvas {
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%; /* Make canvas responsive */
+    pointer-events: none;
+    z-index: -2;
+}
+
+
+/* Concept description styles */
+#conceptDescription {
+    position: relative;
+    color: #fff;
+    z-index: 2;
+    text-align: left;
+    margin-top: auto; /* Place le texte en bas de la page */
+}
+
+/* Styles pour la modal Game Over */
+#gameOverModal {
+    display: none; /* Par défaut, la modale est cachée */
+    position: fixed; /* Positionnement fixe par rapport à la fenêtre du navigateur */
+    top: 50%; /* Position au centre de l'écran en haut */
+    left: 50%; /* Position au centre de l'écran à gauche */
+    transform: translate(-50%, -50%); /* Centrer la modale */
+    /*background-color: rgba(0, 0, 0, 0.7); /* Couleur de fond semi-transparente */
+    padding: 20px; /* Espacement intérieur de la modale */
+    border-radius: 10px; /* Coins arrondis pour la modale */
+}
+
+#gameOverModal .modal-content {
+    border: 2px solid #ddd; /* Bordure grise */
+    border-radius: 10px; /* Coins arrondis */
+    color: #fff; /* Texte blanc */
+}
+
+#gameOverModal .modal-header {
+    border-bottom: 1px solid #fff; /* Bordure grise en bas de l'en-tête */
+    background-color: #050000; /* Couleur de fond noir */
+}
+
+#gameOverModal .modal-title {
+    color: #d0d0d0; /* Couleur du titre */
+}
+
+#gameOverModal .modal-body {
+    padding: 20px;
+    background-color: #050000; /* Couleur de fond noir */
+}
+
+/* Styles pour la modal Game Over */
+#gameOverModalNotLogged {
+    display: none; /* Par défaut, la modale est cachée */
+    position: fixed; /* Positionnement fixe par rapport à la fenêtre du navigateur */
+    top: 50%; /* Position au centre de l'écran en haut */
+    left: 50%; /* Position au centre de l'écran à gauche */
+    transform: translate(-50%, -50%); /* Centrer la modale */
+    /*background-color: rgba(0, 0, 0, 0.7); /* Couleur de fond semi-transparente */
+    padding: 20px; /* Espacement intérieur de la modale */
+    border-radius: 10px; /* Coins arrondis pour la modale */
+}
+
+#gameOverModalNotLogged .modal-content {
+    border: 2px solid #ddd; /* Bordure grise */
+    border-radius: 10px; /* Coins arrondis */
+    color: #fff; /* Texte blanc */
+}
+
+#gameOverModalNotLogged .modal-header {
+    border-bottom: 1px solid #fff; /* Bordure grise en bas de l'en-tête */
+    background-color: #050000; /* Couleur de fond noir */
+}
+
+#gameOverModalNotLogged .modal-title {
+    color: #d0d0d0; /* Couleur du titre */
+}
+
+#gameOverModalNotLogged .modal-body {
+    padding: 20px;
+    background-color: #050000; /* Couleur de fond noir */
+}
+
+
+/* Styles pour le bouton START */
+#startGame {
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: rgb(192, 203, 38); /* Couleur de fond verte */
+    color: #fff; /* Texte blanc */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#startGame:hover {
+    background-color: rgb(187, 143, 32); /* Couleur de fond verte plus foncée au survol */
+}
+
+/* Style pour le bouton désactivé */
+.btn-disabled {
+    pointer-events: none; /* Désactiver les événements de clic */
+    opacity: 0.5; /* Réduire l'opacité pour indiquer que le bouton est désactivé */
+}
+
+.logout-text {
+    margin-right: 10px;
+}
+
+/* Styling for Font Awesome icon */
+.fab.fa-twitter {
+    font-size: 20px;
+    color: #ffffff;
+}
+
+
+@keyframes flashAnimation {
+    0% { background-color: white; }
+    50% { background-color: red; }
+    100% { background-color: white; }
+}
+
+.flash-effect {
+    animation: flashAnimation 0.5s linear;
+}
+
+/* Centrer le bouton de déconnexion sur les petits écrans */
+@media (max-width: 576px) {
+    #disconnectBtnContainer {
+        text-align: center;
+    }
+}
+
+/* Style pour bloquer le défilement de la page */
+.no-scroll {
+    overflow: hidden;
+}
+/* Empêcher la sélection de texte sur la page */
+body {
+    user-select: none;
+}
+
+#fullCanvas {
+    -webkit-touch-callout: none; /* Désactive la fenêtre contextuelle de sélection */
+    -webkit-user-select: none; /* Désactive la sélection de texte */
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.network-modal {
+    display: none; /* Masquer par défaut */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8); /* Fond gris foncé avec opacité */
+}
+
+.network-modal-content {
+    background-color: #333; /* Fond gris foncé */
+    color: #fff; /* Texte en blanc */
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #ccc; /* Bords gris clairs */
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 10px; /* Coins arrondis */
+}
+
+.network-modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #ccc; /* Couleur du titre gris clair */
+}
+
+.network-modal-content p {
+    margin: 20px 0;
+}
+
+.network-modal-content button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.network-modal-content button:hover {
+    background-color: #0056b3;
+}
+
+#connectWallet {
+    background-color: #FCFC03; /* Couleur de fond jaune */
+    border: none; /* Pas de bordure */
+    color: rgb(0, 0, 0); /* Couleur du texte */
+    padding: 8px 16px; /* Espacement à l'intérieur du bouton */
+    text-align: center; /* Centrer le texte */
+    text-decoration: none; /* Pas de soulignement */
+    display: inline-block; /* Afficher en ligne */
+    font-size: 14px; /* Taille de la police */
+    margin: 4px 2px; /* Marge extérieure */
+    cursor: pointer; /* Curseur en pointeur */
+    border-radius: 5px; /* Bordures arrondies */
+}
+  
+#connectWallet:hover {
+    background-color: #ecec00; /* Changement de couleur au survol */
+}
+
+#transactionButton {
+    background-color: #FCFC03; /* Couleur de fond jaune */
+    border: none; /* Pas de bordure */
+    color: rgb(0, 0, 0); /* Couleur du texte */
+    padding: 8px 16px; /* Espacement à l'intérieur du bouton */
+    text-align: center; /* Centrer le texte */
+    text-decoration: none; /* Pas de soulignement */
+    display: inline-block; /* Afficher en ligne */
+    font-size: 14px; /* Taille de la police */
+    margin: 4px 2px; /* Marge extérieure */
+    cursor: pointer; /* Curseur en pointeur */
+    border-radius: 5px; /* Bordures arrondies */
+}
+  
+#transactionButton:hover {
+    background-color: #ecec00; /* Changement de couleur au survol */
+}
+
+#shareTwitterBtn {
+    background-color: #1353c2; /* Couleur de fond jaune */
+    border: none; /* Pas de bordure */
+    color: rgb(255, 255, 255); /* Couleur du texte */
+    padding: 8px 16px; /* Espacement à l'intérieur du bouton */
+    text-align: center; /* Centrer le texte */
+    text-decoration: none; /* Pas de soulignement */
+    display: inline-block; /* Afficher en ligne */
+    font-size: 14px; /* Taille de la police */
+    margin: 4px 2px; /* Marge extérieure */
+    cursor: pointer; /* Curseur en pointeur */
+    border-radius: 5px; /* Bordures arrondies */
+}
+  
+#shareTwitterBtn:hover {
+    background-color: #1723a8; /* Changement de couleur au survol */
+}
+  
+  
+  
+.white-text {
+    color: white; /* Couleur du texte */
+}
+
+footer {
+    background-color: #000;
+    color: #fff; /* Couleur du texte */
+    padding: 20px 0; /* Espacement intérieur du footer */
+    z-index: 1;
+}
+
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Assurez-vous que le conteneur est derrière le contenu */
+  }

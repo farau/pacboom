@@ -4,20 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^20.12.12",
     "axios": "^1.6.8",
+    "canvas": "^2.11.2",
+    "core-js": "^3.37.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
-    "ethers": "^6.12.0",
+    "ethers": "^5.7.2",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2",
     "passport": "^0.7.0",
@@ -25,6 +31,13 @@
     "pg": "^8.11.5",
     "request": "^2.88.2",
     "twit": "^2.2.11",
-    "twitter-api-v2": "^1.16.4"
+    "twitter-api-v2": "^1.16.4",
+    "uglifyjs": "^2.4.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.5",
+    "@babel/node": "^7.23.9",
+    "@babel/preset-env": "^7.24.5",
+    "@babel/register": "^7.23.7"
   }
 }

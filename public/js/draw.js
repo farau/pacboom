@@ -7,11 +7,10 @@ let ctx2 = canvas2.getContext('2d');
 
 // Array contenant les chemins d'accès aux images pour chaque catégorie
 const categoryImages = {
-    head: [null, './img/head/cap.png', './img/head/crown.png', './img/head/hat.png', './img/head/luffy-hat.png', './img/head/magician-hat.png','./img/head/ribbon.png','./img/head/stetson.png'],
+    head: [null, './img/head/cap.png', './img/head/crown.png', './img/head/hat.png', './img/head/luffy-hat.png', './img/head/magician-hat.png','./img/head/ribbon.png','./img/head/stetson.png', './img/head/cooking-hat.png', './img/head/viking-helmet.png', './img/head/pirate-hat.png', './img/head/stetson.png'],
     eyes: [null, './img/eyes/glasses.png', './img/eyes/gold-sunglasses.png', './img/eyes/sunglasses-cig.png','./img/eyes/sunglasses.png', './img/eyes/laser.png'],
     neck: [null, './img/neck/gold-necklace.png', './img/neck/bow-tie.png', './img/neck/scarf.png', './img/neck/tie.png'],
     arm: [null, './img/arm/muscle.png', './img/arm/bone-sword.png', './img/arm/robotic.png', './img/arm/zombie.png']
-
 };
 
 document.getElementById("randomize").addEventListener("click", function(event) {
@@ -124,7 +123,7 @@ const saveButton = document.getElementById('saveButton');
 
 // Fonction pour rendre le bouton visible
 function showSaveMetaDataButton() {
-    const isLoggedIn = document.cookie.includes('username');
+    const isLoggedIn = localStorage.getItem('username');
     const metadataContainer = document.getElementById('metadataContainer');
     
     if (isLoggedIn && metadataContainer.textContent == 'No metadata available.') {
@@ -145,7 +144,7 @@ function getCookie(name) {
 
 // Fonction pour gérer l'insertion des metadata en BDD
 function handleMetadata() {
-    const username = getCookie('username');
+    const username = localStorage.getItem('username');
     const saveErrorMessage = document.getElementById('saveErrorMessage');
     const successMessage = document.getElementById('successMessage');
 
@@ -182,7 +181,7 @@ function handleMetadata() {
 }
 
 function getMetadata() {
-    const username = getCookie('username');
+    const username = localStorage.getItem('username');
 
     // Récupérer les métadonnées de l'utilisateur depuis le serveur
     fetch('/getMetadata', {
@@ -292,7 +291,7 @@ function getMetadata() {
 // Attendez que le DOM soit chargé
 document.addEventListener('DOMContentLoaded', function() {
     // Appeler la fonction getMetadata pour récupérer les métadonnées de l'utilisateur
-    const isLoggedIn = document.cookie.includes('username');
+    const isLoggedIn = localStorage.getItem('username');
     if (isLoggedIn) {
         getMetadata();
         getMetadataAndDisplayPFP();
@@ -327,7 +326,7 @@ function displayPFPOnCanvas(metadata) {
 
 
 function getMetadataAndDisplayPFP() {
-    const username = getCookie('username');
+    const username = localStorage.getItem('username');
 
     // Récupérer les métadonnées de l'utilisateur depuis le serveur
     fetch('/getMetadata', {

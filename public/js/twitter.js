@@ -1,17 +1,3 @@
-function setCookie(name, value, days) {
-    const expires = new Date();
-    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-}
-
-function getCookie(name) {
-    const cookieValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
-    return cookieValue ? cookieValue[2] : null;
-}
-
-function deleteCookie(name) {
-    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
-}
 
 function handleTwitterLoginButtonClick() {
     // Rediriger l'utilisateur vers l'URL d'authentification Twitter côté serveur
@@ -31,15 +17,19 @@ function getParamsFromUrl() {
 
 // Fonction pour gérer l'authentification Twitter réussie
 function handleTwitterCallback() {
+    const address = localStorage.getItem("userAddress");
+    const jwtToken = localStorage.getItem("jwtToken");
+
     const { username, screen_name, avatarUrl } = getParamsFromUrl();
 
     // Stockage des informations utilisateur en base de données (envoi d'une requête POST au serveur)
-    fetch('/saveUser', {
+    fetch('/linkTwitter', {
         method: 'POST',
         headers: {
+            'Authorization': `${jwtToken}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ screen_name })
+        body: JSON.stringify({ screen_name, address })
     })
     .then(response => {
         if (response.ok) {
@@ -47,7 +37,7 @@ function handleTwitterCallback() {
             return response.json();
         } else if (response.status === 200) {
             // Cas où l'utilisateur existe déjà dans la base de données
-            console.log('Utilisateur déjà enregistré.');
+            //console.log('Utilisateur déjà linké.');
 
             // On continue malgré tout pour mettre à jour l'interface utilisateur
             return Promise.resolve({ username, screen_name }); // Simuler une réponse avec les données de l'utilisateur existant
@@ -56,7 +46,7 @@ function handleTwitterCallback() {
         }
     })
     .then(result => {
-        console.log('Informations utilisateur enregistrées:', result);
+        //console.log('Informations utilisateur linkées:', result);
 
         // Mettre à jour l'interface utilisateur (afficher le pseudo sur le bouton avec l'avatar)
         const twitterLoginBtn = document.getElementById("twitterLoginBtn");
@@ -83,12 +73,8 @@ function handleTwitterCallback() {
         twitterLoginBtn.innerHTML = ''; // Effacer le contenu existant du bouton
         twitterLoginBtn.appendChild(flexContainer);
 
-        setCookie('username', screen_name, 30);
-        setCookie('avatarUrl', avatarUrl, 30);
         // Supprimer l'écouteur d'événement click une fois que l'utilisateur est connecté
         twitterLoginBtn.removeEventListener("click", handleTwitterLoginButtonClick);
-        //on affiche le bouton Logout par la suite
-        disconnectBtn.style.display = 'block'; // Afficher le bouton si l'utilisateur est connecté
         
         window.location.href = '/index.html';
     })
@@ -97,6 +83,65 @@ function handleTwitterCallback() {
     });
 }
 
+function getTwitterInfos(address) {
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    fetch(`/getTwitterInfos?address=${address}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `${jwtToken}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        
+        if (response.status === 204) {
+            return null; // Pas de contenu
+        }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json(); // Convertir la réponse en JSON
+    })
+    .then(data => {
+        if (data && data.length > 0) {
+            const userData = data[0]; // Assumant que vous renvoyez un tableau de résultats
+
+            const twitterLoginBtn = document.getElementById("twitterLoginBtn");
+
+            // Créer un conteneur flex pour l'avatar et le texte
+            const flexContainer = document.createElement('div');
+            flexContainer.style.display = 'flex';
+            flexContainer.style.alignItems = 'center';
+
+            // Créer l'élément d'image pour l'avatar
+            const avatarImg = document.createElement('img');
+            avatarImg.src = userData.avatarurl; // Utiliser l'URL de l'avatar fournie
+            avatarImg.alt = 'Avatar';
+            avatarImg.style.width = '30px'; // Ajuster la taille de l'avatar si nécessaire
+
+            // Créer un élément span pour le nom d'utilisateur
+            const usernameSpan = document.createElement('span');
+            usernameSpan.innerText = userData.username;
+            localStorage.setItem('username', userData.username);
+            // Ajouter l'image d'avatar et le nom d'utilisateur au conteneur flex
+            flexContainer.appendChild(avatarImg);
+            flexContainer.appendChild(usernameSpan);
+
+            // Effacer le contenu existant du bouton et ajouter le conteneur flex
+            twitterLoginBtn.innerHTML = ''; // Effacer le contenu existant du bouton
+            twitterLoginBtn.appendChild(flexContainer);
+            twitterLoginBtn.removeEventListener("click", handleTwitterLoginButtonClick);
+        } else {
+            console.log("Aucune donnée Twitter trouvée");
+            document.getElementById("twitterLoginBtn").addEventListener("click", handleTwitterLoginButtonClick);
+        }
+    })
+    .catch(error => console.error('Erreur:', error));
+}
+
+
+
 
 // Appeler handleTwitterCallback() lorsque la page se charge
 document.addEventListener('DOMContentLoaded', () => {
@@ -104,54 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.search.includes('username') && window.location.search.includes('screen_name')) {
         // Appeler la fonction handleTwitterCallback() pour finaliser l'authentification
         handleTwitterCallback();
-        
     }
+    const address = localStorage.getItem("userAddress");
+    const jwtToken = localStorage.getItem("jwtToken");
 
-    // Vérifier si l'utilisateur est connecté (par exemple, en vérifiant l'existence du cookie)
-    const isLoggedIn = document.cookie.includes('username');
-
-    // Récupérer le bouton Disconnect
-    const disconnectBtn = document.getElementById('disconnectBtn');
-
-    // Mettre à jour la visibilité du bouton en fonction de l'état de connexion
-    if (isLoggedIn) {
-        disconnectBtn.style.display = 'block'; // Afficher le bouton si l'utilisateur est connecté
-        // Mettre à jour l'interface utilisateur (afficher le pseudo sur le bouton avec l'avatar)
-        const twitterLoginBtn = document.getElementById("twitterLoginBtn");
-
-        // Créer un conteneur flex pour l'avatar et le texte
-        const flexContainer = document.createElement('div');
-        flexContainer.style.display = 'flex';
-        flexContainer.style.alignItems = 'center';
-
-        // Créer l'élément d'image pour l'avatar
-        const avatarImg = document.createElement('img');
-        avatarImg.src = getCookie("avatarUrl"); // Utiliser l'URL de l'avatar fournie
-        avatarImg.alt = 'Avatar';
-        avatarImg.style.width = '30px'; // Ajuster la taille de l'avatar si nécessaire
-
-        // Créer un élément span pour le nom d'utilisateur
-        const usernameSpan = document.createElement('span');
-        usernameSpan.innerText = getCookie("username");
-        // Ajouter l'image d'avatar et le nom d'utilisateur au conteneur flex
-        flexContainer.appendChild(avatarImg);
-        flexContainer.appendChild(usernameSpan);
-
-        // Effacer le contenu existant du bouton et ajouter le conteneur flex
-        twitterLoginBtn.innerHTML = ''; // Effacer le contenu existant du bouton
-        twitterLoginBtn.appendChild(flexContainer);
-        twitterLoginBtn.removeEventListener("click", handleTwitterLoginButtonClick);
-
-    } else {
-        disconnectBtn.style.display = 'none'; // Cacher le bouton sinon
-        document.getElementById("twitterLoginBtn").addEventListener("click", handleTwitterLoginButtonClick);
+    if (address && jwtToken) {
+        getTwitterInfos(address);
     }
-
-    document.getElementById("disconnectBtn").addEventListener("click", () => {
-        // Rediriger l'utilisateur vers l'URL d'authentification Twitter côté serveur
-        deleteCookie("username");
-        deleteCookie("avatarUrl");
-    });
 
 });
 
