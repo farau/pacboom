@@ -2,8 +2,21 @@
 
 const config = {
     chain_id : '0x13e31', //Blast mainnet
-    pacBoomAddress: '0xe1688644D21EE1e11433735397732D8b7f9c2727',
-    pacBoomABI: [
+    pacBoomAddress: '0x7d0cb9A7f8b4B7E1d8BD5f0dAbAE7a71e8e31A58',
+    pacBoomABI : [
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "score",
+					"type": "uint256"
+				}
+			],
+			"name": "claimPoints",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
 		{
 			"inputs": [
 				{
@@ -76,14 +89,34 @@ const config = {
 			"type": "event"
 		},
 		{
+			"inputs": [],
+			"name": "renounceOwnership",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
 			"inputs": [
 				{
-					"internalType": "uint256",
-					"name": "score",
-					"type": "uint256"
+					"internalType": "address",
+					"name": "_nftContract",
+					"type": "address"
 				}
 			],
-			"name": "claimPoints",
+			"name": "setNftContract",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "newOwner",
+					"type": "address"
+				}
+			],
+			"name": "transferOwnership",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
@@ -176,40 +209,6 @@ const config = {
 			],
 			"stateMutability": "view",
 			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "renounceOwnership",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "_nftContract",
-					"type": "address"
-				}
-			],
-			"name": "setNftContract",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "newOwner",
-					"type": "address"
-				}
-			],
-			"name": "transferOwnership",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
 		}
 	]
-
 };
