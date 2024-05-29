@@ -43,7 +43,7 @@ async function getUserData() {
             const points = ethers.utils.formatUnits(await contract.getPlayerPoints(address), 18) * 10**18; // Supposons que les points soient en Wei
             const nfts = ethers.utils.formatUnits(await contract.numberOfNFTs(address), 18) * 10**18;
 
-            console.log("address :", address, " bonus : ", bonus, " points : ", points, " nfts : ", nfts);
+            // console.log("address :", address, " bonus : ", bonus, " points : ", points, " nfts : ", nfts);
             // Ajouter les données de l'utilisateur au tableau
             userData.push({ address, bonus, points, nfts });
         }
