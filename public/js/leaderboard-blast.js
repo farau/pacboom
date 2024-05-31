@@ -32,7 +32,7 @@ async function getUserData() {
 
         // Initialiser un tableau pour stocker les données des utilisateurs
         const userData = [];
-
+        let i = 1;
         // Boucler sur les utilisateurs
         for (const user of users) {
             // Récupérer l'adresse Ethereum de l'utilisateur
@@ -49,6 +49,7 @@ async function getUserData() {
             if ((i + 1) % 10 === 0 && i !== users.length - 1) {
                 await new Promise(resolve => setTimeout(resolve, 1000)); // Attendre 1 seconde
             }
+            i++;
         }
         // Retourner les données des utilisateurs
         return userData;
