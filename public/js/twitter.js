@@ -37,8 +37,9 @@ function handleTwitterCallback() {
             return response.json();
         } else if (response.status === 200) {
             // Cas où l'utilisateur existe déjà dans la base de données
-            //console.log('Utilisateur déjà linké.');
-
+            console.log('Utilisateur déjà linké.');
+            const twitterLoginBtn = document.getElementById("twitterLoginBtn");
+            twitterLoginBtn.innerHTML = "This X account is already set on another adress !";
             // On continue malgré tout pour mettre à jour l'interface utilisateur
             return Promise.resolve({ username, screen_name }); // Simuler une réponse avec les données de l'utilisateur existant
         } else {

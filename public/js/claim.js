@@ -73,6 +73,7 @@ transactionButton.addEventListener("click", async () => {
         }
 
     } catch (error) {
+
         console.error("Error:", error);
         if (error.code === 4001) {
             // Rejet par l'utilisateur : rétablir l'état du bouton
@@ -80,6 +81,8 @@ transactionButton.addEventListener("click", async () => {
             transactionButton.innerHTML = 'Claim PAC BOOM Points !';
         }
         // Gérer les autres erreurs ici
+        transactionButton.disabled = false;
+        transactionButton.innerHTML = 'Try again ! Error : '+ error.message;
     }
 });
 

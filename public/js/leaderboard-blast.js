@@ -37,15 +37,13 @@ async function getUserData() {
         for (const user of users) {
             // Récupérer l'adresse Ethereum de l'utilisateur
             const address = user.wallet_address;
-
             // Appeler les fonctions du contrat Ethereum pour récupérer les données
-            const bonus = ethers.utils.formatUnits(await contract.getPlayerBonus(address), 18) * 10**18; // Supposons que le bonus soit en Wei
             const points = ethers.utils.formatUnits(await contract.getPlayerPoints(address), 18) * 10**18; // Supposons que les points soient en Wei
             const nfts = ethers.utils.formatUnits(await contract.numberOfNFTs(address), 18) * 10**18;
 
-            // console.log("address :", address, " bonus : ", bonus, " points : ", points, " nfts : ", nfts);
+            //console.log("address :", address, " bonus : ", bonus, " points : ", points, " nfts : ", nfts);
             // Ajouter les données de l'utilisateur au tableau
-            userData.push({ address, bonus, points, nfts });
+            userData.push({ address, points, nfts });
         }
         // Retourner les données des utilisateurs
         return userData;
@@ -71,7 +69,7 @@ async function displayLeaderboard(pageNumber, pageSize) {
 
         // Construire le tableau HTML avec les classes Bootstrap
         let leaderboardTable = '<h1 class="text-center">PAC BOOM Points Leaderboard</h1><table class="table table-striped">';
-        leaderboardTable += '<thead><tr class="white-text"><th>Rank</th><th>Address</th><th>Points</th><th><img src="img/pacboom-nfts.gif" alt="PAC BOOM NFTs" style="max-width: 30px;"></th><th>Bonus</th></tr></thead><tbody>';
+        leaderboardTable += '<thead><tr class="white-text"><th>Rank</th><th>Address</th><th>Points</th><th><img src="img/pacboom-nfts.gif" alt="PAC BOOM NFTs" style="max-width: 30px;"></th></tr></thead><tbody>';
 
         // Compteur de rang
         let rank = startIndex + 1;
@@ -79,7 +77,7 @@ async function displayLeaderboard(pageNumber, pageSize) {
         usersOnPage.forEach(user => {
             let shortenedAddresses = '';
             shortenedAddresses = user.address.substring(0, 4) + '...' + user.address.substring(user.address.length - 4);
-            leaderboardTable += `<tr class="white-text"><td>${rank}</td><td>${shortenedAddresses}</td><td>${user.points}</td><td>${user.nfts}</td><td>${user.bonus}</td></tr>`;
+            leaderboardTable += `<tr class="white-text"><td>${rank}</td><td>${shortenedAddresses}</td><td>${user.points}</td><td>${user.nfts}</td></tr>`;
             rank++; // Incrémenter le rang pour le prochain utilisateur
         });
         leaderboardTable += '</tbody></table>';
