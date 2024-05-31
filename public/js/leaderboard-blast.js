@@ -44,6 +44,11 @@ async function getUserData() {
             //console.log("address :", address, " bonus : ", bonus, " points : ", points, " nfts : ", nfts);
             // Ajouter les données de l'utilisateur au tableau
             userData.push({ address, points, nfts });
+
+            // Si l'index est un multiple de 10, attendre une seconde
+            if ((i + 1) % 10 === 0 && i !== users.length - 1) {
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Attendre 1 seconde
+            }
         }
         // Retourner les données des utilisateurs
         return userData;
