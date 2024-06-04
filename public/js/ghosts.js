@@ -58,7 +58,7 @@ function playGhostEatPacmoonSound() {
     audio.play();
 }
 
-function playGhostEatBomb() {
+export function playGhostEatBomb() {
     // Chemin vers le fichier audio du fantôme mangé
     const soundPath = './sound/sf_explosion_01.mp3';
 
@@ -74,7 +74,7 @@ function playGhostEatBomb() {
 export function initializeGhosts(ctx, canvasWidth, canvasHeight) {
     // Charger les images des fantômes
     loadGhostImages();
-
+    ghosts = [];
     for (let i = 0; i < numGhosts; i++) {
 
         let randomNumber = Math.floor(Math.random() * 100) + 1;
@@ -148,7 +148,7 @@ const explosionCanvas = document.getElementById("explosionCanvas");
 const explosionCtx = explosionCanvas.getContext("2d");
 
 // Fonction pour afficher l'animation d'explosion
-function displayExplosionAnimation(x, y, gameCtx) {
+export function displayExplosionAnimation(x, y, gameCtx) {
     const explosionImage = new Image();
     explosionImage.src = './img/boom.gif'; 
 
@@ -167,7 +167,7 @@ function displayExplosionAnimation(x, y, gameCtx) {
     };
 }
 
-function vibrateScreen() {
+export function vibrateScreen() {
     // Vérifier si le navigateur supporte l'API de vibration
     if (navigator.vibrate) {
         // Faire vibrer l'écran pendant 200 millisecondes

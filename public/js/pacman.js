@@ -4,7 +4,7 @@
 import("./ghosts.js");
 
 // Importer le fichier des fantômes
-import { initializeGhosts, drawGhosts, handleGhostInteractions, moveGhosts, ghosts } from "./ghosts.js";
+import { initializeGhosts, drawGhosts, handleGhostInteractions, moveGhosts, ghosts, playGhostEatBomb, displayExplosionAnimation, vibrateScreen } from "./ghosts.js";
 
 
 // Variables globales
@@ -21,9 +21,13 @@ let pacmanDirection = "right"; // Direction initiale de Pacman
 let mouthAngle = 0.2; // Angle initial pour l'animation de bouche
 let mouthIncrement = 0.05; // Contrôle l'incrémentation de l'angle de la bouche
 let score = 0; // Définition et initialisation du score
+let lastScore = 0;
 let gameLoop; // Déclaration de la variable gameLoop
 // Définir une variable pour garder une trace de l'état du bouton
 let isGameOver = false;
+
+let explosionTimeoutId = null; // id pour que la condition d'explosion ne se relance pas plusieurs fois
+
 
 function setScore(score_) {
     score = score_;
@@ -63,8 +67,7 @@ function gameOver() {
     handleExplosion(gameCtx, pacmanX, pacmanY);
     resetGame();
     
-
-    if (score == 0) {
+    if (!localStorage.getItem('userAddress') && score == 0) {
         document.getElementById("transactionButton").style.display = "none";
         showGameOverModalNotLogged();
     } else {
@@ -81,6 +84,7 @@ function gameOver() {
     // Désactiver le gestionnaire d'événements sur le bouton "Start Game"
     document.getElementById("startGameBtn").removeEventListener("click", startGame);
     isRunning = false;
+    updateScore(0);
 
 }
 
@@ -129,7 +133,9 @@ function startGame() {
         });
         // Démarrer la boucle de jeu
         gameLoop = setInterval(updateGame, 50); // Appeler updateGame toutes les 50 ms (augmentation de la vitesse)
-
+        if (!explosionTimeoutId) {
+            setInterval(drawScore, 50);
+        }
     }
 }
 
@@ -288,16 +294,83 @@ function stopMusic() {
 window.addEventListener('keydown', handleKeyPress);
 window.addEventListener('keyup', handleKeyPress);
 
+let thresholdExplode = false;
+var maxScore = 8000; // Max score pour barre power
+var energyBarWidth = 0; 
+var lastEnergyBarWidth = 0; 
 
 function drawScore() {
     // Dessiner le score dans le canvas
     gameCtx.fillStyle = "white";
     gameCtx.font = "16px Arial";
     gameCtx.fillText("Score: " + score, 20, 30);
+
+    // Dessiner "Boom :"
+    gameCtx.fillText("Boom :", 20, 55);
+    
+    // Calculer la largeur de la barre d'énergie basée sur le score par rapport à maxScore
+    lastEnergyBarWidth = (lastScore % maxScore / maxScore) * 50;
+    energyBarWidth = (score % maxScore / maxScore) * 50;
+    
+    // Vérifier si la différence de largeur dépasse un seuil pour déclencher l'explosion
+    if (energyBarWidth - lastEnergyBarWidth < 0) {
+        thresholdExplode = true;
+    } else {
+        thresholdExplode = false;
+    }
+
+    // Définir la couleur de la barre d'énergie
+    var energyBarColor = "green";
+
+    if (energyBarWidth > 40 && energyBarWidth < 50) {
+        energyBarColor = "red";
+        var amplitude = 4; // Amplitude de la vibration
+        var frequency = 0.1; // Fréquence de la vibration
+        var time = Date.now() * frequency;
+        var vibration = Math.sin(time) * amplitude;
+        // Dessiner la barre d'énergie avec une vibration
+        gameCtx.clearRect(75, 45, 50, 10);
+        gameCtx.fillStyle = energyBarColor;
+        gameCtx.fillRect(75 + vibration, 45, 50, 10);
+    }
+
+    // Si le seuil d'explosion est atteint et aucune explosion en cours
+    if (thresholdExplode && !explosionTimeoutId && score > 0) {
+        // Déclencher l'explosion
+        explosionTimeoutId = Math.random();
+        playGhostEatBomb();
+        displayExplosionAnimation(pacmanX, pacmanY, gameCtx);
+        vibrateScreen();
+        // Ajouter la classe de flash pour déclencher l'animation CSS
+        document.body.classList.add('flash-effect');
+        // Retirer la classe après l'animation pour réinitialiser l'effet
+        setTimeout(function() {
+            document.body.classList.remove('flash-effect');
+        }, 500); // Durée de l'animation en millisecondes
+            
+        // Réinitialisation des fantômes
+        initializeGhosts(gameCtx, gameCanvas.width, gameCanvas.height);
+        updateScore(score);
+    } 
+
+    // Dessiner la barre d'énergie vide avec un contour blanc
+    //gameCtx.fillStyle = "white";
+    gameCtx.fillRect(75, 45, 50, 10); // Dessiner la barre d'énergie vide
+    //gameCtx.strokeStyle = "white";
+    //gameCtx.strokeRect(75, 45, 50, 10); // Dessiner le contour blanc
+
+    gameCtx.fillStyle = energyBarColor;
+    gameCtx.fillRect(75, 45, energyBarWidth, 10); // Dessiner la barre d'énergie
+    explosionTimeoutId = null;
+    
 }
+
+
+
 
 // Fonction pour mettre à jour le score
 function updateScore(points) {
+    lastScore = score;
     score = points;
 }
 
@@ -313,7 +386,7 @@ function updateGame() {
     handleGhostInteractions(gameCtx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame);   
     drawPacman();
     drawGhosts(gameCtx); // Appel de la fonction de dessin des fantômes
-    drawScore();
+    //drawScore();
 }
 
 // Effacer seulement le canvas de jeu

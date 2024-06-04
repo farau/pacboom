@@ -1,7 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
 const path = require('path');
-const fs = require('fs').promises;
 
 const app = express();
 
@@ -10,7 +9,6 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 const session = require('express-session');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { ethers} = require('ethers');
 
 require('dotenv').config();
 
@@ -131,6 +129,14 @@ async function createTables() {
             user_id BIGINT NOT NULL REFERENCES user_access_tokens(user_id),
             score INTEGER NOT NULL,
             date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user_access_tokens(user_id) ON DELETE CASCADE
+        );  
+        CREATE TABLE IF NOT EXISTS score_users_daily (
+            id SERIAL PRIMARY KEY,
+            user_id BIGINT NOT NULL REFERENCES user_access_tokens(user_id),
+            username VARCHAR(50),
+            score INTEGER NOT NULL,
+            date DATE NOT NULL,
             CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user_access_tokens(user_id) ON DELETE CASCADE
         );  
       `);
@@ -300,40 +306,86 @@ app.post('/saveScore', verifyJWT, async (req, res) => {
         
         // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
         const address = req.userAddress;
-        // Check if username is provided
+        // Vérifiez si l'adresse est fournie
         if (!address) {
             return res.status(400).send('Address not provided.');
         }
 
-        // Insert the score and username into the database
+        // Commencez une nouvelle transaction
         const client = await pool.connect();
 
-        const username = await client.query(`
+        // Vérifiez si le nom d'utilisateur est fourni dans la base de données
+        const usernameQuery = await client.query(`
             SELECT username FROM users
             WHERE wallet_address = $1; 
         `, [address]);
 
-        // Vérifier si un username est bien défini
-        if (username.rows.length === 0 || username.rows[0].username === null) {
-            // Aucun enregistrement trouvé ou metadata_set est faux, renvoyer un statut 204 pour indiquer que les métadonnées ne sont pas disponibles
-            //console.log("Aucun enregistrement trouvé dans user_access_tokens pour l'utilisateur:", username);
-            res.status(204).send();
-        } else {
-            const result = await client.query(`
-                UPDATE users
-                SET score = CASE
-                            WHEN $1 > score THEN $1
-                            ELSE score
-                        END
-                WHERE username = $2
-                RETURNING *; 
-            `, [score, username.rows[0].username]);
+        const username = usernameQuery.rows ? usernameQuery.rows[0].username : null;
+        const user_id_query = username ? await client.query(`
+            SELECT user_id FROM user_access_tokens
+            WHERE username = $1; 
+        `, [username]) : null;
 
-            const newScore = result.rows[0];
+        const user_id = user_id_query.rows ? user_id_query.rows[0].user_id : null;
+
+        if (!username || !user_id) {
             client.release();
+            res.status(204).send();
+            return;
+        }
 
-            // Respond with success
-            res.status(201).json(newScore);
+        // Commencez la transaction
+        await client.query('BEGIN');
+
+        // Mettez à jour le score de l'utilisateur
+        const updateQuery = `
+            UPDATE users
+            SET score = CASE
+                        WHEN $1 > score THEN $1
+                        ELSE score
+                    END
+            WHERE wallet_address = $2
+            RETURNING *;
+        `;
+        const updateResult = await client.query(updateQuery, [score, address]);
+
+        // Vérifiez si le score quotidien est déjà enregistré
+        const dailyScoreQuery = await client.query(`
+            SELECT * FROM score_users_daily
+            WHERE user_id = $1 AND date = DATE_TRUNC('day', CURRENT_TIMESTAMP);
+        `, [user_id]);
+
+        if (dailyScoreQuery.rows.length > 0) {
+            // Mettez à jour le score quotidien si déjà enregistré
+            const updateDailyScoreQuery = `
+                UPDATE score_users_daily
+                SET score = CASE
+                        WHEN $1 > score THEN $1
+                        ELSE score
+                    END
+                WHERE user_id = $2 AND date = DATE_TRUNC('day', CURRENT_TIMESTAMP);
+            `;
+            await client.query(updateDailyScoreQuery, [score, user_id]);
+        } else {
+            // Insérez le score quotidien si non enregistré
+            const insertQuery = `
+                INSERT INTO score_users_daily (user_id, username, score, date) 
+                VALUES ($1, $2, $3, DATE_TRUNC('day', CURRENT_TIMESTAMP));
+            `;
+            await client.query(insertQuery, [user_id, username, score]);
+        }
+
+        // Validez la transaction
+        await client.query('COMMIT');
+
+        // Libérez le client
+        client.release();
+
+        // Vérifiez le succès de la mise à jour
+        if (updateResult.rowCount > 0) {
+            res.status(201).json(updateResult.rows);
+        } else {
+            res.status(500).send('Internal Server Error');
         }
     } catch (error) {
         console.error('Error saving score to database:', error);

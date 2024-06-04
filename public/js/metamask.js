@@ -11,7 +11,7 @@ async function handleAccountsChanged(accounts) {
         // L'utilisateur s'est connecté ou a changé de compte
         // Mettez à jour l'état de votre application si nécessaire
         signOutOfMetaMask();
-        await connectWalletwithMetaMask();
+        //await connectWalletwithMetaMask();
     }
 }
 
@@ -82,7 +82,7 @@ async function checkIfUserConnected() {
 }
 
 
-// Générez le JWT côté client en appelant la route /create-jwt sur le serveur
+// Génére le JWT côté client en appelant la route /create-jwt sur le serveur
 function generateJWT(address) {
     return fetch('/create-jwt', {
         method: 'POST',
@@ -175,7 +175,6 @@ async function connectWalletwithMetaMask() {
             localStorage.setItem('userSignature', signature);
 
             // Vous pouvez maintenant utiliser la signature comme nécessaire dans votre application
-
             checkUserSignatureDeleted();
         } catch (error) {
             console.error(error.message);
@@ -208,7 +207,7 @@ function signOutOfMetaMask() {
     localStorage.removeItem('username');
     // Réinitialiser le bouton connectWallet pour qu'il demande la connexion la prochaine fois
     connectWallet.innerHTML = 'Connect Wallet';
-
+    twitterLoginBtn.innerHTML = 'Link your Twitter'
     // On masque le bouton Twitter
     document.getElementById('twitterLoginBtn').style.display = 'none';
     
