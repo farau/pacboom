@@ -17,6 +17,7 @@ let pacmanX;
 let pacmanY;
 let pacmanSize = 20;
 let pacmanSpeed = 7; // Vitesse de déplacement de Pacman
+let color = "yellow"; // Couleur jaune de base de Pacman
 let pacmanDirection = "right"; // Direction initiale de Pacman
 let mouthAngle = 0.2; // Angle initial pour l'animation de bouche
 let mouthIncrement = 0.05; // Contrôle l'incrémentation de l'angle de la bouche
@@ -31,6 +32,16 @@ let explosionTimeoutId = null; // id pour que la condition d'explosion ne se rel
 
 function setScore(score_) {
     score = score_;
+
+}
+
+function setPacmanSpeed(speed_) {
+    pacmanSpeed = speed_;
+
+}
+
+function setColor(color_) {
+    color = color_;
 
 }
 
@@ -67,7 +78,7 @@ function gameOver() {
     handleExplosion(gameCtx, pacmanX, pacmanY);
     resetGame();
     
-    if (!localStorage.getItem('userAddress') && score == 0) {
+    if (!localStorage.getItem('userAddress') || score == 0) {
         document.getElementById("transactionButton").style.display = "none";
         showGameOverModalNotLogged();
     } else {
@@ -158,7 +169,7 @@ function drawBackground() {
 }
 
 // Dessiner Pacman sur le canvas avec animation de bouche
-function drawPacman() {
+function drawPacman(color) {
     // Calculer les angles de début et de fin pour l'animation de bouche
     let startAngle, endAngle;
 
@@ -185,7 +196,7 @@ function drawPacman() {
     }
 
    // Dessiner Pacman en fonction de la direction avec animation de bouche
-   gameCtx.fillStyle = "yellow";
+   gameCtx.fillStyle = color; //couleur de pacman
    gameCtx.beginPath();
    gameCtx.arc(Math.floor(pacmanX), Math.floor(pacmanY), pacmanSize, startAngle, endAngle);
    gameCtx.lineTo(Math.floor(pacmanX), Math.floor(pacmanY));
@@ -383,8 +394,8 @@ function updateGame() {
     moveGhosts(gameCanvas.width, gameCanvas.height); // Appeler moveGhosts avec les dimensions du canvas
     
     // Appel de la fonction de gestion des interactions avec les fantômes
-    handleGhostInteractions(gameCtx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame);   
-    drawPacman();
+    handleGhostInteractions(gameCtx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame, setPacmanSpeed, setColor);   
+    drawPacman(color);
     drawGhosts(gameCtx); // Appel de la fonction de dessin des fantômes
     //drawScore();
 }

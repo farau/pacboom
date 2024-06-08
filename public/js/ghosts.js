@@ -7,7 +7,8 @@ const GhostType = {
     NORMAL: "normal",
     BONUS: "bonus",
     BOMB: "bomb",
-    BEEPLE: "beeple"
+    BEEPLE: "beeple",
+    LAMBOLAND: "lamboland"
 };
 
 const GhostColor = {
@@ -33,6 +34,9 @@ function loadGhostImages() {
 
     ghostImages.beeple = new Image();
     ghostImages.beeple.src = './img/beeple.png';
+
+    ghostImages.lamboland = new Image();
+    ghostImages.lamboland.src = './img/lamboland.png';
 }
 
 // Définir la fonction pour charger et jouer le son du fantôme mangé
@@ -61,6 +65,17 @@ function playGhostEatPacmoonSound() {
 export function playGhostEatBomb() {
     // Chemin vers le fichier audio du fantôme mangé
     const soundPath = './sound/sf_explosion_01.mp3';
+
+    // Créer un nouvel élément audio
+    const audio = new Audio(soundPath);
+
+    // Charger le son et le jouer
+    audio.play();
+}
+
+export function playGhostEatLamboland() {
+    // Chemin vers le fichier audio du fantôme mangé
+    const soundPath = './sound/pacman_death.wav';
 
     // Créer un nouvel élément audio
     const audio = new Audio(soundPath);
@@ -211,6 +226,29 @@ function disableBeepleBonus() {
     }
 }
 
+let lambolandBonus = false;
+let lambolandTimeoutId = null; // ID du timeout pour la durée du bonus BEEPLE
+
+// Fonction pour activer le bonus BEEPLE
+function activateLambolandBonus(ctx, setPacmanSpeed, setColor) {
+    // Activer le bonus LAMBOLAND
+    lambolandBonus = true;
+    setColor("#7D7D7D"); //changer pacman en gris
+    setPacmanSpeed(3);
+    // Définir un timeout pour désactiver le bonus et arrêter la musique après la durée spécifiée
+    beepleTimeoutId = setTimeout(() => {
+        disableLambolandBonus(ctx, setPacmanSpeed, setColor); // Désactiver le bonus BEEPLE après la durée spécifiée
+    }, 5000); // Durée de la musique BEEPLE (5 secondes)
+}
+
+// Fonction pour désactiver le bonus BEEPLE
+function disableLambolandBonus(ctx, setPacmanSpeed, setColor) {
+    lambolandBonus = false; // Désactiver le bonus BEEPLE
+    setPacmanSpeed(7); //vitesse d'origine
+    setColor("yellow"); //pacman retrouve sa couleur jaune
+}
+
+
 // Définition de la fonction pour incrémenter le score
 const incrementScore = (typeMonster) => {
     return fetch('/increment-score', {
@@ -238,7 +276,7 @@ const incrementScore = (typeMonster) => {
 
 
 // Gérer les interactions avec les fantômes
-export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame) {
+export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame, setSpeedPacman, setColor) {
     ghosts.forEach((ghost) => {
         if (ghost.isAlive) {
             let distance = Math.sqrt(Math.pow(pacmanX - ghost.x, 2) + Math.pow(pacmanY - ghost.y, 2));
@@ -287,7 +325,20 @@ export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacma
                         clearTimeout(beepleTimeoutId); // Annuler le timeout actuel
                         activateBeepleBonus(); // Réactiver le bonus BEEPLE avec une nouvelle durée
                     }
+                } else if (ghost.type === GhostType.LAMBOLAND) {
+                    // Aucun bonus de points pour les fantômes LAMBOLAND
+                    scoreIncrementPromise = incrementScore(null); // Pas de bonus avec LAMBOLAND
+                    playGhostEatLamboland();
+                    if (!lambolandBonus) {
+                        // Activer le bonus BEEPLE si ce n'est pas déjà activé
+                        activateLambolandBonus(ctx, setSpeedPacman, setColor);
+                    } else {
+                        // Réinitialiser le délai du bonus BEEPLE lorsqu'un autre BEEPLE est mangé
+                        clearTimeout(lambolandTimeoutId); // Annuler le timeout actuel
+                        activateLambolandBonus(ctx, setSpeedPacman, setColor); // Réactiver le bonus BEEPLE avec une nouvelle durée
+                    }
                 }
+
 
                 // Attendre la résolution de la promesse pour mettre à jour le score
                 scoreIncrementPromise.then(newScore => {
@@ -362,6 +413,8 @@ function generateRandomGhostType() {
         return GhostType.BOMB;
     } else if (randomNumber > 35 && randomNumber <= 39) {
         return GhostType.BEEPLE;
+    } else if (randomNumber > 39 && randomNumber <= 45) {
+        return GhostType.LAMBOLAND;
     } else {
         return GhostType.NORMAL;
     }

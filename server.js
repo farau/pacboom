@@ -702,6 +702,7 @@ app.post('/increment-score', verifyJWT, (req, res) => {
     } else if (typeMonster == GhostType.BEEPLE) {
         scores[address] += 500;
     } else {
+        scores[address] += 0;
     }
     // Retourner le nouveau score
     res.json({ score: scores[address] });
