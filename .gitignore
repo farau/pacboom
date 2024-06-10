@@ -45,6 +45,8 @@ solidity/
 public/pacboomnfts
 public/metadata
 public/metadata copy 2
+public/js-original
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
@@ -134,3 +136,4 @@ dist
 
 .DS_Store
 log.txt
+script.sh

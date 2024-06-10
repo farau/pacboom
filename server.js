@@ -139,6 +139,16 @@ async function createTables() {
             date DATE NOT NULL,
             CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user_access_tokens(user_id) ON DELETE CASCADE
         );  
+
+        CREATE TABLE IF NOT EXISTS points_users_daily (
+            id SERIAL PRIMARY KEY,
+            wallet_address VARCHAR(42) NOT NULL,
+            user_id BIGINT REFERENCES user_access_tokens(user_id),
+            username VARCHAR(50),
+            points INTEGER NOT NULL,
+            date DATE NOT NULL,
+            CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user_access_tokens(user_id) ON DELETE CASCADE
+        );  
       `);
   
       console.log('Tables créées ou chargées avec succès');
@@ -734,6 +744,65 @@ app.get('/profile', verifyJWT, (req, res) => {
         </body>
         </html>
     `);
+});
+
+
+// Route pour sauvegarder le score des users dans la base de données
+app.post('/add-pacboom-points', verifyJWT, async (req, res) => {
+    try {
+        const points_ = req.body.points;
+        const points = parseInt(points_.hex, 16);
+        
+        // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
+        const address = req.userAddress;
+        // Vérifiez si l'adresse est fournie
+        if (!address) {
+            return res.status(400).send('Address not provided.');
+        }
+
+        // Commencez une nouvelle transaction
+        const client = await pool.connect();
+
+        // Vérifiez si le nom d'utilisateur est fourni dans la base de données
+        const usernameQuery = await client.query(`
+            SELECT username FROM users
+            WHERE wallet_address = $1; 
+        `, [address]);
+
+        const username = usernameQuery ? usernameQuery.rows[0].username : null;
+        const user_id_query = username ? await client.query(`
+            SELECT user_id FROM user_access_tokens
+            WHERE username = $1; 
+        `, [username]) : null;
+
+        const user_id = user_id_query ? user_id_query.rows[0].user_id : null;
+
+        // Commencez la transaction
+        await client.query('BEGIN');
+
+        // Insérez les points par user pour chaque transactions
+        const insertQuery = await client.query(`
+            INSERT INTO points_users_daily (wallet_address, user_id, username, points, date) 
+            VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP);`
+        , [address, user_id, username, `${points}`]);
+
+        
+        // Validez la transaction
+        await client.query('COMMIT');
+
+        // Libérez le client
+        client.release();
+
+        // Vérifiez le succès de la mise à jour
+        if (insertQuery.rowCount > 0) {
+            res.status(201).json(insertQuery.rows);
+        } else {
+            res.status(500).send('Internal Server Error');
+        }
+    } catch (error) {
+        console.error('Error saving points to database:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 
