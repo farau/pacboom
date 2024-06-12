@@ -671,7 +671,8 @@ const GhostType = {
     NORMAL: "normal",
     BONUS: "bonus",
     BOMB: "bomb",
-    BEEPLE: "beeple"
+    BEEPLE: "beeple",
+    JENNDEFER: "jenndefer"
 };
 
 // Route pour initialiser le score à zéro pour un joueur donné
@@ -711,6 +712,8 @@ app.post('/increment-score', verifyJWT, (req, res) => {
         scores[address] += 300;
     } else if (typeMonster == GhostType.BEEPLE) {
         scores[address] += 500;
+    } else if (typeMonster == GhostType.JENNDEFER) {
+        scores[address] += 1000;
     } else {
         scores[address] += 0;
     }
