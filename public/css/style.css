@@ -309,3 +309,16 @@ footer {
     height: 100%;
     z-index: -1; /* Assurez-vous que le conteneur est derrière le contenu */
   }
+
+#introductionVideo::-webkit-media-controls {
+    display: none !important;
+}
+#introductionVideo::-moz-media-controls {
+    display: none !important;
+}
+#introductionVideo::-ms-media-controls {
+    display: none !important;
+}
+#introductionVideo {
+    pointer-events: none;
+}

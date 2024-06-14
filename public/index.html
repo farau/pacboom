@@ -61,10 +61,6 @@
         </div>
     </div>
     
-    <div class="text-center mb-3">
-        <!-- Bouton "Start Game" -->
-        <button id="startGameBtn" class="btn btn-success mt-3">Start Game</button>
-    </div>
     <!-- Game Canvas Container -->
     <div class="container mt-5">
         <div class="row">
@@ -74,9 +70,10 @@
                     <canvas id="backgroundCanvas" width="500" height="500"></canvas>
                     <canvas id="gameCanvas" width="500" height="500"></canvas>
                     <canvas id="explosionCanvas" width="500" height="500"></canvas>
-                </div>
-
-                
+                    <div id="videoContainer" class="embed-responsive embed-responsive-4by3">
+                        <video id="introductionVideo" class="embed-responsive-item" src="video/introduction.mp4" style="display: none;" height="500"></video>
+                    </div>
+                </div> 
             </div>
 
             <!-- Colonne pour le texte -->
@@ -180,11 +177,6 @@
                 </div>
                 <div class="col-sm-4 text-center">
                     <!-- Partie centrale avec la musique et le texte -->
-                    <p><a href="https://www.youtube.com/watch?v=qtZ0hl-unM4">Music by Arsenic1987</a></p>
-                    <audio controls autoplay loop>
-                        <source src="./sound/Pac-man theme remix - By Arsenic1987.mp3" type="audio/mp3">
-                        Your browser doesn't support audio
-                    </audio>
                 </div>
                 <div class="col-sm-4">
                     <!-- Partie droite avec le logo -->
