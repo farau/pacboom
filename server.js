@@ -5,10 +5,11 @@ const path = require('path');
 const app = express();
 
 const passport = require('passport');
-const TwitterStrategy = require('passport-twitter').Strategy;
 const session = require('express-session');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+
+const { Strategy } = require('@superfaceai/passport-twitter-oauth2');
 
 require('dotenv').config();
 
@@ -18,26 +19,29 @@ app.use(express.json());
 // Utilisation du middleware CORS
 app.use(cors());
 
+// Remplacez par vos propres clés et secrets
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const CALLBACK_URL = process.env.CALLBACK_URL;
 
-// Configuration de session
-app.use(session({
-    secret: 'votre_secret_session',
-    resave: false,
-    saveUninitialized: true
-}));
+// Configurer les sessions Express
+app.use(session({ secret: 'votre_secret_de_session', resave: true, saveUninitialized: true }));
 
 // Initialiser Passport et session
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Configurer passport
-passport.use(new TwitterStrategy({
-    consumerKey: process.env.CONSUMER_KEY,
-    consumerSecret: process.env.CONSUMER_SECRET,
-    callbackURL: process.env.CALLBACK_URL,
-    includeScreenName: true
+
+
+// Configurer Passport.js pour utiliser la stratégie OAuth2
+passport.use(new Strategy({
+    clientID: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    clientType: 'confidential',
+    callbackURL: CALLBACK_URL,
   },
-  function(token, tokenSecret, profile, done) {
+  function(accessToken, refreshToken, profile, done) {
+    // console.log('Success!', { accessToken, refreshToken });
     // Sauvegarde des jetons d'accès dans la base de données
     saveAccessToken(profile.username, profile.id, profile.photos[0].value)
     .then(() => {
@@ -57,24 +61,34 @@ passport.use(new TwitterStrategy({
     }
 ));
 
-
 // Sérialisation et désérialisation de l'utilisateur
 passport.serializeUser((user, done) => {
-    done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-    done(null, user);
+  done(null, user);
 });
 
+// Route pour l'authentification Twitter
+app.get('/auth/twitter', passport.authenticate('twitter', {
+    // <6> Scopes
+    scope: ['tweet.read', 'users.read', 'offline.access'],
+})
+);
+
+// <7> Callback handler
+app.get('/auth/twitter/callback', passport.authenticate('twitter'),
+function (req, res) {
+    // Authentification réussie, rediriger vers le profil
+    const { username, screen_name, avatarUrl } = req.user;
+    res.redirect(`/index.html?username=${username}&screen_name=${screen_name}&avatarUrl=${avatarUrl}`);
+}
+);
 
 const router = express.Router();
 
-// Route pour l'authentification avec Twitter (redirection côté serveur)
-router.get('/auth/twitter', passport.authenticate('twitter'));
-
 // Autres routes et configurations de votre application Express...
-
 module.exports = router;
 
 
@@ -519,20 +533,6 @@ app.post('/linkTwitter', verifyJWT, async (req, res) => {
     }
 });
 
-
-
-// Route pour l'authentification avec Twitter
-app.get('/auth/twitter', passport.authenticate('twitter'));
-
-// Route de rappel après l'authentification Twitter
-app.get('/auth/twitter/callback',
-  passport.authenticate('twitter', { failureRedirect: '/login' }),
-  (req, res) => {
-    // Authentification réussie, rediriger l'utilisateur vers la page principale
-    const { username, screen_name, avatarUrl } = req.user;
-    res.redirect(`/index.html?username=${username}&screen_name=${screen_name}&avatarUrl=${avatarUrl}`);
-  }
-);
 
 
 // Fonction pour sauvegarder les jetons d'accès dans la base de données
