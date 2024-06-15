@@ -78,13 +78,24 @@ app.get('/auth/twitter', passport.authenticate('twitter', {
 );
 
 // <7> Callback handler
-app.get('/auth/twitter/callback', passport.authenticate('twitter'),
-function (req, res) {
-    // Authentification réussie, rediriger vers le profil
-    const { username, screen_name, avatarUrl } = req.user;
-    res.redirect(`/index.html?username=${username}&screen_name=${screen_name}&avatarUrl=${avatarUrl}`);
-}
-);
+app.get('/auth/twitter/callback', (req, res, next) => {
+    passport.authenticate('twitter', (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.redirect('/');
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                return next(err);
+            }
+            const { username, screen_name, avatarUrl } = user;
+            return res.redirect(`/index.html?username=${username}&screen_name=${screen_name}&avatarUrl=${avatarUrl}`);
+        });
+    })(req, res, next);
+});
+
 
 const router = express.Router();
 
