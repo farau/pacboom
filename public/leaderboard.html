@@ -66,6 +66,25 @@
     </div>
 
     <div class="container mt-5">
+        <h1 class="text-center">Daily High score</h1>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr class="white-text">
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="dailyLeaderboardBody" class="white-text">
+            </tbody>
+        </table>
+        <div class="text-center">
+            <button id="prevPage" class="btn btn-primary">Previous</button>
+            <button id="nextPage" class="btn btn-primary">Next</button>
+        </div>
+    </div>
+    
+    <div class="container mt-5">
         <h1 class="text-center">High score</h1>
         <table class="table table-striped mt-3">
             <thead>
@@ -78,9 +97,12 @@
             <tbody id="leaderboardBody" class="white-text">
             </tbody>
         </table>
+        <div class="text-center">
+            <button id="prevPageOverall" class="btn btn-primary">Previous</button>
+            <button id="nextPageOverall" class="btn btn-primary">Next</button>
+        </div>
     </div>
-    
-
+        
     <footer class="footer mt-10">
         <div class="container">
             <div class="row">
@@ -121,33 +143,60 @@
         });
     </script>
     <script>
-        // Script JavaScript pour afficher le leaderboard
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const response = await fetch('/getLeaderboard');
-                const leaderboardData = await response.json();
+        let currentPageDaily = 1;
+        let currentPageOverall = 1;
+        const pageSize = 10;
 
-                const leaderboardBody = document.getElementById('leaderboardBody');
-                leaderboardBody.innerHTML = ''; // Effacer le contenu existant du tableau
-
-                // Parcourir les données du leaderboard et générer les lignes HTML
-                leaderboardData.forEach((user, index) => {
-                    const row = `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${user.username}</td>
-                            <td>${user.score}</td>
-                        </tr>
-                    `;
-                    leaderboardBody.innerHTML += row;
-                });
-
-            } catch (error) {
-                console.error('Erreur lors de la récupération du leaderboard :', error);
-                // Gérer les erreurs ici (par exemple, afficher un message d'erreur)
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPageDaily > 1) {
+                currentPageDaily--;
+                loadLeaderboard('dailyLeaderboardBody', '/getDailyLeaderboard', currentPageDaily, pageSize, 'prevPage', 'nextPage');
             }
         });
 
+        document.getElementById('nextPage').addEventListener('click', () => {
+            currentPageDaily++;
+            loadLeaderboard('dailyLeaderboardBody', '/getDailyLeaderboard', currentPageDaily, pageSize, 'prevPage', 'nextPage');
+        });
+
+        document.getElementById('prevPageOverall').addEventListener('click', () => {
+            if (currentPageOverall > 1) {
+                currentPageOverall--;
+                loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
+            }
+        });
+
+        document.getElementById('nextPageOverall').addEventListener('click', () => {
+            currentPageOverall++;
+            loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
+        });
+
+        function loadLeaderboard(elementId, url, page, pageSize, prevButtonId, nextButtonId) {
+            fetch(`${url}?page=${page}&pageSize=${pageSize}`)
+                .then(response => response.json())
+                .then(data => {
+                    const leaderboardBody = document.getElementById(elementId);
+                    leaderboardBody.innerHTML = '';
+                    data.forEach((item, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${(page - 1) * pageSize + index + 1}</td>
+                            <td>${item.username}</td>
+                            <td>${item.score}</td>
+                        `;
+                        leaderboardBody.appendChild(row);
+                    });
+
+                    // Disable or enable buttons based on page number and data length
+                    document.getElementById(prevButtonId).disabled = (page === 1);
+                    document.getElementById(nextButtonId).disabled = (data.length < pageSize);
+                })
+                .catch(error => console.error('Erreur lors du chargement des données du leaderboard :', error));
+        }
+
+        // Load initial data
+        loadLeaderboard('dailyLeaderboardBody', '/getDailyLeaderboard', currentPageDaily, pageSize, 'prevPage', 'nextPage');
+        loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
     </script>
 </body>
 </html>

@@ -431,13 +431,18 @@ app.post('/saveScore', verifyJWT, async (req, res) => {
 // Backend route to fetch leaderboard data
 app.get('/getLeaderboard', async (req, res) => {
     try {
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = parseInt(req.query.pageSize) || 10;
+        const offset = (page - 1) * pageSize;
+
         const query = `
             SELECT username, score
             FROM users
             WHERE username IS NOT NULL
-            ORDER BY score DESC;
+            ORDER BY score DESC
+            LIMIT $1 OFFSET $2;
         `;
-        const result = await pool.query(query);
+        const result = await pool.query(query, [pageSize, offset]);
 
         const leaderboardData = result.rows;
         res.json(leaderboardData);
@@ -447,6 +452,31 @@ app.get('/getLeaderboard', async (req, res) => {
     }
 });
 
+
+// Backend route to fetch daily leaderboard data
+app.get('/getDailyLeaderboard', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = parseInt(req.query.pageSize) || 10;
+        const offset = (page - 1) * pageSize;
+
+        const query = `
+            SELECT username, score
+            FROM score_users_daily
+            WHERE username IS NOT NULL
+            AND date = CURRENT_DATE
+            ORDER BY score DESC
+            LIMIT $1 OFFSET $2;
+        `;
+        const result = await pool.query(query, [pageSize, offset]);
+
+        const leaderboardData = result.rows;
+        res.json(leaderboardData);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données du leaderboard :', error);
+        res.status(500).json({ error: 'Erreur interne du serveur' });
+    }
+});
 
 
 // Route POST pour enregistrer les données utilisateur dans la table users
