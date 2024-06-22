@@ -479,6 +479,30 @@ app.get('/getDailyLeaderboard', async (req, res) => {
 });
 
 
+// Route pour que les hosts de D1 puissent avoir les data de la veille et reward les users
+app.get('/d1contest', async (req, res) => {
+    try {
+        const query = `
+            SELECT username, score
+            FROM score_users_daily
+            WHERE username IS NOT NULL
+            AND date = CURRENT_DATE - INTERVAL '1 DAY'
+            ORDER BY score DESC;
+        `;
+        const result = await pool.query(query);
+
+        // Utiliser result.rows pour obtenir les données
+        const leaderboardData = result.rows;
+
+        // Renvoyer les données au client en format JSON
+        return res.json(leaderboardData);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données du leaderboard :', error);
+        res.status(500).json({ error: 'Erreur interne du serveur' });
+    }
+});
+
+
 // Route POST pour enregistrer les données utilisateur dans la table users
 app.post('/linkTwitter', verifyJWT, async (req, res) => {
     const handle = req.body.screen_name;
