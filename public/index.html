@@ -7,7 +7,6 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="./img/explode.gif" type="image/png">
     <link rel="stylesheet" type="text/css" href="./css/style.css" >
-
 </head>
 
 <body class="w-full">
@@ -15,7 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top w-100">
         <div class="container">
             <a class="navbar-brand" href="/index.html">
-                <img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo">
+                <img src="img/logo.png" height="70" class="d-inline-block align-top" alt="Logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -26,13 +25,13 @@
                         <a class="nav-link" href="index.html">Play</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">Why PacBoom ?</a>
+                        <a class="nav-link" href="mynub.html">My Nub</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="pfpgenerator.html">PFP Generator</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pacfidelity.html">PAC Fidelity</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="leaderboard.html">Leaderboard</a>
@@ -55,7 +54,7 @@
 
     <div id="networkModal" class="network-modal">
         <div class="network-modal-content">
-            <img src="img/logo.gif" height="50" class="d-inline-block align-top">
+            <img src="img/logo.gif" height="70" class="d-inline-block align-top">
             <p>Wrong network. Please change the network.</p>
             <button id="changeNetworkButton">Change</button>
         </div>
@@ -66,6 +65,7 @@
         <div class="row">
             <!-- Colonne pour le canvas -->
             <div class="col-md-6 order-0 order-md-0 position-relative" >
+                <button id="playButton" class="btn btn-primary" style="display: flex; justify-content: center; align-items: center; position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);">Play</button>
                 <div id="canvasContainer" style="height: 500px;">
                     <canvas id="backgroundCanvas" width="500" height="500"></canvas>
                     <canvas id="gameCanvas" width="500" height="500"></canvas>
@@ -88,24 +88,24 @@
                         Ghost : Also known as a <a href="https://ghostblast.xyz/">memecoin</a> of the Blast ecosystem, the first to emerge from the Tornado Blast launcher. It aims to chase Pacman and earn gold ! Eat it to <b>get 100 points.</b>
                     </li>
                     <li class="mb-3">
+                        <img src="img/french.png" alt="French government men" style="width: 50px; height: 50px;">
+                        <b style="color: red;">French government men :</b> They arrested a man who did nothing except guarantee our freedom of expression. Liberté ? <br/>Don't try to eat them or ... you will REGRET IT ! But now you can shoot them !
+                    </li>
+                    <li class="mb-3">
+                        <img src="img/durov.png" alt="Durov" style="width: 30px; height: 30px; margin-right: 10px;">
+                        <b style="color: green;">Durov :</b> He is protecting our right to freedom of speech and has been arrested recently. ARMY community and most of crypto use Telegram everyday, let's support him. #FreeDurov. <br/>Eat it to get 500 points and the special ability to eat those <b>french government men</b> spamming the map ! But be careful, the ability doesn't last long !
+                    </li>
+                    <li class="mb-3">
                         <img src="img/pacmoon.png" alt="Pacmoon" style="width: 30px; height: 30px; margin-right: 10px;">
-                        Pacmoon : sometimes a Pacmoon can appear, just eat it because you love it and <b>get 300 points</b> !
+                        Pacmoon : sometimes our dear Pacmoon can appear, just eat it because he is now dead and <b>get 300 points</b> !
                     </li>
                     <li class="mb-3">
-                        <img src="img/bobby.png" alt="Bobby" style="width: 30px; height: 30px; margin-right: 10px;">
-                        Bobby : this is the master, he appears to track his followers and see if everything is right in the Pacmoon ecosystem. Don't try to eat it or ... you will REGRET IT !
-                    </li>
-                    <li class="mb-3">
-                        <img src="img/lamboland.png" alt="Lambolane" style="width: 30px; height: 30px; margin-right: 10px;">
-                        Lamboland : the marketing mastermind behind Pacmoon. As he said "Pacmoon is culture". Don't try to eat it because it will take time to digest !
+                        <img src="img/lamboland.png" alt="Lamboland" style="width: 30px; height: 30px; margin-right: 10px;">
+                        Lamboland : the marketing mastermind behind ARMY. As he said "New pfp. New name. New era.". Don't try to eat it because it will take time to digest !
                     </li>
                     <li class="mb-3">
                         <img src="img/jenndefer.png" alt="Jenndefer" style="width: 30px; height: 30px; margin-right: 10px;">
                         Jenndefer : she is a well-known influencer who often shares advice and tweets about the Blast ecosystem. Eat it to get 1000 points but you will become bigger, so take care of those Boobies ! The ability doesn't last long.
-                    </li>
-                    <li class="mb-3">
-                        <img src="img/beeple.png" alt="Beeple" style="width: 30px; height: 30px; margin-right: 10px;">
-                        Beeple : the #1 in the leaderboard, enlightened by PacMoon. Eat it to get 500 points and the special ability to eat those Bobbies spamming the map ! But be careful, the ability doesn't last long !
                     </li>
                 </ul>
 
@@ -113,12 +113,12 @@
                 <p>Desktop</p>
                 <ul>
                     <li>Arrows : to move Pacboom</li>
-                    <li>Space : to speed up Pacboom</li>
+                    <li>Space : to speed up Pacboom OR shoot a bullet</li>
                 </ul>
                 <p>Smartphone</p>
                 <ul>
                     <li>Slide your finger in the desired direction to move Pacboom</li>
-                    <li>Keep pressing to speed up Pacboom</li>
+                    <li>Keep pressing to speed up Pacboom OR tap on the <i>Shoot!</i> button to shoot a bullet</li>
                 </ul>
             </div>
         </div>
@@ -131,7 +131,7 @@
             <div class="modal-content">
                 <!-- Modal header -->
                 <div class="modal-header text-center">
-                    <h4 class="modal-title mx-auto"><img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo"></h4>
+                    <h4 class="modal-title mx-auto"><img src="img/logo.gif" height="70" class="d-inline-block align-top" alt="Logo"></h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
@@ -155,7 +155,7 @@
             <div class="modal-content">
                 <!-- Modal header -->
                 <div class="modal-header text-center">
-                    <h4 class="modal-title mx-auto"><img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo"></h4>
+                    <h4 class="modal-title mx-auto"><img src="img/logo.png" height="70" class="d-inline-block align-top" alt="Logo"></h4>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -172,8 +172,8 @@
             <div class="row">
                 <div class="col-sm-4">
                     <!-- Partie gauche -->
-                    <p>&copy; 2024 PacBoom.</p> 
-                    <p>For the PacMoon community.</p>
+                    <p>&copy; 2024 PacBoom<br/>
+                    Logo design made by <a href="https://x.com/rodinh03">Rodinho</a></p>
                 </div>
                 <div class="col-sm-4 text-center">
                     <!-- Partie centrale avec la musique et le texte -->
@@ -188,7 +188,6 @@
         </div>
     </footer>
     
-
     <!-- JavaScript for game and Twitter login handling -->
     <script type="module" src="./js/ethers-5.2.umd.min.js"></script>
     <script type="module" src="./js/config.js"></script> <!-- Import ghosts module -->

@@ -1,1 +1,647 @@
-const a0_0x345064=a0_0x5a31;(function(_0xd66d7b,_0x350dda){const _0x2428e0=a0_0x5a31,_0xef80ae=_0xd66d7b();while(!![]){try{const _0x1b0364=parseInt(_0x2428e0(0xa6))/0x1*(-parseInt(_0x2428e0(0xe8))/0x2)+parseInt(_0x2428e0(0xc5))/0x3+parseInt(_0x2428e0(0xa4))/0x4+parseInt(_0x2428e0(0xaa))/0x5*(-parseInt(_0x2428e0(0xe7))/0x6)+parseInt(_0x2428e0(0xde))/0x7*(-parseInt(_0x2428e0(0xdd))/0x8)+parseInt(_0x2428e0(0xd8))/0x9+-parseInt(_0x2428e0(0xb4))/0xa*(-parseInt(_0x2428e0(0xbc))/0xb);if(_0x1b0364===_0x350dda)break;else _0xef80ae['push'](_0xef80ae['shift']());}catch(_0x5b0fe1){_0xef80ae['push'](_0xef80ae['shift']());}}}(a0_0x215d,0x52cb8));export let ghosts=[];export const numGhosts=0x3;let score=0x0;const GhostType={'NORMAL':a0_0x345064(0xba),'BONUS':a0_0x345064(0xb1),'BOMB':a0_0x345064(0xe0),'BEEPLE':a0_0x345064(0xac),'LAMBOLAND':a0_0x345064(0xd9),'JENNDEFER':'jenndefer'},GhostColor={'NORMAL':'red','BONUS':'gold','BOMB':a0_0x345064(0xb5),'BEEPLE':'green'};let ghostImages={};function loadGhostImages(){const _0xb1ae33=a0_0x345064;ghostImages['normal']=new Image(),ghostImages[_0xb1ae33(0xba)][_0xb1ae33(0xec)]='./img/ghost.png',ghostImages[_0xb1ae33(0xb1)]=new Image(),ghostImages['bonus'][_0xb1ae33(0xec)]='./img/pacmoon.png',ghostImages[_0xb1ae33(0xe0)]=new Image(),ghostImages[_0xb1ae33(0xe0)][_0xb1ae33(0xec)]='./img/bobby.png',ghostImages[_0xb1ae33(0xac)]=new Image(),ghostImages[_0xb1ae33(0xac)][_0xb1ae33(0xec)]=_0xb1ae33(0xce),ghostImages[_0xb1ae33(0xd9)]=new Image(),ghostImages[_0xb1ae33(0xd9)][_0xb1ae33(0xec)]=_0xb1ae33(0xed),ghostImages['jenndefer']=new Image(),ghostImages[_0xb1ae33(0xb8)][_0xb1ae33(0xec)]=_0xb1ae33(0xe4);}function playGhostEatSound(){const _0x279011=a0_0x345064,_0x371fd8=_0x279011(0xea),_0x500d4f=new Audio(_0x371fd8);_0x500d4f[_0x279011(0xbf)]();}function playGhostEatPacmoonSound(){const _0x6dec18=a0_0x345064,_0x149862=_0x6dec18(0xc1),_0x4be10b=new Audio(_0x149862);_0x4be10b[_0x6dec18(0xbf)]();}export function playGhostEatBomb(){const _0x1f26b8=a0_0x345064,_0x48a8be='./sound/sf_explosion_01.mp3',_0x14cf09=new Audio(_0x48a8be);_0x14cf09[_0x1f26b8(0xbf)]();}export function playGhostEatLamboland(){const _0x3b9081=a0_0x345064,_0x23b7ff=_0x3b9081(0xca),_0x1fb9d7=new Audio(_0x23b7ff);_0x1fb9d7[_0x3b9081(0xbf)]();}export function playGhostEatJenndefer(){const _0x236bcc=a0_0x345064,_0x543109=_0x236bcc(0xe5),_0x339e48=new Audio(_0x543109);_0x339e48[_0x236bcc(0xbf)]();}export function initializeGhosts(_0xa1eba,_0xcf0022,_0x44ea77,_0x279e42,_0x4b5cb6,_0x444411){const _0x27a15d=a0_0x345064;loadGhostImages(),ghosts=[];for(let _0x74d638=0x0;_0x74d638<numGhosts;_0x74d638++){let _0x5229a8=Math['floor'](Math['random']()*0x64)+0x1,_0x48975b,_0x2f2e5c;if(_0x5229a8<=0xa)_0x48975b=GhostType[_0x27a15d(0xb9)],_0x2f2e5c=GhostColor[_0x27a15d(0xb9)];else{if(_0x5229a8>0xa&&_0x5229a8<=0xf)_0x48975b=GhostType['BOMB'],_0x2f2e5c=GhostColor['BOMB'];else _0x5229a8>0x14&&_0x5229a8<=0x17?(_0x48975b=GhostType[_0x27a15d(0xc4)],_0x2f2e5c=GhostColor['BEEPLE']):(_0x48975b=GhostType[_0x27a15d(0xcb)],_0x2f2e5c=GhostColor['NORMAL']);}let _0x3c9abe={'x':Math[_0x27a15d(0xc8)]()*_0xcf0022,'y':Math[_0x27a15d(0xc8)]()*_0x44ea77,'size':0x14,'speed':0x5,'direction':Math[_0x27a15d(0xc8)]()*0x2*Math['PI'],'isAlive':!![],'type':_0x48975b};while(_0x3c9abe['x']>=_0x279e42-_0x444411&&_0x3c9abe['x']<=_0x279e42+_0x444411&&_0x3c9abe['y']>=_0x4b5cb6-_0x444411&&_0x3c9abe['y']<=_0x4b5cb6+_0x444411){_0x3c9abe['x']=Math[_0x27a15d(0xc8)]()*_0xa1eba['canvas']['width'],_0x3c9abe['y']=Math['random']()*_0xa1eba[_0x27a15d(0xad)][_0x27a15d(0xdc)];}ghosts[_0x27a15d(0xcf)](_0x3c9abe);}}export function drawGhosts(_0x17e983){ghosts['forEach'](_0x2afb63=>{const _0x1a37b0=a0_0x5a31;if(_0x2afb63['isAlive']){let _0x4e4d25=ghostImages[_0x2afb63[_0x1a37b0(0xe1)]],_0x4ae4bb=_0x2afb63[_0x1a37b0(0xc7)]*0x2;_0x17e983[_0x1a37b0(0xda)](_0x4e4d25,_0x2afb63['x']-_0x4ae4bb/0x2,_0x2afb63['y']-_0x4ae4bb/0x2,_0x4ae4bb,_0x4ae4bb);}});}function calculateGhostSpeed(_0x25b993){let _0x221374=0x3,_0x412a6b=0x1+_0x25b993/0x2710,_0x362f77=_0x221374*_0x412a6b;return _0x362f77;}const explosionCanvas=document['getElementById']('explosionCanvas'),explosionCtx=explosionCanvas['getContext']('2d');export function displayExplosionAnimation(_0x297b41,_0x43847c,_0x3610ea){const _0x3fb409=a0_0x345064,_0x580d2a=new Image();_0x580d2a[_0x3fb409(0xec)]=_0x3fb409(0xd7),_0x580d2a[_0x3fb409(0xd5)]=()=>{const _0x52ecf4=_0x3fb409,_0x26e71a=_0x3610ea['canvas'][_0x52ecf4(0xcd)],_0x1a417b=_0x3610ea['canvas'][_0x52ecf4(0xdc)],_0x157c57=_0x26e71a/0x2-_0x580d2a[_0x52ecf4(0xcd)]/0x2,_0x458b05=_0x1a417b/0x2-_0x580d2a[_0x52ecf4(0xdc)]/0x2;_0x3610ea['drawImage'](_0x580d2a,_0x157c57,_0x458b05);};}export function vibrateScreen(){const _0x44e6bf=a0_0x345064;navigator[_0x44e6bf(0xb3)]?navigator[_0x44e6bf(0xb3)](0xc8):console['log']('L\x27API\x20de\x20vibration\x20n\x27est\x20pas\x20prise\x20en\x20charge\x20dans\x20ce\x20navigateur.');}let beepleBonus=![],beepleAudio=null,beepleTimeoutId=null;function a0_0x215d(){const _0x557441=['blue','json','remove','jenndefer','BONUS','normal','body','6622BFthIZ','Erreur\x20lors\x20de\x20l\x27incrémentation\x20du\x20score:','atan2','play','floor','./sound/pacman_eatfruit.wav','pow','direction','BEEPLE','506340FNXjGA','cos','size','random','jwtToken','./sound/pacman_death.wav','NORMAL','currentTime','width','./img/beeple.png','push','classList','./sound/pacman_eating.mp3','score','isAlive','catch','onload','#ADD8E6','./img/boom.gif','4067757LBTUDQ','lamboland','drawImage','pause','height','8ANcWfl','324569xqVJqA','BOMB','bomb','type','paused','getItem','./img/jenndefer.png','./sound/pacman_big.mp3','stringify','235236XrOwLU','7968ryjOmg','sin','./sound/pacman_eatghost.wav','down','src','./img/lamboland.png','speed','797864IJTytv','right','123EqISAd','application/json','JENNDEFER','LAMBOLAND','5VGCkqy','yellow','beeple','canvas','flash-effect','Failed\x20to\x20increment\x20score','then','bonus','POST','vibrate','1570EMWnYH'];a0_0x215d=function(){return _0x557441;};return a0_0x215d();}function activateBeepleBonus(_0x14ccc0){const _0x49939a=a0_0x345064;beepleAudio&&!beepleAudio[_0x49939a(0xe2)]&&(beepleAudio[_0x49939a(0xdb)](),beepleAudio[_0x49939a(0xcc)]=0x0),beepleBonus=!![],_0x14ccc0(_0x49939a(0xd6)),beepleAudio=new Audio(_0x49939a(0xd1)),beepleAudio[_0x49939a(0xcc)]=0x0,beepleAudio['play'](),beepleTimeoutId=setTimeout(()=>{disableBeepleBonus(_0x14ccc0);},0x1388);}function a0_0x5a31(_0x1251b4,_0x51fff6){const _0x215d69=a0_0x215d();return a0_0x5a31=function(_0x5a31a2,_0x3f508f){_0x5a31a2=_0x5a31a2-0xa4;let _0x97b785=_0x215d69[_0x5a31a2];return _0x97b785;},a0_0x5a31(_0x1251b4,_0x51fff6);}function disableBeepleBonus(_0x2797c6){const _0x565653=a0_0x345064;beepleBonus=![],_0x2797c6(_0x565653(0xab)),beepleAudio&&!beepleAudio[_0x565653(0xe2)]&&beepleAudio[_0x565653(0xdb)]();}let lambolandBonus=![],lambolandTimeoutId=null;function activateLambolandBonus(_0x3f1cd1,_0x3567f1,_0x289f27){lambolandBonus=!![],_0x289f27('#7D7D7D'),_0x3567f1(0x3),lambolandTimeoutId=setTimeout(()=>{disableLambolandBonus(_0x3f1cd1,_0x3567f1,_0x289f27);},0x1388);}function disableLambolandBonus(_0xbeeff,_0xc7c6d9,_0x378886){const _0x460222=a0_0x345064;lambolandBonus=![],_0xc7c6d9(0x7),_0x378886(_0x460222(0xab));}let jenndeferBonus=![],jenndeferTimeoutId=null;function activateJenndeferBonus(_0x329f6a){jenndeferBonus=!![],_0x329f6a(0x28),jenndeferTimeoutId=setTimeout(()=>{disableJenndeferBonus(_0x329f6a);},0x1388);}function disableJenndeferBonus(_0x23a1b3){jenndeferBonus=![],_0x23a1b3(0x14);}const incrementScore=_0x203f16=>{const _0xa2fdd6=a0_0x345064;return fetch('/increment-score',{'method':_0xa2fdd6(0xb2),'headers':{'Content-Type':_0xa2fdd6(0xa7),'Authorization':''+localStorage[_0xa2fdd6(0xe3)](_0xa2fdd6(0xc9))},'body':JSON[_0xa2fdd6(0xe6)]({'monster':_0x203f16})})['then'](_0x2b9c40=>{const _0x3b0c3a=_0xa2fdd6;if(!_0x2b9c40['ok'])throw new Error(_0x3b0c3a(0xaf));return _0x2b9c40[_0x3b0c3a(0xb6)]();})['then'](_0x5e9dbb=>{const _0x33f92a=_0xa2fdd6;return _0x5e9dbb[_0x33f92a(0xd2)];})[_0xa2fdd6(0xd4)](_0x3f39c3=>{const _0x1c3c4c=_0xa2fdd6;console['error'](_0x1c3c4c(0xbd),_0x3f39c3);throw _0x3f39c3;});};export function handleGhostInteractions(_0x4dd24d,_0x3297b9,_0x2292fe,_0x5dd168,_0x6648bb,_0x211a07,_0x486202,_0x5e879b,_0x494e7a,_0x4cf1b5,_0x345c7f,_0x4cb7a6){ghosts['forEach'](_0x275ff9=>{const _0x160555=a0_0x5a31;if(_0x275ff9[_0x160555(0xd3)]){let _0x122080=Math['sqrt'](Math[_0x160555(0xc2)](_0x3297b9-_0x275ff9['x'],0x2)+Math[_0x160555(0xc2)](_0x2292fe-_0x275ff9['y'],0x2));if(_0x122080<_0x5dd168+_0x275ff9[_0x160555(0xc7)]){_0x275ff9[_0x160555(0xd3)]=![];let _0x923c25;if(_0x275ff9[_0x160555(0xe1)]===GhostType[_0x160555(0xcb)])playGhostEatSound(),_0x923c25=incrementScore(GhostType[_0x160555(0xcb)]);else{if(_0x275ff9[_0x160555(0xe1)]===GhostType['BONUS'])playGhostEatPacmoonSound(),_0x923c25=incrementScore(GhostType['BONUS']);else{if(_0x275ff9[_0x160555(0xe1)]===GhostType[_0x160555(0xdf)]){if(beepleBonus)_0x923c25=incrementScore(GhostType[_0x160555(0xc4)]);else{ghosts=[],playGhostEatBomb(),displayExplosionAnimation(_0x3297b9,_0x2292fe,_0x4dd24d),vibrateScreen(),document[_0x160555(0xbb)]['classList']['add'](_0x160555(0xae)),setTimeout(()=>{const _0x468b19=_0x160555;document[_0x468b19(0xbb)][_0x468b19(0xd0)][_0x468b19(0xb7)](_0x468b19(0xae));},0x1f4),setTimeout(_0x5e879b,0x64);return;}}else{if(_0x275ff9['type']===GhostType[_0x160555(0xc4)])_0x923c25=incrementScore(GhostType[_0x160555(0xc4)]),!beepleBonus?activateBeepleBonus(_0x345c7f):(clearTimeout(beepleTimeoutId),activateBeepleBonus(_0x345c7f));else{if(_0x275ff9[_0x160555(0xe1)]===GhostType[_0x160555(0xa9)])_0x923c25=incrementScore(null),playGhostEatLamboland(),!lambolandBonus?activateLambolandBonus(_0x4dd24d,_0x4cf1b5,_0x345c7f):(clearTimeout(lambolandTimeoutId),activateLambolandBonus(_0x4dd24d,_0x4cf1b5,_0x345c7f));else _0x275ff9['type']===GhostType[_0x160555(0xa8)]&&(_0x923c25=incrementScore(GhostType['JENNDEFER']),playGhostEatJenndefer(),!jenndeferBonus?activateJenndeferBonus(_0x4cb7a6):(clearTimeout(jenndeferTimeoutId),activateJenndeferBonus(_0x4cb7a6)));}}}}_0x923c25[_0x160555(0xb0)](_0x46337a=>{_0x486202=_0x46337a,_0x211a07(_0x486202);})[_0x160555(0xd4)](_0x412a34=>{const _0x35d134=_0x160555;console['error'](_0x35d134(0xbd),_0x412a34);});let _0x1ffeeb=calculateGhostSpeed(_0x486202),_0x5f5d34=Math['floor'](Math[_0x160555(0xc8)]()*0xa)+0x1,_0xf1d2a,_0x1b9c7e;if(_0x5f5d34>=0x1&&_0x5f5d34<0x3){_0xf1d2a=GhostType[_0x160555(0xcb)],_0x1b9c7e=GhostColor[_0x160555(0xcb)];let _0x5e88be={'x':Math['random']()*_0x4dd24d[_0x160555(0xad)][_0x160555(0xcd)],'y':Math['random']()*_0x4dd24d[_0x160555(0xad)]['height'],'size':0x14,'speed':_0x1ffeeb,'direction':Math['random']()*0x2*Math['PI'],'isAlive':!![],'type':_0xf1d2a,'color':_0x1b9c7e};while(_0x5e88be['x']>=_0x3297b9-_0x5dd168&&_0x5e88be['x']<=_0x3297b9+_0x5dd168&&_0x5e88be['y']>=_0x2292fe-_0x5dd168&&_0x5e88be['y']<=_0x2292fe+_0x5dd168){_0x5e88be['x']=Math[_0x160555(0xc8)]()*_0x4dd24d[_0x160555(0xad)][_0x160555(0xcd)],_0x5e88be['y']=Math[_0x160555(0xc8)]()*_0x4dd24d['canvas'][_0x160555(0xdc)];}ghosts[_0x160555(0xcf)](_0x5e88be);}let _0x4860cf={'x':Math[_0x160555(0xc8)]()*_0x4dd24d[_0x160555(0xad)][_0x160555(0xcd)],'y':Math[_0x160555(0xc8)]()*_0x4dd24d[_0x160555(0xad)][_0x160555(0xdc)],'size':0x14,'speed':_0x1ffeeb,'direction':Math[_0x160555(0xc8)]()*0x2*Math['PI'],'isAlive':!![],'type':generateRandomGhostType(),'color':generateRandomGhostColor()};ghosts[_0x160555(0xcf)](_0x4860cf);}}});}function generateRandomGhostType(){const _0x40f3cd=a0_0x345064;let _0x56d44b=Math[_0x40f3cd(0xc0)](Math[_0x40f3cd(0xc8)]()*0x64)+0x1;if(_0x56d44b<=0xf)return GhostType[_0x40f3cd(0xb9)];else{if(_0x56d44b>0xf&&_0x56d44b<=0x19)return GhostType[_0x40f3cd(0xdf)];else{if(_0x56d44b>0x19&&_0x56d44b<=0x1e)return GhostType[_0x40f3cd(0xc4)];else{if(_0x56d44b>0x1e&&_0x56d44b<=0x28)return GhostType['LAMBOLAND'];else return _0x56d44b>0x28&&_0x56d44b<=0x2d?GhostType['JENNDEFER']:GhostType[_0x40f3cd(0xcb)];}}}}function generateRandomGhostColor(){const _0xe35e70=a0_0x345064;let _0x4f32c0=Math[_0xe35e70(0xc0)](Math[_0xe35e70(0xc8)]()*0x3);switch(_0x4f32c0){case 0x0:return GhostColor['NORMAL'];case 0x1:return GhostColor[_0xe35e70(0xb9)];case 0x2:return GhostColor[_0xe35e70(0xdf)];default:return GhostColor['NORMAL'];}}function directionToAngle(_0x393bde){const _0xf0fb28=a0_0x345064;switch(_0x393bde){case _0xf0fb28(0xa5):return 0x0;case'left':return Math['PI'];case _0xf0fb28(0xeb):return Math['PI']/0x2;case'up':return-Math['PI']/0x2;default:return 0x0;}}export function moveGhosts(_0x4ddfcb,_0x5604d9){ghosts['forEach'](_0x41503e=>{const _0x4d49a2=a0_0x5a31;if(_0x41503e['isAlive']){let _0x566465=Math[_0x4d49a2(0xc6)](_0x41503e[_0x4d49a2(0xc3)])*_0x41503e[_0x4d49a2(0xee)],_0x4fbb81=Math[_0x4d49a2(0xe9)](_0x41503e[_0x4d49a2(0xc3)])*_0x41503e[_0x4d49a2(0xee)];_0x41503e['x']+=_0x566465,_0x41503e['y']+=_0x4fbb81,(_0x41503e['x']<0x0||_0x41503e['x']>_0x4ddfcb)&&(_0x41503e['direction']=Math['PI']-_0x41503e['direction']),(_0x41503e['y']<0x0||_0x41503e['y']>_0x5604d9)&&(_0x41503e[_0x4d49a2(0xc3)]=-_0x41503e[_0x4d49a2(0xc3)]);}});}function getDirection(_0x5ac17b,_0x532c54){const _0x45f7c5=a0_0x345064;return Math[_0x45f7c5(0xbe)](_0x532c54,_0x5ac17b);}
+export let ghosts = []; // Tableau pour stocker les fantômes
+export const numGhosts = 3; // Nombre de fantômes
+let score = 0; // Initialisation du score
+
+// Types de fantômes
+const GhostType = {
+    NORMAL: "normal",
+    BONUS: "bonus",
+    BOMB: "bomb",
+    BEEPLE: "beeple",
+    LAMBOLAND: "lamboland",
+    JENNDEFER: "jenndefer"
+};
+
+const GhostColor = {
+    NORMAL: "red",
+    BONUS: "gold",
+    BOMB: "blue",
+    BEEPLE: "green"
+};
+
+// Déclaration des variables
+let ghostImages = {}; // Objet pour stocker les images des fantômes
+
+// Chargement des images des fantômes
+function loadGhostImages() {
+    ghostImages.normal = new Image();
+    ghostImages.normal.src = './img/ghost.png';
+
+    ghostImages.bonus = new Image();
+    ghostImages.bonus.src = './img/pacmoon.png';
+
+    ghostImages.bomb = new Image();
+    ghostImages.bomb.src = './img/french.png';
+
+    ghostImages.beeple = new Image();
+    ghostImages.beeple.src = './img/durov.png';
+
+    ghostImages.lamboland = new Image();
+    ghostImages.lamboland.src = './img/lamboland.png';
+
+    ghostImages.jenndefer = new Image();
+    ghostImages.jenndefer.src = './img/jenndefer.png';
+}
+
+// Définir la fonction pour charger et jouer le son du fantôme mangé
+function playGhostEatSound() {
+    // Chemin vers le fichier audio du fantôme mangé
+    const soundPath = './sound/pacman_eatghost.wav';
+
+    // Créer un nouvel élément audio
+    const audio = new Audio(soundPath);
+
+    // Charger le son et le jouer
+    audio.play();
+}
+
+function playGhostEatPacmoonSound() {
+    // Chemin vers le fichier audio du fantôme mangé
+    const soundPath = './sound/pacman_eatfruit.wav';
+
+    // Créer un nouvel élément audio
+    const audio = new Audio(soundPath);
+
+    // Charger le son et le jouer
+    audio.play();
+}
+
+export function playGhostEatBomb() {
+    // Chemin vers le fichier audio du fantôme mangé
+    const soundPath = './sound/sf_explosion_01.mp3';
+
+    // Créer un nouvel élément audio
+    const audio = new Audio(soundPath);
+
+    // Charger le son et le jouer
+    audio.play();
+}
+
+export function playGhostEatLamboland() {
+    // Chemin vers le fichier audio du fantôme mangé
+    const soundPath = './sound/pacman_death.wav';
+
+    // Créer un nouvel élément audio
+    const audio = new Audio(soundPath);
+
+    // Charger le son et le jouer
+    audio.play();
+}
+
+export function playGhostEatJenndefer() {
+    // Chemin vers le fichier audio du fantôme mangé
+    const soundPath = './sound/pacman_big.mp3';
+
+    // Créer un nouvel élément audio
+    const audio = new Audio(soundPath);
+
+    // Charger le son et le jouer
+    audio.play();
+}
+
+function playBulletTouchSound() {
+    // Chemin vers le fichier audio du fantôme mangé
+    const soundPath = './sound/bullet_shoot.mp3';
+
+    // Créer un nouvel élément audio
+    const audio = new Audio(soundPath);
+
+    // Charger le son et le jouer
+    audio.play();
+}
+
+// Initialisation des fantômes
+export function initializeGhosts(ctx, canvasWidth, canvasHeight, pacmanX, pacmanY, pacmanSize) {
+    // Charger les images des fantômes
+    loadGhostImages();
+    ghosts = [];
+
+    for (let i = 0; i < numGhosts; i++) {
+
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let ghostType, ghostColor;
+        if (randomNumber <= 10) {
+            ghostType = GhostType.BONUS;
+            ghostColor = GhostColor.BONUS;
+        } else if (randomNumber > 10 && randomNumber <= 15) {
+            ghostType = GhostType.BOMB;
+            ghostColor = GhostColor.BOMB;
+        } else if (randomNumber > 20 && randomNumber <= 23) {
+            ghostType = GhostType.BEEPLE;
+            ghostColor = GhostColor.BEEPLE; 
+        } else {
+            ghostType = GhostType.NORMAL;
+            ghostColor = GhostColor.NORMAL;
+        }
+
+        let ghost = {
+            x: Math.random() * canvasWidth, // Initialize x property with random value within canvas boundaries
+            y: Math.random() * canvasHeight, // Initialize y property with random value within canvas boundaries
+            size: 20,
+            speed: 5,
+            direction: Math.random() * 2 * Math.PI,
+            isAlive: true,
+            type: ghostType // Type de fantôme
+            //color: ghostColor // Couleur associée au type de fantôme
+        };
+        // Regenerate ghost position if it's inside Pacman square
+        while (ghost.x >= pacmanX - pacmanSize && ghost.x <= pacmanX + pacmanSize &&
+            ghost.y >= pacmanY - pacmanSize && ghost.y <= pacmanY + pacmanSize) {
+            ghost.x = Math.random() * ctx.canvas.width;
+            ghost.y = Math.random() * ctx.canvas.height;
+        }
+        ghosts.push(ghost);
+    }
+}
+
+// Dessiner les fantômes
+export function drawGhosts(ctx) {
+    ghosts.forEach((ghost) => {
+        if (ghost.isAlive) {
+            let ghostImage = ghostImages[ghost.type]; // Obtenir l'image correspondant au type de fantôme
+
+            // Dimensions de l'image agrandie
+            let imageSize = ghost.size * 2; // Double la taille du fantôme
+            if (ghost.type == GhostType.BOMB) {
+                imageSize = ghost.size * 4;
+            }
+
+            // Dessiner l'image du fantôme
+            ctx.drawImage(
+                ghostImage, // Image à dessiner
+                ghost.x - imageSize / 2, // Position x centrée sur le fantôme
+                ghost.y - imageSize / 2, // Position y centrée sur le fantôme
+                imageSize, // Largeur de l'image
+                imageSize // Hauteur de l'image
+            );
+        }
+    });
+}
+
+
+// Fonction pour calculer la vitesse des nouveaux fantômes en fonction du score
+function calculateGhostSpeed(score) {
+    // La vitesse de base des fantômes
+    let baseSpeed = 3;
+
+    // Multiplier la vitesse de base par un facteur en fonction du score
+    let speedFactor = 1 + (score / 10000); // Par exemple, augmenter la vitesse de 2 pour chaque tranche de 10000 points
+
+    // Calculer la vitesse finale des fantômes
+    let ghostSpeed = baseSpeed * speedFactor;
+
+    return ghostSpeed;
+}
+
+
+const explosionCanvas = document.getElementById("explosionCanvas");
+const explosionCtx = explosionCanvas.getContext("2d");
+
+// Fonction pour afficher l'animation d'explosion
+export function displayExplosionAnimation(x, y, gameCtx) {
+    const explosionImage = new Image();
+    explosionImage.src = './img/boom.gif'; 
+
+    // Attendre le chargement de l'image avant de l'afficher
+    explosionImage.onload = () => {
+        // Récupérer les dimensions du canvas
+        const canvasWidth = gameCtx.canvas.width;
+        const canvasHeight = gameCtx.canvas.height;
+
+        // Dessiner l'image au centre du canvas
+        const centerX = canvasWidth / 2 - explosionImage.width / 2;
+        const centerY = canvasHeight / 2 - explosionImage.height / 2;
+        gameCtx.drawImage(explosionImage, centerX, centerY);
+
+        // Autres actions à effectuer après l'affichage de l'explosion...
+    };
+}
+
+export function vibrateScreen() {
+    // Vérifier si le navigateur supporte l'API de vibration
+    if (navigator.vibrate) {
+        // Faire vibrer l'écran pendant 200 millisecondes
+        navigator.vibrate(200);
+    } else {
+        console.log("L'API de vibration n'est pas prise en charge dans ce navigateur.");
+    }
+}
+
+let beepleBonus = false;
+let beepleAudio = null; // Instance audio pour la musique BEEPLE
+let beepleTimeoutId = null; // ID du timeout pour la durée du bonus BEEPLE
+
+// Fonction pour activer le bonus BEEPLE
+function activateBeepleBonus(setColor) {
+    // Arrêter l'audio BEEPLE existant s'il est en cours
+    if (beepleAudio && !beepleAudio.paused) {
+        beepleAudio.pause();
+        beepleAudio.currentTime = 0; // Rembobiner l'audio au début
+    }
+
+    // Activer le bonus BEEPLE
+    beepleBonus = true;
+    setColor("#ADD8E6");
+    // Jouer la musique BEEPLE
+    beepleAudio = new Audio('./sound/pacman_eating.mp3');
+    beepleAudio.currentTime = 0; // Rembobiner l'audio au début
+    beepleAudio.play(); // Démarrer la lecture de l'audio
+
+    // Définir un timeout pour désactiver le bonus et arrêter la musique après la durée spécifiée
+    beepleTimeoutId = setTimeout(() => {
+        disableBeepleBonus(setColor); // Désactiver le bonus BEEPLE après la durée spécifiée
+    }, 5000); // Durée de la musique BEEPLE (5 secondes)
+}
+
+// Fonction pour désactiver le bonus BEEPLE
+function disableBeepleBonus(setColor) {
+    beepleBonus = false; // Désactiver le bonus BEEPLE
+    setColor("yellow");
+    if (beepleAudio && !beepleAudio.paused) {
+        beepleAudio.pause(); // Arrêter l'audio si encore en cours de lecture
+    }
+}
+
+let lambolandBonus = false;
+let lambolandTimeoutId = null; // ID du timeout pour la durée du bonus LAMBOLAND
+
+// Fonction pour activer le bonus BEEPLE
+function activateLambolandBonus(ctx, setPacmanSpeed, setColor) {
+    // Activer le bonus LAMBOLAND
+    lambolandBonus = true;
+    setColor("#7D7D7D"); //changer pacman en gris
+    setPacmanSpeed(3);
+    // Définir un timeout pour désactiver le bonus et arrêter la musique après la durée spécifiée
+    lambolandTimeoutId = setTimeout(() => {
+        disableLambolandBonus(ctx, setPacmanSpeed, setColor); // Désactiver le bonus BEEPLE après la durée spécifiée
+    }, 5000); // Durée de la musique BEEPLE (5 secondes)
+}
+
+// Fonction pour désactiver le bonus BEEPLE
+function disableLambolandBonus(ctx, setPacmanSpeed, setColor) {
+    lambolandBonus = false; // Désactiver le bonus BEEPLE
+    setPacmanSpeed(7); //vitesse d'origine
+    setColor("yellow"); //pacman retrouve sa couleur jaune
+}
+
+
+let jenndeferBonus = false;
+let jenndeferTimeoutId = null; // ID du timeout pour la durée du bonus LAMBOLAND
+
+// Fonction pour activer le bonus BEEPLE
+function activateJenndeferBonus(setSize) {
+    // Activer le bonus JENNDEFER
+    jenndeferBonus = true;
+    setSize(40); //doubler la taille de pacman
+    // Définir un timeout pour désactiver le bonus et arrêter la musique après la durée spécifiée
+    jenndeferTimeoutId = setTimeout(() => {
+        disableJenndeferBonus(setSize); // Désactiver le bonus BEEPLE après la durée spécifiée
+    }, 5000); // Durée de la musique BEEPLE (5 secondes)
+}
+
+// Fonction pour désactiver le bonus BEEPLE
+function disableJenndeferBonus(setSize) {
+    jenndeferBonus = false; // Désactiver le bonus BEEPLE
+    setSize(20); //taille d'origine
+}
+
+
+// Définition de la fonction pour incrémenter le score
+const incrementScore = (typeMonster) => {
+    return fetch('/increment-score', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('jwtToken')}`
+        },
+        body: JSON.stringify({ monster: typeMonster }) // Envoyer le type de monstre pour l'incrément du score
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to increment score');
+        }
+        return response.json();
+    })
+    .then(data => {
+        return data.score; // Retourner la nouvelle valeur du score
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'incrémentation du score:', error);
+        throw error; // Propager l'erreur
+    });
+};
+
+
+// Gérer les interactions avec les fantômes
+export function handleGhostInteractions(ctx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame, setSpeedPacman, setColor, setSize) {
+    ghosts.forEach((ghost) => {
+        if (ghost.isAlive) {
+            let distance = Math.sqrt(Math.pow(pacmanX - ghost.x, 2) + Math.pow(pacmanY - ghost.y, 2));
+
+            if (distance < pacmanSize + ghost.size) {
+                ghost.isAlive = false; // Fantôme mangé par Pacman
+                let scoreIncrementPromise;
+
+                if (ghost.type === GhostType.NORMAL) {
+                    playGhostEatSound();
+                    // Utilisation de la fonction pour incrémenter le score avec un type de monstre spécifié
+                    // Par exemple, pour un monstre de type NORMAL
+                    scoreIncrementPromise = incrementScore(GhostType.NORMAL);
+                } else if (ghost.type === GhostType.BONUS) {
+                    playGhostEatPacmoonSound();
+                    scoreIncrementPromise = incrementScore(GhostType.BONUS); // Bonus de points pour les fantômes dorés
+                } else if (ghost.type === GhostType.BOMB) {
+                    if (beepleBonus) {
+                        // Bonus BEEPLE actif : donner un bonus supplémentaire pour les fantômes de type BOMB
+                        scoreIncrementPromise = incrementScore(GhostType.BEEPLE); // Bonus de points avec Beeple Bonus !
+                    } else {
+                        ghosts = [];
+                        playGhostEatBomb();
+                        displayExplosionAnimation(pacmanX, pacmanY, ctx);
+                        vibrateScreen();
+
+                        // Ajouter la classe de flash pour déclencher l'animation CSS
+                        document.body.classList.add('flash-effect');
+
+                        // Retirer la classe après l'animation pour réinitialiser l'effet
+                        setTimeout(() => {
+                            document.body.classList.remove('flash-effect');
+                        }, 500); // Durée de l'animation en millisecondes
+
+                        setTimeout(gameOver, 100);
+                        return;
+                    }
+                } else if (ghost.type === GhostType.BEEPLE) {
+                    // Bonus de points pour les fantômes BEEPLE
+                    scoreIncrementPromise = incrementScore(GhostType.BEEPLE);
+                    if (!beepleBonus) {
+                        // Activer le bonus BEEPLE si ce n'est pas déjà activé
+                        activateBeepleBonus(setColor);
+                    } else {
+                        // Réinitialiser le délai du bonus BEEPLE lorsqu'un autre BEEPLE est mangé
+                        clearTimeout(beepleTimeoutId); // Annuler le timeout actuel
+                        activateBeepleBonus(setColor); // Réactiver le bonus BEEPLE avec une nouvelle durée
+                    }
+                } else if (ghost.type === GhostType.LAMBOLAND) {
+                    // Aucun bonus de points pour les fantômes LAMBOLAND
+                    scoreIncrementPromise = incrementScore(null); // Pas de bonus avec LAMBOLAND
+                    playGhostEatLamboland();
+                    if (!lambolandBonus) {
+                        // Activer le bonus BEEPLE si ce n'est pas déjà activé
+                        activateLambolandBonus(ctx, setSpeedPacman, setColor);
+                    } else {
+                        // Réinitialiser le délai du bonus BEEPLE lorsqu'un autre BEEPLE est mangé
+                        clearTimeout(lambolandTimeoutId); // Annuler le timeout actuel
+                        activateLambolandBonus(ctx, setSpeedPacman, setColor); // Réactiver le bonus BEEPLE avec une nouvelle durée
+                    }
+                } else if (ghost.type === GhostType.JENNDEFER) {
+                    // Bonus de 1000 points pour les fantômes JENNDEFER car on risque de se faire tuer plus facilement ensuite
+                    scoreIncrementPromise = incrementScore(GhostType.JENNDEFER); // Pas de bonus avec LAMBOLAND
+                    playGhostEatJenndefer();
+                    if (!jenndeferBonus) {
+                        // Activer le bonus BEEPLE si ce n'est pas déjà activé
+                        activateJenndeferBonus(setSize);
+                    } else {
+                        // Réinitialiser le délai du bonus BEEPLE lorsqu'un autre BEEPLE est mangé
+                        clearTimeout(jenndeferTimeoutId); // Annuler le timeout actuel
+                        activateJenndeferBonus(setSize); // Réactiver le bonus BEEPLE avec une nouvelle durée
+                    }
+                }
+
+
+                // Attendre la résolution de la promesse pour mettre à jour le score
+                scoreIncrementPromise.then(newScore => {
+                    score = newScore;
+                    updateScore(score);
+                }).catch(error => {
+                    console.error('Erreur lors de l\'incrémentation du score:', error);
+                });
+
+                // Ajouter un nouveau fantôme avec une vitesse basée sur le score actuel
+                let newGhostSpeed = calculateGhostSpeed(score);
+            
+                let randomNumber = Math.floor(Math.random() * 10) + 1;
+                let ghostType, ghostColor;
+                if (randomNumber >= 1 && randomNumber < 3) {
+                    ghostType = GhostType.NORMAL;
+                    ghostColor = GhostColor.NORMAL;
+
+                    //On crée un nouveau fantôme pour complexifier le jeu
+                    let newGhost = {
+                        x: Math.random() * ctx.canvas.width,
+                        y: Math.random() * ctx.canvas.height,
+                        size: 20,
+                        speed: newGhostSpeed,
+                        direction: Math.random() * 2 * Math.PI,
+                        isAlive: true,
+                        type: ghostType,
+                        color: ghostColor
+                    };    
+                    while (newGhost.x >= pacmanX - pacmanSize && newGhost.x <= pacmanX + pacmanSize &&
+                        newGhost.y >= pacmanY - pacmanSize && newGhost.y <= pacmanY + pacmanSize) {
+                            newGhost.x = Math.random() * ctx.canvas.width;
+                            newGhost.y = Math.random() * ctx.canvas.height;
+                    }
+                    ghosts.push(newGhost);
+                } 
+
+                // Générer un nouveau fantôme de manière aléatoire
+                let newGhost = {
+                    x: Math.random() * ctx.canvas.width,
+                    y: Math.random() * ctx.canvas.height,
+                    size: 20,
+                    speed: newGhostSpeed,
+                    direction: Math.random() * 2 * Math.PI,
+                    isAlive: true,
+                    type: generateRandomGhostType(), // Générer un type de fantôme aléatoire
+                    color: generateRandomGhostColor() // Générer une couleur de fantôme aléatoire
+                };
+                while (newGhost.x >= pacmanX - pacmanSize && newGhost.x <= pacmanX + pacmanSize &&
+                    newGhost.y >= pacmanY - pacmanSize && newGhost.y <= pacmanY + pacmanSize) {
+                        newGhost.x = Math.random() * ctx.canvas.width;
+                        newGhost.y = Math.random() * ctx.canvas.height;
+                }
+                ghosts.push(newGhost);
+            }
+        }
+    });
+}
+
+export function handleBulletInteractions(ctx, bullets, updateScore, pacmanX, pacmanY, pacmanSize) {
+    if (!Array.isArray(bullets) || bullets.length === 0) {
+        //console.log("Aucune balle présente");
+        return;
+    }
+
+    let bullet = bullets[0]; // On prend la première balle du tableau
+
+    ghosts.forEach((ghost) => {
+        if (ghost.isAlive) {
+            // Calcul de la distance entre la balle et le fantôme
+            let distance = Math.sqrt(Math.pow(bullet.x - ghost.x, 2) + Math.pow(bullet.y - ghost.y, 2));
+    
+            if (distance < bullet.size + ghost.size) {
+                let scoreIncrementPromise;
+    
+                // Calculer le vecteur de recul
+                let dx = ghost.x - bullet.x;
+                let dy = ghost.y - bullet.y;
+                let magnitude = Math.sqrt(dx * dx + dy * dy);
+    
+                // Normaliser le vecteur (direction du recul)
+                dx /= magnitude;
+                dy /= magnitude;
+    
+                // Appliquer le recul
+                let recoilDistance = 30; // Nombre de pixels de recul
+                ghost.x += dx * recoilDistance;
+                ghost.y += dy * recoilDistance;
+    
+                // Commencer l'effet de vibration
+                let vibrationTime = 1000; // Durée totale de la vibration en ms
+                let vibrationIntensity = 15; // Intensité de la vibration en pixels
+                let vibrationInterval = 30; // Intervalle de temps entre chaque vibration en ms
+    
+                let vibrationStartTime = Date.now();
+    
+                let vibrationIntervalID = setInterval(() => {
+                    let elapsed = Date.now() - vibrationStartTime;
+    
+                    if (elapsed >= vibrationTime) {
+                        clearInterval(vibrationIntervalID);
+                        ghost.x = ghost.originalX;
+                        ghost.y = ghost.originalY;
+                    } else {
+                        // Faire vibrer le fantôme
+                        ghost.x = ghost.originalX + (Math.random() - 0.5) * vibrationIntensity;
+                        ghost.y = ghost.originalY + (Math.random() - 0.5) * vibrationIntensity;
+                    }
+                }, vibrationInterval);
+    
+                // Si la balle touche un fantôme, elle est détruite
+                bullets.splice(0, 1); // On retire la balle du tableau
+    
+                // Incrémenter le score
+                scoreIncrementPromise = incrementScore(GhostType.BONUS);
+    
+                // Jouer le son et marquer le fantôme comme "mort"
+                playBulletTouchSound();
+                setTimeout(function() {
+                    ghost.isAlive = false;
+                }, 1000); 
+    
+                // Attendre la résolution de la promesse pour mettre à jour le score
+                scoreIncrementPromise.then(newScore => {
+                    score = newScore;
+                    updateScore(score);
+                }).catch(error => {
+                    console.error('Erreur lors de l\'incrémentation du score:', error);
+                });
+    
+                // Ajouter un nouveau fantôme avec une vitesse basée sur le score actuel
+                let newGhostSpeed = calculateGhostSpeed(score);
+    
+                // Générer un nouveau fantôme
+                let newGhost = {
+                    x: Math.random() * ctx.canvas.width,
+                    y: Math.random() * ctx.canvas.height,
+                    size: 20,
+                    speed: newGhostSpeed,
+                    direction: Math.random() * 2 * Math.PI,
+                    isAlive: true,
+                    type: generateRandomGhostType(), // Générer un type de fantôme aléatoire
+                    color: generateRandomGhostColor() // Générer une couleur de fantôme aléatoire
+                };
+                while (newGhost.x >= pacmanX - pacmanSize && newGhost.x <= pacmanX + pacmanSize &&
+                    newGhost.y >= pacmanY - pacmanSize && newGhost.y <= pacmanY + pacmanSize) {
+                        newGhost.x = Math.random() * ctx.canvas.width;
+                        newGhost.y = Math.random() * ctx.canvas.height;
+                }
+                ghosts.push(newGhost);
+            }
+        }
+    });
+    
+    
+}
+
+
+
+
+// Fonction utilitaire pour générer un type de fantôme aléatoire
+function generateRandomGhostType() {
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    if (randomNumber <= 15) {
+        return GhostType.BONUS;
+    } else if (randomNumber > 15 && randomNumber <= 25) {
+        return GhostType.BOMB;
+    } else if (randomNumber > 25 && randomNumber <= 30) {
+        return GhostType.BEEPLE;
+    } else if (randomNumber > 30 && randomNumber <= 40) {
+        return GhostType.LAMBOLAND;
+    } else if (randomNumber > 40 && randomNumber <= 45) {
+        return GhostType.JENNDEFER;
+    } else {
+        return GhostType.NORMAL;
+    }
+}
+
+// Fonction utilitaire pour générer une couleur de fantôme aléatoire
+function generateRandomGhostColor() {
+    let randomNumber = Math.floor(Math.random() * 3);
+    switch (randomNumber) {
+        case 0:
+            return GhostColor.NORMAL;
+        case 1:
+            return GhostColor.BONUS;
+        case 2:
+            return GhostColor.BOMB;
+        default:
+            return GhostColor.NORMAL;
+    }
+}
+
+// Fonction pour convertir la direction de Pacman en angle en radians
+function directionToAngle(direction) {
+    switch (direction) {
+        case "right":
+            return 0;
+        case "left":
+            return Math.PI;
+        case "down":
+            return Math.PI / 2;
+        case "up":
+            return -Math.PI / 2;
+        default:
+            return 0; // Par défaut, retourner 0 (droite)
+    }
+}
+
+// Déplacer les fantômes en fonction de leur direction et de leur vitesse
+export function moveGhosts(canvasWidth, canvasHeight) {
+    ghosts.forEach((ghost) => {
+        if (ghost.isAlive) {
+            // Calculer les déplacements en x et y en fonction de la direction
+            let dx = Math.cos(ghost.direction) * ghost.speed;
+            let dy = Math.sin(ghost.direction) * ghost.speed;
+
+            // Mettre à jour la position du fantôme
+            ghost.x += dx;
+            ghost.y += dy;
+
+            // Vérifier les limites du canvas pour rebondir les fantômes (optionnel)
+            if (ghost.x < 0 || ghost.x > canvasWidth) {
+                ghost.direction = Math.PI - ghost.direction; // Inverser la direction horizontale
+            }
+            if (ghost.y < 0 || ghost.y > canvasHeight) {
+                ghost.direction = -ghost.direction; // Inverser la direction verticale
+            }
+        }
+    });
+}
+
+// Fonction pour calculer la direction d'un vecteur (x, y)
+function getDirection(x, y) {
+    return Math.atan2(y, x);
+}
+

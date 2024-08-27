@@ -1,1 +1,106 @@
-var a0_0x3396f8=a0_0x1567;function a0_0x1567(_0x1362eb,_0x412836){var _0x4ba295=a0_0x4ba2();return a0_0x1567=function(_0x156746,_0x5895bb){_0x156746=_0x156746-0x144;var _0x214bbb=_0x4ba295[_0x156746];return _0x214bbb;},a0_0x1567(_0x1362eb,_0x412836);}(function(_0x42292f,_0x4ad4e2){var _0x6b5dc8=a0_0x1567,_0x4a23d5=_0x42292f();while(!![]){try{var _0x4d73bd=parseInt(_0x6b5dc8(0x150))/0x1+-parseInt(_0x6b5dc8(0x149))/0x2+parseInt(_0x6b5dc8(0x147))/0x3+-parseInt(_0x6b5dc8(0x14a))/0x4*(parseInt(_0x6b5dc8(0x146))/0x5)+parseInt(_0x6b5dc8(0x14d))/0x6+-parseInt(_0x6b5dc8(0x144))/0x7*(parseInt(_0x6b5dc8(0x151))/0x8)+-parseInt(_0x6b5dc8(0x148))/0x9;if(_0x4d73bd===_0x4ad4e2)break;else _0x4a23d5['push'](_0x4a23d5['shift']());}catch(_0x182fe0){_0x4a23d5['push'](_0x4a23d5['shift']());}}}(a0_0x4ba2,0x53474),particlesJS(a0_0x3396f8(0x14c),{'particles':{'number':{'value':0x64,'density':{'enable':!![],'value_area':0x320}},'color':{'value':a0_0x3396f8(0x14b)},'shape':{'type':a0_0x3396f8(0x152),'stroke':{'width':0x0,'color':a0_0x3396f8(0x154)},'polygon':{'nb_sides':0x5}},'opacity':{'value':0.5,'random':!![],'anim':{'enable':!![],'speed':0x1,'opacity_min':0.1,'sync':![]}},'size':{'value':0x2,'random':!![],'anim':{'enable':![],'speed':0x28,'size_min':0.1,'sync':![]}},'line_linked':{'enable':![],'distance':0x96,'color':a0_0x3396f8(0x14b),'opacity':0.4,'width':0x1},'move':{'enable':!![],'speed':0x1,'direction':a0_0x3396f8(0x14f),'random':![],'straight':!![],'out_mode':a0_0x3396f8(0x153),'bounce':![],'attract':{'enable':![],'rotateX':0x258,'rotateY':0x4b0}}},'interactivity':{'detect_on':'canvas','events':{'onhover':{'enable':![],'mode':a0_0x3396f8(0x14e)},'onclick':{'enable':![],'mode':a0_0x3396f8(0x145)},'resize':!![]},'modes':{'grab':{'distance':0x190,'line_linked':{'opacity':0x1}},'bubble':{'distance':0x190,'size':0x28,'duration':0x2,'opacity':0x8,'speed':0x3},'repulse':{'distance':0xc8,'duration':0.4},'push':{'particles_nb':0x4},'remove':{'particles_nb':0x2}}},'retina_detect':!![]}));function a0_0x4ba2(){var _0x5a31cf=['out','#000000','7kDMDtn','push','5LKgPRy','1384050wVyBjO','238563ZuAvmG','82834KVjEkO','418408cUuERo','#ffffff','particles-js','1887444LmdCBS','repulse','top','346889RwWWYH','4873432TIfYWC','star'];a0_0x4ba2=function(){return _0x5a31cf;};return a0_0x4ba2();}
+particlesJS("particles-js", {
+    "particles": {
+      "number": {
+        "value": 100, // Nombre d'étoiles
+        "density": {
+          "enable": true,
+          "value_area": 400 // Densité de l'espace où les étoiles sont générées
+        }
+      },
+      "color": {
+        "value": "#8c2b2b"
+      },
+      "shape": {
+        "type": "star", // Type de forme des étoiles
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5 // Nombre de côtés pour les étoiles
+        }
+      },
+      "opacity": {
+        "value": 0.5, // Opacité des étoiles
+        "random": true,
+        "anim": {
+          "enable": true,
+          "speed": 1, // Vitesse de l'animation d'opacité
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 2, // Taille des étoiles
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": false, // Lier les étoiles entre elles
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 1, // Vitesse de déplacement des étoiles
+        "direction": "top",
+        "random": false,
+        "straight": true,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": false, // Réactions au survol de la souris
+          "mode": "repulse"
+        },
+        "onclick": {
+          "enable": false, // Réactions au clic
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 400,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200,
+          "duration": 0.4
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true
+  });
+  

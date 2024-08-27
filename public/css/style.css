@@ -1,10 +1,17 @@
-@import url(https://db.onlinewebfonts.com/c/b0b8a10e9c97391e66297c8b5398984f?family=Geom+Graphic+W03+Regular);
+@font-face {
+    font-family: 'Geom Graphic W03 Regular';
+    src: url('../fonts/Geom Graphic W03 Regular.ttf') format('woff2'),
+         url('../fonts/Geom Graphic W03 Regular.woff') format('woff'),
+         url('../fonts/Geom Graphic W03 Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* Body styles for black background with stars */
 body {
-    background-color: #000;
+    background-color: #131111;
     color: #fff;
-    font-family: "Geom Graphic W03 Regular";
+    font-family: 'Geom Graphic W03 Regular', sans-serif;
     overflow-x: hidden; /* Hide horizontal scrollbar */
     /*background-image: url('../img/asfalt-light.png'); /* Utilisation de url() pour spécifier le chemin de l'image */
     /*background-size: cover;
@@ -15,7 +22,7 @@ body {
 
 /* Navigation bar styles */
 .navbar {
-    background-color: #000;
+    background-color: #000000;
 }
 
 .navbar-brand {
@@ -124,7 +131,7 @@ body {
 #startGame {
     padding: 10px 20px;
     font-size: 20px;
-    background-color: rgb(192, 203, 38); /* Couleur de fond verte */
+    background-color: rgb(192, 203, 38); /* Couleur de fond Blast */
     color: #fff; /* Texte blanc */
     border: none;
     border-radius: 5px;
@@ -133,7 +140,7 @@ body {
 }
 
 #startGame:hover {
-    background-color: rgb(187, 143, 32); /* Couleur de fond verte plus foncée au survol */
+    background-color: rgb(187, 143, 32); /* Couleur de fond plus foncée au survol */
 }
 
 /* Style pour le bouton désactivé */
@@ -287,8 +294,26 @@ body {
 #shareTwitterBtn:hover {
     background-color: #1723a8; /* Changement de couleur au survol */
 }
+
+/* Bouton playButton de démarrage de la partie */
+#playButton {
+    z-index: 2; /* pour éviter qu'on ne puisse pas cliquer sur playButton */
+    background-color: #FCFC03; /* Couleur de fond jaune */
+    border: none; /* Pas de bordure */
+    color: rgb(0, 0, 0); /* Couleur du texte */
+    padding: 8px 16px; /* Espacement à l'intérieur du bouton */
+    text-align: center; /* Centrer le texte */
+    text-decoration: none; /* Pas de soulignement */
+    display: inline-block; /* Afficher en ligne */
+    font-size: 14px; /* Taille de la police */
+    margin: 4px 2px; /* Marge extérieure */
+    cursor: pointer; /* Curseur en pointeur */
+    border-radius: 5px; /* Bordures arrondies */
+}
   
-  
+#playButton:hover {
+    background-color: #ecec00; /* Changement de couleur au survol */
+}
   
 .white-text {
     color: white; /* Couleur du texte */

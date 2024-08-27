@@ -1,1 +1,105 @@
-const a0_0x10e587=a0_0x3475;(function(_0x5bf9fb,_0x480360){const _0x22c1b6=a0_0x3475,_0xa086ad=_0x5bf9fb();while(!![]){try{const _0x199572=parseInt(_0x22c1b6(0xbc))/0x1*(-parseInt(_0x22c1b6(0xb0))/0x2)+-parseInt(_0x22c1b6(0xaa))/0x3+parseInt(_0x22c1b6(0xc1))/0x4+parseInt(_0x22c1b6(0xbf))/0x5+-parseInt(_0x22c1b6(0xae))/0x6*(parseInt(_0x22c1b6(0xc8))/0x7)+-parseInt(_0x22c1b6(0xc2))/0x8+-parseInt(_0x22c1b6(0xb6))/0x9*(-parseInt(_0x22c1b6(0xc4))/0xa);if(_0x199572===_0x480360)break;else _0xa086ad['push'](_0xa086ad['shift']());}catch(_0x15d393){_0xa086ad['push'](_0xa086ad['shift']());}}}(a0_0x40ea,0x7a450));const provider=new ethers['providers']['Web3Provider'](window[a0_0x10e587(0xc0)]),contractAddress=config['pacBoomAddress'],abi=config['pacBoomABI'],contract=new ethers[(a0_0x10e587(0xcc))](contractAddress,abi,provider),signerAddress=await provider[a0_0x10e587(0xc3)]()[a0_0x10e587(0xb9)]();!signerAddress&&console[a0_0x10e587(0xb1)](a0_0x10e587(0xc9));function a0_0x3475(_0x1af127,_0x56feff){const _0x40ea42=a0_0x40ea();return a0_0x3475=function(_0x3475c1,_0x415cef){_0x3475c1=_0x3475c1-0xa9;let _0x6162e1=_0x40ea42[_0x3475c1];return _0x6162e1;},a0_0x3475(_0x1af127,_0x56feff);}let nbNFTs='';async function getUserData(){const _0x2cad39=a0_0x10e587;try{const _0x957d87=await fetch(_0x2cad39(0xcd));if(!_0x957d87['ok'])throw new Error(_0x2cad39(0xc6));const _0x4254ef=await _0x957d87['json'](),_0x34bba0=[];let _0x59ce87=0x1;for(const _0xbd128b of _0x4254ef){const _0x32b399=_0xbd128b['wallet_address'],_0x405115=ethers[_0x2cad39(0xaf)]['formatUnits'](await contract[_0x2cad39(0xce)](_0x32b399),0x12)*0xa**0x12,_0xbb178d=ethers[_0x2cad39(0xaf)]['formatUnits'](await contract[_0x2cad39(0xc5)](_0x32b399),0x12)*0xa**0x12;_0x34bba0['push']({'address':_0x32b399,'points':_0x405115,'nfts':_0xbb178d}),(_0x59ce87+0x1)%0xa===0x0&&_0x59ce87!==_0x4254ef['length']-0x1&&await new Promise(_0x411a5a=>setTimeout(_0x411a5a,0x3e8)),_0x59ce87++;}return _0x34bba0;}catch(_0x527989){console['error'](_0x2cad39(0xab),_0x527989);throw _0x527989;}}async function displayLeaderboard(_0x2df8dc,_0x5ac287){const _0x146a62=a0_0x10e587;try{const _0x3b29e0=await getUserData();_0x3b29e0[_0x146a62(0xba)]((_0x2bbdef,_0x1c59b1)=>_0x1c59b1[_0x146a62(0xca)]-_0x2bbdef[_0x146a62(0xca)]);const _0x53ccc6=(_0x2df8dc-0x1)*_0x5ac287,_0x3c65ee=_0x53ccc6+_0x5ac287,_0x52d7e4=_0x3b29e0['slice'](_0x53ccc6,_0x3c65ee);let _0x645c07='<h1\x20class=\x22text-center\x22>PAC\x20BOOM\x20Points\x20Leaderboard</h1><table\x20class=\x22table\x20table-striped\x22>';_0x645c07+=_0x146a62(0xbb);let _0xd4d3cb=_0x53ccc6+0x1;_0x52d7e4[_0x146a62(0xbd)](_0x1b1ef5=>{const _0x2d47d2=_0x146a62;let _0xe64c2e='';_0xe64c2e=_0x1b1ef5[_0x2d47d2(0xcb)][_0x2d47d2(0xb4)](0x0,0x4)+_0x2d47d2(0xb7)+_0x1b1ef5[_0x2d47d2(0xcb)][_0x2d47d2(0xb4)](_0x1b1ef5['address'][_0x2d47d2(0xa9)]-0x4),_0x645c07+='<tr\x20class=\x22white-text\x22><td>'+_0xd4d3cb+_0x2d47d2(0xbe)+_0xe64c2e+_0x2d47d2(0xbe)+_0x1b1ef5[_0x2d47d2(0xca)]+'</td><td>'+_0x1b1ef5[_0x2d47d2(0xb2)]+_0x2d47d2(0xc7),_0xd4d3cb++;}),_0x645c07+=_0x146a62(0xad);const _0x18f910=document[_0x146a62(0xb3)](_0x146a62(0xac));_0x18f910[_0x146a62(0xb8)]=_0x645c07;}catch(_0x15f5b7){console[_0x146a62(0xb1)](_0x146a62(0xb5),_0x15f5b7);}}const pageNumber=0x1,pageSize=0xa;displayLeaderboard(pageNumber,pageSize);function a0_0x40ea(){const _0x29c4d8=['7wwdVLj','No\x20Ethereum\x20address\x20connected.\x20Please\x20connect\x20with\x20your\x20wallet.','points','address','Contract','/users','getPlayerPoints','length','2205993kOaURY','Error\x20fetching\x20user\x20data:','leaderboard-container','</tbody></table>','720642kXXpYe','utils','1928IXRpXY','error','nfts','getElementById','substring','Error\x20displaying\x20leaderboard:','918nJCgdp','...','innerHTML','getAddress','sort','<thead><tr\x20class=\x22white-text\x22><th>Rank</th><th>Address</th><th>Points</th><th><img\x20src=\x22img/pacboom-nfts.gif\x22\x20alt=\x22PAC\x20BOOM\x20NFTs\x22\x20style=\x22max-width:\x2030px;\x22></th></tr></thead><tbody>','868PHOEHg','forEach','</td><td>','2562190YjjsPl','ethereum','3937500IYzUvj','5914024bvyfil','getSigner','140730vjwMlR','numberOfNFTs','Failed\x20to\x20fetch\x20users','</td></tr>'];a0_0x40ea=function(){return _0x29c4d8;};return a0_0x40ea();}
+// Définition du fournisseur de signer (provider) Ethereum
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+// Chargement de l'adresse du contrat et de l'ABI depuis le fichier de configuration
+const contractAddress = config.pacBoomAddress;
+const abi = config.pacBoomABI;
+
+// Instanciation du contrat intelligent PacBoomTest
+const contract = new ethers.Contract(contractAddress, abi, provider);
+
+// Récupération de l'adresse Ethereum actuellement connectée
+const signerAddress = await provider.getSigner().getAddress();
+
+// Vérification si l'adresse est connectée
+if (!signerAddress) {
+    console.error("No Ethereum address connected. Please connect with your wallet.");
+}
+
+// Déclaration de nbNFTs
+let nbNFTs = '';
+
+
+// Fonction pour récupérer les données des utilisateurs
+async function getUserData() {
+    try {
+        // Récupérer les utilisateurs depuis la base de données
+        const response = await fetch('/users');
+        if (!response.ok) {
+            throw new Error('Failed to fetch users');
+        }
+        const users = await response.json();
+
+        // Initialiser un tableau pour stocker les données des utilisateurs
+        const userData = [];
+        let i = 1;
+        // Boucler sur les utilisateurs
+        for (const user of users) {
+            // Récupérer l'adresse Ethereum de l'utilisateur
+            const address = user.wallet_address;
+            // Appeler les fonctions du contrat Ethereum pour récupérer les données
+            const points = ethers.utils.formatUnits(await contract.getPlayerPoints(address), 18) * 10**18; // Supposons que les points soient en Wei
+            const nfts = ethers.utils.formatUnits(await contract.numberOfNFTs(address), 18) * 10**18;
+
+            //console.log("address :", address, " bonus : ", bonus, " points : ", points, " nfts : ", nfts);
+            // Ajouter les données de l'utilisateur au tableau
+            userData.push({ address, points, nfts });
+
+            // Si l'index est un multiple de 10, attendre une seconde
+            if ((i + 1) % 10 === 0 && i !== users.length - 1) {
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Attendre 1 seconde
+            }
+            i++;
+        }
+        // Retourner les données des utilisateurs
+        return userData;
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        throw error;
+    }
+}
+
+// Fonction pour afficher le leaderboard
+async function displayLeaderboard(pageNumber, pageSize) {
+    try {
+        // Récupérer les données des utilisateurs
+        const userData = await getUserData();
+
+        // Trier les données par points
+        userData.sort((a, b) => b.points - a.points);
+
+        // Paginer les données
+        const startIndex = (pageNumber - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        const usersOnPage = userData.slice(startIndex, endIndex);
+
+        // Construire le tableau HTML avec les classes Bootstrap
+        let leaderboardTable = '<h1 class="text-center">PAC BOOM Points Leaderboard</h1><table class="table table-striped">';
+        leaderboardTable += '<thead><tr class="white-text"><th>Rank</th><th>Address</th><th>Points</th><th><img src="img/pacboom-nfts.gif" alt="PAC BOOM NFTs" style="max-width: 30px;"></th></tr></thead><tbody>';
+
+        // Compteur de rang
+        let rank = startIndex + 1;
+
+        usersOnPage.forEach(user => {
+            let shortenedAddresses = '';
+            shortenedAddresses = user.address.substring(0, 4) + '...' + user.address.substring(user.address.length - 4);
+            leaderboardTable += `<tr class="white-text"><td>${rank}</td><td>${shortenedAddresses}</td><td>${user.points}</td><td>${user.nfts}</td></tr>`;
+            rank++; // Incrémenter le rang pour le prochain utilisateur
+        });
+        leaderboardTable += '</tbody></table>';
+
+        // Afficher le tableau dans la page HTML
+        const leaderboardContainer = document.getElementById('leaderboard-container');
+        leaderboardContainer.innerHTML = leaderboardTable;
+    } catch (error) {
+        console.error('Error displaying leaderboard:', error);
+    }
+}
+
+
+
+
+// Appel de la fonction pour afficher le leaderboard des PB points (par exemple, page 1 avec 10 utilisateurs par page)
+const pageNumber = 1;
+const pageSize = 10;
+displayLeaderboard(pageNumber, pageSize);

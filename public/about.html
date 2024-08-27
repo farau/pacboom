@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top w-100">
         <div class="container">
             <a class="navbar-brand" href="/index.html">
-                <img src="img/logo.gif" height="50" class="d-inline-block align-top" alt="Logo">
+                <img src="img/logo.png" height="70" class="d-inline-block align-top" alt="Logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -27,13 +27,13 @@
                         <a class="nav-link" href="index.html">Play</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">Why PacBoom ?</a>
+                        <a class="nav-link" href="mynub.html">My Nub</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="pfpgenerator.html">PFP Generator</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pacfidelity.html">PAC Fidelity</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="leaderboard.html">Leaderboard</a>
@@ -53,7 +53,7 @@
 
     <div id="networkModal" class="network-modal">
         <div class="network-modal-content">
-            <img src="img/logo.gif" height="50" class="d-inline-block align-top">
+            <img src="img/logo.gif" height="70" class="d-inline-block align-top">
             <p>Wrong network. Please change the network.</p>
             <button id="changeNetworkButton">Change</button>
         </div>
@@ -132,13 +132,6 @@
                 </tbody>
             </table>
         </div>
-        
-        <h2 class="text-center">A way to be rewarded </h2><br>
-        <div class="text-center mb-5">
-            <img src="img/revenue.png" alt="Estimated revenue" style="max-width: 250px;">
-        </div>
-        <p>Thanks to the Blast ecosystem, a yield up to 4% will be generated and <b>send back to users of the app</b> !</p>
-        <p>That means 2 ETH will be generated and redistributed every year !</p>
     </div>
 
 
@@ -147,8 +140,8 @@
             <div class="row">
                 <div class="col-sm-4">
                     <!-- Partie gauche -->
-                    <p>&copy; 2024 PacBoom.</p> 
-                    <p>For the PacMoon community.</p>
+                    <p>&copy; 2024 PacBoom<br/>
+                    Logo design made by <a href="https://x.com/rodinh03">Rodinho</a></p>
                 </div>
                 <div class="col-sm-4 text-center">
                     <!-- Partie centrale -->
@@ -164,6 +157,7 @@
     </footer>
 
 
+    <script type="module" src="./js/ethers-5.2.umd.min.js"></script>
     <script src="./js/config.js"></script> <!-- Import pacman game module -->
     <script type="module" src="./js/metamask.js"></script> <!-- Import Metamask js -->
     <script type="module" src="./js/twitter.js"></script> <!-- Import twitter js -->

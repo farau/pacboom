@@ -1,1 +1,355 @@
-const a0_0x3a3cb7=a0_0x2036;(function(_0x3d7e9b,_0x568edc){const _0x49f727=a0_0x2036,_0x3e4263=_0x3d7e9b();while(!![]){try{const _0x3066c6=parseInt(_0x49f727(0xed))/0x1+-parseInt(_0x49f727(0xc8))/0x2+parseInt(_0x49f727(0xfa))/0x3*(-parseInt(_0x49f727(0xf4))/0x4)+-parseInt(_0x49f727(0xe6))/0x5*(parseInt(_0x49f727(0xfe))/0x6)+parseInt(_0x49f727(0xf2))/0x7*(parseInt(_0x49f727(0xe8))/0x8)+-parseInt(_0x49f727(0xce))/0x9+parseInt(_0x49f727(0xff))/0xa;if(_0x3066c6===_0x568edc)break;else _0x3e4263['push'](_0x3e4263['shift']());}catch(_0x54ab85){_0x3e4263['push'](_0x3e4263['shift']());}}}(a0_0x3cf0,0xc1d19));let canvas=document['getElementById'](a0_0x3a3cb7(0xfb)),ctx=canvas[a0_0x3a3cb7(0xde)]('2d'),canvas2=document[a0_0x3a3cb7(0xba)](a0_0x3a3cb7(0xcf)),ctx2=canvas2[a0_0x3a3cb7(0xde)]('2d');const categoryImages={'head':[null,a0_0x3a3cb7(0xae),a0_0x3a3cb7(0x106),a0_0x3a3cb7(0xab),a0_0x3a3cb7(0xe4),a0_0x3a3cb7(0xdc),a0_0x3a3cb7(0x105),a0_0x3a3cb7(0xd9),'./img/head/cooking-hat.png','./img/head/viking-helmet.png',a0_0x3a3cb7(0xbb),a0_0x3a3cb7(0xd9)],'eyes':[null,a0_0x3a3cb7(0xeb),a0_0x3a3cb7(0xa6),a0_0x3a3cb7(0xe2),'./img/eyes/sunglasses.png','./img/eyes/laser.png'],'neck':[null,a0_0x3a3cb7(0xb0),a0_0x3a3cb7(0xb7),a0_0x3a3cb7(0xfc),a0_0x3a3cb7(0xb8)],'arm':[null,a0_0x3a3cb7(0xe9),a0_0x3a3cb7(0xb3),'./img/arm/robotic.png',a0_0x3a3cb7(0xf8)]};document[a0_0x3a3cb7(0xba)](a0_0x3a3cb7(0xfd))[a0_0x3a3cb7(0xd2)](a0_0x3a3cb7(0xbd),function(_0x1293fb){const _0x55e9e6=a0_0x3a3cb7,_0x5c7038=categoryImages[_0x55e9e6(0xd6)],_0x398cd4=categoryImages[_0x55e9e6(0xf7)],_0x946263=categoryImages[_0x55e9e6(0xd5)],_0x178db6=categoryImages[_0x55e9e6(0xc2)];ctx['clearRect'](0x0,0x0,canvas['width'],canvas[_0x55e9e6(0xf9)]);const _0x858359=new Image();_0x858359[_0x55e9e6(0x101)]=_0x55e9e6(0xec),_0x858359[_0x55e9e6(0x10b)]=function(){const _0x475779=_0x55e9e6;ctx[_0x475779(0xbe)](_0x858359,0x0,0x0,canvas[_0x475779(0xf3)],canvas[_0x475779(0xf9)]);const _0x32655c=_0x5c7038[Math[_0x475779(0xd0)](Math[_0x475779(0xda)]()*_0x5c7038[_0x475779(0xe3)])],_0x1b66b9=_0x398cd4[Math[_0x475779(0xd0)](Math[_0x475779(0xda)]()*_0x398cd4[_0x475779(0xe3)])],_0x477049=_0x946263[Math[_0x475779(0xd0)](Math['random']()*_0x946263[_0x475779(0xe3)])],_0x479a3d=_0x178db6[Math[_0x475779(0xd0)](Math['random']()*_0x178db6[_0x475779(0xe3)])];drawImage(_0x32655c,_0x475779(0xd6)),drawImage(_0x1b66b9,_0x475779(0xf7)),drawImage(_0x477049,_0x475779(0xd5)),drawImage(_0x479a3d,_0x475779(0xc2));},showSaveMetaDataButton();});let currentImages={'head':null,'eyes':null,'arm':null,'neck':null};function drawImage(_0xa2db6c,_0x2886c5){const _0x4b3beb=a0_0x3a3cb7,_0x221da7=new Image();_0x221da7[_0x4b3beb(0x10b)]=function(){const _0x5c70b5=_0x4b3beb;ctx[_0x5c70b5(0xbe)](_0x221da7,0x0,0x0,canvas[_0x5c70b5(0xf3)],canvas[_0x5c70b5(0xf9)]);};let _0x2272c0='';if(_0xa2db6c!==null){const _0x3dea28=_0xa2db6c[_0x4b3beb(0xf6)]('/'),_0x5307f5=_0x3dea28[_0x3dea28[_0x4b3beb(0xe3)]-0x1];_0x2272c0=_0x5307f5[_0x4b3beb(0xf6)]('.')[0x0];}currentImages[_0x2886c5]=_0x2272c0,_0xa2db6c&&(_0x221da7[_0x4b3beb(0x101)]=_0xa2db6c);}function drawImage2(_0x35ca18){const _0x582f21=a0_0x3a3cb7,_0x1e3898=new Image();_0x1e3898[_0x582f21(0x101)]=_0x35ca18,_0x1e3898['onload']=function(){const _0x1f085f=_0x582f21;ctx2[_0x1f085f(0xbe)](_0x1e3898,0x0,0x0,0xc8,0xc8);};}document[a0_0x3a3cb7(0xd2)]('DOMContentLoaded',_0x3415d3=>{const _0x19f3d3=a0_0x3a3cb7;ctx[_0x19f3d3(0xef)](0x0,0x0,canvas[_0x19f3d3(0xf3)],canvas[_0x19f3d3(0xf9)]);});function getCurrentImagesJSON(_0x2c12b7){const _0x2a8889=a0_0x3a3cb7;return JSON[_0x2a8889(0xc3)](_0x2c12b7);}const shareTwitterBtn=document[a0_0x3a3cb7(0xba)](a0_0x3a3cb7(0xd7));shareTwitterBtn['addEventListener'](a0_0x3a3cb7(0xbd),()=>{const _0xd02854=a0_0x3a3cb7,_0x4a85b7=canvas['toDataURL'](),_0x32a7d5=getCurrentImagesJSON(currentImages);let _0x516249=encodeURIComponent(_0x32a7d5),_0xd0f52f=_0xd02854(0xad)+_0x516249;window[_0xd02854(0xc1)](_0xd0f52f,_0xd02854(0xa7));});const saveButton=document[a0_0x3a3cb7(0xba)](a0_0x3a3cb7(0x109));function showSaveMetaDataButton(){const _0x4edc22=a0_0x3a3cb7,_0x2850fc=localStorage['getItem'](_0x4edc22(0xd4)),_0xf45b96=document[_0x4edc22(0xba)]('metadataContainer');_0x2850fc&&_0xf45b96[_0x4edc22(0x107)]==_0x4edc22(0xb5)&&(saveButton[_0x4edc22(0xea)]['display']=_0x4edc22(0xbc));}function a0_0x2036(_0x40ebf9,_0x388edb){const _0x3cf0d4=a0_0x3cf0();return a0_0x2036=function(_0x203617,_0x1986b9){_0x203617=_0x203617-0xa4;let _0x543012=_0x3cf0d4[_0x203617];return _0x543012;},a0_0x2036(_0x40ebf9,_0x388edb);}saveButton['addEventListener'](a0_0x3a3cb7(0xbd),()=>{handleMetadata();});function getCookie(_0x5c08bc){const _0x1f723c=a0_0x3a3cb7,_0x33316d=document[_0x1f723c(0xb9)][_0x1f723c(0xf1)](_0x1f723c(0xb4)+_0x5c08bc+'=([^;]*)(;|$)');return _0x33316d?_0x33316d[0x2]:null;}function a0_0x3cf0(){const _0x52cfea=['./img/arm/muscle.png','style','./img/eyes/glasses.png','img/pacmoon.png','813594fPCYZe','log','clearRect','value','match','8869OztOGs','width','4989048Gbmnjk','getItem','split','eyes','./img/arm/zombie.png','height','3eimRVJ','drawingCanvas','./img/neck/scarf.png','randomize','29724NwAguC','47958660QowvGs','application/json','src','#9575CD','/getMetadata','Uncommon','./img/head/ribbon.png','./img/head/crown.png','textContent','table-striped','saveButton','then','onload','innerHTML','The\x20metadata\x20you\x20registered:','status','color','#42A5F5','Arm','#FFC107','metadataCard','./img/eyes/gold-sunglasses.png','_blank','#8BC34A','add','catch','./img/head/hat.png','red','https://twitter.com/intent/tweet?text=Here+is+my+new+PFP+generated+with+PacBoom+!\x0a+For+the+PacMoon+community+!\x0a+Metadata:+','./img/head/cap.png','createElement','./img/neck/gold-necklace.png','DOMContentLoaded','label','./img/arm/bone-sword.png','(^|;)\x20?','No\x20metadata\x20available.','Metadata\x20saved\x20into\x20database','./img/neck/bow-tie.png','./img/neck/tie.png','cookie','getElementById','./img/head/pirate-hat.png','block','click','drawImage','.png','json','open','arm','stringify','appendChild','successMessage','Neck','#000000','2648732nIhHme','resolve','error','./img/eyes/','forEach','metadataContainer','13297833zEpHFM','secondaryCanvas','floor','Error\x20retrieving\x20metadata','addEventListener','Legendary','username','neck','head','shareTwitterBtn','backgroundColor','./img/head/stetson.png','random','rarity','./img/head/magician-hat.png','/saveMetadata','getContext','tbody','Head','saveErrorMessage','./img/eyes/sunglasses-cig.png','length','./img/head/luffy-hat.png','Rare','950wrIvQd','Epic','1104vDReIo'];a0_0x3cf0=function(){return _0x52cfea;};return a0_0x3cf0();}function handleMetadata(){const _0xcbc21e=a0_0x3a3cb7,_0x5affdf=localStorage[_0xcbc21e(0xf5)](_0xcbc21e(0xd4)),_0x31513d=document[_0xcbc21e(0xba)](_0xcbc21e(0xe1)),_0x27f75b=document[_0xcbc21e(0xba)](_0xcbc21e(0xc5));_0x27f75b['textContent']='',fetch(_0xcbc21e(0xdd),{'method':'POST','headers':{'Content-Type':_0xcbc21e(0x100)},'body':JSON[_0xcbc21e(0xc3)]({'username':_0x5affdf,'currentImages':currentImages})})['then'](_0x222e28=>{const _0x448c4d=_0xcbc21e;if(_0x222e28['ok'])return _0x222e28[_0x448c4d(0xc0)]();else{if(_0x222e28[_0x448c4d(0x10e)]===0x1f4)return Promise[_0x448c4d(0xc9)]({'username':_0x5affdf,'currentImages':currentImages});else throw new Error('Erreur\x20serveur');}})['then'](_0x1c4ef9=>{const _0x4c022e=_0xcbc21e;console['log'](_0x4c022e(0xb6),_0x1c4ef9),_0x27f75b[_0x4c022e(0x107)]='Metadata\x20saved\x20!';})[_0xcbc21e(0xaa)](_0x4f3579=>{const _0x515f22=_0xcbc21e;console[_0x515f22(0xca)]('Metadata\x20already\x20saved\x20!\x20You\x20already\x20got\x20your\x20PFP\x20!',_0x4f3579);});}function getMetadata(){const _0x3b72f6=a0_0x3a3cb7,_0x375bc8=localStorage[_0x3b72f6(0xf5)](_0x3b72f6(0xd4));fetch('/getMetadata',{'method':'POST','headers':{'Content-Type':_0x3b72f6(0x100)},'body':JSON[_0x3b72f6(0xc3)]({'username':_0x375bc8})})[_0x3b72f6(0x10a)](_0x283f64=>{const _0x25233f=_0x3b72f6;if(_0x283f64['ok'])return _0x283f64[_0x25233f(0x10e)]===0xcc?(console[_0x25233f(0xee)]('No\x20metadata\x20available.'),null):_0x283f64['json']();else{}})[_0x3b72f6(0x10a)](_0x304296=>{const _0x201d0a=_0x3b72f6,_0x1436fd=document[_0x201d0a(0xba)](_0x201d0a(0xcd)),_0x43b97d=document[_0x201d0a(0xba)](_0x201d0a(0xa5));_0x1436fd[_0x201d0a(0x10c)]='';if(_0x304296){const _0x2d110b=document[_0x201d0a(0xaf)]('p');_0x2d110b['textContent']=_0x201d0a(0x10d),_0x1436fd[_0x201d0a(0xc4)](_0x2d110b);const _0x3754d3=document[_0x201d0a(0xaf)]('table');_0x3754d3['classList'][_0x201d0a(0xa9)]('table','table-bordered',_0x201d0a(0x108));const _0x5e4458=document['createElement'](_0x201d0a(0xdf)),_0x4639d7=[{'label':_0x201d0a(0xe0),'value':_0x304296[_0x201d0a(0xd6)]},{'label':'Eyes','value':_0x304296['eyes']},{'label':_0x201d0a(0x111),'value':_0x304296[_0x201d0a(0xc2)]},{'label':_0x201d0a(0xc6),'value':_0x304296[_0x201d0a(0xd5)]},{'label':'Rarity','value':_0x304296[_0x201d0a(0xdb)]}];_0x4639d7[_0x201d0a(0xcc)](_0x48f48c=>{const _0x286f02=_0x201d0a,_0x3a05b8=document['createElement']('tr'),_0x21f197=document[_0x286f02(0xaf)]('td'),_0x297c83=document['createElement']('td');_0x21f197[_0x286f02(0xea)][_0x286f02(0x10f)]=_0x286f02(0xc7),_0x297c83[_0x286f02(0xea)][_0x286f02(0x10f)]=_0x286f02(0xc7),_0x21f197['textContent']=_0x48f48c[_0x286f02(0xb2)],_0x297c83[_0x286f02(0x107)]=_0x48f48c[_0x286f02(0xf0)],_0x3a05b8[_0x286f02(0xc4)](_0x21f197),_0x3a05b8['appendChild'](_0x297c83),_0x5e4458[_0x286f02(0xc4)](_0x3a05b8);}),_0x3754d3[_0x201d0a(0xc4)](_0x5e4458),_0x1436fd[_0x201d0a(0xc4)](_0x3754d3);switch(_0x304296['rarity']){case _0x201d0a(0x104):_0x43b97d[_0x201d0a(0xea)][_0x201d0a(0x10f)]=_0x201d0a(0xc7),_0x43b97d['style']['backgroundColor']=_0x201d0a(0xa8);break;case _0x201d0a(0xe5):_0x43b97d['style']['color']='#000000',_0x43b97d[_0x201d0a(0xea)][_0x201d0a(0xd8)]=_0x201d0a(0x110);break;case _0x201d0a(0xe7):_0x43b97d[_0x201d0a(0xea)]['color']=_0x201d0a(0xc7),_0x43b97d[_0x201d0a(0xea)][_0x201d0a(0xd8)]=_0x201d0a(0x102);break;case _0x201d0a(0xd3):_0x43b97d[_0x201d0a(0xea)][_0x201d0a(0x10f)]='#000000',_0x43b97d['style']['backgroundColor']=_0x201d0a(0xa4);break;default:}const _0x4ac348=document[_0x201d0a(0xaf)]('p');return _0x4ac348[_0x201d0a(0x107)]='You\x20cannot\x20save\x20metadata\x20again\x20but\x20feel\x20free\x20to\x20share\x20other\x20PFP\x20on\x20socials\x20!',_0x4ac348[_0x201d0a(0xea)][_0x201d0a(0x10f)]=_0x201d0a(0xac),_0x1436fd[_0x201d0a(0xc4)](_0x4ac348),_0x304296;}else return _0x1436fd['textContent']=_0x201d0a(0xb5),null;})[_0x3b72f6(0xaa)](_0x415c91=>{const _0x2ea647=_0x3b72f6;console[_0x2ea647(0xca)]('Error\x20retrieving\x20metadata:',_0x415c91);});}document[a0_0x3a3cb7(0xd2)](a0_0x3a3cb7(0xb1),function(){const _0x35caf0=a0_0x3a3cb7,_0x5a5e42=localStorage['getItem'](_0x35caf0(0xd4));_0x5a5e42&&(getMetadata(),getMetadataAndDisplayPFP());});function displayPFPOnCanvas(_0x47a0c2){const _0x481318=a0_0x3a3cb7,_0x414b87=new Image();_0x414b87[_0x481318(0x101)]='img/pacmoon.png',_0x414b87['onload']=function(){const _0x1c3c23=_0x481318;ctx2[_0x1c3c23(0xbe)](_0x414b87,0x0,0x0,0xc8,0xc8),_0x47a0c2[_0x1c3c23(0xd6)]&&drawImage2('./img/head/'+_0x47a0c2['head']+_0x1c3c23(0xbf)),_0x47a0c2[_0x1c3c23(0xf7)]&&drawImage2(_0x1c3c23(0xcb)+_0x47a0c2['eyes']+_0x1c3c23(0xbf)),_0x47a0c2[_0x1c3c23(0xc2)]&&drawImage2('./img/arm/'+_0x47a0c2[_0x1c3c23(0xc2)]+_0x1c3c23(0xbf)),_0x47a0c2[_0x1c3c23(0xd5)]&&drawImage2('./img/neck/'+_0x47a0c2[_0x1c3c23(0xd5)]+_0x1c3c23(0xbf));};}function getMetadataAndDisplayPFP(){const _0x1235d3=a0_0x3a3cb7,_0x336b1d=localStorage[_0x1235d3(0xf5)](_0x1235d3(0xd4));fetch(_0x1235d3(0x103),{'method':'POST','headers':{'Content-Type':_0x1235d3(0x100)},'body':JSON[_0x1235d3(0xc3)]({'username':_0x336b1d})})[_0x1235d3(0x10a)](_0x4a9e03=>{const _0x4a9864=_0x1235d3;if(_0x4a9e03['ok'])return _0x4a9e03[_0x4a9864(0xc0)]();else throw new Error(_0x4a9864(0xd1));})[_0x1235d3(0x10a)](_0x3a2a5f=>{displayPFPOnCanvas(_0x3a2a5f);})[_0x1235d3(0xaa)](_0xccf46e=>{});}
+let canvas = document.getElementById('drawingCanvas');
+let ctx = canvas.getContext('2d');
+
+let canvas2 = document.getElementById('secondaryCanvas');
+let ctx2 = canvas2.getContext('2d');
+
+
+// Array contenant les chemins d'accès aux images pour chaque catégorie
+const categoryImages = {
+    head: [null, './img/head/cap.png', './img/head/crown.png', './img/head/hat.png', './img/head/luffy-hat.png', './img/head/magician-hat.png','./img/head/ribbon.png','./img/head/stetson.png', './img/head/cooking-hat.png', './img/head/viking-helmet.png', './img/head/pirate-hat.png', './img/head/stetson.png'],
+    eyes: [null, './img/eyes/glasses.png', './img/eyes/gold-sunglasses.png', './img/eyes/sunglasses-cig.png','./img/eyes/sunglasses.png', './img/eyes/laser.png'],
+    neck: [null, './img/neck/gold-necklace.png', './img/neck/bow-tie.png', './img/neck/scarf.png', './img/neck/tie.png'],
+    arm: [null, './img/arm/muscle.png', './img/arm/bone-sword.png', './img/arm/robotic.png', './img/arm/zombie.png']
+};
+
+document.getElementById("randomize").addEventListener("click", function(event) {
+    
+    // Exemple d'utilisation pour la catégorie "head"
+    const headImages = categoryImages['head'];
+    const eyesImages = categoryImages['eyes'];
+    const neckImages = categoryImages['neck'];
+    const armImages = categoryImages['arm'];
+
+    // Effacer tout le canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Charger l'image de fond
+    const backgroundImage = new Image();
+    backgroundImage.src = 'img/pacmoon.png';
+
+    // Attendre que l'image soit chargée
+    backgroundImage.onload = function() {
+        // Dessiner l'image de fond sur le canvas
+        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);    
+        
+        // On affiche les attributs random sur pacmoon
+        const randomHeadImage = headImages[Math.floor(Math.random() * headImages.length)];
+        const randomEyesImage = eyesImages[Math.floor(Math.random() * eyesImages.length)];
+        const randomNeckImage = neckImages[Math.floor(Math.random() * neckImages.length)];
+        const randomArmImage = armImages[Math.floor(Math.random() * armImages.length)];
+        drawImage(randomHeadImage, 'head');
+        drawImage(randomEyesImage, 'eyes');
+        drawImage(randomNeckImage, 'neck');
+        drawImage(randomArmImage, 'arm');
+    };
+    
+    showSaveMetaDataButton();
+
+});
+        
+
+
+
+// Garder une référence aux images actuellement dessinées par catégorie
+let currentImages = {
+    head: null,
+    eyes: null,
+    arm: null,
+    neck: null
+}; 
+
+// Fonction pour dessiner une image sur le canvas
+function drawImage(imagePath, category) {
+    const image = new Image();
+    image.onload = function() {
+    // Dessiner la nouvelle image
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height); 
+    } 
+
+    let fileName = '';
+
+    if (imagePath !== null) {
+        const segments = imagePath.split('/'); // Diviser le chemin en segments
+        const fileNameWithExtension = segments[segments.length - 1]; // Prendre le dernier segment (nom de fichier avec extension)
+        fileName = fileNameWithExtension.split('.')[0]; // Diviser le nom de fichier pour obtenir le nom seulement
+    }
+
+    // Mettre à jour la référence de l'image actuellement dessinée par catégorie
+    currentImages[category] = fileName ;
+    if (imagePath) {
+        image.src = imagePath;
+    }
+}
+
+// Fonction pour dessiner une image sur le canvas
+function drawImage2(imagePath) {
+    const image = new Image();
+    image.src = imagePath;
+    image.onload = function() {
+    // Dessiner la nouvelle image
+        ctx2.drawImage(image, 0, 0, 200, 200); 
+    } 
+
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {   
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// Fonction pour obtenir les données de currentImages au format JSON
+function getCurrentImagesJSON(images) {
+    return JSON.stringify(images);
+}
+
+
+
+// Sélectionner le bouton de partage Twitter
+const shareTwitterBtn = document.getElementById('shareTwitterBtn');
+
+// Ajouter un gestionnaire d'événements pour le clic sur le bouton
+shareTwitterBtn.addEventListener('click', () => {
+    const imageUrl = canvas.toDataURL(); // Convertir le contenu du canvas en URL de données
+    // Exemple d'utilisation
+    const currentImagesJSON = getCurrentImagesJSON(currentImages);
+    let shareJSON = encodeURIComponent(currentImagesJSON);
+    let twitterUrl = `https://twitter.com/intent/tweet?text=Here+is+my+new+PFP+generated+with+PacBoom+!\n+For+the+PacMoon+community+!\n+Metadata:+${shareJSON}`;
+    window.open(twitterUrl, '_blank');
+
+});
+
+
+const saveButton = document.getElementById('saveButton');
+
+// Fonction pour rendre le bouton visible
+function showSaveMetaDataButton() {
+    const isLoggedIn = localStorage.getItem('username');
+    const metadataContainer = document.getElementById('metadataContainer');
+    
+    if (isLoggedIn && metadataContainer.textContent == 'No metadata available.') {
+        saveButton.style.display = 'block';
+    }
+}
+
+// Ajouter un gestionnaire d'événements pour le clic sur le bouton
+saveButton.addEventListener('click', () => {
+    // Quand on clique sur saveButton on peut enregistrer les metadata car l'user est logué
+    handleMetadata();
+});
+
+function getCookie(name) {
+    const cookieValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
+    return cookieValue ? cookieValue[2] : null;
+}
+
+// Fonction pour gérer l'insertion des metadata en BDD
+function handleMetadata() {
+    const username = localStorage.getItem('username');
+    const saveErrorMessage = document.getElementById('saveErrorMessage');
+    const successMessage = document.getElementById('successMessage');
+
+    // Message de succès
+    successMessage.textContent = '';
+
+    // Stockage des informations utilisateur en base de données (envoi d'une requête POST au serveur)
+    fetch('/saveMetadata', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, currentImages })
+    })
+    .then(response => {
+        if (response.ok) {
+            // La requête s'est déroulée avec succès (metadata enregistrée ou mises à jour)
+            return response.json();
+        } else if (response.status === 500) {
+            // On continue malgré tout pour mettre à jour l'interface utilisateur
+            return Promise.resolve({ username, currentImages }); // Simuler une réponse avec les données de l'utilisateur existant
+        } else {
+            throw new Error('Erreur serveur');
+        }
+    })
+    .then(result => {
+        console.log('Metadata saved into database', result);
+        successMessage.textContent = 'Metadata saved !';
+    })
+    .catch(error => {
+        console.error("Metadata already saved ! You already got your PFP !", error);
+    
+    });
+}
+
+function getMetadata() {
+    const username = localStorage.getItem('username');
+
+    // Récupérer les métadonnées de l'utilisateur depuis le serveur
+    fetch('/getMetadata', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    })
+    .then(response => {
+        if (response.ok) {
+            if (response.status === 204) {
+                // Aucune donnée n'est présente, vous pouvez gérer cela comme nécessaire
+                console.log('No metadata available.');
+                return null; // Ou toute autre action que vous souhaitez prendre
+            } else {
+                // Il y a des données dans la réponse, vous pouvez la traiter comme d'habitude
+                return response.json();
+            }
+        } else {
+            //throw new Error('Error retrieving metadata');
+        }
+    })
+    .then(metadata => {
+        // Mettre à jour l'interface utilisateur avec les métadonnées récupérées
+        // Par exemple, remplacer le bouton Save Metadata par les métadonnées
+        const metadataContainer = document.getElementById('metadataContainer');
+        const metadataCard = document.getElementById('metadataCard');
+
+        metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+        if (metadata) {
+            // Créer un tableau Bootstrap pour afficher les métadonnées
+            const beginMessage = document.createElement('p');
+            beginMessage.textContent = 'The metadata you registered:';
+            metadataContainer.appendChild(beginMessage);
+            const table = document.createElement('table');
+            table.classList.add('table', 'table-bordered', 'table-striped');
+            const tbody = document.createElement('tbody');
+            const metadataRows = [
+                { label: 'Head', value: metadata.head },
+                { label: 'Eyes', value: metadata.eyes },
+                { label: 'Arm', value: metadata.arm },
+                { label: 'Neck', value: metadata.neck },
+                { label: 'Rarity', value: metadata.rarity }
+            ];
+            metadataRows.forEach(rowData => {
+                const row = document.createElement('tr');
+                const labelCell = document.createElement('td');
+                const valueCell = document.createElement('td');
+
+                // Définir la couleur du texte sur noir
+                labelCell.style.color = '#000000'; // Noir
+                valueCell.style.color = '#000000'; // Noir
+
+                labelCell.textContent = rowData.label;
+                valueCell.textContent = rowData.value;
+                row.appendChild(labelCell);
+                row.appendChild(valueCell);
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+            metadataContainer.appendChild(table);
+
+            // Changer la couleur de metadataContainer en fonction de la rareté
+            switch (metadata.rarity) {
+                case 'Uncommon':
+                    metadataCard.style.color = '#000000'; // Noir
+                    metadataCard.style.backgroundColor = '#8BC34A'; // Vert doux
+                    break;
+                case 'Rare':
+                    metadataCard.style.color = '#000000'; // Noir
+                    metadataCard.style.backgroundColor = '#42A5F5'; // Bleu doux
+                    break;
+                case 'Epic':
+                    metadataCard.style.color = '#000000'; // Noir
+                    metadataCard.style.backgroundColor = '#9575CD'; // Violet doux
+                    break;
+                case 'Legendary':
+                    metadataCard.style.color = '#000000'; // Noir
+                    metadataCard.style.backgroundColor = '#FFC107'; // Or doux
+                    break;
+                default:
+                    // Ne rien faire pour les autres cas
+            }
+
+            // Afficher un message indiquant que les métadonnées ne peuvent pas être enregistrées à nouveau
+            const cannotSaveMessage = document.createElement('p');
+            cannotSaveMessage.textContent = 'You cannot save metadata again but feel free to share other PFP on socials !';
+            cannotSaveMessage.style.color = 'red';
+            metadataContainer.appendChild(cannotSaveMessage);
+
+            return metadata;
+
+        } else {
+            // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+            metadataContainer.textContent = 'No metadata available.';
+            return null;
+        }
+
+    })
+    .catch(error => {
+        console.error('Error retrieving metadata:', error);
+    });
+}
+
+
+// Attendez que le DOM soit chargé
+document.addEventListener('DOMContentLoaded', function() {
+    // Appeler la fonction getMetadata pour récupérer les métadonnées de l'utilisateur
+    const isLoggedIn = localStorage.getItem('username');
+    if (isLoggedIn) {
+        getMetadata();
+        getMetadataAndDisplayPFP();
+    }
+});
+
+function displayPFPOnCanvas(metadata) {
+    // Charger l'image de fond
+    const backgroundImage = new Image();
+    backgroundImage.src = 'img/pacmoon.png';
+
+    // Attendre que l'image soit chargée
+    backgroundImage.onload = function() {
+        // Dessiner l'image de fond sur le canvas
+        ctx2.drawImage(backgroundImage, 0, 0, 200, 200);    
+        
+        // Dessiner les éléments du PFP s'ils ne sont pas vides
+        if (metadata.head) {
+            drawImage2('./img/head/'+metadata.head+'.png');
+        }
+        if (metadata.eyes) {
+            drawImage2('./img/eyes/'+metadata.eyes+'.png');
+        }
+        if (metadata.arm) {
+            drawImage2('./img/arm/'+metadata.arm+'.png');
+        }
+        if (metadata.neck) {
+            drawImage2('./img/neck/'+metadata.neck+'.png');
+        }
+    };
+}
+
+
+function getMetadataAndDisplayPFP() {
+    const username = localStorage.getItem('username');
+
+    // Récupérer les métadonnées de l'utilisateur depuis le serveur
+    fetch('/getMetadata', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Error retrieving metadata');
+        }
+    })
+    .then(metadata => {
+        // Afficher la PFP sur le canvas secondaire à partir des métadonnées récupérées
+        displayPFPOnCanvas(metadata);
+    })
+    .catch(error => {
+        //console.log('No metadata found.');
+    });
+}
+
+

@@ -121,7 +121,8 @@ async function createTables() {
             id INTEGER PRIMARY KEY,
             wallet_address VARCHAR(42) NOT NULL UNIQUE,
             username VARCHAR(50) UNIQUE,
-            score INTEGER NOT NULL DEFAULT 0
+            score INTEGER NOT NULL DEFAULT 0,
+            nub_id INTEGER DEFAULT NULL
         );
         
         CREATE TABLE IF NOT EXISTS metadata (
@@ -873,6 +874,114 @@ app.post('/add-pacboom-points', verifyJWT, async (req, res) => {
     }
 });
 
+
+// Route pour sauvegarder l'id du Nub possédé dans la base de données
+app.post('/saveNub', verifyJWT, async (req, res) => {
+    try {
+        const { nub_id } = req.body;
+        
+        // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
+        const address = req.userAddress;
+        // Vérifiez si l'adresse est fournie
+        if (!address) {
+            return res.status(400).send('Address not provided.');
+        }
+
+        // Commencez une nouvelle transaction
+        const client = await pool.connect();
+
+        // Vérifiez si le nom d'utilisateur est fourni dans la base de données
+        const usernameQuery = await client.query(`
+            SELECT username FROM users
+            WHERE wallet_address = $1; 
+        `, [address]);
+
+        const username = usernameQuery.rows ? usernameQuery.rows[0].username : null;
+        const user_id_query = username ? await client.query(`
+            SELECT user_id FROM user_access_tokens
+            WHERE username = $1; 
+        `, [username]) : null;
+
+        const user_id = user_id_query.rows ? user_id_query.rows[0].user_id : null;
+
+        if (!username || !user_id) {
+            client.release();
+            res.status(204).send();
+            return;
+        }
+
+        // Commencez la transaction
+        await client.query('BEGIN');
+
+        // Mettez à jour le score de l'utilisateur
+        const updateQuery = `
+            UPDATE users
+            SET nub_id = $1
+            WHERE wallet_address = $2
+            RETURNING *;
+        `;
+        const updateResult = await client.query(updateQuery, [nub_id, address]);
+
+        // Validez la transaction
+        await client.query('COMMIT');
+
+        // Libérez le client
+        client.release();
+
+        // Vérifiez le succès de la mise à jour
+        if (updateResult.rowCount > 0) {
+            res.status(201).json(updateResult.rows);
+        } else {
+            res.status(500).send('Internal Server Error');
+        }
+    } catch (error) {
+        console.error('Error saving nub id to database:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+// Route pour récupérer l'id du Nub possédé dans la base de données
+app.post('/getNub', verifyJWT, async (req, res) => {
+    try {
+        // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
+        const address = req.userAddress;
+        // Vérifiez si l'adresse est fournie
+        if (!address) {
+            return res.status(400).send('Address not provided.');
+        }
+
+        // Commencez une nouvelle transaction
+        const client = await pool.connect();
+
+        // Commencez la transaction
+        await client.query('BEGIN');
+
+        // Mettez à jour le score de l'utilisateur
+        const updateQuery = `
+            SELECT nub_id
+            FROM users
+            WHERE wallet_address = $1;
+        `;
+        const returnResult = await client.query(updateQuery, [address]);
+
+        // Validez la transaction
+        await client.query('COMMIT');
+
+        // Libérez le client
+        client.release();
+
+        // Vérifiez le succès de la mise à jour
+        if (returnResult.rowCount > 0) {
+            res.status(201).json(returnResult.rows);
+        } else {
+            res.status(500).send('Internal Server Error');
+        }
+    } catch (error) {
+        console.error('Error retrieving nub id for user :', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 // Démarre le serveur Express
 const PORT = process.env.PORT || 3000;

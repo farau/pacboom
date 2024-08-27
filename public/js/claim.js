@@ -1,1 +1,120 @@
-function a0_0x1169(_0x17c028,_0x554db4){const _0x33e11c=a0_0x33e1();return a0_0x1169=function(_0x1169ad,_0x236dc5){_0x1169ad=_0x1169ad-0x13a;let _0x2d46ba=_0x33e11c[_0x1169ad];return _0x2d46ba;},a0_0x1169(_0x17c028,_0x554db4);}const a0_0x49f868=a0_0x1169;(function(_0x249697,_0x20b1a6){const _0x5d817f=a0_0x1169,_0x674335=_0x249697();while(!![]){try{const _0x18ae82=-parseInt(_0x5d817f(0x15e))/0x1*(-parseInt(_0x5d817f(0x148))/0x2)+parseInt(_0x5d817f(0x162))/0x3+parseInt(_0x5d817f(0x145))/0x4+-parseInt(_0x5d817f(0x143))/0x5*(parseInt(_0x5d817f(0x144))/0x6)+-parseInt(_0x5d817f(0x13b))/0x7*(-parseInt(_0x5d817f(0x151))/0x8)+-parseInt(_0x5d817f(0x16d))/0x9*(-parseInt(_0x5d817f(0x16f))/0xa)+-parseInt(_0x5d817f(0x14f))/0xb;if(_0x18ae82===_0x20b1a6)break;else _0x674335['push'](_0x674335['shift']());}catch(_0x4c5f51){_0x674335['push'](_0x674335['shift']());}}}(a0_0x33e1,0xbb387));const provider=new ethers[(a0_0x49f868(0x13c))]['Web3Provider'](window['ethereum']),contractAddress=config[a0_0x49f868(0x169)],abi=config[a0_0x49f868(0x157)],contract=new ethers[(a0_0x49f868(0x141))](contractAddress,abi,provider),signerAddress=await provider[a0_0x49f868(0x16b)]()[a0_0x49f868(0x142)]();!signerAddress&&console[a0_0x49f868(0x163)](a0_0x49f868(0x14e));let nbNFTs='';contract['on'](a0_0x49f868(0x152),(_0x2e39ae,_0x28c599)=>{const _0x2f54cc=a0_0x49f868;console[_0x2f54cc(0x153)](_0x2f54cc(0x168)+_0x28c599),_0x28c599!=0x0&&fetch(_0x2f54cc(0x16a),{'method':_0x2f54cc(0x158),'headers':{'Content-Type':_0x2f54cc(0x154),'Authorization':''+localStorage['getItem'](_0x2f54cc(0x15a))},'body':JSON[_0x2f54cc(0x149)]({'points':_0x28c599})})[_0x2f54cc(0x140)](_0x77386d=>{const _0xae6bbf=_0x2f54cc;_0x77386d['ok']?console[_0xae6bbf(0x153)]('PB\x20points\x20successfully\x20registered\x20on\x20database'):console[_0xae6bbf(0x163)]('Failed\x20to\x20add\x20PB\x20points\x20into\x20database\x20for\x20the\x20user\x20:',_0x77386d[_0xae6bbf(0x150)]);})['catch'](_0x39d05d=>{const _0x397aed=_0x2f54cc;console[_0x397aed(0x163)]('An\x20error\x20occurred\x20while\x20adding\x20PB\x20points\x20into\x20database\x20for\x20the\x20user\x20:',_0x39d05d);}),transactionButton[_0x2f54cc(0x13e)]=_0x2f54cc(0x165)+_0x28c599+_0x2f54cc(0x159);}),transactionButton[a0_0x49f868(0x15d)](a0_0x49f868(0x146),async()=>{const _0x3f8b3f=a0_0x49f868;try{transactionButton[_0x3f8b3f(0x16c)]=!![],transactionButton[_0x3f8b3f(0x16e)]=_0x3f8b3f(0x14d);const _0x1dc857=await contract[_0x3f8b3f(0x15c)](provider[_0x3f8b3f(0x16b)]()[_0x3f8b3f(0x142)]()),_0x1b7a89=await fetch(_0x3f8b3f(0x13d),{'method':_0x3f8b3f(0x166),'headers':{'Authorization':''+localStorage[_0x3f8b3f(0x156)](_0x3f8b3f(0x15a))}});if(_0x1b7a89['ok']){const _0x4d78f4=await _0x1b7a89['json'](),_0x3eed78=_0x4d78f4[_0x3f8b3f(0x160)],_0x5354da=await contract[_0x3f8b3f(0x13f)](provider[_0x3f8b3f(0x16b)]())[_0x3f8b3f(0x14b)](_0x3eed78),_0x29e980=await _0x5354da['wait'](),_0x33d02d=_0x29e980[_0x3f8b3f(0x15f)],_0x30e907=await contract[_0x3f8b3f(0x15b)](provider[_0x3f8b3f(0x16b)]()[_0x3f8b3f(0x142)]());nbNFTs=_0x3f8b3f(0x14a)+_0x1dc857+_0x3f8b3f(0x161)+_0x30e907+'\x20';const _0x4194ee='<a\x20href=\x22https://blastscan.io/tx/'+_0x33d02d+_0x3f8b3f(0x155);document[_0x3f8b3f(0x164)](_0x3f8b3f(0x14c))[_0x3f8b3f(0x16e)]=_0x4194ee,document['getElementById'](_0x3f8b3f(0x167))[_0x3f8b3f(0x16e)]=nbNFTs;}else console[_0x3f8b3f(0x163)](_0x3f8b3f(0x13a),_0x1b7a89[_0x3f8b3f(0x150)]);}catch(_0x1babd2){console[_0x3f8b3f(0x163)]('Error:',_0x1babd2),_0x1babd2['code']===0xfa1&&(transactionButton['disabled']=![],transactionButton[_0x3f8b3f(0x16e)]='Claim\x20PAC\x20BOOM\x20Points\x20!'),transactionButton[_0x3f8b3f(0x16c)]=![],transactionButton[_0x3f8b3f(0x16e)]=_0x3f8b3f(0x147)+_0x1babd2['message'];}});function a0_0x33e1(){const _0x3b993c=['Contract','getAddress','12280GzElvQ','1758ziofXA','2595188JIcVhi','click','Try\x20again\x20!\x20Error\x20:\x20','502xmHrxz','stringify','You\x20own\x20currently\x20','claimPoints','txHash','<span\x20class=\x22spinner-border\x20spinner-border-sm\x22\x20role=\x22status\x22\x20aria-hidden=\x22true\x22></span>\x20Waiting...','No\x20Ethereum\x20address\x20connected.\x20Please\x20connect\x20with\x20your\x20wallet.','14566574gwmFbD','statusText','96RYTeNf','PointsEarned','log','application/json','\x22\x20target=\x22_blank\x22>View\x20Transaction</a>','getItem','pacBoomABI','POST','\x20PAC\x20BOOM\x20points\x20!','jwtToken','getPlayerPoints','numberOfNFTs','addEventListener','1139oRXYCO','transactionHash','score','\x20NFTs\x20from\x20PAC\x20BOOM\x20collection.<br/>Your\x20total\x20PB\x20points\x20:\x20','3188391qoJHZD','error','getElementById','Claimed\x20','GET','infosUser','Points\x20earned:\x20','pacBoomAddress','/add-pacboom-points','getSigner','disabled','1502694VTRHCP','innerHTML','10UuRGnp','Failed\x20to\x20fetch\x20score:','376978hUxHIv','providers','/get-score','innerText','connect','then'];a0_0x33e1=function(){return _0x3b993c;};return a0_0x33e1();}
+// Définition du fournisseur de signer (provider) Ethereum
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+// Chargement de l'adresse du contrat et de l'ABI depuis le fichier de configuration
+const contractAddress = config.pacBoomAddress;
+const abi = config.pacBoomABI;
+
+// Instanciation du contrat intelligent PacBoomTest
+const contract = new ethers.Contract(contractAddress, abi, provider);
+
+// Récupération de l'adresse Ethereum actuellement connectée
+const signerAddress = await provider.getSigner().getAddress();
+
+// Vérification si l'adresse est connectée
+if (!signerAddress) {
+    console.error("No Ethereum address connected. Please connect with your wallet.");
+}
+
+// Déclaration de nbNFTs
+let nbNFTs = '';
+
+// Écouteur d'événement pour les événements PointsEarned
+contract.on("PointsEarned", (player, points) => {
+    console.log(`Points earned: ${points}`);
+
+    if (points != 0) {
+        // On enregistre dans la BDD le nombre de PB points récoltés par les users.
+        // Supposons que points est une valeur hexadécimale
+
+        fetch('/add-pacboom-points', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem("jwtToken")}` // Remplacer jwtToken par le jeton JWT de l'utilisateur
+            },
+            body: JSON.stringify({points: points})
+        })
+        .then(response => {
+            // Vérifier si la réponse est réussie (statut HTTP 200)
+            if (response.ok) {
+                // Extraire les données JSON de la réponse
+                console.log("PB points successfully registered on database");
+            } else {
+                // Si la réponse n'est pas réussie, afficher le message d'erreur correspondant
+                console.error("Failed to add PB points into database for the user :", response.statusText);
+            }
+        })
+        .catch(error => {
+            // Si une erreur se produit lors de la requête, la gérer ici
+            console.error("An error occurred while adding PB points into database for the user :", error);
+        });
+
+    }
+
+    // Mettre à jour le texte du bouton avec les points gagnés
+    transactionButton.innerText = `Claimed ${points} PAC BOOM points !`;
+});
+
+// Écouteur d'événement pour le clic sur le bouton
+transactionButton.addEventListener("click", async () => {
+    try {
+        transactionButton.disabled = true;
+        // Afficher une icône de chargement sur le bouton
+        transactionButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Waiting...';
+
+        // Récupérer le nombre de NFTs possédés par le joueur
+        const numberOfNFTs = await contract.numberOfNFTs(provider.getSigner().getAddress());
+
+        // Effectuer une requête pour récupérer le score du joueur
+        const response = await fetch('/get-score', {
+            method: 'GET',
+            headers: {
+                'Authorization': `${localStorage.getItem("jwtToken")}` // Remplacer jwtToken par le jeton JWT de l'utilisateur
+            }
+        });
+
+        // Vérifier si la réponse est réussie (statut HTTP 200)
+        if (response.ok) {
+            // Extraire les données JSON de la réponse
+            const data = await response.json();
+            // Récupérer le score à partir des données
+            const score = data.score;
+            // Création d'une transaction signée avec le fournisseur de signer
+            const transaction = await contract.connect(provider.getSigner()).claimPoints(score);
+
+            // Attente de la confirmation de la transaction
+  
+            const receipt = await transaction.wait();
+            const txHash = receipt.transactionHash; // Récupérer le hash de la transaction
+
+            // Récupérer le nombre de PB points du joueur
+            const totalPoints = await contract.getPlayerPoints(provider.getSigner().getAddress());
+            // Mettre à jour le texte du bouton avec le nombre de NFTs
+            nbNFTs = `You own currently ${numberOfNFTs} NFTs from PAC BOOM collection.<br/>Your total PB points : ${totalPoints} `;
+
+            const txLink = `<a href="https://blastscan.io/tx/${txHash}" target="_blank">View Transaction</a>`;
+            document.getElementById("txHash").innerHTML = txLink;
+            document.getElementById("infosUser").innerHTML = nbNFTs;
+            
+        } else {
+            // Si la réponse n'est pas réussie, afficher le message d'erreur correspondant
+            console.error("Failed to fetch score:", response.statusText);
+        }
+
+    } catch (error) {
+
+        console.error("Error:", error);
+        if (error.code === 4001) {
+            // Rejet par l'utilisateur : rétablir l'état du bouton
+            transactionButton.disabled = false;
+            transactionButton.innerHTML = 'Claim PAC BOOM Points !';
+        }
+        // Gérer les autres erreurs ici
+        transactionButton.disabled = false;
+        transactionButton.innerHTML = 'Try again ! Error : '+ error.message;
+    }
+});
+
+
+

@@ -1,1 +1,167 @@
-const a0_0x270e77=a0_0x84b8;function a0_0x4b7f(){const _0x5b5ca4=['/index.html','search','click','Avatar','flex','Utilisateur\x20déjà\x20linké.','appendChild','innerText','avatarUrl','20hyjVlf','6921341OgJdUL','center','alt','DOMContentLoaded','location','username','createElement','img','resolve','68104gWnKNb','getElementById','12557270MZqSKM','twitterLoginBtn','addEventListener','6932211uDmiGM','length','stringify','userAddress','removeEventListener','src','2727045gaLYsT','includes','application/json','error','setItem','width','avatarurl','Erreur\x20serveur','/getTwitterInfos?address=','Aucune\x20donnée\x20Twitter\x20trouvée','2ZtKPGO','8UJkLSh','display','alignItems','then','href','jwtToken','POST','log','get','2567652GRlYkR','6NxYpjW','json','status','getItem','innerHTML','Erreur:','style','div','span','This\x20X\x20account\x20is\x20already\x20set\x20on\x20another\x20adress\x20!','catch','1722954vOycXt','30px'];a0_0x4b7f=function(){return _0x5b5ca4;};return a0_0x4b7f();}function a0_0x84b8(_0x2b6d9c,_0x401a28){const _0x4b7f60=a0_0x4b7f();return a0_0x84b8=function(_0x84b8c0,_0x10e6fe){_0x84b8c0=_0x84b8c0-0x16c;let _0x294222=_0x4b7f60[_0x84b8c0];return _0x294222;},a0_0x84b8(_0x2b6d9c,_0x401a28);}(function(_0x4b3219,_0x206cb0){const _0x288142=a0_0x84b8,_0x140422=_0x4b3219();while(!![]){try{const _0x45c67b=-parseInt(_0x288142(0x19d))/0x1*(parseInt(_0x288142(0x172))/0x2)+parseInt(_0x288142(0x17d))/0x3*(parseInt(_0x288142(0x17c))/0x4)+parseInt(_0x288142(0x193))/0x5*(-parseInt(_0x288142(0x188))/0x6)+-parseInt(_0x288142(0x194))/0x7+parseInt(_0x288142(0x173))/0x8*(-parseInt(_0x288142(0x1a8))/0x9)+parseInt(_0x288142(0x19f))/0xa+parseInt(_0x288142(0x1a2))/0xb;if(_0x45c67b===_0x206cb0)break;else _0x140422['push'](_0x140422['shift']());}catch(_0x4dceb0){_0x140422['push'](_0x140422['shift']());}}}(a0_0x4b7f,0xa16fe));function handleTwitterLoginButtonClick(){const _0xd327df=a0_0x84b8;window[_0xd327df(0x198)][_0xd327df(0x177)]='/auth/twitter';}function getParamsFromUrl(){const _0x868713=a0_0x84b8,_0x2697fe=new URLSearchParams(window['location'][_0x868713(0x18b)]);return{'username':_0x2697fe[_0x868713(0x17b)](_0x868713(0x199)),'screen_name':_0x2697fe[_0x868713(0x17b)]('screen_name'),'avatarUrl':_0x2697fe[_0x868713(0x17b)](_0x868713(0x192))};}function handleTwitterCallback(){const _0x4142db=a0_0x84b8,_0x37f3d1=localStorage[_0x4142db(0x180)](_0x4142db(0x1a5)),_0x3580f8=localStorage['getItem']('jwtToken'),{username:_0x3eada9,screen_name:_0x208fbe,avatarUrl:_0x4f1fef}=getParamsFromUrl();fetch('/linkTwitter',{'method':_0x4142db(0x179),'headers':{'Authorization':''+_0x3580f8,'Content-Type':_0x4142db(0x1aa)},'body':JSON[_0x4142db(0x1a4)]({'screen_name':_0x208fbe,'address':_0x37f3d1})})[_0x4142db(0x176)](_0xb3613b=>{const _0x1eeddf=_0x4142db;if(_0xb3613b['ok'])return _0xb3613b[_0x1eeddf(0x17e)]();else{if(_0xb3613b[_0x1eeddf(0x17f)]===0xc8){console[_0x1eeddf(0x17a)](_0x1eeddf(0x18f));const _0x527707=document['getElementById'](_0x1eeddf(0x1a0));return _0x527707[_0x1eeddf(0x181)]=_0x1eeddf(0x186),Promise[_0x1eeddf(0x19c)]({'username':_0x3eada9,'screen_name':_0x208fbe});}else throw new Error(_0x1eeddf(0x16f));}})[_0x4142db(0x176)](_0x995382=>{const _0x2caf8b=_0x4142db,_0x98b0e1=document[_0x2caf8b(0x19e)](_0x2caf8b(0x1a0)),_0x94dd3=document[_0x2caf8b(0x19a)](_0x2caf8b(0x184));_0x94dd3[_0x2caf8b(0x183)][_0x2caf8b(0x174)]=_0x2caf8b(0x18e),_0x94dd3[_0x2caf8b(0x183)][_0x2caf8b(0x175)]=_0x2caf8b(0x195);const _0x1b42b4=document['createElement'](_0x2caf8b(0x19b));_0x1b42b4[_0x2caf8b(0x1a7)]=_0x4f1fef,_0x1b42b4['alt']='Avatar',_0x1b42b4[_0x2caf8b(0x183)][_0x2caf8b(0x16d)]=_0x2caf8b(0x189);const _0x4f0645=document[_0x2caf8b(0x19a)]('span');_0x4f0645['innerText']=''+_0x995382[_0x2caf8b(0x199)],_0x94dd3[_0x2caf8b(0x190)](_0x1b42b4),_0x94dd3[_0x2caf8b(0x190)](_0x4f0645),_0x98b0e1[_0x2caf8b(0x181)]='',_0x98b0e1[_0x2caf8b(0x190)](_0x94dd3),_0x98b0e1[_0x2caf8b(0x1a6)](_0x2caf8b(0x18c),handleTwitterLoginButtonClick),window[_0x2caf8b(0x198)][_0x2caf8b(0x177)]=_0x2caf8b(0x18a);})[_0x4142db(0x187)](_0x2f07e4=>{const _0x54acd7=_0x4142db;console[_0x54acd7(0x1ab)]('Erreur\x20lors\x20de\x20l\x27enregistrement\x20ou\x20de\x20la\x20récupération\x20des\x20informations\x20utilisateur:',_0x2f07e4);});}function getTwitterInfos(_0x4e0dd4){const _0x2ad32d=a0_0x84b8,_0x541fea=localStorage[_0x2ad32d(0x180)](_0x2ad32d(0x178));fetch(_0x2ad32d(0x170)+_0x4e0dd4,{'method':'GET','headers':{'Authorization':''+_0x541fea,'Content-Type':_0x2ad32d(0x1aa)}})['then'](_0x4d8e88=>{const _0x45e5cd=_0x2ad32d;if(_0x4d8e88['status']===0xcc)return null;if(!_0x4d8e88['ok'])throw new Error('HTTP\x20error!\x20status:\x20'+_0x4d8e88[_0x45e5cd(0x17f)]);return _0x4d8e88[_0x45e5cd(0x17e)]();})[_0x2ad32d(0x176)](_0x3d1af8=>{const _0x3c8508=_0x2ad32d;if(_0x3d1af8&&_0x3d1af8[_0x3c8508(0x1a3)]>0x0){const _0x2f20a6=_0x3d1af8[0x0],_0x3d0a2e=document[_0x3c8508(0x19e)](_0x3c8508(0x1a0)),_0x382b21=document[_0x3c8508(0x19a)]('div');_0x382b21[_0x3c8508(0x183)][_0x3c8508(0x174)]=_0x3c8508(0x18e),_0x382b21[_0x3c8508(0x183)][_0x3c8508(0x175)]='center';const _0x409ebf=document['createElement']('img');_0x409ebf[_0x3c8508(0x1a7)]=_0x2f20a6[_0x3c8508(0x16e)],_0x409ebf[_0x3c8508(0x196)]=_0x3c8508(0x18d),_0x409ebf[_0x3c8508(0x183)]['width']=_0x3c8508(0x189);const _0x2f380d=document[_0x3c8508(0x19a)](_0x3c8508(0x185));_0x2f380d[_0x3c8508(0x191)]=_0x2f20a6[_0x3c8508(0x199)],localStorage[_0x3c8508(0x16c)](_0x3c8508(0x199),_0x2f20a6[_0x3c8508(0x199)]),_0x382b21[_0x3c8508(0x190)](_0x409ebf),_0x382b21['appendChild'](_0x2f380d),_0x3d0a2e[_0x3c8508(0x181)]='',_0x3d0a2e[_0x3c8508(0x190)](_0x382b21),_0x3d0a2e[_0x3c8508(0x1a6)](_0x3c8508(0x18c),handleTwitterLoginButtonClick);}else console[_0x3c8508(0x17a)](_0x3c8508(0x171)),document[_0x3c8508(0x19e)](_0x3c8508(0x1a0))[_0x3c8508(0x1a1)](_0x3c8508(0x18c),handleTwitterLoginButtonClick);})[_0x2ad32d(0x187)](_0x2338c3=>console[_0x2ad32d(0x1ab)](_0x2ad32d(0x182),_0x2338c3));}document[a0_0x270e77(0x1a1)](a0_0x270e77(0x197),()=>{const _0x4831db=a0_0x270e77;window['location'][_0x4831db(0x18b)][_0x4831db(0x1a9)]('username')&&window[_0x4831db(0x198)][_0x4831db(0x18b)][_0x4831db(0x1a9)]('screen_name')&&handleTwitterCallback();const _0x2e15fc=localStorage[_0x4831db(0x180)](_0x4831db(0x1a5)),_0x3d4581=localStorage['getItem'](_0x4831db(0x178));_0x2e15fc&&_0x3d4581&&getTwitterInfos(_0x2e15fc);});
+
+function handleTwitterLoginButtonClick() {
+    // Rediriger l'utilisateur vers l'URL d'authentification Twitter côté serveur
+    window.location.href = '/auth/twitter';
+}
+
+
+/// Fonction pour extraire les paramètres de l'URL
+function getParamsFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        username: params.get('username'),
+        screen_name: params.get('screen_name'),
+        avatarUrl: params.get('avatarUrl')
+    };
+}
+
+// Fonction pour gérer l'authentification Twitter réussie
+function handleTwitterCallback() {
+    const address = localStorage.getItem("userAddress");
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    const { username, screen_name, avatarUrl } = getParamsFromUrl();
+
+    // Stockage des informations utilisateur en base de données (envoi d'une requête POST au serveur)
+    fetch('/linkTwitter', {
+        method: 'POST',
+        headers: {
+            'Authorization': `${jwtToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ screen_name, address })
+    })
+    .then(response => {
+        if (response.ok) {
+            // La requête s'est déroulée avec succès (utilisateur enregistré ou mis à jour)
+            return response.json();
+        } else if (response.status === 200) {
+            // Cas où l'utilisateur existe déjà dans la base de données
+            console.log('Utilisateur déjà linké.');
+            const twitterLoginBtn = document.getElementById("twitterLoginBtn");
+            twitterLoginBtn.innerHTML = "This X account is already set on another adress !";
+            // On continue malgré tout pour mettre à jour l'interface utilisateur
+            return Promise.resolve({ username, screen_name }); // Simuler une réponse avec les données de l'utilisateur existant
+        } else {
+            throw new Error('Erreur serveur');
+        }
+    })
+    .then(result => {
+        //console.log('Informations utilisateur linkées:', result);
+
+        // Mettre à jour l'interface utilisateur (afficher le pseudo sur le bouton avec l'avatar)
+        const twitterLoginBtn = document.getElementById("twitterLoginBtn");
+
+        // Créer un conteneur flex pour l'avatar et le texte
+        const flexContainer = document.createElement('div');
+        flexContainer.style.display = 'flex';
+        flexContainer.style.alignItems = 'center';
+
+        // Créer l'élément d'image pour l'avatar
+        const avatarImg = document.createElement('img');
+        avatarImg.src = avatarUrl; // Utiliser l'URL de l'avatar fournie
+        avatarImg.alt = 'Avatar';
+        avatarImg.style.width = '30px'; // Ajuster la taille de l'avatar si nécessaire
+
+        // Créer un élément span pour le nom d'utilisateur
+        const usernameSpan = document.createElement('span');
+        usernameSpan.innerText = `${result.username}`;
+        // Ajouter l'image d'avatar et le nom d'utilisateur au conteneur flex
+        flexContainer.appendChild(avatarImg);
+        flexContainer.appendChild(usernameSpan);
+
+        // Effacer le contenu existant du bouton et ajouter le conteneur flex
+        twitterLoginBtn.innerHTML = ''; // Effacer le contenu existant du bouton
+        twitterLoginBtn.appendChild(flexContainer);
+
+        // Supprimer l'écouteur d'événement click une fois que l'utilisateur est connecté
+        twitterLoginBtn.removeEventListener("click", handleTwitterLoginButtonClick);
+        
+        window.location.href = '/index.html';
+    })
+    .catch(error => {
+        console.error("Erreur lors de l'enregistrement ou de la récupération des informations utilisateur:", error);
+    });
+}
+
+function getTwitterInfos(address) {
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    fetch(`/getTwitterInfos?address=${address}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `${jwtToken}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        
+        if (response.status === 204) {
+            return null; // Pas de contenu
+        }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json(); // Convertir la réponse en JSON
+    })
+    .then(data => {
+        if (data && data.length > 0) {
+            const userData = data[0]; // Assumant que vous renvoyez un tableau de résultats
+
+            const twitterLoginBtn = document.getElementById("twitterLoginBtn");
+
+            // Créer un conteneur flex pour l'avatar et le texte
+            const flexContainer = document.createElement('div');
+            flexContainer.style.display = 'flex';
+            flexContainer.style.alignItems = 'center';
+
+            // Créer l'élément d'image pour l'avatar
+            const avatarImg = document.createElement('img');
+            avatarImg.src = userData.avatarurl; // Utiliser l'URL de l'avatar fournie
+            avatarImg.alt = 'Avatar';
+            avatarImg.style.width = '30px'; // Ajuster la taille de l'avatar si nécessaire
+
+            // Créer un élément span pour le nom d'utilisateur
+            const usernameSpan = document.createElement('span');
+            usernameSpan.innerText = userData.username;
+            localStorage.setItem('username', userData.username);
+            // Ajouter l'image d'avatar et le nom d'utilisateur au conteneur flex
+            flexContainer.appendChild(avatarImg);
+            flexContainer.appendChild(usernameSpan);
+
+            // Effacer le contenu existant du bouton et ajouter le conteneur flex
+            twitterLoginBtn.innerHTML = ''; // Effacer le contenu existant du bouton
+            twitterLoginBtn.appendChild(flexContainer);
+            twitterLoginBtn.removeEventListener("click", handleTwitterLoginButtonClick);
+        } else {
+            console.log("Aucune donnée Twitter trouvée");
+            document.getElementById("twitterLoginBtn").addEventListener("click", handleTwitterLoginButtonClick);
+        }
+    })
+    .catch(error => console.error('Erreur:', error));
+}
+
+
+
+
+// Appeler handleTwitterCallback() lorsque la page se charge
+document.addEventListener('DOMContentLoaded', () => {
+    // Vérifier si l'URL contient les paramètres 
+    if (window.location.search.includes('username') && window.location.search.includes('screen_name')) {
+        // Appeler la fonction handleTwitterCallback() pour finaliser l'authentification
+        handleTwitterCallback();
+    }
+    const address = localStorage.getItem("userAddress");
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    if (address && jwtToken) {
+        getTwitterInfos(address);
+    }
+
+});
+
+
+
+
+
+
