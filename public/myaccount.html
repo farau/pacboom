@@ -6,7 +6,7 @@
     <title>PacBoom</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <link rel="shortcut icon" href="./img/explode.gif" type="image/png">
+    <link rel="shortcut icon" href="./img/icon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="./css/style.css" >
     <style>
         #saveButton {
@@ -40,7 +40,7 @@
                         <a class="nav-link" href="index.html">Play</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mynub.html">My Nub</a>
+                        <a class="nav-link" href="myaccount.html">My account</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.html">About</a>
@@ -74,7 +74,24 @@
         </div>
     </div>
 
-
+    <!-- Twitter Modal -->
+    <div class="modal fade" id="twitterAlreadyLinkedModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Modal header -->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title mx-auto">
+                        <img src="img/logo.png" height="70" class="img-fluid d-inline-block align-top" alt="Logo">
+                    </h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="text-center">The X account is already linked to another wallet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Background -->
     <div id="particles-js"></div>
 
@@ -82,9 +99,9 @@
     <div class="container mt-2">
         <div class="row">
             <!-- Colonne pour le canvas de dessin et les boutons -->
-            <div class="col-md-6 order-1 order-md-0 d-flex justify-content-center align-items-center mt-4">
+            <div class="col-md-6 order-1 order-md-0 d-flex justify-content-center mt-4">
                 <div class="canvas-container">
-                    <h3 class="mb-4">My Nub<img src="img/pacman_thumbsup.png" height="50" width="50" "d-inline-block align-top" alt="Logo"></h3>
+                    <h3 class="mb-4">Select a Nub<img src="img/pacman_thumbsup.png" height="50" width="50" "d-inline-block align-top" alt="Logo"></h3>
                     <p>Choose your PacNub from the Blastr collection made by <a href="https://x.com/rodinh03">Rodinho</a> to integrate it in the game !</p>
                     <p>More fun and action with your PacNub in the game ! </p>
                     
@@ -105,12 +122,19 @@
             <!-- Colonne pour le canvas de profil et les métadonnées -->
             <div class="col-md-6 order-0 order-md-1 d-flex justify-content-center align-items-center mt-4">
                 <div class="canvas-container2">
-                    <h3 class="mb-4">Your actual Nub</h3>
+                    <h3 class="mb-4">My account</h3>
+                    <div class="card bg-secondary mb-4">
+                        <div class="card-body" id="metadataCard">
+                            <h5 class="card-title">Your profile</h5>
+                            <div id="profileContainer"></div>
+                        </div>
+                    </div>   
+
                     <p class="mb-4 mt-4">Choose a Nub with a "weapon" attribute to be able to shoot !</p>
                 
                     <!-- Canvas secondaire pour afficher la PFP -->
                     <canvas id="secondaryNubCanvas" width="200" height="200" class="border mb-3"></canvas>
-            
+
                     <div class="card bg-secondary">
                         <div class="card-body" id="metadataCard">
                             <h5 class="card-title">Your Nub Metadata</h5>
@@ -118,6 +142,7 @@
                         </div>
                     </div>
                     <p class="mb-4 mt-4">If you sell the Nub you won't be able to play with it in the game and you will have to select another one.</p>
+
                 </div>
             </div>
         </div>

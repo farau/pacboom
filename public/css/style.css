@@ -127,6 +127,40 @@ body {
 }
 
 
+/* Styles pour la modal Twitter */
+#twitterAlreadyLinkedModal {
+    display: none; /* Par défaut, la modale est cachée */
+    position: fixed; /* Positionnement fixe par rapport à la fenêtre du navigateur */
+    top: 50%; /* Position au centre de l'écran en haut */
+    left: 50%; /* Position au centre de l'écran à gauche */
+    transform: translate(-50%, -50%); /* Centrer la modale */
+    /*background-color: rgba(0, 0, 0, 0.7); /* Couleur de fond semi-transparente */
+    padding: 20px; /* Espacement intérieur de la modale */
+    border-radius: 10px; /* Coins arrondis pour la modale */
+}
+
+#twitterAlreadyLinkedModal .modal-content {
+    border: 2px solid #ddd; /* Bordure grise */
+    border-radius: 10px; /* Coins arrondis */
+    color: #fff; /* Texte blanc */
+}
+
+#twitterAlreadyLinkedModal .modal-header {
+    border-bottom: 1px solid #fff; /* Bordure grise en bas de l'en-tête */
+    background-color: #050000; /* Couleur de fond noir */
+}
+
+#twitterAlreadyLinkedModal .modal-title {
+    color: #d0d0d0; /* Couleur du titre */
+}
+
+#twitterAlreadyLinkedModal .modal-body {
+    padding: 20px;
+    background-color: #050000; /* Couleur de fond noir */
+}
+
+
+
 /* Styles pour le bouton START */
 #startGame {
     padding: 10px 20px;

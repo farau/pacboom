@@ -6,7 +6,7 @@
     <title>PacBoom</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <link rel="shortcut icon" href="./img/explode.gif" type="image/png">
+    <link rel="shortcut icon" href="./img/icon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="./css/style.css" >
 </head>
 
@@ -27,7 +27,7 @@
                         <a class="nav-link" href="index.html">Play</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mynub.html">My Nub</a>
+                        <a class="nav-link" href="myaccount.html">My account</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.html">About</a>
@@ -59,39 +59,41 @@
         </div>
     </div>
 
+    <!-- Twitter Modal -->
+    <div class="modal fade" id="twitterAlreadyLinkedModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Modal header -->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title mx-auto">
+                        <img src="img/logo.png" height="70" class="img-fluid d-inline-block align-top" alt="Logo">
+                    </h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="text-center">The X account is already linked to another wallet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Background -->
     <div id="particles-js"></div>
 
-    <div class="container mt-5" id="leaderboard-container">
-    </div>
-
     <div class="container mt-5">
-        <h1 class="text-center">Daily High score</h1>
-        <table class="table table-striped mt-3">
-            <thead>
-                <tr class="white-text">
-                    <th>Rank</th>
-                    <th>Username</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody id="dailyLeaderboardBody" class="white-text">
-            </tbody>
-        </table>
+        <h1 class="text-center">PacBoom leaderboard</h1>
         <div class="text-center">
-            <button id="prevPage" class="btn btn-primary">Previous</button>
-            <button id="nextPage" class="btn btn-primary">Next</button>
+            <p>The following leaderboard will be used to distribute Blast Gold at the end of each epoch.</p>
+            <p>Points will be reinitialized at each new epoch.</p>
         </div>
-    </div>
-    
-    <div class="container mt-5">
-        <h1 class="text-center">High score</h1>
+
         <table class="table table-striped mt-3">
             <thead>
                 <tr class="white-text">
                     <th>Rank</th>
+                    <th>Wallet address</th>
                     <th>Username</th>
-                    <th>Score</th>
+                    <th>PacBoom points</th>
                 </tr>
             </thead>
             <tbody id="leaderboardBody" class="white-text">
@@ -102,6 +104,7 @@
             <button id="nextPageOverall" class="btn btn-primary">Next</button>
         </div>
     </div>
+
         
     <footer class="footer mt-10">
         <div class="container">
@@ -129,7 +132,6 @@
     <script src="./js/config.js"></script> <!-- Import pacman game module -->
     <script type="module" src="./js/metamask.js"></script> <!-- Import Metamask js -->
     <script type="module" src="./js/twitter.js"></script> <!-- Import twitter js -->
-    <script type="module" src="./js/leaderboard-blast.js"></script> <!-- Import lead blast js -->
     <!-- Load jQuery and Bootstrap JS -->
     <!-- Inclure Bootstrap JS (nécessaire pour les fonctionnalités Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -147,17 +149,6 @@
         let currentPageOverall = 1;
         const pageSize = 10;
 
-        document.getElementById('prevPage').addEventListener('click', () => {
-            if (currentPageDaily > 1) {
-                currentPageDaily--;
-                loadLeaderboard('dailyLeaderboardBody', '/getDailyLeaderboard', currentPageDaily, pageSize, 'prevPage', 'nextPage');
-            }
-        });
-
-        document.getElementById('nextPage').addEventListener('click', () => {
-            currentPageDaily++;
-            loadLeaderboard('dailyLeaderboardBody', '/getDailyLeaderboard', currentPageDaily, pageSize, 'prevPage', 'nextPage');
-        });
 
         document.getElementById('prevPageOverall').addEventListener('click', () => {
             if (currentPageOverall > 1) {
@@ -177,12 +168,13 @@
                 .then(data => {
                     const leaderboardBody = document.getElementById(elementId);
                     leaderboardBody.innerHTML = '';
-                    data.forEach((item, index) => {
+                    data.leaderboard.forEach((item, index) => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${(page - 1) * pageSize + index + 1}</td>
-                            <td>${item.username}</td>
-                            <td>${item.score}</td>
+                            <td>${item.wallet_address.substring(0, 4)}...${item.wallet_address.substring(item.wallet_address.length - 4)}</td>
+                            <td>${item.username || ''}</td>
+                            <td>${item.total_points}</td>
                         `;
                         leaderboardBody.appendChild(row);
                     });
@@ -195,7 +187,6 @@
         }
 
         // Load initial data
-        loadLeaderboard('dailyLeaderboardBody', '/getDailyLeaderboard', currentPageDaily, pageSize, 'prevPage', 'nextPage');
         loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
     </script>
 </body>

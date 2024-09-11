@@ -10,6 +10,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
 const { Strategy } = require('@superfaceai/passport-twitter-oauth2');
+const { ethers, Wallet } = require('ethers');
 
 require('dotenv').config();
 
@@ -205,17 +206,25 @@ app.get('/pfpgenerator', (req, res) => {
 
 // Exemple de requête pour récupérer des données depuis PostgreSQL (liste des utilisateurs)
 app.get('/users', async (req, res) => {
+    let client;
     try {
-        const client = await pool.connect();
-        const result = await client.query('SELECT * FROM users');
-        const users = result.rows;
-        res.json(users);
-        client.release();
+        // Obtenez un client de la pool
+        client = await pool.connect();
+
+        // Exécutez la requête SQL pour récupérer les utilisateurs
+        const { rows: users } = await client.query('SELECT * FROM users');
+
+        // Renvoyez la réponse avec les utilisateurs
+        res.status(200).json(users);
     } catch (err) {
-        console.error('Erreur lors de la récupération des utilisateurs', err);
-        res.status(500).send('Erreur serveur');
+        console.error('Erreur lors de la récupération des utilisateurs:', err);
+        res.status(500).json({ error: 'Erreur serveur lors de la récupération des utilisateurs' });
+    } finally {
+        // Libérez toujours le client, même en cas d'erreur
+        if (client) client.release();
     }
 });
+
 
 
 // Route pour sauvegarder lees metadata des users dans la base de données
@@ -231,33 +240,44 @@ app.post('/saveMetadata', async (req, res) => {
         return res.status(400).send('Username not provided.');
     }
 
+    let client;
+
     try {
-        // Insert the score and username into the database
-        const client = await pool.connect();
+        // Obtenir un client de la pool
+        client = await pool.connect();
 
-        // Exécution de la requête SQL UPDATE pour mettre à jour les métadonnées
-        await client.query(
-            `UPDATE metadata 
-             SET head = $2, eyes = $3, arm = $4, neck = $5 
-             WHERE username = $1`,
-            [username, head, eyes, arm, neck]
-        );
+        // Commencez une transaction pour garantir que toutes les requêtes réussissent ou échouent ensemble
+        await client.query('BEGIN');
 
-        // Mettre à jour la colonne metadata_id de user_access_tokens
-        await client.query(
-            'UPDATE user_access_tokens SET metadata_set = TRUE WHERE username = $1',
-            [username]
-        );
+        // Mise à jour des métadonnées de l'utilisateur
+        const metadataUpdateQuery = `
+            UPDATE metadata 
+            SET head = $2, eyes = $3, arm = $4, neck = $5 
+            WHERE username = $1
+        `;
+        await client.query(metadataUpdateQuery, [username, head, eyes, arm, neck]);
 
-        client.release();
+        // Mettre à jour la colonne metadata_set
+        const userAccessUpdateQuery = `
+            UPDATE user_access_tokens 
+            SET metadata_set = TRUE 
+            WHERE username = $1
+        `;
+        await client.query(userAccessUpdateQuery, [username]);
 
-        // Envoyer une réponse JSON avec un message de réussite
-        res.status(200).json({ message: 'Metadata inserted successfully' });
+        // Valider la transaction
+        await client.query('COMMIT');
 
+        // Envoyer la réponse en cas de succès
+        res.status(200).json({ message: 'Metadata updated successfully' });
     } catch (error) {
+        // Annuler la transaction en cas d'erreur
+        if (client) await client.query('ROLLBACK');
         console.error('Error inserting metadata:', error);
-        // Envoyer une réponse JSON avec un message d'erreur
         res.status(500).json({ error: 'Error inserting metadata' });
+    } finally {
+        // Libération du client
+        if (client) client.release();
     }
 });
 
@@ -265,37 +285,37 @@ app.post('/saveMetadata', async (req, res) => {
 
 // Route pour récupérer les métadonnées de l'utilisateur
 app.post('/getMetadata', async (req, res) => {
-    const username = req.body.username; // Récupérer le nom d'utilisateur depuis la requête
+    const { username } = req.body; // Récupérer le nom d'utilisateur depuis la requête
 
     const client = await pool.connect();
-    // Exécution de la requête SQL SELECT pour vérifier si les métadonnées sont définies pour cet utilisateur
-    const query = `SELECT metadata_set FROM user_access_tokens WHERE username = $1`;
-    client.query(query, [username], async (error, results) => {
-        if (error) {
-            console.error('Error retrieving metadata:', error);
-            res.status(500).json({ error: 'Error retrieving metadata' });
-        } else {
-            // Vérifier si des résultats ont été retournés
-            if (results.rows.length === 0 || !results.rows[0].metadata_set) {
-                // Aucun enregistrement trouvé ou metadata_set est faux, renvoyer un statut 204 pour indiquer que les métadonnées ne sont pas disponibles
-                //console.log("Aucun enregistrement trouvé dans user_access_tokens pour l'utilisateur:", username);
-                res.status(204).send();
-            } else {
-                // Metadata_set est vrai, récupérer les métadonnées depuis la table metadata
-                const metadataQuery = 'SELECT * FROM metadata WHERE username = $1';
-                try {
-                    const metadataResult = await client.query(metadataQuery, [username]);
-                    // Envoyer les métadonnées récupérées en réponse
-                    res.status(200).json(metadataResult.rows[0]);
-                } catch (metadataError) {
-                    console.error('Error retrieving metadata:', metadataError);
-                    res.status(500).json({ error: 'Error retrieving metadata' });
-                }
-            }
+    try {
+        // Vérifier si les métadonnées sont définies pour cet utilisateur
+        const query = `SELECT metadata_set FROM user_access_tokens WHERE username = $1`;
+        const result = await client.query(query, [username]);
+
+        if (result.rows.length === 0 || !result.rows[0].metadata_set) {
+            // Aucun enregistrement trouvé ou metadata_set est faux, renvoyer un statut 204
+            return res.status(204).json({ message: 'Metadata not set or user not found.' });
         }
-        client.release();
-    });
+
+        // Si metadata_set est vrai, récupérer les métadonnées
+        const metadataQuery = 'SELECT * FROM metadata WHERE username = $1';
+        const metadataResult = await client.query(metadataQuery, [username]);
+
+        if (metadataResult.rows.length === 0) {
+            return res.status(404).json({ message: 'Metadata not found.' });
+        }
+
+        // Envoyer les métadonnées récupérées en réponse
+        res.status(200).json(metadataResult.rows[0]);
+    } catch (error) {
+        console.error('Error retrieving metadata:', error);
+        res.status(500).json({ error: 'Error retrieving metadata' });
+    } finally {
+        client.release(); // Libérer le client dans tous les cas
+    }
 });
+
 
 // Route pour créer et renvoyer un JWT
 app.post('/create-jwt', (req, res) => {
@@ -337,125 +357,147 @@ app.post('/verify-jwt', verifyJWT, (req, res) => {
 
 // Route pour sauvegarder le score des users dans la base de données
 app.post('/saveScore', verifyJWT, async (req, res) => {
+    const client = await pool.connect();
     try {
         const { score } = req.body;
-        
-        // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
         const address = req.userAddress;
+
         // Vérifiez si l'adresse est fournie
         if (!address) {
             return res.status(400).send('Address not provided.');
         }
 
-        // Commencez une nouvelle transaction
-        const client = await pool.connect();
-
-        // Vérifiez si le nom d'utilisateur est fourni dans la base de données
-        const usernameQuery = await client.query(`
-            SELECT username FROM users
-            WHERE wallet_address = $1; 
+        // Récupérer le nom d'utilisateur et l'ID utilisateur en une seule requête
+        const userQuery = await client.query(`
+            SELECT u.username, ua.user_id
+            FROM users u
+            JOIN user_access_tokens ua ON u.username = ua.username
+            WHERE u.wallet_address = $1;
         `, [address]);
 
-        const username = usernameQuery.rows ? usernameQuery.rows[0].username : null;
-        const user_id_query = username ? await client.query(`
-            SELECT user_id FROM user_access_tokens
-            WHERE username = $1; 
-        `, [username]) : null;
-
-        const user_id = user_id_query.rows ? user_id_query.rows[0].user_id : null;
-
-        if (!username || !user_id) {
-            client.release();
-            res.status(204).send();
-            return;
+        if (userQuery.rowCount === 0) {
+            return res.status(204).send(); // Aucun utilisateur trouvé
         }
 
-        // Commencez la transaction
+        const { username, user_id } = userQuery.rows[0];
+
+        // Commencer une transaction
         await client.query('BEGIN');
 
-        // Mettez à jour le score de l'utilisateur
-        const updateQuery = `
+        // Mettre à jour le score de l'utilisateur uniquement si le nouveau score est plus élevé
+        const updateResult = await client.query(`
             UPDATE users
-            SET score = CASE
-                        WHEN $1 > score THEN $1
-                        ELSE score
-                    END
+            SET score = GREATEST($1, score)
             WHERE wallet_address = $2
             RETURNING *;
-        `;
-        const updateResult = await client.query(updateQuery, [score, address]);
+        `, [score, address]);
 
-        // Vérifiez si le score quotidien est déjà enregistré
+        // Vérifier si un score quotidien existe déjà
         const dailyScoreQuery = await client.query(`
-            SELECT * FROM score_users_daily
-            WHERE user_id = $1 AND date = DATE_TRUNC('day', CURRENT_TIMESTAMP);
+            SELECT score FROM score_users_daily
+            WHERE user_id = $1 AND date = CURRENT_DATE;
         `, [user_id]);
 
-        if (dailyScoreQuery.rows.length > 0) {
-            // Mettez à jour le score quotidien si déjà enregistré
-            const updateDailyScoreQuery = `
+        if (dailyScoreQuery.rowCount > 0) {
+            // Mettre à jour le score quotidien si déjà enregistré
+            await client.query(`
                 UPDATE score_users_daily
-                SET score = CASE
-                        WHEN $1 > score THEN $1
-                        ELSE score
-                    END
-                WHERE user_id = $2 AND date = DATE_TRUNC('day', CURRENT_TIMESTAMP);
-            `;
-            await client.query(updateDailyScoreQuery, [score, user_id]);
+                SET score = GREATEST($1, score)
+                WHERE user_id = $2 AND date = CURRENT_DATE;
+            `, [score, user_id]);
         } else {
-            // Insérez le score quotidien si non enregistré
-            const insertQuery = `
-                INSERT INTO score_users_daily (user_id, username, score, date) 
-                VALUES ($1, $2, $3, DATE_TRUNC('day', CURRENT_TIMESTAMP));
-            `;
-            await client.query(insertQuery, [user_id, username, score]);
+            // Insérer le score quotidien si inexistant
+            await client.query(`
+                INSERT INTO score_users_daily (user_id, username, score, date)
+                VALUES ($1, $2, $3, CURRENT_DATE);
+            `, [user_id, username, score]);
         }
 
-        // Validez la transaction
+        // Valider la transaction
         await client.query('COMMIT');
 
-        // Libérez le client
-        client.release();
-
-        // Vérifiez le succès de la mise à jour
+        // Vérifier le succès de la mise à jour et renvoyer la réponse appropriée
         if (updateResult.rowCount > 0) {
             res.status(201).json(updateResult.rows);
         } else {
             res.status(500).send('Internal Server Error');
         }
     } catch (error) {
+        await client.query('ROLLBACK'); // Annuler la transaction en cas d'erreur
         console.error('Error saving score to database:', error);
         res.status(500).send('Internal Server Error');
+    } finally {
+        client.release(); // Libérer le client dans tous les cas
     }
 });
+
 
 // Backend route to fetch leaderboard data
 app.get('/getLeaderboard', async (req, res) => {
+    const client = await pool.connect();
     try {
-        const page = parseInt(req.query.page) || 1;
-        const pageSize = parseInt(req.query.pageSize) || 10;
+        let page = parseInt(req.query.page) || 1;
+        let pageSize = parseInt(req.query.pageSize) || 10;
+
+        // Assurer que page et pageSize sont des valeurs valides
+        if (page <= 0) page = 1;
+        if (pageSize <= 0) pageSize = 10;
+
         const offset = (page - 1) * pageSize;
 
+        // Requête SQL pour récupérer les données du classement
         const query = `
-            SELECT username, score
-            FROM users
-            WHERE username IS NOT NULL
-            ORDER BY score DESC
+            SELECT
+                wallet_address,
+                username,
+                SUM(points) AS total_points,
+                RANK() OVER (ORDER BY SUM(points) DESC) AS ranking
+            FROM
+                points_users_daily
+            GROUP BY
+                wallet_address, username
+            ORDER BY
+                total_points DESC
             LIMIT $1 OFFSET $2;
         `;
-        const result = await pool.query(query, [pageSize, offset]);
+
+        const countQuery = `
+            SELECT COUNT(DISTINCT wallet_address) AS total_users
+            FROM points_users_daily;
+        `;
+
+        // Exécuter les deux requêtes (pour les données et pour le nombre total de résultats)
+        const [result, countResult] = await Promise.all([
+            client.query(query, [pageSize, offset]),
+            client.query(countQuery)
+        ]);
 
         const leaderboardData = result.rows;
-        res.json(leaderboardData);
+        const totalUsers = countResult.rows[0].total_users;
+        const totalPages = Math.ceil(totalUsers / pageSize);
+
+        res.json({
+            leaderboard: leaderboardData,
+            totalUsers: totalUsers,
+            totalPages: totalPages,
+            currentPage: page
+        });
+
     } catch (error) {
         console.error('Erreur lors de la récupération des données du leaderboard :', error);
         res.status(500).json({ error: 'Erreur interne du serveur' });
+    } finally {
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
 });
+
 
 
 // Backend route to fetch daily leaderboard data
 app.get('/getDailyLeaderboard', async (req, res) => {
+    const client = await pool.connect();
     try {
         const page = parseInt(req.query.page) || 1;
         const pageSize = parseInt(req.query.pageSize) || 10;
@@ -469,39 +511,20 @@ app.get('/getDailyLeaderboard', async (req, res) => {
             ORDER BY score DESC
             LIMIT $1 OFFSET $2;
         `;
-        const result = await pool.query(query, [pageSize, offset]);
+        const result = await client.query(query, [pageSize, offset]);
 
         const leaderboardData = result.rows;
         res.json(leaderboardData);
     } catch (error) {
         console.error('Erreur lors de la récupération des données du leaderboard :', error);
         res.status(500).json({ error: 'Erreur interne du serveur' });
+    } finally {
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
 });
 
-
-// Route pour que les hosts de D1 puissent avoir les data de la veille et reward les users
-app.get('/d1contest', async (req, res) => {
-    try {
-        const query = `
-            SELECT username, score
-            FROM score_users_daily
-            WHERE username IS NOT NULL
-            AND date = CURRENT_DATE - INTERVAL '1 DAY'
-            ORDER BY score DESC;
-        `;
-        const result = await pool.query(query);
-
-        // Utiliser result.rows pour obtenir les données
-        const leaderboardData = result.rows;
-
-        // Renvoyer les données au client en format JSON
-        return res.json(leaderboardData);
-    } catch (error) {
-        console.error('Erreur lors de la récupération des données du leaderboard :', error);
-        res.status(500).json({ error: 'Erreur interne du serveur' });
-    }
-});
 
 
 // Route POST pour enregistrer les données utilisateur dans la table users
@@ -534,7 +557,7 @@ app.post('/linkTwitter', verifyJWT, async (req, res) => {
             const existingUser = checkUserResult.rows[0];
             //console.log("utilisateur déjà enregistré donc on retourne les infos twitter");
             await client.query('COMMIT');
-            res.status(200).json(existingUser); // Retourner les informations de l'utilisateur existant
+            res.status(409).json(null); // on retourne null pour ne pas link le X // Retourner les informations de l'utilisateur existant
         } else {
             //console.log("on insere l'username dans la table user ");
 
@@ -595,7 +618,9 @@ app.post('/linkTwitter', verifyJWT, async (req, res) => {
         console.error('Erreur lors de l\'enregistrement de l\'utilisateur', err);
         res.status(500).send('Erreur serveur');
     } finally {
-        client.release();
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
 });
 
@@ -605,14 +630,12 @@ app.post('/linkTwitter', verifyJWT, async (req, res) => {
 async function saveAccessToken(userName, userId, avatarUrl) {
     const client = await pool.connect();
     try {
-
-        
         // Vérifier si l'utilisateur existe déjà dans la base de données
         const checkUserQuery = `
             SELECT username, user_id, avatarUrl FROM user_access_tokens
             WHERE username = $1;
         `;
-        const checkUserResult = await pool.query(checkUserQuery, [userName]);
+        const checkUserResult = await client.query(checkUserQuery, [userName]);
 
         if (checkUserResult.rows.length > 0) {
             // L'utilisateur existe déjà dans la base de données
@@ -626,7 +649,9 @@ async function saveAccessToken(userName, userId, avatarUrl) {
       await client.query('ROLLBACK');
       throw error;
     } finally {
-      client.release();
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
   }
 
@@ -655,6 +680,7 @@ app.get('/getTwitterInfos', verifyJWT, async (req, res) => {
         return res.status(400).send('Adresse manquante');
     }
 
+    const client = await pool.connect();
     try {
 
         const checkUserQuery = `
@@ -662,7 +688,7 @@ app.get('/getTwitterInfos', verifyJWT, async (req, res) => {
             JOIN users ON users.id = user_access_tokens.user_wallet_id 
             WHERE users.wallet_address = $1;
         `;
-        const result = await pool.query(checkUserQuery, [address]);
+        const result = await client.query(checkUserQuery, [address]);
 
         if (result.rows.length > 0) {
             //console.log("user a déjà ses infos twitter enregistree");
@@ -674,6 +700,10 @@ app.get('/getTwitterInfos', verifyJWT, async (req, res) => {
     } catch (error) {
         console.error('Erreur lors de la récupération des infos Twitter :', error);
         return res.status(500).send('Erreur lors de la récupération des infos Twitter');
+    } finally {
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
 });
 
@@ -683,10 +713,11 @@ app.post('/save-user', verifyJWT, async (req, res) => {
     if (!wallet_address) {
         return res.status(400).json({ error: 'Adresse de portefeuille manquante.' });
     }
+    const client = await pool.connect();
     try {
         // Récupérez le dernier ID inséré dans la table users
         const lastUserIdQuery = 'SELECT MAX(id) AS max_id FROM users';
-        const { rows } = await pool.query(lastUserIdQuery);
+        const { rows } = await client.query(lastUserIdQuery);
         let nextUserId = 1; // Valeur par défaut pour le premier utilisateur s'il n'y a pas encore d'enregistrement
         if (rows.length > 0 && rows[0].max_id !== null) {
             nextUserId = parseInt(rows[0].max_id) + 1; // Incrémente le dernier ID
@@ -695,7 +726,7 @@ app.post('/save-user', verifyJWT, async (req, res) => {
         // Insérez le nouvel utilisateur avec l'ID incrémenté
         const insertUserQuery = `
             INSERT INTO users (id, wallet_address) VALUES ($1, $2) ON CONFLICT (wallet_address) DO NOTHING RETURNING *`;
-        const result = await pool.query(insertUserQuery, [nextUserId, wallet_address]);
+        const result = await client.query(insertUserQuery, [nextUserId, wallet_address]);
         
         if (result.rows.length === 0) {
             return res.status(201).json({ message: 'Utilisateur déjà enregistré.' });
@@ -704,6 +735,10 @@ app.post('/save-user', verifyJWT, async (req, res) => {
     } catch (error) {
         console.error('Erreur lors de l\'enregistrement de l\'utilisateur:', error);
         res.status(500).json({ error: 'Erreur lors de l\'enregistrement de l\'utilisateur.' });
+    } finally {
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
 });
 
@@ -711,11 +746,13 @@ app.post('/save-user', verifyJWT, async (req, res) => {
 // Route pour vérifier si un utilisateur est déjà présent en BDD
 app.post('/check-user', verifyJWT, async (req, res) => {
     const { wallet_address } = req.body;
+    const client = await pool.connect();
+
     if (!wallet_address) {
         return res.status(400).json({ error: 'Adresse de portefeuille manquante.' });
     }
     try {
-        const result = await pool.query(
+        const result = await client.query(
             'SELECT * FROM users WHERE wallet_address = $1',
             [wallet_address]
         );
@@ -727,6 +764,10 @@ app.post('/check-user', verifyJWT, async (req, res) => {
     } catch (error) {
         console.error('Erreur lors de la vérification de l\'utilisateur:', error);
         res.status(500).json({ error: 'Erreur lors de la vérification de l\'utilisateur.' });
+    } finally {
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
 });
 
@@ -790,34 +831,49 @@ app.post('/increment-score', verifyJWT, (req, res) => {
 
 
 
-app.get('/profile', verifyJWT, (req, res) => {
-    const userAddress = req.userAddress;
-    if (!userAddress) {
+app.post('/profile', verifyJWT, async (req, res) => {
+    const address = req.userAddress;
+    if (!address) {
         return res.status(400).send('User not connected.');
     }
-    if (!req.query.isUserConnected) {
-        return res.status(403).send('Accès refusé.');
+    const client = await pool.connect();
+    try {
+        const result = await client.query(
+            'SELECT username FROM users WHERE wallet_address = $1',
+            [address]
+        );
+        const result2 = await client.query(
+            `SELECT
+                SUM(points) AS total_points,
+                RANK() OVER (ORDER BY SUM(points) DESC) AS ranking
+            FROM
+                points_users_daily
+            WHERE 
+                wallet_address = $1
+            GROUP BY
+                wallet_address, username
+            ORDER BY
+                total_points DESC`,
+            [address]
+        )
+        res.json({ username : result.rows[0].username, points : result2.rows[0].total_points, rank : result2.rows[0].ranking });
+    } catch (error) {
+        console.error('Erreur lors de la vérification de l\'utilisateur:', error);
+        res.status(500).json({ error: 'Erreur lors de la vérification de l\'utilisateur.' });
+    } finally {
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
-    res.send(`
-        <html>
-        <body>
-            <h1>Profile</h1>
-            <p>Wallet Address: ${userAddress}</p>
-            <button onclick="linkTwitter()">Link Twitter Account</button>
-            <script>
-                function linkTwitter() {
-                    // Add logic to link Twitter account
-                    alert('Functionality to link Twitter will be added here.');
-                }
-            </script>
-        </body>
-        </html>
-    `);
 });
 
 
 // Route pour sauvegarder le score des users dans la base de données
 app.post('/add-pacboom-points', verifyJWT, async (req, res) => {
+
+    // Commencez une nouvelle transaction
+    const client = await pool.connect();
+
     try {
         const points_ = req.body.points;
         const points = parseInt(points_.hex, 16);
@@ -829,8 +885,6 @@ app.post('/add-pacboom-points', verifyJWT, async (req, res) => {
             return res.status(400).send('Address not provided.');
         }
 
-        // Commencez une nouvelle transaction
-        const client = await pool.connect();
 
         // Vérifiez si le nom d'utilisateur est fourni dans la base de données
         const usernameQuery = await client.query(`
@@ -859,9 +913,6 @@ app.post('/add-pacboom-points', verifyJWT, async (req, res) => {
         // Validez la transaction
         await client.query('COMMIT');
 
-        // Libérez le client
-        client.release();
-
         // Vérifiez le succès de la mise à jour
         if (insertQuery.rowCount > 0) {
             res.status(201).json(insertQuery.rows);
@@ -871,12 +922,20 @@ app.post('/add-pacboom-points', verifyJWT, async (req, res) => {
     } catch (error) {
         console.error('Error saving points to database:', error);
         res.status(500).send('Internal Server Error');
+    } finally {
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
 });
 
 
 // Route pour sauvegarder l'id du Nub possédé dans la base de données
 app.post('/saveNub', verifyJWT, async (req, res) => {
+
+    // Commencez une nouvelle transaction
+    const client = await pool.connect();
+
     try {
         const { nub_id } = req.body;
         
@@ -887,28 +946,12 @@ app.post('/saveNub', verifyJWT, async (req, res) => {
             return res.status(400).send('Address not provided.');
         }
 
-        // Commencez une nouvelle transaction
-        const client = await pool.connect();
 
         // Vérifiez si le nom d'utilisateur est fourni dans la base de données
         const usernameQuery = await client.query(`
             SELECT username FROM users
             WHERE wallet_address = $1; 
         `, [address]);
-
-        const username = usernameQuery.rows ? usernameQuery.rows[0].username : null;
-        const user_id_query = username ? await client.query(`
-            SELECT user_id FROM user_access_tokens
-            WHERE username = $1; 
-        `, [username]) : null;
-
-        const user_id = user_id_query.rows ? user_id_query.rows[0].user_id : null;
-
-        if (!username || !user_id) {
-            client.release();
-            res.status(204).send();
-            return;
-        }
 
         // Commencez la transaction
         await client.query('BEGIN');
@@ -925,9 +968,6 @@ app.post('/saveNub', verifyJWT, async (req, res) => {
         // Validez la transaction
         await client.query('COMMIT');
 
-        // Libérez le client
-        client.release();
-
         // Vérifiez le succès de la mise à jour
         if (updateResult.rowCount > 0) {
             res.status(201).json(updateResult.rows);
@@ -937,12 +977,20 @@ app.post('/saveNub', verifyJWT, async (req, res) => {
     } catch (error) {
         console.error('Error saving nub id to database:', error);
         res.status(500).send('Internal Server Error');
+    } finally {
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
 });
 
 
 // Route pour récupérer l'id du Nub possédé dans la base de données
 app.post('/getNub', verifyJWT, async (req, res) => {
+
+    // Commencez une nouvelle transaction
+    const client = await pool.connect();
+
     try {
         // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
         const address = req.userAddress;
@@ -951,8 +999,6 @@ app.post('/getNub', verifyJWT, async (req, res) => {
             return res.status(400).send('Address not provided.');
         }
 
-        // Commencez une nouvelle transaction
-        const client = await pool.connect();
 
         // Commencez la transaction
         await client.query('BEGIN');
@@ -968,9 +1014,6 @@ app.post('/getNub', verifyJWT, async (req, res) => {
         // Validez la transaction
         await client.query('COMMIT');
 
-        // Libérez le client
-        client.release();
-
         // Vérifiez le succès de la mise à jour
         if (returnResult.rowCount > 0) {
             res.status(201).json(returnResult.rows);
@@ -980,8 +1023,54 @@ app.post('/getNub', verifyJWT, async (req, res) => {
     } catch (error) {
         console.error('Error retrieving nub id for user :', error);
         res.status(500).send('Internal Server Error');
+    } finally {
+        if (client) {
+            client.release(); // Libérer le client après utilisation
+        }
     }
 });
+
+const privateKey = process.env.PRIVATE_KEY;
+const signer = new Wallet(privateKey);
+
+// Route pour récupérer la signature servant à valider le claim de PB points
+app.post('/getSignature', verifyJWT, async (req, res) => {
+    try {
+        // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
+        const address = req.userAddress;
+        const score = req.body.score;  // Supposons que le score soit passé dans le corps de la requête
+
+        // Vérifiez si l'adresse est fournie
+        if (!address) {
+            return res.status(400).send('Address not provided.');
+        }
+
+        // Vérifiez si le score est fourni
+        if (typeof score !== 'number') {
+            return res.status(400).send('Score not provided or invalid.');
+        }
+
+        // Générer un message
+        const timestamp = Math.floor(Date.now() / 1000);
+        const message = `${timestamp}${address}${score}`;
+
+        // Signer le message
+        const messageHash = ethers.utils.id(message);
+        const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
+
+        // Envoyer la signature et le message signé au client
+        res.status(200).json({
+            message,
+            signature,
+            timestamp
+        });
+    } catch (error) {
+        console.error('Error sending signature:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
 
 // Démarre le serveur Express
 const PORT = process.env.PORT || 3000;

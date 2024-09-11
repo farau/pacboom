@@ -1,1 +1,1041 @@
-const a0_0x51383f=a0_0x140b;(function(_0x2d61f9,_0x4b7498){const _0x4f8831=a0_0x140b,_0x4988b3=_0x2d61f9();while(!![]){try{const _0x1aa55f=parseInt(_0x4f8831(0x1f7))/0x1+-parseInt(_0x4f8831(0x24a))/0x2*(parseInt(_0x4f8831(0x25c))/0x3)+parseInt(_0x4f8831(0x224))/0x4*(-parseInt(_0x4f8831(0x238))/0x5)+-parseInt(_0x4f8831(0x255))/0x6+-parseInt(_0x4f8831(0x246))/0x7+parseInt(_0x4f8831(0x228))/0x8*(parseInt(_0x4f8831(0x21a))/0x9)+parseInt(_0x4f8831(0x214))/0xa;if(_0x1aa55f===_0x4b7498)break;else _0x4988b3['push'](_0x4988b3['shift']());}catch(_0x1b1560){_0x4988b3['push'](_0x4988b3['shift']());}}}(a0_0x32e3,0xcbef4),import(a0_0x51383f(0x200)));import{initializeGhosts,drawGhosts,handleGhostInteractions,handleBulletInteractions,moveGhosts,ghosts,playGhostEatBomb,displayExplosionAnimation,vibrateScreen}from'./ghosts.js';import{verifyNubOwned}from'./metamask.js';let backgroundCanvas=document[a0_0x51383f(0x22b)]('backgroundCanvas'),gameCanvas=document[a0_0x51383f(0x22b)](a0_0x51383f(0x20a)),fullCanvas,backgroundCtx=backgroundCanvas['getContext']('2d'),gameCtx,pacmanX,pacmanY,pacmanSize=0x14,pacmanSpeed=0x7,color='yellow',pacmanDirection=a0_0x51383f(0x201),mouthAngle=0.2,mouthIncrement=0.05,score=0x0,lastScore=0x0,gameLoop,isGameOver=![],explosionTimeoutId=null;const startAgainImage=new Image();startAgainImage['src']='img/start.gif';let nub_id=null;function setScore(_0x13909c){score=_0x13909c;}function setPacmanSpeed(_0x41e7b8){pacmanSpeed=_0x41e7b8;}function setColor(_0x39fc14){color=_0x39fc14;}function setSize(_0x2950ba){pacmanSize=_0x2950ba;}const video=document[a0_0x51383f(0x22b)]('introductionVideo'),videoContainer=document['getElementById'](a0_0x51383f(0x1ef));video[a0_0x51383f(0x248)](a0_0x51383f(0x237),function(){drawVideo();});function drawVideo(){const _0x7ee066=a0_0x51383f;if(video[_0x7ee066(0x242)]||video['ended'])return;backgroundCtx[_0x7ee066(0x24e)](video,0x0,0x0,backgroundCanvas[_0x7ee066(0x249)],backgroundCanvas['height']*0.8),requestAnimationFrame(drawVideo);}function handleVideoAfterClickButton(){const _0x439e11=a0_0x51383f;video[_0x439e11(0x237)]()[_0x439e11(0x231)](_0xfb55cc=>{const _0x25054f=_0x439e11;console[_0x25054f(0x22f)](_0x25054f(0x20c),_0xfb55cc),document['getElementById'](_0x25054f(0x245))[_0x25054f(0x254)][_0x25054f(0x1ed)]=_0x25054f(0x253);}),document[_0x439e11(0x22b)](_0x439e11(0x245))[_0x439e11(0x254)][_0x439e11(0x1ed)]='none',videoContainer[_0x439e11(0x248)]('click',handleClickStartGame),document[_0x439e11(0x22b)](_0x439e11(0x245))[_0x439e11(0x1f0)](_0x439e11(0x259),handleVideoAfterClickButton);};document[a0_0x51383f(0x22b)](a0_0x51383f(0x245))[a0_0x51383f(0x248)](a0_0x51383f(0x259),handleVideoAfterClickButton),video[a0_0x51383f(0x22d)]=![];let isExploding=![],explosionSize=0x0;const maxExplosionSize=0x32;function handleExplosion(_0x217249,_0x100750,_0x4874d7){const _0x3b5ac3=a0_0x51383f;_0x217249[_0x3b5ac3(0x1f1)]='orange',_0x217249[_0x3b5ac3(0x25a)](),_0x217249[_0x3b5ac3(0x21c)](_0x100750,_0x4874d7,explosionSize,0x0,0x2*Math['PI']),_0x217249[_0x3b5ac3(0x23d)](),_0x217249[_0x3b5ac3(0x1fc)](),explosionSize+=0x2,explosionSize>maxExplosionSize&&(isExploding=![],explosionSize=0x0);}function gameOver(){const _0x222e43=a0_0x51383f;isGameOver=!![],handleExplosion(gameCtx,pacmanX,pacmanY),resetGame(),!localStorage[_0x222e43(0x1fe)]('userAddress')||score==0x0?(document[_0x222e43(0x22b)](_0x222e43(0x226))['style'][_0x222e43(0x1ed)]='none',showGameOverModalNotLogged()):(document[_0x222e43(0x22b)](_0x222e43(0x211))[_0x222e43(0x24f)]='',document[_0x222e43(0x22b)](_0x222e43(0x207))['innerHTML']='',document[_0x222e43(0x22b)](_0x222e43(0x226))[_0x222e43(0x1f8)]=![],document[_0x222e43(0x22b)]('transactionButton')[_0x222e43(0x254)]['display']='block',document[_0x222e43(0x22b)]('transactionButton')[_0x222e43(0x24f)]='Claim\x20PAC\x20BOOM\x20Points\x20!',showGameOverModal(score)),document[_0x222e43(0x22b)]('backgroundCanvas')[_0x222e43(0x1f0)](_0x222e43(0x259),startGame),isRunning=![],updateScore(0x0),gameCanvas[_0x222e43(0x254)][_0x222e43(0x1ed)]=_0x222e43(0x1f2),backgroundCtx['drawImage'](startAgainImage,0x0,0x0,backgroundCanvas[_0x222e43(0x249)],backgroundCanvas[_0x222e43(0x23e)]*0.8),videoContainer['style'][_0x222e43(0x1ed)]=_0x222e43(0x253),document[_0x222e43(0x22b)](_0x222e43(0x245))[_0x222e43(0x248)]('click',handleVideoAfterClickButton),videoContainer[_0x222e43(0x248)](_0x222e43(0x259),handleClickStartGame);}function clearVideo(){const _0x2e4a43=a0_0x51383f;!video[_0x2e4a43(0x242)]&&video['pause'](),backgroundCtx['clearRect'](0x0,0x0,backgroundCanvas[_0x2e4a43(0x249)],backgroundCanvas[_0x2e4a43(0x23e)]),videoContainer[_0x2e4a43(0x254)][_0x2e4a43(0x1ed)]='none';}let isRunning=![];function startGame(){const _0xcc2074=a0_0x51383f;if(!isRunning){isRunning=!![],backgroundCanvas=document[_0xcc2074(0x22b)](_0xcc2074(0x243)),gameCanvas=document['getElementById'](_0xcc2074(0x20a)),fullCanvas=document[_0xcc2074(0x22b)](_0xcc2074(0x1e7)),backgroundCtx=backgroundCanvas[_0xcc2074(0x21d)]('2d'),gameCtx=gameCanvas[_0xcc2074(0x21d)]('2d'),document[_0xcc2074(0x22b)](_0xcc2074(0x226))[_0xcc2074(0x1f8)]=!![],videoContainer[_0xcc2074(0x1f0)](_0xcc2074(0x259),handleClickStartGame),clearVideo(),gameCtx[_0xcc2074(0x1e8)](0x0,0x0,0x1f4,0x1f4),pacmanX=gameCanvas[_0xcc2074(0x249)]/0x2,pacmanY=gameCanvas[_0xcc2074(0x23e)]/0x2;const _0x1b0b96=localStorage[_0xcc2074(0x1fe)]('jwtToken');fetch(_0xcc2074(0x233),{'method':_0xcc2074(0x1f3),'headers':{'Authorization':''+_0x1b0b96,'Content-Type':'application/json'}})[_0xcc2074(0x21e)](_0x3ec30d=>{const _0x4bf366=_0xcc2074;if(_0x3ec30d['ok'])return _0x3ec30d[_0x4bf366(0x1eb)]===0xcc?(console[_0x4bf366(0x1f5)](_0x4bf366(0x241)),null):_0x3ec30d[_0x4bf366(0x1e6)]();else{}})[_0xcc2074(0x21e)](_0x79a784=>{const _0xcb8fae=_0xcc2074;_0x79a784[0x0][_0xcb8fae(0x22a)]!=null?nub_id=_0x79a784[0x0]['nub_id']%0x10:nub_id=null;})[_0xcc2074(0x231)](_0x3ae84d=>{const _0x3ff124=_0xcc2074;console[_0x3ff124(0x22f)]('Error\x20retrieving\x20nub:',_0x3ae84d),drawPacman(_0x3ff124(0x206),null);}),initializeGhosts(gameCtx,gameCanvas[_0xcc2074(0x249)],gameCanvas[_0xcc2074(0x23e)]),fetch('/initialize-score',{'method':_0xcc2074(0x1f3),'headers':{'Content-Type':_0xcc2074(0x219),'Authorization':''+localStorage[_0xcc2074(0x1fe)]('jwtToken')}})[_0xcc2074(0x21e)](_0x219297=>{const _0xacfc0d=_0xcc2074;if(!_0x219297['ok'])throw new Error(_0xacfc0d(0x205));return _0x219297['json']();})['then'](_0x2458c9=>{score=_0x2458c9['score'];})[_0xcc2074(0x231)](_0xb9fc2f=>{const _0x510dd2=_0xcc2074;console[_0x510dd2(0x22f)](_0x510dd2(0x1f6),_0xb9fc2f);}),gameLoop=setInterval(()=>updateGame(nub_id),0x32),!explosionTimeoutId&&setInterval(drawScore,0x32);}}let ellipseRadiusX=0xc/0x14*pacmanSize,ellipseRadiusY=0x8/0x14*pacmanSize,ellipseGrowing=!![];const img=new Image();function a0_0x140b(_0x532a89,_0xa8f774){const _0x32e341=a0_0x32e3();return a0_0x140b=function(_0x140b8b,_0x2ff0d0){_0x140b8b=_0x140b8b-0x1e6;let _0x1d410d=_0x32e341[_0x140b8b];return _0x1d410d;},a0_0x140b(_0x532a89,_0xa8f774);}function drawPacman(_0x38f2c0,_0x2995c5){const _0x1c9f68=a0_0x51383f;let _0x29c7b2,_0x13a29f;switch(pacmanDirection){case'right':_0x29c7b2=mouthAngle,_0x13a29f=0x2*Math['PI']-mouthAngle;break;case _0x1c9f68(0x1f9):_0x29c7b2=Math['PI']+mouthAngle,_0x13a29f=Math['PI']-mouthAngle;break;case'up':_0x29c7b2=0x3/0x2*Math['PI']+mouthAngle,_0x13a29f=0x3/0x2*Math['PI']-mouthAngle;break;case _0x1c9f68(0x1fa):_0x29c7b2=0x1/0x2*Math['PI']+mouthAngle,_0x13a29f=0x1/0x2*Math['PI']-mouthAngle;break;default:break;}if(_0x2995c5==null)gameCtx['fillStyle']=_0x38f2c0,gameCtx['beginPath'](),gameCtx[_0x1c9f68(0x21c)](Math['floor'](pacmanX),Math[_0x1c9f68(0x24b)](pacmanY),pacmanSize,_0x29c7b2,_0x13a29f),gameCtx[_0x1c9f68(0x22c)](Math['floor'](pacmanX),Math['floor'](pacmanY)),gameCtx['closePath'](),gameCtx['fill'](),mouthAngle+=mouthIncrement,(mouthAngle>=0.8||mouthAngle<=0.2)&&(mouthIncrement=-mouthIncrement);else{if(_0x2995c5!=null){img[_0x1c9f68(0x244)]=_0x1c9f68(0x1f4)+_0x2995c5%0x10+_0x1c9f68(0x252),gameCtx[_0x1c9f68(0x247)](),gameCtx[_0x1c9f68(0x23b)](Math[_0x1c9f68(0x24b)](pacmanX),Math[_0x1c9f68(0x24b)](pacmanY));switch(pacmanDirection){case _0x1c9f68(0x201):gameCtx['rotate'](-Math['PI']/0x2);break;case _0x1c9f68(0x1f9):gameCtx[_0x1c9f68(0x229)](Math['PI']/0x2);break;case'up':gameCtx[_0x1c9f68(0x229)](Math['PI']);break;case _0x1c9f68(0x1fa):gameCtx[_0x1c9f68(0x229)](0x0);break;default:break;}gameCtx[_0x1c9f68(0x24e)](img,-pacmanSize*2.5,-pacmanSize*2.5,pacmanSize*0x5,pacmanSize*0x5),gameCtx[_0x1c9f68(0x1f1)]=_0x1c9f68(0x1e9),gameCtx[_0x1c9f68(0x25a)](),gameCtx[_0x1c9f68(0x20d)](0x0,0x0,ellipseRadiusX,ellipseRadiusY,0x0,0x0,0x2*Math['PI']),gameCtx['closePath'](),gameCtx[_0x1c9f68(0x1fc)](),gameCtx[_0x1c9f68(0x1ff)](),ellipseGrowing?(ellipseRadiusX+=0x1/0x32*pacmanSize,ellipseRadiusY+=0x1/0x32*pacmanSize,(ellipseRadiusX>=0xc/0x14*pacmanSize||ellipseRadiusY>=0x8/0x14*pacmanSize)&&(ellipseGrowing=![])):(ellipseRadiusX-=0x1/0x32*pacmanSize,ellipseRadiusY-=0x1/0x32*pacmanSize,(ellipseRadiusX<=0x2/0x14*pacmanSize||ellipseRadiusY<=0x2/0x14*pacmanSize)&&(ellipseGrowing=!![]));}}}let isSpacePressed=![],lastShotTime=0x0,shotCooldown=0xbb8,cooldownProgress=0x0,isPacmanStopped=![];function handleKeyPress(_0x59e053){const _0x58aa22=a0_0x51383f,_0x323fb6=_0x59e053[_0x58aa22(0x215)];(_0x323fb6==='ArrowDown'||_0x323fb6===_0x58aa22(0x24c))&&_0x59e053[_0x58aa22(0x217)]();if(_0x323fb6==='\x20'){if(_0x59e053[_0x58aa22(0x258)]===_0x58aa22(0x25b)){_0x59e053[_0x58aa22(0x217)]();if(isRunning&&!isGameOver){if(nub_id!=null&&nub_id>=0x9){let _0x456e33=Date[_0x58aa22(0x235)]();_0x456e33-lastShotTime>=shotCooldown&&(lastShotTime=_0x456e33,playMusicShoot(),stopPacmanAndShoot());}else isSpacePressed=!![],playMusic();}}else _0x59e053[_0x58aa22(0x258)]===_0x58aa22(0x20b)&&(isRunning&&!isGameOver&&(isSpacePressed=![],stopMusic()));}}function movePacman(){const _0x3b7634=a0_0x51383f;if(isPacmanStopped)return;let _0x4e0c49=isSpacePressed?0x2:0x1;switch(pacmanDirection){case _0x3b7634(0x201):pacmanX+pacmanSize+pacmanSpeed*_0x4e0c49<=gameCanvas[_0x3b7634(0x249)]&&(pacmanX+=pacmanSpeed*_0x4e0c49);break;case _0x3b7634(0x1f9):pacmanX-pacmanSpeed*_0x4e0c49>=0x0&&(pacmanX-=pacmanSpeed*_0x4e0c49);break;case _0x3b7634(0x1fa):pacmanY+pacmanSize+pacmanSpeed*_0x4e0c49<=gameCanvas[_0x3b7634(0x23e)]&&(pacmanY+=pacmanSpeed*_0x4e0c49);break;case'up':pacmanY-pacmanSpeed*_0x4e0c49>=0x0&&(pacmanY-=pacmanSpeed*_0x4e0c49);break;default:break;}}const audioShoot=new Audio(a0_0x51383f(0x20f));function playMusicShoot(){const _0x4a180a=a0_0x51383f;audioShoot[_0x4a180a(0x23a)]=![],audioShoot[_0x4a180a(0x237)]();}const audio=new Audio(a0_0x51383f(0x22e));function a0_0x32e3(){const _0x3e34e4=['9058210xfayDx','save','addEventListener','width','94rdoows','floor','ArrowUp','touches','drawImage','innerHTML','#FFA500','ArrowDown','.png','block','style','9438006KIzvHx','body','random','type','click','beginPath','keydown','104904whTpxW','Boom\x20:','Score:\x20','white','innerWidth','json','canvasContainer','clearRect','black','16px\x20Arial','status','fillText','display','red','videoContainer','removeEventListener','fillStyle','none','POST','../img/nub/','log','Erreur\x20lors\x20de\x20l\x27initialisation\x20du\x20score:','327215IUPPEU','disabled','left','down','fillRect','fill','remove','getItem','restore','./ghosts.js','right','touchend','clientY','splice','Failed\x20to\x20initialize\x20score','yellow','infosUser','ArrowLeft','touchmove','gameCanvas','keyup','Playback\x20failed:','ellipse','sin','sound/pacman_shoot.mp3','push','txHash','forEach','ArrowRight','62773780XrskfT','key','currentTime','preventDefault','bold\x2010px\x20Arial','application/json','796662dmAmmX','direction','arc','getContext','then','clientX','Shoot!','add','font','#ccc','16088xnyiMb','classList','transactionButton','speed','32joYyyA','rotate','nub_id','getElementById','lineTo','controls','sound/pacman_extrapac.wav','error','grey','catch','rect','/getNub','no-scroll','now','#ffffff','play','2005dEKBcP','abs','loop','translate','touchstart','closePath','height','flash-effect','selectstart','No\x20nub\x20selected.','paused','backgroundCanvas','src','playButton'];a0_0x32e3=function(){return _0x3e34e4;};return a0_0x32e3();}function playMusic(){const _0x4b70e3=a0_0x51383f;audio[_0x4b70e3(0x23a)]=!![],audio[_0x4b70e3(0x237)]();}function stopMusic(){const _0x2dc8f6=a0_0x51383f;audio['pause'](),audio[_0x2dc8f6(0x216)]=0x0;}window['addEventListener'](a0_0x51383f(0x25b),handleKeyPress),window[a0_0x51383f(0x248)](a0_0x51383f(0x20b),handleKeyPress);let thresholdExplode=![];var maxScore=0x1f40,energyBarWidth=0x0,lastEnergyBarWidth=0x0,energyBarColor;function drawScore(){const _0x116b0c=a0_0x51383f;gameCtx['fillStyle']=_0x116b0c(0x25f),gameCtx['font']=_0x116b0c(0x1ea),gameCtx[_0x116b0c(0x1ec)](_0x116b0c(0x25e)+score,0x14,0x1e),gameCtx['fillText'](_0x116b0c(0x25d),0x14,0x37),lastEnergyBarWidth=lastScore%maxScore/maxScore*0x32,energyBarWidth=score%maxScore/maxScore*0x32;energyBarWidth-lastEnergyBarWidth<0x0?thresholdExplode=!![]:thresholdExplode=![];energyBarColor='green';if(energyBarWidth>0x28&&energyBarWidth<0x32){energyBarColor=_0x116b0c(0x1ee);var _0xe771c4=0x4,_0x15d84c=0.1,_0x2252b3=Date[_0x116b0c(0x235)]()*_0x15d84c,_0x221801=Math[_0x116b0c(0x20e)](_0x2252b3)*_0xe771c4;gameCtx['clearRect'](0x4b,0x2d,0x32,0xa),gameCtx['fillStyle']=energyBarColor,gameCtx[_0x116b0c(0x1fb)](0x4b+_0x221801,0x2d,0x32,0xa);}thresholdExplode&&!explosionTimeoutId&&score>0x0&&(explosionTimeoutId=Math[_0x116b0c(0x257)](),playGhostEatBomb(),displayExplosionAnimation(pacmanX,pacmanY,gameCtx),vibrateScreen(),document[_0x116b0c(0x256)][_0x116b0c(0x225)][_0x116b0c(0x221)](_0x116b0c(0x23f)),setTimeout(function(){const _0x54bb5e=_0x116b0c;document[_0x54bb5e(0x256)][_0x54bb5e(0x225)][_0x54bb5e(0x1fd)](_0x54bb5e(0x23f));},0x1f4),initializeGhosts(gameCtx,gameCanvas[_0x116b0c(0x249)],gameCanvas['height'],pacmanX,pacmanY,pacmanSize),updateScore(score)),gameCtx[_0x116b0c(0x1fb)](0x4b,0x2d,0x32,0xa),gameCtx['fillStyle']=energyBarColor,gameCtx[_0x116b0c(0x1fb)](0x4b,0x2d,energyBarWidth,0xa),explosionTimeoutId=null;}function updateScore(_0x458dbc){lastScore=score,score=_0x458dbc;}function updateGame(_0x11807a){const _0x5bfc1f=a0_0x51383f;clearGameCanvas(),movePacman(),moveGhosts(gameCanvas[_0x5bfc1f(0x249)],gameCanvas[_0x5bfc1f(0x23e)]),handleGhostInteractions(gameCtx,pacmanX,pacmanY,pacmanSize,pacmanDirection,updateScore,score,gameOver,resetGame,setPacmanSpeed,setColor,setSize),drawGhosts(gameCtx),drawPacman(color,_0x11807a),_0x11807a>=0x9&&(handleBulletInteractions(gameCtx,bullets,updateScore,pacmanX,pacmanY,pacmanSize),drawCooldownCircle(_0x11807a),updateCooldown(),moveBullets(),drawBullets());}function clearGameCanvas(){const _0x1cc374=a0_0x51383f;gameCtx[_0x1cc374(0x1e8)](0x0,0x0,gameCanvas[_0x1cc374(0x249)],gameCanvas[_0x1cc374(0x23e)]);}document[a0_0x51383f(0x248)](a0_0x51383f(0x25b),_0x55fd61=>{const _0x57ee57=a0_0x51383f;switch(_0x55fd61['key']){case _0x57ee57(0x213):pacmanDirection='right';break;case _0x57ee57(0x208):pacmanDirection=_0x57ee57(0x1f9);break;case _0x57ee57(0x251):pacmanDirection='down';break;case _0x57ee57(0x24c):pacmanDirection='up';break;default:break;}});function resetGame(){const _0x41447f=a0_0x51383f;clearInterval(gameLoop),gameCtx['clearRect'](0x0,0x0,gameCanvas[_0x41447f(0x249)],gameCanvas['height']),pacmanX=gameCanvas['width']/0x2,pacmanY=gameCanvas[_0x41447f(0x23e)]/0x2,mouthAngle=0.2,mouthIncrement=0.05,setSize(0x14),setColor(_0x41447f(0x206)),stopMusic(),isSmartphone&&(unblockPageScroll(),document[_0x41447f(0x1f0)](_0x41447f(0x23c),handleTouchStart),document[_0x41447f(0x1f0)](_0x41447f(0x209),handleTouchMove,{'passive':![]}),document[_0x41447f(0x1f0)]('touchend',handleTouchEnd)),isSpacePressed=![],isMusicPlaying=![],initialX=null,initialY=null,isGameOver=![];}const isSmartphone=window[a0_0x51383f(0x260)]<0x300;function handleClickStartGame(){const _0x4ff2a3=a0_0x51383f;gameCanvas[_0x4ff2a3(0x254)][_0x4ff2a3(0x1ed)]=_0x4ff2a3(0x253),startGame(),isSmartphone&&(blockPageScroll(),document[_0x4ff2a3(0x248)]('touchstart',handleTouchStart),document[_0x4ff2a3(0x248)](_0x4ff2a3(0x209),handleTouchMove,{'passive':!![]}),document[_0x4ff2a3(0x248)](_0x4ff2a3(0x202),handleTouchEnd)),videoContainer[_0x4ff2a3(0x1f0)](_0x4ff2a3(0x259),handleClickStartGame);}let initialX=null,initialY=null,isMusicPlaying=![],touchStartTime=null;const tapThreshold=0xc8,moveThreshold=0xa;let touchTimeout=null;const minimumPressDuration=0x96;function handleTouchStart(_0x392bbf){const _0x54b2f0=a0_0x51383f;nub_id>=0x9?(initialX=_0x392bbf[_0x54b2f0(0x24d)][0x0][_0x54b2f0(0x21f)],initialY=_0x392bbf[_0x54b2f0(0x24d)][0x0][_0x54b2f0(0x203)],touchStartTime=Date[_0x54b2f0(0x235)]()):(initialX=_0x392bbf['touches'][0x0][_0x54b2f0(0x21f)],initialY=_0x392bbf[_0x54b2f0(0x24d)][0x0][_0x54b2f0(0x203)],touchStartTime=Date[_0x54b2f0(0x235)](),touchTimeout=setTimeout(()=>{!isMusicPlaying&&(isSpacePressed=!![],playMusic(),isMusicPlaying=!![]);},minimumPressDuration));}function handleTouchMove(_0x500742){const _0x5088dd=a0_0x51383f;if(!initialX||!initialY)return;const _0x3ba41e=_0x500742[_0x5088dd(0x24d)][0x0][_0x5088dd(0x21f)],_0x58a35b=_0x500742[_0x5088dd(0x24d)][0x0][_0x5088dd(0x203)],_0x525915=_0x3ba41e-initialX,_0x2bf221=_0x58a35b-initialY;nub_id>=0x9?(Math[_0x5088dd(0x239)](_0x525915)>moveThreshold||Math[_0x5088dd(0x239)](_0x2bf221)>moveThreshold)&&(Math[_0x5088dd(0x239)](_0x525915)>Math[_0x5088dd(0x239)](_0x2bf221)?_0x525915>0x0?pacmanDirection=_0x5088dd(0x201):pacmanDirection=_0x5088dd(0x1f9):_0x2bf221>0x0?pacmanDirection=_0x5088dd(0x1fa):pacmanDirection='up',touchStartTime=null):Math[_0x5088dd(0x239)](_0x525915)>Math[_0x5088dd(0x239)](_0x2bf221)?_0x525915>0x0?pacmanDirection=_0x5088dd(0x201):pacmanDirection=_0x5088dd(0x1f9):_0x2bf221>0x0?pacmanDirection=_0x5088dd(0x1fa):pacmanDirection='up',initialX=null,initialY=null;}function handleTouchEnd(_0xc81960){const _0x5bd487=a0_0x51383f;clearTimeout(touchTimeout);if(nub_id>=0x9){if(!touchStartTime)return;const _0x4e132a=Date[_0x5bd487(0x235)](),_0x3b849a=_0x4e132a-touchStartTime;if(_0x3b849a<tapThreshold){if(window[_0x5bd487(0x260)]<=0x300&&nub_id!=null){let _0x29e889=Date[_0x5bd487(0x235)]();_0x29e889-lastShotTime>=shotCooldown&&(lastShotTime=_0x29e889,playMusicShoot(),stopPacmanAndShoot());}}initialX=null,initialY=null,touchStartTime=null;}else initialX=null,initialY=null,isMusicPlaying&&(isSpacePressed=![],stopMusic(),isMusicPlaying=![]);}function blockPageScroll(){const _0x883443=a0_0x51383f;document[_0x883443(0x256)]['classList'][_0x883443(0x221)]('no-scroll');}function unblockPageScroll(){const _0x26b073=a0_0x51383f;document[_0x26b073(0x256)][_0x26b073(0x225)][_0x26b073(0x1fd)](_0x26b073(0x234));}document['getElementById']('gameCanvas')[a0_0x51383f(0x248)](a0_0x51383f(0x240),function(_0x8f48f6){const _0x12a557=a0_0x51383f;_0x8f48f6[_0x12a557(0x217)]();}),document[a0_0x51383f(0x22b)](a0_0x51383f(0x243))[a0_0x51383f(0x248)](a0_0x51383f(0x240),function(_0x4a05e6){const _0x4251d6=a0_0x51383f;_0x4a05e6[_0x4251d6(0x217)]();});function stopPacmanAndShoot(){const _0x57e82e=a0_0x51383f;cooldownProgress>=0x64&&(lastShotTime=Date[_0x57e82e(0x235)](),cooldownProgress=0x0,isPacmanStopped=!![],shootBullet(),setTimeout(function(){isPacmanStopped=![];},0x1f4));}let bullets=[];function shootBullet(){const _0x5a3cc1=a0_0x51383f,_0x41bf70={'x':pacmanX,'y':pacmanY,'direction':pacmanDirection,'speed':0x7*0x4,'size':0x5};bullets[_0x5a3cc1(0x210)](_0x41bf70);}function moveBullets(){const _0x4b1253=a0_0x51383f;bullets[_0x4b1253(0x212)]((_0xd93ac1,_0x2c3192)=>{const _0x3d672c=_0x4b1253;switch(_0xd93ac1[_0x3d672c(0x21b)]){case _0x3d672c(0x201):_0xd93ac1['x']+=_0xd93ac1[_0x3d672c(0x227)];break;case _0x3d672c(0x1f9):_0xd93ac1['x']-=_0xd93ac1[_0x3d672c(0x227)];break;case'up':_0xd93ac1['y']-=_0xd93ac1[_0x3d672c(0x227)];break;case _0x3d672c(0x1fa):_0xd93ac1['y']+=_0xd93ac1[_0x3d672c(0x227)];break;default:break;}(_0xd93ac1['x']<0x0||_0xd93ac1['x']>gameCanvas[_0x3d672c(0x249)]||_0xd93ac1['y']<0x0||_0xd93ac1['y']>gameCanvas['height'])&&bullets[_0x3d672c(0x204)](_0x2c3192,0x1);});}function drawBullets(){const _0x5f11a6=a0_0x51383f;bullets[_0x5f11a6(0x212)](_0x464818=>{const _0x9ff433=_0x5f11a6;gameCtx['fillStyle']=_0x9ff433(0x230),gameCtx[_0x9ff433(0x25a)]();let _0x55bbe7=_0x464818['size']*1.2,_0x2c86f6=_0x464818['size']*0.6;gameCtx[_0x9ff433(0x232)](_0x464818['x']-_0x55bbe7/0x2,_0x464818['y']-_0x2c86f6/0x2,_0x55bbe7,_0x2c86f6),gameCtx[_0x9ff433(0x21c)](_0x464818['x'],_0x464818['y']-_0x2c86f6/0x2,_0x55bbe7/0x2,0x0,Math['PI'],!![]),gameCtx[_0x9ff433(0x1fc)](),gameCtx[_0x9ff433(0x23d)]();});}function updateCooldown(){const _0x262ce5=a0_0x51383f;let _0x3cbd85=Date[_0x262ce5(0x235)]();_0x3cbd85-lastShotTime<shotCooldown?cooldownProgress=(_0x3cbd85-lastShotTime)/shotCooldown*0x64:cooldownProgress=0x64;}function drawCooldownCircle(_0x53e3b0){const _0x1ea295=a0_0x51383f;if(_0x53e3b0==null)return;let _0x3cfcae=gameCanvas[_0x1ea295(0x249)]-0x14,_0x5c5bbc=0x28,_0x50116a=0x14;gameCtx[_0x1ea295(0x25a)](),gameCtx[_0x1ea295(0x21c)](_0x3cfcae,_0x5c5bbc,_0x50116a,0x0,0x2*Math['PI']),gameCtx['fillStyle']=_0x1ea295(0x223),gameCtx[_0x1ea295(0x1fc)](),gameCtx[_0x1ea295(0x23d)](),gameCtx[_0x1ea295(0x25a)]();let _0x38a816=-0.5*Math['PI']+0x2*Math['PI']*(cooldownProgress/0x64);gameCtx[_0x1ea295(0x21c)](_0x3cfcae,_0x5c5bbc,_0x50116a,-0.5*Math['PI'],_0x38a816),gameCtx[_0x1ea295(0x22c)](_0x3cfcae,_0x5c5bbc),gameCtx[_0x1ea295(0x1f1)]=_0x1ea295(0x250),gameCtx[_0x1ea295(0x1fc)](),gameCtx[_0x1ea295(0x23d)](),cooldownProgress>=0x64&&(gameCtx[_0x1ea295(0x222)]=_0x1ea295(0x218),gameCtx['fillStyle']=_0x1ea295(0x236),gameCtx['fillText'](_0x1ea295(0x220),_0x3cfcae-0x10,_0x5c5bbc+0x2));}
+// Importer le fichier des fantômes
+// Assurez-vous d'importer avant d'utiliser les fonctions des fantômes
+// Ce script doit être inclus après le chargement du HTML, donc placé dans un fichier ou dans le balisage de la page.
+import("./ghosts.js");
+
+// Importer le fichier des fantômes
+import { initializeGhosts, drawGhosts, handleGhostInteractions, handleBulletInteractions, moveGhosts, ghosts, playGhostEatBomb, displayExplosionAnimation, vibrateScreen } from "./ghosts.js";
+
+import { verifyNubOwned } from "./metamask.js";
+
+// Variables globales
+let backgroundCanvas = document.getElementById("backgroundCanvas");
+let gameCanvas = document.getElementById("gameCanvas");
+let fullCanvas;
+let backgroundCtx = backgroundCanvas.getContext("2d");
+let gameCtx;
+let pacmanX;
+let pacmanY;
+let pacmanSize = 20;
+let pacmanSpeed = 7; // Vitesse de déplacement de Pacman
+let color = "yellow"; // Couleur jaune de base de Pacman
+let pacmanDirection = "right"; // Direction initiale de Pacman
+let mouthAngle = 0.2; // Angle initial pour l'animation de bouche
+let mouthIncrement = 0.05; // Contrôle l'incrémentation de l'angle de la bouche
+let score = 0; // Définition et initialisation du score
+let lastScore = 0;
+let gameLoop; // Déclaration de la variable gameLoop
+// Définir une variable pour garder une trace de l'état du bouton
+let isGameOver = false;
+
+let explosionTimeoutId = null; // id pour que la condition d'explosion ne se relance pas plusieurs fonctions
+
+// gif pour relancer une partie
+const startAgainImage = new Image();
+startAgainImage.src = 'img/start.gif';
+
+// On récupère l'id NUB sélectionné pour l'utilisateur courant en BDD
+let nub_id = null; // default null
+        
+function setScore(score_) {
+    score = score_;
+
+}
+
+function setPacmanSpeed(speed_) {
+    pacmanSpeed = speed_;
+
+}
+
+function setColor(color_) {
+    color = color_;
+
+}
+
+function setSize(size_) {
+    pacmanSize = size_;
+
+}
+
+// vidéo d'introduction du jeu 
+const video = document.getElementById('introductionVideo');
+const videoContainer = document.getElementById('videoContainer');
+
+
+// Lecture de la vidéo automatiquement au chargement de la page
+video.addEventListener('play', function() {
+    drawVideo();
+});
+
+// Fonction de lecture de vidéo
+function drawVideo() {
+    if (video.paused || video.ended) return;
+    backgroundCtx.drawImage(video, 0, 0, backgroundCanvas.width, backgroundCanvas.height*0.8);
+    requestAnimationFrame(drawVideo);
+}
+
+function handleVideoAfterClickButton() {
+
+    video.play().catch(error => {
+        console.error("Playback failed:", error);
+        document.getElementById("playButton").style.display = "block";
+    });
+
+    //On masque le bouton Play par la suite
+    document.getElementById("playButton").style.display = "none";
+    videoContainer.addEventListener("click", handleClickStartGame);
+    document.getElementById("playButton").removeEventListener("click", handleVideoAfterClickButton);
+
+};
+
+// On ajoute cet event au début
+document.getElementById("playButton").addEventListener("click", handleVideoAfterClickButton);
+
+//On affiche le bouton Play au début
+//document.getElementById("playButton").style.display = "block";
+// Masquer les contrôles de la vidéo
+video.controls = false;
+
+
+
+
+// Déclaration des variables
+let isExploding = false;
+let explosionSize = 0;
+const maxExplosionSize = 50; // Taille maximale de l'explosion
+
+// Fonction pour gérer l'explosion
+function handleExplosion(ctx, x, y) {
+    ctx.fillStyle = "orange"; // Couleur de l'explosion
+    ctx.beginPath();
+    ctx.arc(x, y, explosionSize, 0, 2 * Math.PI); // Dessin du cercle d'explosion
+    ctx.closePath();
+    ctx.fill();
+
+    // Mettre à jour la taille de l'explosion
+    explosionSize += 2; // Augmenter la taille de l'explosion
+
+    // Réinitialiser l'explosion une fois la taille maximale atteinte
+    if (explosionSize > maxExplosionSize) {
+        isExploding = false; // Fin de l'explosion
+        explosionSize = 0; // Réinitialiser la taille de l'explosion
+    }
+}
+
+
+
+// Définition de la fonction gameOver
+function gameOver() {
+    isGameOver = true; // Mettre à jour l'état du jeu à "game over"
+    // Autres actions à effectuer en cas de fin de jeu...
+
+    // Gérer l'explosion si elle est en cours
+    handleExplosion(gameCtx, pacmanX, pacmanY);
+    resetGame();
+    
+    if (!localStorage.getItem('userAddress') || score == 0) {
+        document.getElementById("transactionButton").style.display = "none";
+        showGameOverModalNotLogged();
+    } else {
+        // Fenetre de partage
+        document.getElementById("txHash").innerHTML = '';
+        document.getElementById("infosUser").innerHTML = '';
+        document.getElementById("transactionButton").disabled = false;
+        document.getElementById("transactionButton").style.display = "block";
+        document.getElementById("transactionButton").innerHTML = 'Claim PAC BOOM Points !';
+        showGameOverModal(score);
+    }
+
+
+    // Désactiver le gestionnaire d'événements sur le bouton "Start Game"
+    document.getElementById("backgroundCanvas").removeEventListener("click", startGame);
+    isRunning = false;
+    updateScore(0);
+
+    // Réactiver le gestionnaire d'événements sur "Start Game"
+    gameCanvas.style.display = "none";
+    backgroundCtx.drawImage(startAgainImage, 0, 0, backgroundCanvas.width, backgroundCanvas.height*0.8);
+    videoContainer.style.display = "block";
+
+    // On ajoute l'evenement de click une fois qu'on a cliqué sur le bouton playButton
+    document.getElementById("playButton").addEventListener("click", handleVideoAfterClickButton);
+
+    videoContainer.addEventListener("click", handleClickStartGame);
+
+}
+
+
+// Fonction pour effacer la vidéo du canvas et la cacher
+function clearVideo() {
+    // Arrêter la vidéo si elle est en train de jouer
+    if (!video.paused) {
+        video.pause();
+    }
+
+    // Effacer le contenu du canvas
+    backgroundCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+
+    // Cacher visuellement la vidéo en modifiant les styles CSS
+    videoContainer.style.display = "none";
+}
+
+let isRunning = false;
+
+// Fonction pour initialiser le jeu
+function startGame() {
+    if (!isRunning) {
+        isRunning = true;
+        // Récupérer les références des canvas et des contextes
+        backgroundCanvas = document.getElementById("backgroundCanvas");
+        gameCanvas = document.getElementById("gameCanvas");
+        fullCanvas = document.getElementById("canvasContainer");
+        backgroundCtx = backgroundCanvas.getContext("2d");
+        gameCtx = gameCanvas.getContext("2d");
+        document.getElementById("transactionButton").disabled = true;
+
+        // Désactiver l'event click sur videoContainer
+        videoContainer.removeEventListener("click", handleClickStartGame);
+        // On efface la vidéo d'intro quand on lance le jeu !
+        clearVideo();
+
+        gameCtx.clearRect(0, 0, 500, 500);
+
+        // Initialiser la position de Pacman au centre du canvas de jeu
+        pacmanX = gameCanvas.width / 2;
+        pacmanY = gameCanvas.height / 2;
+
+
+        // On début de la partie on récupère le nub_id dans le serveur pour la personne x
+        const jwtToken = localStorage.getItem('jwtToken'); // Récupérer le JWT depuis localStorage
+        
+        // Récupérer les métadonnées de l'utilisateur depuis le serveur
+        fetch('/getNub', {
+            method: 'POST',
+            headers: {
+                'Authorization': `${jwtToken}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                if (response.status === 204) {
+                    // Aucune donnée n'est présente, vous pouvez gérer cela comme nécessaire
+                    console.log('No nub selected.');
+                    return null; // Ou toute autre action que vous souhaitez prendre
+                } else {
+                    // Il y a des données dans la réponse, vous pouvez la traiter comme d'habitude
+                    return response.json();
+                }
+            } else {
+                //throw new Error('Error retrieving metadata');
+            }
+        })
+        .then(metadata => {
+            // Mettre à jour l'interface utilisateur avec les métadonnées récupérées
+            
+            if (metadata[0].nub_id != null) {
+
+                nub_id = metadata[0].nub_id % 16; // stocker l'id du nub dans la variable nub_id pour la suite du traitement
+                // !!! faire un modulo 16 pour travailler avec les images des nubs présentes sur le serveur !!!!
+                
+            } else {
+                // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+                nub_id = null;
+            }
+
+        })
+        .catch(error => {
+            console.error('Error retrieving nub:', error);
+            // Si pas de login et pas de nub on affiche pacman en jaune avec un nub_id null
+            drawPacman("yellow", null);
+        });
+
+        // On vérifie si le nub enregistré en bdd est bien possédé, sinon on réattribue la valeur null au nub_id
+        /*verifyNubOwned(nub_id).then(isOwned => {
+            if (!isOwned) {
+                nub_id = null;
+
+                fetch('/saveNub', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `${jwtToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nub_id : null })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // La requête s'est déroulée avec succès (metadata enregistrée ou mises à jour)
+                        return response.json();
+                    } else if (response.status === 500) {
+                        // On continue malgré tout pour mettre à jour l'interface utilisateur
+                        return Promise.resolve({ nub_id }); // Simuler une réponse avec les données de l'utilisateur existant
+                    } else {
+                        throw new Error('Erreur serveur');
+                    }
+                })
+                .then(result => {
+                    console.log('Nub Metadata saved into database');
+                })
+                .catch(error => {
+                    console.error("Error during saving of nub metadata !", error);
+                });
+            }
+        });*/
+
+
+        // Initialisation des fantômes
+        initializeGhosts(gameCtx, gameCanvas.width, gameCanvas.height);
+       
+        // On remet le score à zéro
+        fetch('/initialize-score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem("jwtToken")}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to initialize score');
+            }
+            return response.json();
+        })
+        .then(data => {
+            score = data.score; // Affecte la valeur du score initialisé à zéro à la variable score
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'initialisation du score:', error);
+        });
+        // Démarrer la boucle de jeu
+        gameLoop = setInterval(() => updateGame(nub_id), 50); // Appeler updateGame toutes les 50 ms (augmentation de la vitesse)
+        if (!explosionTimeoutId) {
+            setInterval(drawScore, 50);
+        }
+    }
+}
+
+// Variables globales pour l'animation de l'ellipse
+let ellipseRadiusX = 12 / 20 * pacmanSize; // Rayon initial de l'axe x de l'ellipse
+let ellipseRadiusY = 8 / 20 * pacmanSize;  // Rayon initial de l'axe y de l'ellipse
+let ellipseGrowing = true; // Indicateur pour savoir si l'ellipse grandit ou rétrécit
+
+// Image qui affichera le nub sélectionné
+const img = new Image();
+
+// Dessiner Pacman sur le canvas avec animation de bouche
+function drawPacman(color, nub_id) {
+    // Calculer les angles de début et de fin pour l'animation de bouche
+    let startAngle, endAngle;
+
+    switch (pacmanDirection) {
+        case "right":
+            startAngle = mouthAngle;
+            endAngle = 2 * Math.PI - mouthAngle;
+            break;
+        case "left":
+            startAngle = Math.PI + mouthAngle;
+            endAngle = Math.PI - mouthAngle;
+            break;
+        case "up":
+            startAngle = 3 / 2 * Math.PI + mouthAngle;
+            endAngle = 3 / 2 * Math.PI - mouthAngle;
+            break;
+        case "down":
+            startAngle = 1 / 2 * Math.PI + mouthAngle;
+            endAngle = 1 / 2 * Math.PI - mouthAngle;
+            break;
+        default:
+            break;
+    }
+
+    if (nub_id == null) {
+        gameCtx.fillStyle = color;
+        gameCtx.beginPath();
+        gameCtx.arc(Math.floor(pacmanX), Math.floor(pacmanY), pacmanSize, startAngle, endAngle);
+        gameCtx.lineTo(Math.floor(pacmanX), Math.floor(pacmanY));
+        gameCtx.closePath();
+        gameCtx.fill();
+
+        mouthAngle += mouthIncrement;
+        if (mouthAngle >= 0.8 || mouthAngle <= 0.2) {
+            mouthIncrement = -mouthIncrement;
+        }
+        
+    } else if (nub_id != null) { 
+
+        img.src = '../img/nub/' + nub_id % 16 + '.png';
+
+        gameCtx.save();
+        gameCtx.translate(Math.floor(pacmanX), Math.floor(pacmanY));
+
+        switch (pacmanDirection) {
+            case "right":
+                gameCtx.rotate(-Math.PI / 2);
+                break;
+            case "left":
+                gameCtx.rotate(Math.PI / 2);
+                break;
+            case "up":
+                gameCtx.rotate(Math.PI);
+                break;
+            case "down":
+                gameCtx.rotate(0);
+                break;
+            default:
+                break;
+        }
+
+        gameCtx.drawImage(img, -pacmanSize * 2.5, -pacmanSize * 2.5, pacmanSize * 5, pacmanSize * 5);
+
+        gameCtx.fillStyle = 'black';
+        gameCtx.beginPath();
+        gameCtx.ellipse(0, 0, ellipseRadiusX, ellipseRadiusY, 0, 0, 2 * Math.PI);
+        gameCtx.closePath();
+        gameCtx.fill();
+
+        gameCtx.restore();
+
+        // Mise à jour de la taille de l'ellipse pour l'animation
+        if (ellipseGrowing) {
+            ellipseRadiusX += 1 / 50 * pacmanSize;
+            ellipseRadiusY += 1 / 50 * pacmanSize;
+            if (ellipseRadiusX >= 12 / 20 * pacmanSize || ellipseRadiusY >= 8 / 20 * pacmanSize) {
+                ellipseGrowing = false;
+            }
+        } else {
+            ellipseRadiusX -= 1 / 50 * pacmanSize;
+            ellipseRadiusY -= 1 / 50 * pacmanSize;
+            if (ellipseRadiusX <= 2 / 20 * pacmanSize || ellipseRadiusY <= 2 / 20 * pacmanSize) {
+                ellipseGrowing = true;
+            }
+        }
+    } 
+}
+
+
+// Variable globale pour stocker l'état de la touche "SPACE"
+let isSpacePressed = false;
+
+// Variables pour contrôler le tir
+let lastShotTime = 0;
+let shotCooldown = 3000; // 3 secondes en millisecondes
+let cooldownProgress = 0; // Progression du cooldown en pourcentage (0 à 100)
+let isPacmanStopped = false; // Indique si Pacman est arrêté
+
+
+// Fonction pour gérer les événements clavier
+function handleKeyPress(event) {
+    // Récupérer le code de la touche pressée
+    const key = event.key;
+
+    // Empêcher le comportement par défaut (défilement de la fenêtre)
+    if (key === 'ArrowDown' || key === 'ArrowUp') {
+        event.preventDefault();
+    }
+
+    if (key === ' ') { // Touche Espace (Space)
+        if (event.type === 'keydown') {
+
+            event.preventDefault(); // Empêche le comportement par défaut de la touche "SPACE" (par exemple, défilement de la page)
+
+            // Vérifie si le jeu est en cours et que ce n'est pas en game over
+            if (isRunning && !isGameOver) {
+
+                if (nub_id != null && nub_id >= 9) { //supérieur ou égal à 9 car l'id 9 à 15 sont les nub avec une arme !
+                    // Si nub_id est différent de null et supérieur ou égal à 9 , Pacman tire une balle au lieu d'accélérer
+                    let currentTime = Date.now();
+                    if (currentTime - lastShotTime >= shotCooldown) {
+                        lastShotTime = currentTime;
+                        playMusicShoot(); // Jouer la musique
+                        stopPacmanAndShoot();
+                    }
+
+                } else {
+                    isSpacePressed = true; // Accélère Pacman si nub_id est null
+                    playMusic(); // Jouer la musique
+                }
+
+            }
+
+        } else if (event.type === 'keyup') {
+
+            if (isRunning && !isGameOver) {
+                isSpacePressed = false; // Marque la touche "SPACE" comme relâchée
+                stopMusic(); // Arrêter la musique lorsque la touche est relâchée
+            }
+        }
+    }
+}
+
+
+// Fonction pour déplacer Pacman en fonction de la direction et de la vitesse
+function movePacman() {
+
+    if (isPacmanStopped) {
+        return; // Ne pas bouger Pacman si isPacmanStopped est true
+    }
+
+    let speedFactor = isSpacePressed ? 2 : 1; // Facteur de vitesse (x2 si "SPACE" est enfoncée, sinon x1)
+  
+    switch (pacmanDirection) {
+        case "right":
+            if (pacmanX + pacmanSize + pacmanSpeed * speedFactor <= gameCanvas.width) {
+                pacmanX += pacmanSpeed * speedFactor;
+            }
+            break;
+        case "left":
+            if (pacmanX - pacmanSpeed * speedFactor >= 0) {
+                pacmanX -= pacmanSpeed * speedFactor;
+            }
+            break;
+        case "down":
+            if (pacmanY + pacmanSize + pacmanSpeed * speedFactor <= gameCanvas.height) {
+                pacmanY += pacmanSpeed * speedFactor;
+            }
+            break;
+        case "up":
+            if (pacmanY - pacmanSpeed * speedFactor >= 0) {
+                pacmanY -= pacmanSpeed * speedFactor;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+
+// Créer un nouvel élément audio
+const audioShoot = new Audio("sound/pacman_shoot.mp3");
+
+// Fonction pour jouer la musique
+function playMusicShoot() {
+    audioShoot.loop = false; // Jouer en boucle
+    audioShoot.play(); // Jouer la musique
+}
+
+
+// Créer un nouvel élément audio
+const audio = new Audio("sound/pacman_extrapac.wav");
+
+// Fonction pour jouer la musique
+function playMusic() {
+    audio.loop = true; // Jouer en boucle
+    audio.play(); // Jouer la musique
+}
+
+// Fonction pour arrêter la musique
+function stopMusic() {
+    audio.pause(); // Mettre en pause la musique
+    audio.currentTime = 0; // Revenir au début de la piste
+}
+
+// Écouter les événements clavier sur la fenêtre
+window.addEventListener('keydown', handleKeyPress);
+window.addEventListener('keyup', handleKeyPress);
+
+let thresholdExplode = false;
+var maxScore = 8000; // Max score pour barre power
+var energyBarWidth = 0; 
+var lastEnergyBarWidth = 0; 
+var energyBarColor;
+
+function drawScore() {
+
+    // Dessiner le score
+    gameCtx.fillStyle = "white";
+    gameCtx.font = "16px Arial";
+    gameCtx.fillText("Score: " + score, 20, 30);
+
+    // Dessiner "Boom :"
+    gameCtx.fillText("Boom :", 20, 55);
+
+
+    // Calculer la largeur de la barre d'énergie basée sur le score par rapport à maxScore
+    lastEnergyBarWidth = (lastScore % maxScore / maxScore) * 50;
+    energyBarWidth = (score % maxScore / maxScore) * 50;
+    
+    // Vérifier si la différence de largeur dépasse un seuil pour déclencher l'explosion
+    if (energyBarWidth - lastEnergyBarWidth < 0) {
+        thresholdExplode = true;
+    } else {
+        thresholdExplode = false;
+    }
+
+    // Définir la couleur de la barre d'énergie
+    energyBarColor = "green";
+
+    if (energyBarWidth > 40 && energyBarWidth < 50) {
+        energyBarColor = "red";
+        var amplitude = 4; // Amplitude de la vibration
+        var frequency = 0.1; // Fréquence de la vibration
+        var time = Date.now() * frequency;
+        var vibration = Math.sin(time) * amplitude;
+        // Dessiner la barre d'énergie avec une vibration
+        gameCtx.clearRect(75, 45, 50, 10);
+        gameCtx.fillStyle = energyBarColor;
+        gameCtx.fillRect(75 + vibration, 45, 50, 10);
+    }
+
+    // Si le seuil d'explosion est atteint et aucune explosion en cours
+    if (thresholdExplode && !explosionTimeoutId && score > 0) {
+        // Déclencher l'explosion
+        explosionTimeoutId = Math.random();
+        playGhostEatBomb();
+        displayExplosionAnimation(pacmanX, pacmanY, gameCtx);
+        vibrateScreen();
+        // Ajouter la classe de flash pour déclencher l'animation CSS
+        document.body.classList.add('flash-effect');
+        // Retirer la classe après l'animation pour réinitialiser l'effet
+        setTimeout(function() {
+            document.body.classList.remove('flash-effect');
+        }, 500); // Durée de l'animation en millisecondes
+            
+        // Réinitialisation des fantômes
+        initializeGhosts(gameCtx, gameCanvas.width, gameCanvas.height, pacmanX, pacmanY, pacmanSize);
+        updateScore(score);
+    } 
+
+    // Dessiner la barre d'énergie vide avec un contour blanc
+    //gameCtx.fillStyle = "white";
+    gameCtx.fillRect(75, 45, 50, 10); // Dessiner la barre d'énergie vide
+    //gameCtx.strokeStyle = "white";
+    //gameCtx.strokeRect(75, 45, 50, 10); // Dessiner le contour blanc
+
+    gameCtx.fillStyle = energyBarColor;
+    gameCtx.fillRect(75, 45, energyBarWidth, 10); // Dessiner la barre d'énergie
+    explosionTimeoutId = null;
+    
+}
+
+
+
+
+// Fonction pour mettre à jour le score
+function updateScore(points) {
+    lastScore = score;
+    score = points;
+}
+
+
+
+// Mettre à jour le jeu à chaque frame
+function updateGame(nub_id) {
+    clearGameCanvas(); // Effacer seulement le canvas de jeu
+    movePacman();
+    moveGhosts(gameCanvas.width, gameCanvas.height); // Appeler moveGhosts avec les dimensions du canvas
+    
+    // Appel de la fonction de gestion des interactions avec les fantômes
+    handleGhostInteractions(gameCtx, pacmanX, pacmanY, pacmanSize, pacmanDirection, updateScore, score, gameOver, resetGame, setPacmanSpeed, setColor, setSize);   
+    
+    drawGhosts(gameCtx); // Appel de la fonction de dessin des fantômes
+    //drawScore();
+    drawPacman(color, nub_id);
+
+    if (nub_id >= 9) {
+        // Appel de la fonction de gestion des interactions entre balles et fantômes
+        handleBulletInteractions(gameCtx, bullets, updateScore, score, pacmanX, pacmanY, pacmanSize);    
+        
+        // Dessine le cercle de cooldown en dernier pour qu'il soit affiché au-dessus de pacman
+        drawCooldownCircle(nub_id); //ne pas l'afficher si nub_id est null 
+
+        // Met à jour la progression du cooldown
+        updateCooldown();
+
+        // Gérer les balles
+        moveBullets(); // Déplacer les balles
+        drawBullets(); // Dessiner les balles
+    }
+
+
+
+}
+
+
+
+// Effacer seulement le canvas de jeu
+function clearGameCanvas() {
+    gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+}
+
+// Gérer les touches du clavier
+document.addEventListener("keydown", (event) => {
+    switch (event.key) {
+        case "ArrowRight":
+            pacmanDirection = "right";
+            break;
+        case "ArrowLeft":
+            pacmanDirection = "left";
+            break;
+        case "ArrowDown":
+            pacmanDirection = "down";
+            break;
+        case "ArrowUp":
+            pacmanDirection = "up";
+            break;
+        default:
+            break;
+    }
+});
+
+// Fonction pour réinitialiser le jeu
+function resetGame() {
+    clearInterval(gameLoop); // Arrêter la boucle de jeu
+    gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Effacer seulement le canvas de jeu
+    pacmanX = gameCanvas.width / 2; // Réinitialiser la position X de Pacman
+    pacmanY = gameCanvas.height / 2; // Réinitialiser la position Y de Pacman
+    mouthAngle = 0.2; // Réinitialiser l'angle de la bouche de Pacman
+    mouthIncrement = 0.05; // Réinitialiser l'incrémentation de l'angle de la bouche
+    setSize(20);
+    setColor("yellow");
+    stopMusic();
+    //On remet à zéro tout ce qui concerne le mode tactile
+
+    if (isSmartphone) {
+        unblockPageScroll(); // Débloque le défilement de la page
+
+        // Gestionnaire d'événement pour touchstart (au début du toucher)
+        document.removeEventListener("touchstart", handleTouchStart);
+
+        // Gestionnaire d'événement pour touchmove (mouvement du toucher)
+        document.removeEventListener("touchmove", handleTouchMove, { passive: false });
+
+        // Gestionnaire d'événement pour touchend (fin du toucher)
+        document.removeEventListener("touchend", handleTouchEnd);
+    }
+    isSpacePressed = false;
+    isMusicPlaying = false;
+    initialX = null;
+    initialY = null;
+
+    isGameOver = false; // Réinitialiser l'état du jeu à "non game over"
+
+}
+
+
+
+// Vérifier si la largeur de l'écran est inférieure à une certaine valeur (typiquement une largeur de smartphone)
+const isSmartphone = window.innerWidth < 768; // Vous pouvez ajuster cette valeur selon vos besoins
+
+
+
+// Gérer le clic sur le bouton
+function handleClickStartGame() {
+
+    //Rafficher le canvas du jeu avec tous les éléments
+    gameCanvas.style.display = "block";
+    // Démarrer le jeu ou effectuer d'autres actions ici...
+    startGame();
+
+    // Attacher les gestionnaires d'événements tactiles uniquement si c'est un smartphone
+    if (isSmartphone) {
+        blockPageScroll(); // Bloque le défilement de la page
+
+        // Gestionnaire d'événement pour touchstart (au début du toucher)
+        document.addEventListener("touchstart", handleTouchStart);
+
+        // Gestionnaire d'événement pour touchmove (mouvement du toucher)
+        document.addEventListener("touchmove", handleTouchMove, { passive: true });
+
+        // Gestionnaire d'événement pour touchend (fin du toucher)
+        document.addEventListener("touchend", handleTouchEnd);
+    }
+
+    // On enlève l'event handleClickStartGame pour ne pas avoir à recliquer plusieurs fois
+    videoContainer.removeEventListener("click", handleClickStartGame);
+
+}
+
+
+
+// Variable pour stocker les coordonnées initiales du toucher
+let initialX = null;
+let initialY = null;
+let isMusicPlaying = false; // Variable de contrôle pour vérifier si la musique est en cours de lecture
+
+let touchStartTime = null; // Temps du début du toucher
+const tapThreshold = 200; // Délai en millisecondes pour distinguer un tap
+const moveThreshold = 10; // Distance minimale en pixels pour distinguer un tap d'un glissement
+
+let touchTimeout = null;
+const minimumPressDuration = 150; // Durée minimale en millisecondes
+
+
+function handleTouchStart(event) {
+    if (nub_id >= 9) {
+        initialX = event.touches[0].clientX;
+        initialY = event.touches[0].clientY;
+        touchStartTime = Date.now(); // Enregistrer le temps du début du toucher
+
+    } else {
+
+        initialX = event.touches[0].clientX;
+        initialY = event.touches[0].clientY;
+        touchStartTime = Date.now(); // Enregistrer le temps du début du toucher
+
+        // Démarrer un timeout pour vérifier la durée du toucher
+        touchTimeout = setTimeout(() => {
+            if (!isMusicPlaying) {
+                // Accélérer le mouvement de Pacman si le toucher dure au moins 100 ms
+                isSpacePressed = true;
+                playMusic();
+                isMusicPlaying = true; // Mettre à jour la variable de contrôle
+            }
+        }, minimumPressDuration);
+    }
+}
+
+
+// Gestionnaire pour le mouvement tactile
+function handleTouchMove(event) {
+    if (!initialX || !initialY) {
+        return;
+    }
+
+    // Récupérer les coordonnées du mouvement actuel du doigt
+    const currentX = event.touches[0].clientX;
+    const currentY = event.touches[0].clientY;
+
+    // Calculer la différence entre les coordonnées initiales et actuelles
+    const deltaX = currentX - initialX;
+    const deltaY = currentY - initialY;
+
+    if (nub_id >= 9) {
+        // Vérifier si le mouvement dépasse le seuil pour être considéré comme un glissement
+        if (Math.abs(deltaX) > moveThreshold || Math.abs(deltaY) > moveThreshold) {
+            // Déterminer la direction en fonction du mouvement horizontal et vertical
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > 0) {
+                    pacmanDirection = "right";
+                } else {
+                    pacmanDirection = "left";
+                }
+            } else {
+                if (deltaY > 0) {
+                    pacmanDirection = "down";
+                } else {
+                    pacmanDirection = "up";
+                }
+            }
+
+            touchStartTime = null;
+        } 
+    } else {
+        // Déterminer la direction en fonction du mouvement horizontal et vertical
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (deltaX > 0) {
+                pacmanDirection = "right";
+            } else {
+                pacmanDirection = "left";
+            }
+        } else {
+            if (deltaY > 0) {
+                pacmanDirection = "down";
+            } else {
+                pacmanDirection = "up";
+            }
+        }
+    }
+
+    // Réinitialiser les coordonnées du toucher initial pour le prochain mouvement
+    initialX = null;
+    initialY = null;
+}
+
+
+function handleTouchEnd(event) {
+    
+    // Si l'utilisateur lève le doigt avant 100 ms, annuler le timeout
+    clearTimeout(touchTimeout);
+    if (nub_id >= 9) {
+        if (!touchStartTime) return;
+
+        const touchEndTime = Date.now();
+        const touchDuration = touchEndTime - touchStartTime;
+
+        // Si la durée du toucher est inférieure au seuil et que le mouvement est faible, c'est un tap
+        if (touchDuration < tapThreshold) {
+            // Si nub_id est différent de null et supérieur ou égal à 9, Pacman tire une balle au lieu d'accélérer
+            if (window.innerWidth <= 768 && nub_id != null) {
+                // Vérifier si le toucher est à l'intérieur du cercle
+                let currentTime = Date.now();
+                if (currentTime - lastShotTime >= shotCooldown) {
+                    lastShotTime = currentTime;
+                    playMusicShoot(); // Jouer la musique
+                    stopPacmanAndShoot();
+                }
+            }
+        }
+        // Réinitialiser les coordonnées du toucher initial
+        initialX = null;
+        initialY = null;
+        touchStartTime = null;
+    } else {
+        // Réinitialiser les coordonnées du toucher initial
+        initialX = null;
+        initialY = null;
+
+        // Arrêt de la musique et de la vitesse élevée pour Pacman si nub_id == null
+        if (isMusicPlaying) {
+            // Arrêter d'accélérer le mouvement de Pacman
+            isSpacePressed = false;
+            // Arrêter de jouer la musique
+            stopMusic();
+            isMusicPlaying = false; // Mettre à jour la variable de contrôle
+        }
+    }
+}
+
+
+// Fonction pour bloquer le défilement de la page
+function blockPageScroll() {
+    document.body.classList.add('no-scroll'); // Ajoute la classe 'no-scroll' au corps
+}
+
+// Fonction pour débloquer le défilement de la page
+function unblockPageScroll() {
+    document.body.classList.remove('no-scroll'); // Supprime la classe 'no-scroll' du corps
+}
+
+// Empêcher la sélection de texte sur le canvas
+document.getElementById("gameCanvas").addEventListener("selectstart", function(event) {
+    event.preventDefault();
+});
+
+// Empêcher la sélection de texte sur le canvas
+document.getElementById("backgroundCanvas").addEventListener("selectstart", function(event) {
+    event.preventDefault();
+});
+
+
+// Fonction pour arrêter Pacman et tirer une balle
+function stopPacmanAndShoot() {
+    if (cooldownProgress >= 100) {
+        // Réinitialise le cooldown
+        lastShotTime = Date.now();
+        cooldownProgress = 0;
+
+        // Arrête Pacman
+        isPacmanStopped = true;
+
+        // Tirer une balle
+        shootBullet();
+
+        // Remet Pacman en mouvement après un court délai (par exemple 1 seconde)
+        setTimeout(function() {
+            isPacmanStopped = false;
+        }, 500); // Pacman s'arrête pendant 0.5 seconde avant de reprendre son mouvement
+    }
+}
+
+
+let bullets = []; // Array pour stocker les balles
+
+// Fonction pour tirer une balle
+function shootBullet() {
+    // Créer une nouvelle balle en fonction de la position actuelle et de la direction de Pacman
+    const bullet = {
+        x: pacmanX,
+        y: pacmanY,
+        direction: pacmanDirection,
+        speed: 7 * 4, // La vitesse de la balle peut être plus rapide que Pacman
+        size: 5
+    };
+
+    // Ajouter la balle à la liste des balles
+    bullets.push(bullet);
+}
+
+
+function moveBullets() {
+    bullets.forEach((bullet, index) => {
+        // Mettre à jour la position de la balle en fonction de sa direction
+        switch (bullet.direction) {
+            case "right":
+                bullet.x += bullet.speed;
+                break;
+            case "left":
+                bullet.x -= bullet.speed;
+                break;
+            case "up":
+                bullet.y -= bullet.speed;
+                break;
+            case "down":
+                bullet.y += bullet.speed;
+                break;
+            default:
+                break;
+        }
+
+        // Supprimer la balle si elle sort du cadre
+        if (bullet.x < 0 || bullet.x > gameCanvas.width || bullet.y < 0 || bullet.y > gameCanvas.height) {
+            bullets.splice(index, 1);
+        }
+    });
+}
+
+function drawBullets() {
+    bullets.forEach((bullet) => {
+        gameCtx.fillStyle = "grey"; // Couleur de la munition
+        gameCtx.beginPath();
+
+        // Dessiner la base de la munition (un rectangle)
+        let baseWidth = bullet.size * 1.2; // Largeur de la base
+        let baseHeight = bullet.size * 0.6; // Hauteur de la base
+        gameCtx.rect(bullet.x - baseWidth / 2, bullet.y - baseHeight / 2, baseWidth, baseHeight);
+
+        // Dessiner la tête de la munition (un demi-cercle)
+        gameCtx.arc(bullet.x, bullet.y - baseHeight / 2, baseWidth / 2, 0, Math.PI, true);
+        
+        gameCtx.fill();
+        gameCtx.closePath();
+    });
+}
+
+
+// Fonction pour mettre à jour la progression du cooldown
+function updateCooldown() {
+    let currentTime = Date.now();
+    if (currentTime - lastShotTime < shotCooldown) {
+        cooldownProgress = (currentTime - lastShotTime) / shotCooldown * 100;
+    } else {
+        cooldownProgress = 100; // Prêt à tirer
+    }
+}
+
+// Fonction pour dessiner le cercle de cooldown
+function drawCooldownCircle(nub_id) {
+
+    // Ne pas dessiner le cercle si nub_id est null
+    if (nub_id == null) {
+        return;
+    }
+    
+    let centerX = gameCanvas.width - 20; // Position X du cercle (coin supérieur droit)
+    let centerY = 40; // Position Y du cercle
+    let radius = 20; // Rayon du cercle
+
+    // Dessine le cercle de fond
+    gameCtx.beginPath();
+    gameCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    gameCtx.fillStyle = "#ccc"; // Couleur de fond du cercle
+    gameCtx.fill();
+    gameCtx.closePath();
+
+    // Dessine le cercle de progression
+    gameCtx.beginPath();
+    let endAngle = -0.5 * Math.PI + (2 * Math.PI * (cooldownProgress / 100));
+    gameCtx.arc(centerX, centerY, radius, -0.5 * Math.PI, endAngle);
+    gameCtx.lineTo(centerX, centerY); // Ligne vers le centre
+    gameCtx.fillStyle = "#FFA500"; // Couleur de la progression (orange)
+    gameCtx.fill();
+    gameCtx.closePath();
+
+    // Si le cooldown est terminé, affiche "Shoot!" au centre du cercle
+    if (cooldownProgress >= 100) {
+        gameCtx.font = "bold 10px Arial";
+        gameCtx.fillStyle = "#ffffff"; // Couleur du texte
+        gameCtx.fillText("Shoot!", centerX - 16, centerY + 2);
+    }
+}
+
