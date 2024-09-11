@@ -836,12 +836,20 @@ app.post('/profile', verifyJWT, async (req, res) => {
     if (!address) {
         return res.status(400).send('User not connected.');
     }
+
     const client = await pool.connect();
     try {
+        // Récupération du nom d'utilisateur
         const result = await client.query(
             'SELECT username FROM users WHERE wallet_address = $1',
             [address]
         );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        // Récupération des points et du classement
         const result2 = await client.query(
             `SELECT
                 SUM(points) AS total_points,
@@ -855,8 +863,24 @@ app.post('/profile', verifyJWT, async (req, res) => {
             ORDER BY
                 total_points DESC`,
             [address]
-        )
-        res.json({ username : result.rows[0].username, points : result2.rows[0].total_points, rank : result2.rows[0].ranking });
+        );
+
+        // Vérification si l'utilisateur a des points
+        let points = 0;
+        let ranking = null;
+
+        if (result2.rows.length > 0) {
+            points = result2.rows[0].total_points;
+            ranking = result2.rows[0].ranking;
+        }
+
+        // Réponse avec le nom d'utilisateur, les points et le classement
+        res.json({
+            username: result.rows[0].username,
+            points: points,
+            rank: ranking
+        });
+
     } catch (error) {
         console.error('Erreur lors de la vérification de l\'utilisateur:', error);
         res.status(500).json({ error: 'Erreur lors de la vérification de l\'utilisateur.' });
@@ -866,6 +890,7 @@ app.post('/profile', verifyJWT, async (req, res) => {
         }
     }
 });
+
 
 
 // Route pour sauvegarder le score des users dans la base de données
