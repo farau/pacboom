@@ -851,19 +851,29 @@ app.post('/profile', verifyJWT, async (req, res) => {
 
         // Récupération des points et du classement
         const result2 = await client.query(
-            `SELECT
-                SUM(points) AS total_points,
-                RANK() OVER (ORDER BY SUM(points) DESC) AS ranking
+            `WITH ranking_data AS (
+                SELECT
+                    wallet_address,
+                    username,
+                    SUM(points) AS total_points,
+                    RANK() OVER (ORDER BY SUM(points) DESC) AS ranking
+                FROM
+                    points_users_daily
+                GROUP BY
+                    wallet_address, username
+            )
+            SELECT
+                total_points,
+                ranking
             FROM
-                points_users_daily
+                ranking_data
             WHERE 
                 wallet_address = $1
-            GROUP BY
-                wallet_address, username
             ORDER BY
                 total_points DESC`,
             [address]
         );
+        
 
         // Vérification si l'utilisateur a des points
         let points = 0;
