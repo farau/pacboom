@@ -201,10 +201,10 @@ let leaderboardData = [];
 async function saveLeaderboardToFile() {
     try {
         const userData = await leaderboard.getUserData();  // Récupérer les données des utilisateurs
-        leaderboardData = userData;  // Mettre à jour la variable globale
+        leaderboardData = {userData : userData, date : new Date()};  // Mettre à jour la variable globale
 
         // Sauvegarder les données dans un fichier JSON
-        fs.writeFileSync('leaderboard.json', JSON.stringify(userData, null, 2), 'utf8');
+        fs.writeFileSync('leaderboard.json', JSON.stringify(leaderboardData, null, 2), 'utf8');
         console.log('Leaderboard mis à jour et sauvegardé dans leaderboard.json');
     } catch (error) {
         console.error('Erreur lors de la mise à jour du leaderboard:', error);
@@ -225,14 +225,16 @@ app.get('/getLeaderboard', (req, res) => {
 
         const startIndex = (page - 1) * pageSize;
         const endIndex = page * pageSize;
-
+        
         // Charger les données du leaderboard (stockées dans leaderboardData par exemple)
-        const leaderboard = leaderboardData.slice(startIndex, endIndex);  // Extraire la portion paginée
+        const leaderboard = leaderboardData.userData.slice(startIndex, endIndex);  // Extraire la portion paginée
+        const last_refresh = leaderboardData.date;
 
         res.status(200).json({
             leaderboard,  // Renvoyer la portion paginée
             page,
-            pageSize
+            pageSize,
+            last_refresh
         });
     } catch (error) {
         res.status(500).json({ error: 'Erreur lors de la récupération des données du leaderboard' });

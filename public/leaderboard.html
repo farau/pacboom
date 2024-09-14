@@ -84,7 +84,7 @@
         <h1 class="text-center">PacBoom leaderboard</h1>
         <div class="text-center">
             <p>The following leaderboard will be used to distribute Blast Gold at the end of each epoch.</p>
-            <p>The leaderboard is updated every 15 minutes.</p>
+            <p>The leaderboard is updated every 15 minutes. <span id='last-update'></span></p>
             <p>Points will be reinitialized at each new epoch.</p>
         </div>
 
@@ -150,7 +150,7 @@
     </script>
     <script>
         
-        function loadLeaderboard(elementId, url, page, pageSize, prevButtonId, nextButtonId) {
+        function loadLeaderboard(elementId, url, page, pageSize, prevButtonId, nextButtonId, refreshElementId) {
             // Appel à l'API avec pagination
             fetch(`${url}?page=${page}&pageSize=${pageSize}`)
                 .then(response => response.json())
@@ -170,6 +170,19 @@
                         leaderboardBody.appendChild(row);
                     });
 
+                    // Afficher le temps écoulé depuis la dernière mise à jour
+                    if (data.date_leaderboard) {
+                        const refreshElement = document.getElementById(refreshElementId);
+                        const lastRefreshDate = new Date(data.date_leaderboard); // Convertir la date ISO en objet Date
+                        const now = new Date();
+                        const minutesElapsed = Math.floor((now - lastRefreshDate) / (1000 * 60)); // Convertir millisecondes en minutes
+                        refreshElement.textContent = `Last update : ${minutesElapsed} minute(s) ago`;
+                    } else {
+                        // Si date_leaderboard n'est pas défini, afficher un message par défaut
+                        const refreshElement = document.getElementById(refreshElementId);
+                        refreshElement.textContent = 'No data available';
+                    }
+
                     // Activer/désactiver les boutons de pagination
                     document.getElementById(prevButtonId).disabled = (page === 1);
                     document.getElementById(nextButtonId).disabled = (data.leaderboard.length < pageSize);
@@ -182,19 +195,19 @@
         const pageSize = 10;  // Taille de la page
 
         // Charger les données initiales du leaderboard
-        loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
+        loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall','last-update');
 
         // Gérer la navigation dans le leaderboard (pagination)
         document.getElementById('prevPageOverall').addEventListener('click', () => {
             if (currentPageOverall > 1) {
                 currentPageOverall--;
-                loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
+                loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall','last-update');
             }
         });
 
         document.getElementById('nextPageOverall').addEventListener('click', () => {
             currentPageOverall++;
-            loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
+            loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall','last-update');
         });
 
     </script>

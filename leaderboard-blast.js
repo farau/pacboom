@@ -450,11 +450,21 @@ async function getUserData() {
             const username = user.username;
             // Appeler les fonctions du contrat Ethereum pour récupérer les données
             const points = ethers.utils.formatUnits(await contract.getPlayerPoints(address), 18) * 10**18; // Supposons que les points soient en Wei
-            const nfts = ethers.utils.formatUnits(await contract.numberOfNFTsFromACollection(address, 0), 18) * 10**18;
+            //const nfts = ethers.utils.formatUnits(await contract.numberOfNFTsFromACollection(address, 0), 18) * 10**18;
+
+            // Conversion pour l'affichage
+
+            // Convertir la chaîne en nombre flottant
+            const pointsFloat = parseFloat(points);
+
+            // Arrondir la valeur flottante à l'entier le plus proche
+            const pointsRounded = Math.round(pointsFloat);
+
+            //const formattedNfts = ethers.utils.formatUnits(nfts, 18);
 
             //console.log("address :", address, " bonus : ", bonus, " points : ", points, " nfts : ", nfts);
             // Ajouter les données de l'utilisateur au tableau
-            userData.push({ address, username,  points, nfts });
+            userData.push({ address, username,  points : pointsRounded });
 
             i++;
         }
