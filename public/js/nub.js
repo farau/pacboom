@@ -1,1 +1,396 @@
-const a0_0x30911c=a0_0x2c24;(function(_0x1153fe,_0x5c345e){const _0x32b83f=a0_0x2c24,_0x446215=_0x1153fe();while(!![]){try{const _0x124547=parseInt(_0x32b83f(0x1bc))/0x1*(parseInt(_0x32b83f(0x1e2))/0x2)+parseInt(_0x32b83f(0x1d3))/0x3*(-parseInt(_0x32b83f(0x1ab))/0x4)+parseInt(_0x32b83f(0x1db))/0x5*(-parseInt(_0x32b83f(0x1e9))/0x6)+parseInt(_0x32b83f(0x1eb))/0x7+parseInt(_0x32b83f(0x1e3))/0x8+-parseInt(_0x32b83f(0x1bf))/0x9+parseInt(_0x32b83f(0x1b8))/0xa*(-parseInt(_0x32b83f(0x1ba))/0xb);if(_0x124547===_0x5c345e)break;else _0x446215['push'](_0x446215['shift']());}catch(_0x52929c){_0x446215['push'](_0x446215['shift']());}}}(a0_0x297d,0xeec71));function a0_0x2c24(_0x44fc56,_0x43c0e6){const _0x297d93=a0_0x297d();return a0_0x2c24=function(_0x2c24ec,_0x29ee86){_0x2c24ec=_0x2c24ec-0x19b;let _0x5fb878=_0x297d93[_0x2c24ec];return _0x5fb878;},a0_0x2c24(_0x44fc56,_0x43c0e6);}import{checkIfUserConnected,nubOwned,updateCanvasBasedOnConnection,showSaveMetaDataButton}from'./metamask.js';let nubCanvas,ctx,nubSelectedcanvas,ctx2;const pacArmyIpfs=config['pacArmyIpfs'];document[a0_0x30911c(0x1c5)](a0_0x30911c(0x1c6))&&(nubCanvas=document['getElementById'](a0_0x30911c(0x1c6)),ctx=nubCanvas[a0_0x30911c(0x19b)]('2d')!=null?nubCanvas['getContext']('2d'):null);document[a0_0x30911c(0x1c5)](a0_0x30911c(0x1ca))&&(nubSelectedcanvas=document[a0_0x30911c(0x1c5)](a0_0x30911c(0x1ca)),ctx2=nubSelectedcanvas[a0_0x30911c(0x19b)]('2d')!=null?nubSelectedcanvas['getContext']('2d'):null);document[a0_0x30911c(0x1d8)](a0_0x30911c(0x1c8),_0x4ca706=>{const _0x252553=a0_0x30911c;document[_0x252553(0x1c5)](_0x252553(0x1c6))&&(ctx[_0x252553(0x1a7)](0x0,0x0,nubCanvas[_0x252553(0x1ec)],nubCanvas[_0x252553(0x1c9)]),updateCanvasBasedOnConnection());});if(document[a0_0x30911c(0x1c5)](a0_0x30911c(0x1b0))){const saveButton=document[a0_0x30911c(0x1c5)](a0_0x30911c(0x1b0));saveButton['addEventListener'](a0_0x30911c(0x1d6),()=>{saveMetadataNub();});}function saveMetadataNub(){const _0x34e523=a0_0x30911c,_0x23d7cd=localStorage[_0x34e523(0x1f0)](_0x34e523(0x1cb)),_0x576bdb=document['getElementById'](_0x34e523(0x1ea)),_0x405997=document[_0x34e523(0x1c5)]('successMessage');_0x405997[_0x34e523(0x1a0)]='';const _0x4e772b=showSaveMetaDataButton(),_0x29b253=_0x4e772b==null?null:parseInt(_0x4e772b[_0x34e523(0x1d1)](),0xa);fetch(_0x34e523(0x1d7),{'method':_0x34e523(0x1af),'headers':{'Authorization':''+_0x23d7cd,'Content-Type':'application/json'},'body':JSON[_0x34e523(0x1c1)]({'nub_id':_0x29b253})})[_0x34e523(0x1b7)](_0x4998a8=>{const _0x253c83=_0x34e523;if(_0x4998a8['ok'])return _0x4998a8[_0x253c83(0x1f2)]();else{if(_0x4998a8[_0x253c83(0x1dd)]===0x1f4)return Promise[_0x253c83(0x1e4)]({'nub_id_int':_0x29b253});else throw new Error(_0x253c83(0x1f1));}})[_0x34e523(0x1b7)](_0x25830c=>{const _0x7aa287=_0x34e523;console['log']('Nub\x20Metadata\x20saved\x20into\x20database',_0x29b253),_0x405997[_0x7aa287(0x1a0)]='This\x20nub\x20has\x20been\x20selected\x20!',location[_0x7aa287(0x1ed)]();})[_0x34e523(0x1e5)](_0x4b2884=>{const _0x26a820=_0x34e523;console[_0x26a820(0x1ac)](_0x26a820(0x1be),_0x4b2884),_0x576bdb[_0x26a820(0x1a0)]=_0x4b2884;});}function a0_0x297d(){const _0x1e92ed=['The\x20metadata\x20you\x20registered:','/getNub','attributes','then','330CglGGc','table-bordered','148181IqNokA','Error\x20retrieving\x20profile:','4aDjuRy','table-striped','Error\x20during\x20saving\x20of\x20nub\x20metadata\x20!','3952980KckvdS','description','stringify','Name','createElement','tbody','getElementById','nubCanvas','style','DOMContentLoaded','height','secondaryNubCanvas','jwtToken','length','profileContainer','Discord\x20handle','nub_id','innerHTML','toString','profileCard','33240dsuMYG','metadataNubContainer','X\x20handle','click','/saveNub','addEventListener','Soon','trait_type','5PGycrf','log','status','<span\x20style=\x22color:\x20blue;\x22>','drawImage','points','add','557286AWVIjS','10295824Wxpkdz','resolve','catch','src','No\x20nub\x20selected.','<span\x20style=\x22color:\x20blue;\x22>Rank</span>','2912622QrghaQ','saveErrorMessage','1636341UtUqSL','width','reload','metadataCard','</span>','getItem','Erreur\x20serveur','json','application/json','Please\x20login\x20to\x20see\x20your\x20profile.','getContext','table','N/A','Erreur\x20HTTP\x20!\x20Statut\x20:\x20','<span\x20style=\x22color:\x20blue;\x22>PacBoom\x20points</span>','textContent','classList','#000000','Description','color','rank','forEach','clearRect','onload','No\x20nub\x20selected.\x20The\x20default\x20Pacman\x20will\x20be\x20used\x20in-game.','value','104dujdKH','error','username','./img/nub/null.png','POST','saveButton','pacArmyImgIpfs','appendChild','label'];a0_0x297d=function(){return _0x1e92ed;};return a0_0x297d();}export async function getMetadataNub(){const _0x56f7ec=a0_0x30911c,_0x4a9ad4=localStorage[_0x56f7ec(0x1f0)](_0x56f7ec(0x1cb));fetch('/profile',{'method':'POST','headers':{'Authorization':''+_0x4a9ad4,'Content-Type':_0x56f7ec(0x1f3)}})[_0x56f7ec(0x1b7)](_0xca4107=>{const _0x1be13b=_0x56f7ec;if(_0xca4107['ok'])return _0xca4107[_0x1be13b(0x1dd)]===0xcc?(console['log']('No\x20profile\x20found.'),null):_0xca4107[_0x1be13b(0x1f2)]();else{if(document[_0x1be13b(0x1c5)](_0x1be13b(0x1cd))){const _0x173566=document['getElementById']('profileContainer');_0x173566[_0x1be13b(0x1d0)]='',_0x173566[_0x1be13b(0x1a0)]='Please\x20login\x20to\x20see\x20your\x20profile.';}return null;}})[_0x56f7ec(0x1b7)](async _0x2bcd43=>{const _0x4237de=_0x56f7ec;if(document[_0x4237de(0x1c5)]('profileContainer')){const _0x3b89b9=document[_0x4237de(0x1c5)](_0x4237de(0x1cd)),_0x8a843b=document['getElementById'](_0x4237de(0x1d2));if(_0x2bcd43){_0x3b89b9['innerHTML']='';const _0x41b174=document[_0x4237de(0x1c3)]('p');_0x41b174['textContent']='',_0x3b89b9[_0x4237de(0x1b2)](_0x41b174);const _0x311cc8=document[_0x4237de(0x1c3)]('table');_0x311cc8[_0x4237de(0x1a1)]['add'](_0x4237de(0x19c),_0x4237de(0x1b9),_0x4237de(0x1bd));const _0xf57c0a=document[_0x4237de(0x1c3)](_0x4237de(0x1c4)),_0x14bc60=[{'label':_0x4237de(0x1d5),'value':_0x2bcd43['username']},{'label':_0x4237de(0x1ce),'value':'Soon'},{'label':'Unlink\x20X','value':_0x4237de(0x1d9)},{'label':'Unlink\x20Discord','value':'Soon'},{'label':'','value':null},{'label':_0x4237de(0x19f),'value':_0x4237de(0x1de)+_0x2bcd43[_0x4237de(0x1e0)]+_0x4237de(0x1ef)},{'label':_0x4237de(0x1e8),'value':_0x4237de(0x1de)+_0x2bcd43[_0x4237de(0x1a5)]+_0x4237de(0x1ef)}];return _0x14bc60[_0x4237de(0x1a6)](_0x5688d3=>{const _0x14fb6e=_0x4237de,_0x42a193=document[_0x14fb6e(0x1c3)]('tr'),_0x503d30=document[_0x14fb6e(0x1c3)]('td'),_0x1e8cae=document[_0x14fb6e(0x1c3)]('td');_0x503d30[_0x14fb6e(0x1c7)][_0x14fb6e(0x1a4)]=_0x14fb6e(0x1a2),_0x1e8cae[_0x14fb6e(0x1c7)]['color']=_0x14fb6e(0x1a2),_0x503d30['innerHTML']=_0x5688d3[_0x14fb6e(0x1b3)],_0x1e8cae['innerHTML']=_0x5688d3[_0x14fb6e(0x1aa)],_0x42a193[_0x14fb6e(0x1b2)](_0x503d30),_0x42a193[_0x14fb6e(0x1b2)](_0x1e8cae),_0xf57c0a[_0x14fb6e(0x1b2)](_0x42a193);}),_0x311cc8[_0x4237de(0x1b2)](_0xf57c0a),_0x3b89b9[_0x4237de(0x1b2)](_0x311cc8),_0x2bcd43[_0x4237de(0x1ad)];}else{if(document['getElementById'](_0x4237de(0x1cd))){const _0x586e6f=document['getElementById']('profileContainer');_0x586e6f[_0x4237de(0x1d0)]='',_0x586e6f[_0x4237de(0x1a0)]=_0x4237de(0x1f4);}return null;}}else{if(document[_0x4237de(0x1c5)](_0x4237de(0x1cd))){const _0x238ad1=document[_0x4237de(0x1c5)](_0x4237de(0x1cd));_0x238ad1['innerHTML']='',_0x238ad1[_0x4237de(0x1a0)]=_0x4237de(0x1f4);}return null;}})['catch'](_0x120799=>{const _0x55e020=_0x56f7ec;console[_0x55e020(0x1ac)](_0x55e020(0x1bb),_0x120799);});let _0x5501f1=new Image();fetch(_0x56f7ec(0x1b5),{'method':_0x56f7ec(0x1af),'headers':{'Authorization':''+_0x4a9ad4,'Content-Type':_0x56f7ec(0x1f3)}})[_0x56f7ec(0x1b7)](_0x34f003=>{const _0x5aa21a=_0x56f7ec;if(_0x34f003['ok'])return _0x34f003[_0x5aa21a(0x1dd)]===0xcc?(console[_0x5aa21a(0x1dc)](_0x5aa21a(0x1e7)),null):_0x34f003['json']();else{_0x5501f1['src']=_0x5aa21a(0x1ae),document[_0x5aa21a(0x1c5)](_0x5aa21a(0x1ca))[_0x5aa21a(0x19b)]('2d')[_0x5aa21a(0x1a7)](0x0,0x0,0xc8,0xc8),_0x5501f1[_0x5aa21a(0x1a8)]=function(){const _0x576605=_0x5aa21a;document[_0x576605(0x1c5)](_0x576605(0x1ca))['getContext']('2d')[_0x576605(0x1df)](_0x5501f1,0x0,0x0,0xc8,0xc8);};if(document[_0x5aa21a(0x1c5)](_0x5aa21a(0x1d4))){const _0x34e63a=document[_0x5aa21a(0x1c5)](_0x5aa21a(0x1d4));_0x34e63a[_0x5aa21a(0x1d0)]='',_0x34e63a[_0x5aa21a(0x1a0)]=_0x5aa21a(0x1a9);}return null;}})[_0x56f7ec(0x1b7)](async _0x1f2aeb=>{const _0x411ddb=_0x56f7ec;if(document[_0x411ddb(0x1c5)](_0x411ddb(0x1d4))){const _0x597ec2=document[_0x411ddb(0x1c5)](_0x411ddb(0x1d4)),_0xf55bc3=document['getElementById'](_0x411ddb(0x1ee));if(_0x1f2aeb&&_0x1f2aeb[_0x411ddb(0x1cc)]>0x0&&_0x1f2aeb[0x0][_0x411ddb(0x1cf)]!=null){const _0x107be0=await fetchData(pacArmyIpfs+_0x1f2aeb[0x0][_0x411ddb(0x1cf)]);if(_0x107be0){_0x597ec2[_0x411ddb(0x1d0)]='';const _0x1bbe85=document[_0x411ddb(0x1c3)]('p');_0x1bbe85[_0x411ddb(0x1a0)]=_0x411ddb(0x1b4),_0x597ec2[_0x411ddb(0x1b2)](_0x1bbe85);const _0x369f39=document['createElement'](_0x411ddb(0x19c));_0x369f39[_0x411ddb(0x1a1)][_0x411ddb(0x1e1)](_0x411ddb(0x19c),_0x411ddb(0x1b9),'table-striped');const _0x1bcde6=document[_0x411ddb(0x1c3)](_0x411ddb(0x1c4)),_0x3512cc=[{'label':_0x411ddb(0x1c2),'value':_0x107be0['name']},{'label':_0x411ddb(0x1a3),'value':_0x107be0[_0x411ddb(0x1c0)]},{'label':'Attributes'}];_0x3512cc['forEach'](_0x58d12e=>{const _0x45b710=_0x411ddb,_0x1a2ef2=document[_0x45b710(0x1c3)]('tr'),_0x8729c7=document[_0x45b710(0x1c3)]('td'),_0x20054a=document[_0x45b710(0x1c3)]('td');_0x8729c7['style']['color']=_0x45b710(0x1a2),_0x20054a[_0x45b710(0x1c7)]['color']=_0x45b710(0x1a2),_0x8729c7[_0x45b710(0x1a0)]=_0x58d12e['label'],_0x20054a[_0x45b710(0x1a0)]=_0x58d12e[_0x45b710(0x1aa)],_0x1a2ef2['appendChild'](_0x8729c7),_0x1a2ef2[_0x45b710(0x1b2)](_0x20054a),_0x1bcde6[_0x45b710(0x1b2)](_0x1a2ef2);}),_0x107be0[_0x411ddb(0x1b6)][_0x411ddb(0x1a6)](_0x506f70=>{const _0x593351=_0x411ddb,_0x4688e7=document[_0x593351(0x1c3)]('tr'),_0x1baf6a=document[_0x593351(0x1c3)]('td'),_0x4f68be=document[_0x593351(0x1c3)]('td');_0x1baf6a['style'][_0x593351(0x1a4)]=_0x593351(0x1a2),_0x4f68be[_0x593351(0x1c7)][_0x593351(0x1a4)]='#000000',_0x1baf6a[_0x593351(0x1a0)]=_0x506f70[_0x593351(0x1da)],_0x4f68be['textContent']=_0x506f70[_0x593351(0x1aa)]!==null?_0x506f70[_0x593351(0x1aa)]:_0x593351(0x19d),_0x4688e7[_0x593351(0x1b2)](_0x1baf6a),_0x4688e7[_0x593351(0x1b2)](_0x4f68be),_0x1bcde6['appendChild'](_0x4688e7);}),_0x369f39[_0x411ddb(0x1b2)](_0x1bcde6),_0x597ec2[_0x411ddb(0x1b2)](_0x369f39);}return document[_0x411ddb(0x1c5)]('secondaryNubCanvas')&&(_0x5501f1[_0x411ddb(0x1e6)]=config[_0x411ddb(0x1b1)]+_0x1f2aeb[0x0][_0x411ddb(0x1cf)]+'.png',document['getElementById'](_0x411ddb(0x1ca))[_0x411ddb(0x19b)]('2d')['clearRect'](0x0,0x0,0xc8,0xc8),_0x5501f1[_0x411ddb(0x1a8)]=function(){const _0x1bb878=_0x411ddb;document[_0x1bb878(0x1c5)]('secondaryNubCanvas')[_0x1bb878(0x19b)]('2d')[_0x1bb878(0x1df)](_0x5501f1,0x0,0x0,0xc8,0xc8);}),_0x1f2aeb[0x0][_0x411ddb(0x1cf)];}else{document['getElementById'](_0x411ddb(0x1ca))&&(_0x5501f1[_0x411ddb(0x1e6)]=_0x411ddb(0x1ae),document[_0x411ddb(0x1c5)](_0x411ddb(0x1ca))[_0x411ddb(0x19b)]('2d')[_0x411ddb(0x1a7)](0x0,0x0,0xc8,0xc8),_0x5501f1[_0x411ddb(0x1a8)]=function(){const _0x4a866c=_0x411ddb;document[_0x4a866c(0x1c5)](_0x4a866c(0x1ca))['getContext']('2d')[_0x4a866c(0x1df)](_0x5501f1,0x0,0x0,0xc8,0xc8);});if(document[_0x411ddb(0x1c5)](_0x411ddb(0x1d4))){const _0x3e305d=document[_0x411ddb(0x1c5)](_0x411ddb(0x1d4));_0x3e305d[_0x411ddb(0x1d0)]='',_0x3e305d['textContent']=_0x411ddb(0x1a9);}return null;}}else{document[_0x411ddb(0x1c5)](_0x411ddb(0x1ca))&&(_0x5501f1[_0x411ddb(0x1e6)]='./img/nub/null.png',document[_0x411ddb(0x1c5)]('secondaryNubCanvas')['getContext']('2d')['clearRect'](0x0,0x0,0xc8,0xc8),_0x5501f1[_0x411ddb(0x1a8)]=function(){const _0x242383=_0x411ddb;document['getElementById'](_0x242383(0x1ca))[_0x242383(0x19b)]('2d')['drawImage'](_0x5501f1,0x0,0x0,0xc8,0xc8);});if(document[_0x411ddb(0x1c5)](_0x411ddb(0x1d4))){const _0x431c9b=document[_0x411ddb(0x1c5)]('metadataNubContainer');_0x431c9b[_0x411ddb(0x1d0)]='',_0x431c9b[_0x411ddb(0x1a0)]=_0x411ddb(0x1a9);}return null;}})[_0x56f7ec(0x1e5)](_0x11ae81=>{console['error']('Error\x20retrieving\x20nub:',_0x11ae81);});}async function fetchData(_0x2f0ac6){const _0x3f16a0=a0_0x30911c;try{const _0x20cb05=await fetch(_0x2f0ac6);if(!_0x20cb05['ok'])throw new Error(_0x3f16a0(0x19e)+_0x20cb05[_0x3f16a0(0x1dd)]);const _0x4f1649=await _0x20cb05[_0x3f16a0(0x1f2)]();return _0x4f1649;}catch(_0x437991){return console[_0x3f16a0(0x1ac)]('Erreur\x20lors\x20de\x20la\x20récupération\x20des\x20données\x20:',_0x437991),null;}}
+import { checkIfUserConnected, nubOwned, updateCanvasBasedOnConnection, showSaveMetaDataButton} from "./metamask.js";
+
+let nubCanvas;
+let ctx;
+let nubSelectedcanvas;
+let ctx2;
+
+// On récupère l'adresse IPFS du contrat de NFT PacArmy
+const pacArmyIpfs = config.pacArmyIpfs;
+
+
+if (document.getElementById('nubCanvas')) {
+    nubCanvas = document.getElementById('nubCanvas');
+    ctx = nubCanvas.getContext('2d') != null ? nubCanvas.getContext('2d') : null ;
+}
+
+if (document.getElementById('secondaryNubCanvas')) {
+    nubSelectedcanvas = document.getElementById('secondaryNubCanvas');
+    ctx2 = nubSelectedcanvas.getContext('2d') != null ? nubSelectedcanvas.getContext('2d') : null;
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {   
+    if (document.getElementById('nubCanvas')) {
+        ctx.clearRect(0, 0, nubCanvas.width, nubCanvas.height);
+        //On update le canvas en fonction de la connexion ou pas à chaque refresh de la page
+        updateCanvasBasedOnConnection();
+    }
+});
+
+if (document.getElementById('saveButton')) {
+
+    const saveButton = document.getElementById('saveButton');
+    // Ajouter un gestionnaire d'événements pour le clic sur le bouton
+    saveButton.addEventListener('click', () => {
+        // Quand on clique sur saveButton on peut enregistrer les metadata car l'user est logué
+        saveMetadataNub();
+    });
+}
+
+
+
+
+
+// Fonction pour gérer l'insertion du NUB en BDD
+function saveMetadataNub() {
+    const jwtToken = localStorage.getItem('jwtToken'); // Récupérer le JWT depuis localStorage
+    
+    const saveErrorMessage = document.getElementById('saveErrorMessage');
+    const successMessage = document.getElementById('successMessage');
+
+    // Message de succès
+    successMessage.textContent = '';
+
+    // On récupère nub_id courant 
+    const nub_id = showSaveMetaDataButton();
+    //console.log("nub id recu par show save button :", nub_id);
+    const nub_id_int = nub_id == null ? null : parseInt(nub_id.toString(), 10);
+    //console.log(parseInt(nub_id.toString(), 10));
+    // Stockage des informations utilisateur en base de données (envoi d'une requête POST au serveur)
+    fetch('/saveNub', {
+        method: 'POST',
+        headers: {
+            'Authorization': `${jwtToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nub_id : nub_id_int })
+    })
+    .then(response => {
+        if (response.ok) {
+            // La requête s'est déroulée avec succès (metadata enregistrée ou mises à jour)
+            return response.json();
+        } else if (response.status === 500) {
+            // On continue malgré tout pour mettre à jour l'interface utilisateur
+            return Promise.resolve({ nub_id_int }); // Simuler une réponse avec les données de l'utilisateur existant
+        } else {
+            throw new Error('Erreur serveur');
+        }
+    })
+    .then(result => {
+        console.log('Nub Metadata saved into database', nub_id_int);
+        successMessage.textContent = 'This nub has been selected !';
+
+        // On reload la page pour afficher les changements directement
+        location.reload();
+    })
+    .catch(error => {
+        console.error("Error during saving of nub metadata !", error);
+        saveErrorMessage.textContent = error;
+    });
+}
+
+export async function getMetadataNub() {
+
+    const jwtToken = localStorage.getItem('jwtToken'); // Récupérer le JWT depuis localStorage
+
+    // On récupère aussi les données user pour afficher juste avant le nom de l'user et son wallet ainsi que son rank
+    fetch('/getUserLeaderboard', {
+        method: 'POST',
+        headers: {
+            'Authorization': `${jwtToken}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            if (response.status === 204) {
+                // Aucune donnée n'est présente, vous pouvez gérer cela comme nécessaire
+                console.log('No profile found.');
+                return null; // Ou toute autre action que vous souhaitez prendre
+            } else {
+                // Il y a des données dans la réponse, vous pouvez la traiter comme d'habitude
+                return response.json();
+            }
+        } else {
+            
+            if (document.getElementById('profileContainer')) {
+                const profileContainer = document.getElementById('profileContainer');
+
+                profileContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+                profileContainer.textContent = 'Please login to see your profile.';
+                
+            }
+            return null;
+        }
+    })
+    .then(async profile => {
+        // Mettre à jour l'interface utilisateur avec les métadonnées récupérées
+        // Par exemple, remplacer le bouton Save Metadata par les métadonnées
+        if (document.getElementById('profileContainer')) {
+            const profileContainer = document.getElementById('profileContainer');
+            const profileCard = document.getElementById('profileCard');
+            
+            if (profile) {
+                profileContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                
+                const beginMessage = document.createElement('p');
+                beginMessage.textContent = '';
+                profileContainer.appendChild(beginMessage);
+            
+                const table = document.createElement('table');
+                table.classList.add('table', 'table-bordered', 'table-striped');
+                const tbody = document.createElement('tbody');
+            
+                const profileRows = [
+                    { label: 'X handle', value: profile.leaderboardUser[0].username },
+                    { label: 'Discord handle', value: 'Soon' },
+                    { label: 'Unlink X', value: 'Soon' },
+                    { label: 'Unlink Discord', value: 'Soon' },
+                    { label: '', value: null },
+                    { 
+                        label: '<span style="color: blue;">Rank</span>', 
+                        value: `<span style="color: blue;">${profile.rank}</span>` 
+                    },
+                    { 
+                        label: '<span style="color: blue;">PacBoom points</span>', 
+                        value: `<span style="color: blue;">${profile.leaderboardUser[0].points}</span>` 
+                    }
+                ];
+            
+                // Ajouter les lignes de base (Name et Description)
+                profileRows.forEach(rowData => {
+                    const row = document.createElement('tr');
+                    const labelCell = document.createElement('td');
+                    const valueCell = document.createElement('td');
+            
+                    labelCell.style.color = '#000000';
+                    valueCell.style.color = '#000000';
+            
+                    labelCell.innerHTML = rowData.label;
+                    valueCell.innerHTML = rowData.value;
+                    row.appendChild(labelCell);
+                    row.appendChild(valueCell);
+                    tbody.appendChild(row);
+                });
+            
+            
+                table.appendChild(tbody);
+                profileContainer.appendChild(table);
+                
+                return profile.username;
+
+            } else {
+
+                if (document.getElementById('profileContainer')) {
+                    const profileContainer = document.getElementById('profileContainer');
+    
+                    profileContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                    profileContainer.textContent = 'Please login to see your profile.';
+                }
+                return null;
+            }
+
+        } else {
+            // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+
+            if (document.getElementById('profileContainer')) {
+                const metadataContainer = document.getElementById('profileContainer');
+
+                metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                metadataContainer.textContent = 'Please login to see your profile.';
+            }
+
+            return null;
+        }
+
+    })
+    .catch(error => {
+        console.error('Error retrieving profile:', error);
+    });
+
+
+    let backgroundImage = new Image();
+
+    // Récupérer les métadonnées de l'utilisateur depuis le serveur
+    fetch('/getNub', {
+        method: 'POST',
+        headers: {
+            'Authorization': `${jwtToken}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            if (response.status === 204) {
+                // Aucune donnée n'est présente, vous pouvez gérer cela comme nécessaire
+                console.log('No nub selected.');
+                return null; // Ou toute autre action que vous souhaitez prendre
+            } else {
+                // Il y a des données dans la réponse, vous pouvez la traiter comme d'habitude
+                return response.json();
+            }
+        } else {
+            //throw new Error('Error retrieving metadata');
+
+            // On enlève l'image du nub sur le petit canvas
+            backgroundImage.src = './img/nub/null.png';
+
+            document.getElementById('secondaryNubCanvas').getContext('2d').clearRect(0, 0, 200, 200);
+            // Attendre que l'image soit chargée
+            backgroundImage.onload = function() {
+                // Dessiner l'image de fond sur le canvas
+                document.getElementById('secondaryNubCanvas').getContext('2d').drawImage(backgroundImage, 0, 0, 200, 200); 
+            };
+            if (document.getElementById('metadataNubContainer')) {
+                const metadataContainer = document.getElementById('metadataNubContainer');
+
+                metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+                metadataContainer.textContent = 'No nub selected. The default Pacman will be used in-game.';
+                
+            }
+            return null;
+        }
+    })
+    .then(async metadata => {
+        // Mettre à jour l'interface utilisateur avec les métadonnées récupérées
+        // Par exemple, remplacer le bouton Save Metadata par les métadonnées
+        if (document.getElementById('metadataNubContainer')) {
+            const metadataContainer = document.getElementById('metadataNubContainer');
+            const metadataCard = document.getElementById('metadataCard');
+
+            if (metadata && metadata.length > 0 && metadata[0].nub_id != null) {
+
+                // Récupération des metadata via l'IPFS
+                const ipfsData = await fetchData(pacArmyIpfs+metadata[0].nub_id);
+        
+                if (ipfsData) {
+                    metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                    
+                    const beginMessage = document.createElement('p');
+                    beginMessage.textContent = 'The metadata you registered:';
+                    metadataContainer.appendChild(beginMessage);
+                
+                    const table = document.createElement('table');
+                    table.classList.add('table', 'table-bordered', 'table-striped');
+                    const tbody = document.createElement('tbody');
+                
+                    const metadataRows = [
+                        { label: 'Name', value: ipfsData.name },
+                        { label: 'Description', value: ipfsData.description },
+                        { label: 'Attributes' },
+                    ];
+                
+                    // Ajouter les lignes de base (Name et Description)
+                    metadataRows.forEach(rowData => {
+                        const row = document.createElement('tr');
+                        const labelCell = document.createElement('td');
+                        const valueCell = document.createElement('td');
+                
+                        labelCell.style.color = '#000000';
+                        valueCell.style.color = '#000000';
+                
+                        labelCell.textContent = rowData.label;
+                        valueCell.textContent = rowData.value;
+                        row.appendChild(labelCell);
+                        row.appendChild(valueCell);
+                        tbody.appendChild(row);
+                    });
+                
+                    // Ajouter les attributs au tableau
+                    ipfsData.attributes.forEach(attribute => {
+                        const row = document.createElement('tr');
+                        const labelCell = document.createElement('td');
+                        const valueCell = document.createElement('td');
+                
+                        labelCell.style.color = '#000000';
+                        valueCell.style.color = '#000000';
+                
+                        labelCell.textContent = attribute.trait_type; // Nom du trait 
+                        valueCell.textContent = attribute.value !== null ? attribute.value : 'N/A'; // Valeur ou 'N/A' si null
+                
+                        row.appendChild(labelCell);
+                        row.appendChild(valueCell);
+                        tbody.appendChild(row);
+                    });
+                
+                    table.appendChild(tbody);
+                    metadataContainer.appendChild(table);
+                }
+                if (document.getElementById('secondaryNubCanvas')) {
+                    backgroundImage.src = config.pacArmyImgIpfs + metadata[0].nub_id +'.png';
+                    document.getElementById('secondaryNubCanvas').getContext('2d').clearRect(0, 0, 200, 200);
+                    backgroundImage.onload = function() {
+                        // Dessiner l'image de fond sur le canvas
+                        document.getElementById('secondaryNubCanvas').getContext('2d').drawImage(backgroundImage, 0, 0, 200, 200); 
+                    };
+                }
+                return metadata[0].nub_id;
+
+            } else {
+                if (document.getElementById('secondaryNubCanvas')) {
+                    backgroundImage.src = './img/nub/null.png';
+                    document.getElementById('secondaryNubCanvas').getContext('2d').clearRect(0, 0, 200, 200);
+                    backgroundImage.onload = function() {
+                        // Dessiner l'image de fond sur le canvas
+                        document.getElementById('secondaryNubCanvas').getContext('2d').drawImage(backgroundImage, 0, 0, 200, 200); 
+                    };
+                }
+                if (document.getElementById('metadataNubContainer')) {
+                    const metadataContainer = document.getElementById('metadataNubContainer');
+    
+                    metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                    metadataContainer.textContent = 'No nub selected. The default Pacman will be used in-game.';
+                }
+                return null;
+            }
+
+        } else {
+            // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+
+            if (document.getElementById('secondaryNubCanvas')) {
+                // On enlève l'image du nub sur le petit canvas
+                backgroundImage.src = './img/nub/null.png';
+
+                //console.log("background img:", backgroundImage.src);
+                document.getElementById('secondaryNubCanvas').getContext('2d').clearRect(0, 0, 200, 200);
+                backgroundImage.onload = function() {
+                    // Dessiner l'image de fond sur le canvas
+                    document.getElementById('secondaryNubCanvas').getContext('2d').drawImage(backgroundImage, 0, 0, 200, 200); 
+                };
+
+            }
+            if (document.getElementById('metadataNubContainer')) {
+                const metadataContainer = document.getElementById('metadataNubContainer');
+
+                metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                metadataContainer.textContent = 'No nub selected. The default Pacman will be used in-game.';
+            }
+
+            return null;
+        }
+
+    })
+    .catch(error => {
+        console.error('Error retrieving nub:', error);
+    });
+}
+
+
+async function fetchData(url) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP ! Statut : ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données :', error);
+      return null; // En cas d'erreur, retournez null ou gérez l'erreur selon vos besoins
+    }
+  }
+  
+
+

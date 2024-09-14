@@ -241,6 +241,30 @@ app.get('/getLeaderboard', (req, res) => {
     }
 });
 
+// Route pour renvoyer les données du leaderboard pour un user
+app.post('/getUserLeaderboard', verifyJWT, (req, res) => {
+    try {
+        // Addresse de l'user
+        const address = req.userAddress;
+        // Vérifiez si l'adresse est fournie
+        if (!address) {
+            return res.status(400).send('Address not provided.');
+        }
+
+        // Charger les données du leaderboard (stockées dans leaderboardData par exemple)
+        const leaderboardUser = leaderboardData.userData.filter(user => user.address === address);
+
+        // Trouver l'index de l'utilisateur dans le leaderboard
+        const index = leaderboardData.userData.findIndex(user => user.address === address);
+
+        res.status(200).json({
+            leaderboardUser, rank : index + 1
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur lors de la récupération des données du leaderboard' });
+    }
+});
+
 // -----------------------
 
 
@@ -881,79 +905,6 @@ app.post('/increment-score', verifyJWT, (req, res) => {
     }
     // Retourner le nouveau score
     res.json({ score: scores[address] });
-});
-
-
-
-
-app.post('/profile', verifyJWT, async (req, res) => {
-    const address = req.userAddress;
-    if (!address) {
-        return res.status(400).send('User not connected.');
-    }
-
-    const client = await pool.connect();
-    try {
-        // Récupération du nom d'utilisateur
-        const result = await client.query(
-            'SELECT username FROM users WHERE wallet_address = $1',
-            [address]
-        );
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'User not found.' });
-        }
-
-        // Récupération des points et du classement
-        const result2 = await client.query(
-            `WITH ranking_data AS (
-                SELECT
-                    wallet_address,
-                    username,
-                    SUM(points) AS total_points,
-                    RANK() OVER (ORDER BY SUM(points) DESC) AS ranking
-                FROM
-                    points_users_daily
-                GROUP BY
-                    wallet_address, username
-            )
-            SELECT
-                total_points,
-                ranking
-            FROM
-                ranking_data
-            WHERE 
-                wallet_address = $1
-            ORDER BY
-                total_points DESC`,
-            [address]
-        );
-        
-
-        // Vérification si l'utilisateur a des points
-        let points = 0;
-        let ranking = null;
-
-        if (result2.rows.length > 0) {
-            points = result2.rows[0].total_points;
-            ranking = result2.rows[0].ranking;
-        }
-
-        // Réponse avec le nom d'utilisateur, les points et le classement
-        res.json({
-            username: result.rows[0].username,
-            points: points,
-            rank: ranking
-        });
-
-    } catch (error) {
-        console.error('Erreur lors de la vérification de l\'utilisateur:', error);
-        res.status(500).json({ error: 'Erreur lors de la vérification de l\'utilisateur.' });
-    } finally {
-        if (client) {
-            client.release(); // Libérer le client après utilisation
-        }
-    }
 });
 
 // Route pour sauvegarder l'id du Nub possédé dans la base de données
