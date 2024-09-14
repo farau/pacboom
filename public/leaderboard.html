@@ -171,14 +171,14 @@
                     });
 
                     // Afficher le temps écoulé depuis la dernière mise à jour
-                    if (data.date_leaderboard) {
+                    if (data.last_refresh) {
                         const refreshElement = document.getElementById(refreshElementId);
                         const lastRefreshDate = new Date(data.date_leaderboard); // Convertir la date ISO en objet Date
                         const now = new Date();
                         const minutesElapsed = Math.floor((now - lastRefreshDate) / (1000 * 60)); // Convertir millisecondes en minutes
                         refreshElement.textContent = `Last update : ${minutesElapsed} minute(s) ago`;
                     } else {
-                        // Si date_leaderboard n'est pas défini, afficher un message par défaut
+                        // Si last_refresh n'est pas défini, afficher un message par défaut
                         const refreshElement = document.getElementById(refreshElementId);
                         refreshElement.textContent = 'No data available';
                     }
