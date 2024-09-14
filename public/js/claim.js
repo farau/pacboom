@@ -36,7 +36,7 @@ transactionButton.addEventListener("click", async () => {
         ], signer);
 
         // Montant à approuver (1 BLAST)
-        const amountToApprove = ethers.constants.MaxUint256; // Assurez-vous que c'est le bon nombre de décimales
+        const amountToApprove = ethers.utils.parseUnits("1.0", 18); // Montant de 1 BLAST avec 18 décimales
 
         // Vérifier combien de BLAST ont déjà été approuvés
         const allowance = await tokenContract.allowance(userAddress, contract.address);
@@ -45,7 +45,8 @@ transactionButton.addEventListener("click", async () => {
             //console.log("Pas besoin d'approuver, l'allocation est suffisante.");
         } else {
             //console.log("L'allocation n'est pas suffisante. Approve nécessaire.");
-            // Approuver la dépense des tokens supplémentaires
+            // Approuver la dépense des tokens supplémentairesconst 
+            amountToApprove = ethers.constants.MaxUint256; // Assurez-vous que c'est le bon nombre de décimales
             const approvalTx = await tokenContract.approve(contract.address, amountToApprove);
             await approvalTx.wait(); // Attendre la confirmation de l'approbation
         }
