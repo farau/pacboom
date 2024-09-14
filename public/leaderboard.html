@@ -84,6 +84,7 @@
         <h1 class="text-center">PacBoom leaderboard</h1>
         <div class="text-center">
             <p>The following leaderboard will be used to distribute Blast Gold at the end of each epoch.</p>
+            <p>The leaderboard is updated every 15 minutes.</p>
             <p>Points will be reinitialized at each new epoch.</p>
         </div>
 
@@ -148,11 +149,42 @@
         });
     </script>
     <script>
-        let currentPageDaily = 1;
+        
+        function loadLeaderboard(elementId, url, page, pageSize, prevButtonId, nextButtonId) {
+            // Appel à l'API avec pagination
+            fetch(`${url}?page=${page}&pageSize=${pageSize}`)
+                .then(response => response.json())
+                .then(data => {
+                    const leaderboardBody = document.getElementById(elementId);
+                    leaderboardBody.innerHTML = '';  // Réinitialiser le contenu du tableau
+
+                    // Afficher les données du leaderboard dans le tableau
+                    data.leaderboard.forEach((item, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${(page - 1) * pageSize + index + 1}</td>
+                            <td>${item.address.substring(0, 4)}...${item.address.substring(item.address.length - 4)}</td>
+                            <td>${item.username || ''}</td>
+                            <td>${item.points}</td>
+                        `;
+                        leaderboardBody.appendChild(row);
+                    });
+
+                    // Activer/désactiver les boutons de pagination
+                    document.getElementById(prevButtonId).disabled = (page === 1);
+                    document.getElementById(nextButtonId).disabled = (data.leaderboard.length < pageSize);
+                })
+                .catch(error => console.error('Erreur lors du chargement des données du leaderboard :', error));
+        }
+
+        // Variables pour la pagination
         let currentPageOverall = 1;
-        const pageSize = 10;
+        const pageSize = 10;  // Taille de la page
 
+        // Charger les données initiales du leaderboard
+        loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
 
+        // Gérer la navigation dans le leaderboard (pagination)
         document.getElementById('prevPageOverall').addEventListener('click', () => {
             if (currentPageOverall > 1) {
                 currentPageOverall--;
@@ -165,32 +197,6 @@
             loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
         });
 
-        function loadLeaderboard(elementId, url, page, pageSize, prevButtonId, nextButtonId) {
-            fetch(`${url}?page=${page}&pageSize=${pageSize}`)
-                .then(response => response.json())
-                .then(data => {
-                    const leaderboardBody = document.getElementById(elementId);
-                    leaderboardBody.innerHTML = '';
-                    data.leaderboard.forEach((item, index) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${(page - 1) * pageSize + index + 1}</td>
-                            <td>${item.wallet_address.substring(0, 4)}...${item.wallet_address.substring(item.wallet_address.length - 4)}</td>
-                            <td>${item.username || ''}</td>
-                            <td>${item.total_points}</td>
-                        `;
-                        leaderboardBody.appendChild(row);
-                    });
-
-                    // Disable or enable buttons based on page number and data length
-                    document.getElementById(prevButtonId).disabled = (page === 1);
-                    document.getElementById(nextButtonId).disabled = (data.length < pageSize);
-                })
-                .catch(error => console.error('Erreur lors du chargement des données du leaderboard :', error));
-        }
-
-        // Load initial data
-        loadLeaderboard('leaderboardBody', '/getLeaderboard', currentPageOverall, pageSize, 'prevPageOverall', 'nextPageOverall');
     </script>
 </body>
 </html>

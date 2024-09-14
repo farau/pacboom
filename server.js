@@ -14,6 +14,7 @@ const { ethers, Wallet } = require('ethers');
 
 require('dotenv').config();
 
+
 // Middleware pour parser le corps de la requête en JSON
 app.use(express.json());
 
@@ -188,6 +189,58 @@ async function createTables() {
 
 // Appel de la fonction pour créer les tables au démarrage du serveur
 createTables();
+
+
+// LEADERBOARD -----------
+const leaderboard = require("./leaderboard-blast.js"); // Module contenant getUserData
+const fs = require('fs');
+
+let leaderboardData = [];
+
+// Fonction pour sauvegarder le leaderboard dans un fichier JSON
+async function saveLeaderboardToFile() {
+    try {
+        const userData = await leaderboard.getUserData();  // Récupérer les données des utilisateurs
+        leaderboardData = userData;  // Mettre à jour la variable globale
+
+        // Sauvegarder les données dans un fichier JSON
+        fs.writeFileSync('leaderboard.json', JSON.stringify(userData, null, 2), 'utf8');
+        console.log('Leaderboard mis à jour et sauvegardé dans leaderboard.json');
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du leaderboard:', error);
+    }
+}
+
+// Appeler immédiatement la fonction pour calculer et stocker le leaderboard au démarrage du serveur
+saveLeaderboardToFile();
+
+// Mettre à jour le leaderboard toutes les 15 minutes
+setInterval(saveLeaderboardToFile, 15 * 60 * 1000);
+
+// Route pour renvoyer les données du leaderboard
+app.get('/getLeaderboard', (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;  // Page actuelle (par défaut 1)
+        const pageSize = parseInt(req.query.pageSize) || 10;  // Taille de la page (par défaut 10)
+
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = page * pageSize;
+
+        // Charger les données du leaderboard (stockées dans leaderboardData par exemple)
+        const leaderboard = leaderboardData.slice(startIndex, endIndex);  // Extraire la portion paginée
+
+        res.status(200).json({
+            leaderboard,  // Renvoyer la portion paginée
+            page,
+            pageSize
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Erreur lors de la récupération des données du leaderboard' });
+    }
+});
+
+// -----------------------
+
 
 // Middleware pour servir les fichiers statiques (HTML, CSS, JavaScript, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -900,70 +953,6 @@ app.post('/profile', verifyJWT, async (req, res) => {
         }
     }
 });
-
-
-
-// Route pour sauvegarder le score des users dans la base de données
-app.post('/add-pacboom-points', verifyJWT, async (req, res) => {
-
-    // Commencez une nouvelle transaction
-    const client = await pool.connect();
-
-    try {
-        const points_ = req.body.points;
-        const points = parseInt(points_.hex, 16);
-        
-        // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
-        const address = req.userAddress;
-        // Vérifiez si l'adresse est fournie
-        if (!address) {
-            return res.status(400).send('Address not provided.');
-        }
-
-
-        // Vérifiez si le nom d'utilisateur est fourni dans la base de données
-        const usernameQuery = await client.query(`
-            SELECT username FROM users
-            WHERE wallet_address = $1; 
-        `, [address]);
-
-        const username = usernameQuery ? usernameQuery.rows[0].username : null;
-        const user_id_query = username ? await client.query(`
-            SELECT user_id FROM user_access_tokens
-            WHERE username = $1; 
-        `, [username]) : null;
-
-        const user_id = user_id_query ? user_id_query.rows[0].user_id : null;
-
-        // Commencez la transaction
-        await client.query('BEGIN');
-
-        // Insérez les points par user pour chaque transactions
-        const insertQuery = await client.query(`
-            INSERT INTO points_users_daily (wallet_address, user_id, username, points, date) 
-            VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP);`
-        , [address, user_id, username, `${points}`]);
-
-        
-        // Validez la transaction
-        await client.query('COMMIT');
-
-        // Vérifiez le succès de la mise à jour
-        if (insertQuery.rowCount > 0) {
-            res.status(201).json(insertQuery.rows);
-        } else {
-            res.status(500).send('Internal Server Error');
-        }
-    } catch (error) {
-        console.error('Error saving points to database:', error);
-        res.status(500).send('Internal Server Error');
-    } finally {
-        if (client) {
-            client.release(); // Libérer le client après utilisation
-        }
-    }
-});
-
 
 // Route pour sauvegarder l'id du Nub possédé dans la base de données
 app.post('/saveNub', verifyJWT, async (req, res) => {
