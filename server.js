@@ -245,7 +245,7 @@ app.get('/getLeaderboard', (req, res) => {
 app.post('/getUserLeaderboard', verifyJWT, (req, res) => {
     try {
         // Addresse de l'user
-        const address = req.userAddress;
+        const address = req.userAddress.toLowerCase();
         // Vérifiez si l'adresse est fournie
         if (!address) {
             return res.status(400).send('Address not provided.');
@@ -399,7 +399,7 @@ app.post('/getMetadata', async (req, res) => {
 // Route pour créer et renvoyer un JWT
 app.post('/create-jwt', (req, res) => {
     // Dans cet exemple, nous supposons que vous avez déjà récupéré l'adresse MetaMask de l'utilisateur
-    const userAddress = req.body.userAddress;
+    const userAddress = req.body.userAddress.toLowerCase();
 
     // Remplacez 'votre_clé_secrète' par votre propre clé secrète sécurisée
     const secretKey = process.env.SECRET_KEY;
@@ -439,7 +439,7 @@ app.post('/saveScore', verifyJWT, async (req, res) => {
     const client = await pool.connect();
     try {
         const { score } = req.body;
-        const address = req.userAddress;
+        const address = req.userAddress.toLowerCase();
 
         // Vérifiez si l'adresse est fournie
         if (!address) {
@@ -451,7 +451,7 @@ app.post('/saveScore', verifyJWT, async (req, res) => {
             SELECT u.username, ua.user_id
             FROM users u
             JOIN user_access_tokens ua ON u.username = ua.username
-            WHERE u.wallet_address = $1;
+            WHERE u.wallet_address = LOWER($1);
         `, [address]);
 
         if (userQuery.rowCount === 0) {
@@ -467,7 +467,7 @@ app.post('/saveScore', verifyJWT, async (req, res) => {
         const updateResult = await client.query(`
             UPDATE users
             SET score = GREATEST($1, score)
-            WHERE wallet_address = $2
+            WHERE wallet_address = LOWER($2)
             RETURNING *;
         `, [score, address]);
 
@@ -511,105 +511,10 @@ app.post('/saveScore', verifyJWT, async (req, res) => {
 });
 
 
-// Backend route to fetch leaderboard data
-app.get('/getLeaderboard', async (req, res) => {
-    const client = await pool.connect();
-    try {
-        let page = parseInt(req.query.page) || 1;
-        let pageSize = parseInt(req.query.pageSize) || 10;
-
-        // Assurer que page et pageSize sont des valeurs valides
-        if (page <= 0) page = 1;
-        if (pageSize <= 0) pageSize = 10;
-
-        const offset = (page - 1) * pageSize;
-
-        // Requête SQL pour récupérer les données du classement
-        const query = `
-            SELECT
-                wallet_address,
-                username,
-                SUM(points) AS total_points,
-                RANK() OVER (ORDER BY SUM(points) DESC) AS ranking
-            FROM
-                points_users_daily
-            GROUP BY
-                wallet_address, username
-            ORDER BY
-                total_points DESC
-            LIMIT $1 OFFSET $2;
-        `;
-
-        const countQuery = `
-            SELECT COUNT(DISTINCT wallet_address) AS total_users
-            FROM points_users_daily;
-        `;
-
-        // Exécuter les deux requêtes (pour les données et pour le nombre total de résultats)
-        const [result, countResult] = await Promise.all([
-            client.query(query, [pageSize, offset]),
-            client.query(countQuery)
-        ]);
-
-        const leaderboardData = result.rows;
-        const totalUsers = countResult.rows[0].total_users;
-        const totalPages = Math.ceil(totalUsers / pageSize);
-
-        res.json({
-            leaderboard: leaderboardData,
-            totalUsers: totalUsers,
-            totalPages: totalPages,
-            currentPage: page
-        });
-
-    } catch (error) {
-        console.error('Erreur lors de la récupération des données du leaderboard :', error);
-        res.status(500).json({ error: 'Erreur interne du serveur' });
-    } finally {
-        if (client) {
-            client.release(); // Libérer le client après utilisation
-        }
-    }
-});
-
-
-
-// Backend route to fetch daily leaderboard data
-app.get('/getDailyLeaderboard', async (req, res) => {
-    const client = await pool.connect();
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const pageSize = parseInt(req.query.pageSize) || 10;
-        const offset = (page - 1) * pageSize;
-
-        const query = `
-            SELECT username, score
-            FROM score_users_daily
-            WHERE username IS NOT NULL
-            AND date = CURRENT_DATE
-            ORDER BY score DESC
-            LIMIT $1 OFFSET $2;
-        `;
-        const result = await client.query(query, [pageSize, offset]);
-
-        const leaderboardData = result.rows;
-        res.json(leaderboardData);
-    } catch (error) {
-        console.error('Erreur lors de la récupération des données du leaderboard :', error);
-        res.status(500).json({ error: 'Erreur interne du serveur' });
-    } finally {
-        if (client) {
-            client.release(); // Libérer le client après utilisation
-        }
-    }
-});
-
-
-
 // Route POST pour enregistrer les données utilisateur dans la table users
 app.post('/linkTwitter', verifyJWT, async (req, res) => {
     const handle = req.body.screen_name;
-    const address = req.body.address;
+    const address = req.body.address.toLowerCase();
 
     const client = await pool.connect();
     
@@ -644,7 +549,7 @@ app.post('/linkTwitter', verifyJWT, async (req, res) => {
             const updateUserQuery = `
                 UPDATE users
                 SET username = $1
-                WHERE wallet_address = $2
+                WHERE wallet_address = LOWER($2)
                 RETURNING id;
             `;
             const updateUserResult = await client.query(updateUserQuery, [handle, address]);
@@ -655,7 +560,7 @@ app.post('/linkTwitter', verifyJWT, async (req, res) => {
                 // Insérer un nouvel utilisateur avec l'ID incrémenté
                 const insertUserQuery = `
                     INSERT INTO users (id, wallet_address, username)
-                    VALUES ($1, $2, $3) RETURNING id;
+                    VALUES ($1, LOWER($2), $3) RETURNING id;
                 `;
                 usrId = await client.query(insertUserQuery, [currentUserId, address, handle]);
             } else {
@@ -753,7 +658,7 @@ app.get('/getFidelityboard', async (req, res) => {
 
 // Route pour vérifier les infos Twitter d'un user et les récupérer si ils existent
 app.get('/getTwitterInfos', verifyJWT, async (req, res) => {
-    const { address } = req.query;
+    const address = req.userAddress.toLowerCase();
 
     if (!address) {
         return res.status(400).send('Adresse manquante');
@@ -765,7 +670,7 @@ app.get('/getTwitterInfos', verifyJWT, async (req, res) => {
         const checkUserQuery = `
             SELECT user_access_tokens.username, avatarUrl FROM user_access_tokens 
             JOIN users ON users.id = user_access_tokens.user_wallet_id 
-            WHERE users.wallet_address = $1;
+            WHERE users.wallet_address = LOWER($1);
         `;
         const result = await client.query(checkUserQuery, [address]);
 
@@ -788,7 +693,7 @@ app.get('/getTwitterInfos', verifyJWT, async (req, res) => {
 
 
 app.post('/save-user', verifyJWT, async (req, res) => {
-    const { wallet_address } = req.body; // Obtenez l'adresse du portefeuille depuis le corps de la requête
+    const wallet_address = req.userAddress.toLowerCase(); // Obtenez l'adresse du portefeuille depuis le corps de la requête
     if (!wallet_address) {
         return res.status(400).json({ error: 'Adresse de portefeuille manquante.' });
     }
@@ -804,7 +709,7 @@ app.post('/save-user', verifyJWT, async (req, res) => {
 
         // Insérez le nouvel utilisateur avec l'ID incrémenté
         const insertUserQuery = `
-            INSERT INTO users (id, wallet_address) VALUES ($1, $2) ON CONFLICT (wallet_address) DO NOTHING RETURNING *`;
+            INSERT INTO users (id, wallet_address) VALUES ($1, LOWER($2)) ON CONFLICT (wallet_address) DO NOTHING RETURNING *`;
         const result = await client.query(insertUserQuery, [nextUserId, wallet_address]);
         
         if (result.rows.length === 0) {
@@ -832,7 +737,7 @@ app.post('/check-user', verifyJWT, async (req, res) => {
     }
     try {
         const result = await client.query(
-            'SELECT * FROM users WHERE wallet_address = $1',
+            'SELECT * FROM users WHERE wallet_address = LOWER($1)',
             [wallet_address]
         );
         if (result.rows.length > 0) {
@@ -863,21 +768,21 @@ const GhostType = {
 
 // Route pour initialiser le score à zéro pour un joueur donné
 app.post('/initialize-score', verifyJWT, (req, res) => {
-    const address = req.userAddress;
+    const address = req.userAddress.toLowerCase();
     scores[address] = 0;
     res.send({ score: scores[address] });
 });
 
 // Route pour récupérer le score d'un joueur donné
 app.get('/get-score', verifyJWT, (req, res) => {
-    const address = req.userAddress;
+    const address = req.userAddress.toLowerCase();
     const score = scores[address] || 0;
     res.send({ score });
 });
 
 // Route pour incrémenter le score d'un joueur
 app.post('/increment-score', verifyJWT, (req, res) => {
-    const address = req.userAddress;
+    const address = req.userAddress.toLowerCase();
     const typeMonster = req.body.monster;
 
     // Vérifier si le tokenId est présent dans la requête
@@ -917,7 +822,7 @@ app.post('/saveNub', verifyJWT, async (req, res) => {
         const { nub_id } = req.body;
         
         // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
-        const address = req.userAddress;
+        const address = req.userAddress.toLowerCase();
         // Vérifiez si l'adresse est fournie
         if (!address) {
             return res.status(400).send('Address not provided.');
@@ -927,7 +832,7 @@ app.post('/saveNub', verifyJWT, async (req, res) => {
         // Vérifiez si le nom d'utilisateur est fourni dans la base de données
         const usernameQuery = await client.query(`
             SELECT username FROM users
-            WHERE wallet_address = $1; 
+            WHERE wallet_address = LOWER($1); 
         `, [address]);
 
         // Commencez la transaction
@@ -937,7 +842,7 @@ app.post('/saveNub', verifyJWT, async (req, res) => {
         const updateQuery = `
             UPDATE users
             SET nub_id = $1
-            WHERE wallet_address = $2
+            WHERE wallet_address = LOWER($2)
             RETURNING *;
         `;
         const updateResult = await client.query(updateQuery, [nub_id, address]);
@@ -970,7 +875,7 @@ app.post('/getNub', verifyJWT, async (req, res) => {
 
     try {
         // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
-        const address = req.userAddress;
+        const address = req.userAddress.toLowerCase();
         // Vérifiez si l'adresse est fournie
         if (!address) {
             return res.status(400).send('Address not provided.');
@@ -1014,7 +919,7 @@ const signer = new Wallet(privateKey);
 app.post('/getSignature', verifyJWT, async (req, res) => {
     try {
         // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
-        const address = req.userAddress;
+        const address = req.userAddress.toLowerCase();
         const score = req.body.score;  // Supposons que le score soit passé dans le corps de la requête
 
         // Vérifiez si l'adresse est fournie

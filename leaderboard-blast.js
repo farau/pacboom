@@ -419,7 +419,7 @@ async function getUsers() {
         client = await pool.connect();
 
         // Exécutez la requête SQL pour récupérer les utilisateurs
-        const { rows: users } = await client.query('SELECT * FROM users');
+        const { rows: users } = await client.query('SELECT LOWER(wallet_address) AS wallet_address, username FROM users');
         return users;  // Retourne les utilisateurs
     } catch (err) {
         console.error('Erreur lors de la récupération des utilisateurs:', err);
