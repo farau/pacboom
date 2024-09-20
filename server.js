@@ -186,7 +186,7 @@ async function createTables() {
         CREATE TABLE IF NOT EXISTS user_access_tokens (
             id SERIAL PRIMARY KEY,
             username VARCHAR(50) UNIQUE,
-            user_id BIGINT UNIQUE NOT NULL,
+            user_id BIGINT UNIQUE,
             user_wallet_id INTEGER UNIQUE REFERENCES users(id),
             avatarUrl VARCHAR(250),
             metadata_set BOOLEAN DEFAULT FALSE,
