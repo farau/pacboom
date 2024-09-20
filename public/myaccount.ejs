@@ -8,6 +8,8 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="shortcut icon" href="./img/icon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="./css/style.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> <!-- Fonts awesome pour les socials-->
+    <link rel="manifest" href="./manifest.json"> <!-- Add logo for the mobile app-->
     <style>
         #saveButton {
             display: none;
@@ -28,7 +30,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top w-100">
         <div class="container">
-            <a class="navbar-brand" href="/index.html">
+            <a class="navbar-brand" href="/index">
                 <img src="img/logo.png" height="70" class="d-inline-block align-top" alt="Logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,19 +39,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Play</a>
+                        <a class="nav-link" href="index">Play</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="myaccount.html">My account</a>
+                        <a class="nav-link" href="myaccount">My account</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
+                        <a class="nav-link" href="about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pfpgenerator.html">PFP Generator</a>
+                        <a class="nav-link" href="pfpgenerator">PFP Generator</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                        <a class="nav-link" href="leaderboard">Leaderboard</a>
                     </li>
                     <!-- Twitter Login Button -->
                     <li class="nav-item d-sm-block d-lg-inline">
@@ -64,7 +66,15 @@
         </div>
     </nav>
 
-    
+    <!-- Affichage des messages flash s'ils existent -->
+    <div>
+        <% if (errorMessage) { %>
+            <div class="flash-error"><%= errorMessage %></div>
+        <% } %>
+        <% if (successMessage) { %>
+            <div class="flash-success"><%= successMessage %></div>
+        <% } %>
+    </div>
 
     <div id="networkModal" class="network-modal">
         <div class="network-modal-content">
@@ -92,6 +102,24 @@
         </div>
     </div>
     
+    <!-- Discord Modal -->
+    <div class="modal fade" id="discordAlreadyLinkedModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Modal header -->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title mx-auto">
+                        <img src="img/logo.png" height="70" class="img-fluid d-inline-block align-top" alt="Logo">
+                    </h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="text-center">This Discord account is already linked to another wallet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Background -->
     <div id="particles-js"></div>
 
@@ -154,15 +182,19 @@
                 <div class="col-sm-4">
                     <!-- Partie gauche -->
                     <p>&copy; 2024 PacBoom<br/>
-                    Logo design made by <a href="https://x.com/rodinh03">Rodinho</a></p>
+                    Logo by <a href="https://x.com/rodinh03">Rodinho</a></p>
                 </div>
                 <div class="col-sm-4 text-center">
                     <!-- Partie centrale avec la musique et le texte -->
-                    <p><a href="https://www.youtube.com/watch?v=XsYc9Xv6oMY">Music by Multiversal Music</a></p>
-                    <audio controls autoplay loop>
-                        <source src="./sound/Pac-Man Remix REMASTERED.mp3" type="audio/mp3">
-                        Your browser doesn't support audio
-                    </audio>
+                    <a href="https://t.me/+wPZIcMLFQxBkNWRk" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-telegram" style="font-size: 36px; color: #ffffff; margin: 0 10px;"></i>
+                    </a>
+                    <a href="https://discord.gg/cXBe9u7vmD" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-discord" style="font-size: 36px; color: #ffffff; margin: 0 10px;"></i>
+                    </a>
+                    <a href="https://x.com/pacboom_" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-twitter" style="font-size: 36px; color: #ffffff; margin: 0 10px;"></i>
+                    </a>
                 </div>
                 <div class="col-sm-4">
                     <!-- Partie droite avec le logo -->
@@ -174,20 +206,15 @@
         </div>
     </footer>
 
-    <script>
-        function getCookie(name) {
-            const cookieValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
-            return cookieValue ? cookieValue[2] : null;
-        }
-
-    </script>
-
 
     <script type="module" src="./js/ethers-5.2.umd.min.js"></script>
     <script src="./js/config.js"></script> <!-- Import pacman game module -->
     <script type="module" src="./js/metamask.js"></script> <!-- Import Metamask js -->
+    <script type="module" src="./js/discord.js"></script> <!-- Import discord js -->
     <script type="module" src="./js/nub.js"></script> <!-- Import Nub module js -->
     <script type="module" src="./js/twitter.js"></script> <!-- Import twitter js -->
+    <script type="module" src="./js/flash.js"></script> <!-- Import flash js -->
+    
     <!-- Load jQuery and Bootstrap JS -->
     <!-- Inclure Bootstrap JS (nécessaire pour les fonctionnalités Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

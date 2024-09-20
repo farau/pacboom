@@ -160,6 +160,39 @@ body {
 }
 
 
+/* Styles pour la modal Discord */
+#discordAlreadyLinkedModal {
+    display: none; /* Par défaut, la modale est cachée */
+    position: fixed; /* Positionnement fixe par rapport à la fenêtre du navigateur */
+    top: 50%; /* Position au centre de l'écran en haut */
+    left: 50%; /* Position au centre de l'écran à gauche */
+    transform: translate(-50%, -50%); /* Centrer la modale */
+    /*background-color: rgba(0, 0, 0, 0.7); /* Couleur de fond semi-transparente */
+    padding: 20px; /* Espacement intérieur de la modale */
+    border-radius: 10px; /* Coins arrondis pour la modale */
+}
+
+#discordAlreadyLinkedModal .modal-content {
+    border: 2px solid #ddd; /* Bordure grise */
+    border-radius: 10px; /* Coins arrondis */
+    color: #fff; /* Texte blanc */
+}
+
+#discordAlreadyLinkedModal .modal-header {
+    border-bottom: 1px solid #fff; /* Bordure grise en bas de l'en-tête */
+    background-color: #050000; /* Couleur de fond noir */
+}
+
+#discordAlreadyLinkedModal .modal-title {
+    color: #d0d0d0; /* Couleur du titre */
+}
+
+#discordAlreadyLinkedModal .modal-body {
+    padding: 20px;
+    background-color: #050000; /* Couleur de fond noir */
+}
+
+
 
 /* Styles pour le bouton START */
 #startGame {
@@ -354,7 +387,7 @@ body {
 }
 
 footer {
-    background-color: #000;
+    background-color: hsl(0, 0%, 0%);
     color: #fff; /* Couleur du texte */
     padding: 20px 0; /* Espacement intérieur du footer */
     z-index: 1;
@@ -380,4 +413,68 @@ footer {
 }
 #introductionVideo {
     pointer-events: none;
+}
+
+/* Style pour les messages d'erreur */
+.flash-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    max-width: 400px; /* Limite la largeur du message */
+    margin: 20px auto; /* Centre horizontalement et ajoute de l'espace en haut/bas */
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center; /* Centre le texte à l'intérieur */
+}
+
+/* Style pour les messages de succès */
+.flash-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    max-width: 400px; /* Limite la largeur du message */
+    margin: 20px auto; /* Centre horizontalement et ajoute de l'espace en haut/bas */
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center; /* Centre le texte à l'intérieur */
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.flash-error, .flash-success {
+    animation: fadeOut 1s ease-out forwards;
+    animation-delay: 4s; /* Le message reste visible 4s, puis s'efface en 1s */
+}
+
+/* Style pour centrer les messages flash */
+.flash-message {
+    max-width: 400px; /* Limite la largeur du message */
+    margin: 20px auto; /* Centre horizontalement et ajoute de l'espace en haut/bas */
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center; /* Centre le texte à l'intérieur */
+}
+
+footer a {
+    display: inline-block; /* Pour s'assurer que l'icône prend seulement son espace */
+    text-decoration: none; /* Enlève le soulignement */
+    outline: none; /* Enlève l'encadrement de focus sur les navigateurs */
+}
+
+footer a:hover, 
+footer a:focus, 
+footer a:active {
+    color: inherit; /* Garde la couleur d'origine */
+    outline: none; /* Enlève le contour de focus */
+    box-shadow: none; /* Enlève la surbrillance bleue */
+    background: transparent; /* Assure qu'il n'y a pas de fond sur hover */
 }

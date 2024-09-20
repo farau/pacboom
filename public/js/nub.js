@@ -1,1 +1,406 @@
-const a0_0x2ea947=a0_0x3d5d;(function(_0x3bbdf8,_0x4f35e6){const _0x12e9e7=a0_0x3d5d,_0x45f769=_0x3bbdf8();while(!![]){try{const _0x194c45=parseInt(_0x12e9e7(0x139))/0x1+parseInt(_0x12e9e7(0x12a))/0x2+-parseInt(_0x12e9e7(0x132))/0x3+parseInt(_0x12e9e7(0x156))/0x4+-parseInt(_0x12e9e7(0x11c))/0x5*(parseInt(_0x12e9e7(0x131))/0x6)+-parseInt(_0x12e9e7(0x125))/0x7*(parseInt(_0x12e9e7(0x149))/0x8)+parseInt(_0x12e9e7(0x13c))/0x9*(parseInt(_0x12e9e7(0x136))/0xa);if(_0x194c45===_0x4f35e6)break;else _0x45f769['push'](_0x45f769['shift']());}catch(_0x150fdb){_0x45f769['push'](_0x45f769['shift']());}}}(a0_0x1a87,0x5ce0c));import{checkIfUserConnected,nubOwned,updateCanvasBasedOnConnection,showSaveMetaDataButton}from'./metamask.js';let nubCanvas,ctx,nubSelectedcanvas,ctx2;const pacArmyIpfs=config[a0_0x2ea947(0x123)];function a0_0x1a87(){const _0x76fee=['Erreur\x20lors\x20de\x20la\x20récupération\x20des\x20données\x20:','nub_id','.png','2736050EQJztg','description','Description','415307zgtqnw','pacArmyImgIpfs','saveButton','9aeTeSs','metadataNubContainer','drawImage','</span>','leaderboardUser','No\x20nub\x20selected.\x20The\x20default\x20Pacman\x20will\x20be\x20used\x20in-game.','name','click','color','json','onload','N/A','addEventListener','163192EcbrXb','Soon','clearRect','saveErrorMessage','Error\x20retrieving\x20profile:','table-striped','getContext','add','forEach','error','Unlink\x20X','attributes','getElementById','2369700lyWgRB','innerHTML','successMessage','#000000','stringify','catch','application/json','POST','textContent','DOMContentLoaded','table','tbody','profileContainer','trait_type','./img/nub/null.png','nubCanvas','classList','createElement','Nub\x20Metadata\x20saved\x20into\x20database','src','status','appendChild','secondaryNubCanvas','/getNub','<span\x20style=\x22color:\x20blue;\x22>PacBoom\x20points</span>','width','log','style','<span\x20style=\x22color:\x20blue;\x22>Rank</span>','getItem','rank','Please\x20login\x20to\x20see\x20your\x20profile.','X\x20handle','<span\x20style=\x22color:\x20blue;\x22>','username','Erreur\x20serveur','1300705fLMsHt','resolve','value','Discord\x20handle','then','/saveNub','Name','pacArmyIpfs','points','21OVfmTJ','No\x20nub\x20selected.','No\x20profile\x20found.','/getUserLeaderboard','table-bordered','13804KbwZVO','height','This\x20nub\x20has\x20been\x20selected\x20!','Erreur\x20HTTP\x20!\x20Statut\x20:\x20','label','profileCard','reload','6dTPzxM','1759419reBAkD'];a0_0x1a87=function(){return _0x76fee;};return a0_0x1a87();}document[a0_0x2ea947(0x155)](a0_0x2ea947(0x107))&&(nubCanvas=document[a0_0x2ea947(0x155)](a0_0x2ea947(0x107)),ctx=nubCanvas['getContext']('2d')!=null?nubCanvas[a0_0x2ea947(0x14f)]('2d'):null);function a0_0x3d5d(_0x47a3da,_0x1eac97){const _0x1a87d5=a0_0x1a87();return a0_0x3d5d=function(_0x3d5d50,_0x4637e4){_0x3d5d50=_0x3d5d50-0xfe;let _0x79b9df=_0x1a87d5[_0x3d5d50];return _0x79b9df;},a0_0x3d5d(_0x47a3da,_0x1eac97);}document[a0_0x2ea947(0x155)]('secondaryNubCanvas')&&(nubSelectedcanvas=document['getElementById'](a0_0x2ea947(0x10e)),ctx2=nubSelectedcanvas[a0_0x2ea947(0x14f)]('2d')!=null?nubSelectedcanvas['getContext']('2d'):null);document[a0_0x2ea947(0x148)](a0_0x2ea947(0x101),_0x27d3d3=>{const _0x1b1af4=a0_0x2ea947;document[_0x1b1af4(0x155)](_0x1b1af4(0x107))&&(ctx[_0x1b1af4(0x14b)](0x0,0x0,nubCanvas[_0x1b1af4(0x111)],nubCanvas[_0x1b1af4(0x12b)]),updateCanvasBasedOnConnection());});if(document[a0_0x2ea947(0x155)](a0_0x2ea947(0x13b))){const saveButton=document[a0_0x2ea947(0x155)](a0_0x2ea947(0x13b));saveButton[a0_0x2ea947(0x148)](a0_0x2ea947(0x143),()=>{saveMetadataNub();});}function saveMetadataNub(){const _0x543238=a0_0x2ea947,_0x577f18=localStorage['getItem']('jwtToken'),_0x50aee6=document[_0x543238(0x155)](_0x543238(0x14c)),_0x39376e=document[_0x543238(0x155)](_0x543238(0x158));_0x39376e['textContent']='';const _0x407047=showSaveMetaDataButton(),_0x433b33=_0x407047==null?null:parseInt(_0x407047['toString'](),0xa);fetch(_0x543238(0x121),{'method':'POST','headers':{'Authorization':''+_0x577f18,'Content-Type':_0x543238(0xfe)},'body':JSON[_0x543238(0x15a)]({'nub_id':_0x433b33})})['then'](_0x2c5f41=>{const _0x311cd4=_0x543238;if(_0x2c5f41['ok'])return _0x2c5f41[_0x311cd4(0x145)]();else{if(_0x2c5f41[_0x311cd4(0x10c)]===0x1f4)return Promise[_0x311cd4(0x11d)]({'nub_id_int':_0x433b33});else throw new Error(_0x311cd4(0x11b));}})[_0x543238(0x120)](_0x2203f9=>{const _0x2b8b68=_0x543238;console[_0x2b8b68(0x112)](_0x2b8b68(0x10a),_0x433b33),_0x39376e['textContent']=_0x2b8b68(0x12c),location[_0x2b8b68(0x130)]();})['catch'](_0x544125=>{const _0x17778a=_0x543238;console[_0x17778a(0x152)]('Error\x20during\x20saving\x20of\x20nub\x20metadata\x20!',_0x544125),_0x50aee6[_0x17778a(0x100)]=_0x544125;});}export async function getMetadataNub(){const _0x1f8eb7=a0_0x2ea947,_0x2520f4=localStorage[_0x1f8eb7(0x115)]('jwtToken');fetch(_0x1f8eb7(0x128),{'method':_0x1f8eb7(0xff),'headers':{'Authorization':''+_0x2520f4,'Content-Type':_0x1f8eb7(0xfe)}})['then'](_0x24f239=>{const _0xbfeace=_0x1f8eb7;if(_0x24f239['ok'])return _0x24f239[_0xbfeace(0x10c)]===0xcc?(console[_0xbfeace(0x112)](_0xbfeace(0x127)),null):_0x24f239[_0xbfeace(0x145)]();else{if(document[_0xbfeace(0x155)](_0xbfeace(0x104))){const _0x2eea04=document[_0xbfeace(0x155)](_0xbfeace(0x104));_0x2eea04[_0xbfeace(0x157)]='',_0x2eea04['textContent']='Please\x20login\x20to\x20see\x20your\x20profile.';}return null;}})['then'](async _0x37d110=>{const _0x219808=_0x1f8eb7;if(document['getElementById'](_0x219808(0x104))){const _0x42341c=document[_0x219808(0x155)](_0x219808(0x104)),_0x3c9035=document[_0x219808(0x155)](_0x219808(0x12f));if(_0x37d110){_0x42341c[_0x219808(0x157)]='';const _0x1f3db3=document[_0x219808(0x109)]('p');_0x1f3db3[_0x219808(0x100)]='',_0x42341c[_0x219808(0x10d)](_0x1f3db3);const _0x48d51a=document[_0x219808(0x109)](_0x219808(0x102));_0x48d51a['classList'][_0x219808(0x150)](_0x219808(0x102),_0x219808(0x129),_0x219808(0x14e));const _0x2d6b31=document[_0x219808(0x109)](_0x219808(0x103)),_0x9d3d07=[{'label':_0x219808(0x118),'value':_0x37d110['leaderboardUser'][0x0]['username']},{'label':_0x219808(0x11f),'value':'Soon'},{'label':_0x219808(0x153),'value':'Soon'},{'label':'Unlink\x20Discord','value':_0x219808(0x14a)},{'label':'','value':null},{'label':_0x219808(0x114),'value':'<span\x20style=\x22color:\x20blue;\x22>'+_0x37d110[_0x219808(0x116)]+_0x219808(0x13f)},{'label':_0x219808(0x110),'value':_0x219808(0x119)+_0x37d110[_0x219808(0x140)][0x0][_0x219808(0x124)]+_0x219808(0x13f)}];return _0x9d3d07[_0x219808(0x151)](_0x467023=>{const _0x9fb206=_0x219808,_0x5ec0e3=document[_0x9fb206(0x109)]('tr'),_0x2f5292=document[_0x9fb206(0x109)]('td'),_0x4feeaa=document[_0x9fb206(0x109)]('td');_0x2f5292[_0x9fb206(0x113)][_0x9fb206(0x144)]=_0x9fb206(0x159),_0x4feeaa[_0x9fb206(0x113)][_0x9fb206(0x144)]='#000000',_0x2f5292[_0x9fb206(0x157)]=_0x467023[_0x9fb206(0x12e)],_0x4feeaa['innerHTML']=_0x467023['value'],_0x5ec0e3[_0x9fb206(0x10d)](_0x2f5292),_0x5ec0e3[_0x9fb206(0x10d)](_0x4feeaa),_0x2d6b31['appendChild'](_0x5ec0e3);}),_0x48d51a[_0x219808(0x10d)](_0x2d6b31),_0x42341c[_0x219808(0x10d)](_0x48d51a),_0x37d110[_0x219808(0x11a)];}else{if(document['getElementById'](_0x219808(0x104))){const _0x4742d3=document[_0x219808(0x155)](_0x219808(0x104));_0x4742d3[_0x219808(0x157)]='',_0x4742d3[_0x219808(0x100)]=_0x219808(0x117);}return null;}}else{if(document[_0x219808(0x155)]('profileContainer')){const _0x4d54f1=document['getElementById']('profileContainer');_0x4d54f1[_0x219808(0x157)]='',_0x4d54f1['textContent']=_0x219808(0x117);}return null;}})[_0x1f8eb7(0x15b)](_0x150b5f=>{const _0x2b520b=_0x1f8eb7;console[_0x2b520b(0x152)](_0x2b520b(0x14d),_0x150b5f);});let _0x17d597=new Image();fetch(_0x1f8eb7(0x10f),{'method':_0x1f8eb7(0xff),'headers':{'Authorization':''+_0x2520f4,'Content-Type':_0x1f8eb7(0xfe)}})[_0x1f8eb7(0x120)](_0x532ca7=>{const _0x5577c7=_0x1f8eb7;if(_0x532ca7['ok'])return _0x532ca7['status']===0xcc?(console[_0x5577c7(0x112)](_0x5577c7(0x126)),null):_0x532ca7[_0x5577c7(0x145)]();else{_0x17d597[_0x5577c7(0x10b)]=_0x5577c7(0x106),document[_0x5577c7(0x155)](_0x5577c7(0x10e))[_0x5577c7(0x14f)]('2d')[_0x5577c7(0x14b)](0x0,0x0,0xc8,0xc8),_0x17d597[_0x5577c7(0x146)]=function(){const _0x1ff6bf=_0x5577c7;document[_0x1ff6bf(0x155)](_0x1ff6bf(0x10e))['getContext']('2d')[_0x1ff6bf(0x13e)](_0x17d597,0x0,0x0,0xc8,0xc8);};if(document[_0x5577c7(0x155)](_0x5577c7(0x13d))){const _0x3665fe=document['getElementById'](_0x5577c7(0x13d));_0x3665fe[_0x5577c7(0x157)]='',_0x3665fe['textContent']=_0x5577c7(0x141);}return null;}})[_0x1f8eb7(0x120)](async _0x4a3bd5=>{const _0x48556e=_0x1f8eb7;if(document['getElementById']('metadataNubContainer')){const _0x13ba82=document[_0x48556e(0x155)](_0x48556e(0x13d)),_0x30ede9=document[_0x48556e(0x155)]('metadataCard');if(_0x4a3bd5&&_0x4a3bd5['length']>0x0&&_0x4a3bd5[0x0][_0x48556e(0x134)]!=null){const _0x14fd7d=await fetchData(pacArmyIpfs+_0x4a3bd5[0x0]['nub_id']);if(_0x14fd7d){_0x13ba82['innerHTML']='';const _0x4506fb=document[_0x48556e(0x109)]('p');_0x4506fb[_0x48556e(0x100)]='The\x20metadata\x20you\x20registered:',_0x13ba82[_0x48556e(0x10d)](_0x4506fb);const _0x16b295=document[_0x48556e(0x109)]('table');_0x16b295[_0x48556e(0x108)][_0x48556e(0x150)](_0x48556e(0x102),_0x48556e(0x129),_0x48556e(0x14e));const _0x348f9d=document['createElement'](_0x48556e(0x103)),_0x3a8c77=[{'label':_0x48556e(0x122),'value':_0x14fd7d[_0x48556e(0x142)]},{'label':_0x48556e(0x138),'value':_0x14fd7d[_0x48556e(0x137)]},{'label':'Attributes'}];_0x3a8c77[_0x48556e(0x151)](_0xb2edd0=>{const _0x441d88=_0x48556e,_0x183af1=document[_0x441d88(0x109)]('tr'),_0x333f90=document[_0x441d88(0x109)]('td'),_0x433d55=document[_0x441d88(0x109)]('td');_0x333f90[_0x441d88(0x113)][_0x441d88(0x144)]=_0x441d88(0x159),_0x433d55['style'][_0x441d88(0x144)]=_0x441d88(0x159),_0x333f90[_0x441d88(0x100)]=_0xb2edd0['label'],_0x433d55[_0x441d88(0x100)]=_0xb2edd0[_0x441d88(0x11e)],_0x183af1[_0x441d88(0x10d)](_0x333f90),_0x183af1[_0x441d88(0x10d)](_0x433d55),_0x348f9d[_0x441d88(0x10d)](_0x183af1);}),_0x14fd7d[_0x48556e(0x154)][_0x48556e(0x151)](_0x2c5dbf=>{const _0x548d81=_0x48556e,_0x536af6=document[_0x548d81(0x109)]('tr'),_0x537a47=document['createElement']('td'),_0x2e0d14=document[_0x548d81(0x109)]('td');_0x537a47['style'][_0x548d81(0x144)]=_0x548d81(0x159),_0x2e0d14[_0x548d81(0x113)][_0x548d81(0x144)]=_0x548d81(0x159),_0x537a47[_0x548d81(0x100)]=_0x2c5dbf[_0x548d81(0x105)],_0x2e0d14['textContent']=_0x2c5dbf[_0x548d81(0x11e)]!==null?_0x2c5dbf[_0x548d81(0x11e)]:_0x548d81(0x147),_0x536af6[_0x548d81(0x10d)](_0x537a47),_0x536af6[_0x548d81(0x10d)](_0x2e0d14),_0x348f9d[_0x548d81(0x10d)](_0x536af6);}),_0x16b295[_0x48556e(0x10d)](_0x348f9d),_0x13ba82[_0x48556e(0x10d)](_0x16b295);}return document[_0x48556e(0x155)](_0x48556e(0x10e))&&(_0x17d597['src']=config[_0x48556e(0x13a)]+_0x4a3bd5[0x0][_0x48556e(0x134)]+_0x48556e(0x135),document[_0x48556e(0x155)](_0x48556e(0x10e))[_0x48556e(0x14f)]('2d')['clearRect'](0x0,0x0,0xc8,0xc8),_0x17d597['onload']=function(){const _0x3e2a7c=_0x48556e;document[_0x3e2a7c(0x155)]('secondaryNubCanvas')['getContext']('2d')[_0x3e2a7c(0x13e)](_0x17d597,0x0,0x0,0xc8,0xc8);}),_0x4a3bd5[0x0][_0x48556e(0x134)];}else{document[_0x48556e(0x155)]('secondaryNubCanvas')&&(_0x17d597[_0x48556e(0x10b)]=_0x48556e(0x106),document[_0x48556e(0x155)]('secondaryNubCanvas')[_0x48556e(0x14f)]('2d')[_0x48556e(0x14b)](0x0,0x0,0xc8,0xc8),_0x17d597[_0x48556e(0x146)]=function(){const _0x52007e=_0x48556e;document[_0x52007e(0x155)](_0x52007e(0x10e))[_0x52007e(0x14f)]('2d')[_0x52007e(0x13e)](_0x17d597,0x0,0x0,0xc8,0xc8);});if(document[_0x48556e(0x155)]('metadataNubContainer')){const _0xfe0fbb=document['getElementById'](_0x48556e(0x13d));_0xfe0fbb['innerHTML']='',_0xfe0fbb[_0x48556e(0x100)]=_0x48556e(0x141);}return null;}}else{document[_0x48556e(0x155)](_0x48556e(0x10e))&&(_0x17d597[_0x48556e(0x10b)]=_0x48556e(0x106),document[_0x48556e(0x155)]('secondaryNubCanvas')[_0x48556e(0x14f)]('2d')[_0x48556e(0x14b)](0x0,0x0,0xc8,0xc8),_0x17d597[_0x48556e(0x146)]=function(){const _0x221ce8=_0x48556e;document[_0x221ce8(0x155)](_0x221ce8(0x10e))[_0x221ce8(0x14f)]('2d')[_0x221ce8(0x13e)](_0x17d597,0x0,0x0,0xc8,0xc8);});if(document[_0x48556e(0x155)](_0x48556e(0x13d))){const _0x2c6e60=document[_0x48556e(0x155)]('metadataNubContainer');_0x2c6e60[_0x48556e(0x157)]='',_0x2c6e60['textContent']=_0x48556e(0x141);}return null;}})['catch'](_0x1d4b3e=>{const _0x59cd3e=_0x1f8eb7;console[_0x59cd3e(0x152)]('Error\x20retrieving\x20nub:',_0x1d4b3e);});}async function fetchData(_0x19acd0){const _0x59679a=a0_0x2ea947;try{const _0x3e767a=await fetch(_0x19acd0);if(!_0x3e767a['ok'])throw new Error(_0x59679a(0x12d)+_0x3e767a[_0x59679a(0x10c)]);const _0x18243b=await _0x3e767a[_0x59679a(0x145)]();return _0x18243b;}catch(_0x44954b){return console['error'](_0x59679a(0x133),_0x44954b),null;}}
+import { checkIfUserConnected, nubOwned, updateCanvasBasedOnConnection, showSaveMetaDataButton } from "./metamask.js";
+import { getDiscordInfos } from "./discord.js";
+
+let nubCanvas;
+let ctx;
+let nubSelectedcanvas;
+let ctx2;
+
+// On récupère l'adresse IPFS du contrat de NFT PacArmy
+const pacArmyIpfs = config.pacArmyIpfs;
+
+
+if (document.getElementById('nubCanvas')) {
+    nubCanvas = document.getElementById('nubCanvas');
+    ctx = nubCanvas.getContext('2d') != null ? nubCanvas.getContext('2d') : null ;
+}
+
+if (document.getElementById('secondaryNubCanvas')) {
+    nubSelectedcanvas = document.getElementById('secondaryNubCanvas');
+    ctx2 = nubSelectedcanvas.getContext('2d') != null ? nubSelectedcanvas.getContext('2d') : null;
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {   
+    if (document.getElementById('nubCanvas')) {
+        ctx.clearRect(0, 0, nubCanvas.width, nubCanvas.height);
+        //On update le canvas en fonction de la connexion ou pas à chaque refresh de la page
+        updateCanvasBasedOnConnection();
+    }
+});
+
+if (document.getElementById('saveButton')) {
+
+    const saveButton = document.getElementById('saveButton');
+    // Ajouter un gestionnaire d'événements pour le clic sur le bouton
+    saveButton.addEventListener('click', () => {
+        // Quand on clique sur saveButton on peut enregistrer les metadata car l'user est logué
+        saveMetadataNub();
+    });
+}
+
+
+
+
+
+// Fonction pour gérer l'insertion du NUB en BDD
+function saveMetadataNub() {
+
+    const saveErrorMessage = document.getElementById('saveErrorMessage');
+    const successMessage = document.getElementById('successMessage');
+
+    // Message de succès
+    successMessage.textContent = '';
+
+    // On récupère nub_id courant 
+    const nub_id = showSaveMetaDataButton();
+    //console.log("nub id recu par show save button :", nub_id);
+    const nub_id_int = nub_id == null ? null : parseInt(nub_id.toString(), 10);
+    //console.log(parseInt(nub_id.toString(), 10));
+    // Stockage des informations utilisateur en base de données (envoi d'une requête POST au serveur)
+    fetch('/saveNub', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nub_id : nub_id_int })
+    })
+    .then(response => {
+        if (response.ok) {
+            // La requête s'est déroulée avec succès (metadata enregistrée ou mises à jour)
+            return response.json();
+        } else if (response.status === 500) {
+            // On continue malgré tout pour mettre à jour l'interface utilisateur
+            return Promise.resolve({ nub_id_int }); // Simuler une réponse avec les données de l'utilisateur existant
+        } else {
+            throw new Error('Erreur serveur');
+        }
+    })
+    .then(result => {
+        console.log('Nub Metadata saved into database', nub_id_int);
+        successMessage.textContent = 'This nub has been selected !';
+
+        // On reload la page pour afficher les changements directement
+        location.reload();
+    })
+    .catch(error => {
+        console.error("Error during saving of nub metadata !", error);
+        saveErrorMessage.textContent = error;
+    });
+}
+
+export async function getMetadataNub() {
+
+    // On récupère aussi les données user pour afficher juste avant le nom de l'user et son wallet ainsi que son rank
+    fetch('/getUserLeaderboard', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            if (response.status === 204) {
+                // Aucune donnée n'est présente, vous pouvez gérer cela comme nécessaire
+                console.log('No profile found.');
+                return null; // Ou toute autre action que vous souhaitez prendre
+            } else {
+                // Il y a des données dans la réponse, vous pouvez la traiter comme d'habitude
+                return response.json();
+            }
+        } else {
+            
+            if (document.getElementById('profileContainer')) {
+                const profileContainer = document.getElementById('profileContainer');
+
+                profileContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+                profileContainer.textContent = 'Please login to see your profile.';
+                
+            }
+            return null;
+        }
+    })
+    .then(async profile => {
+        // Mettre à jour l'interface utilisateur avec les métadonnées récupérées
+        // Par exemple, remplacer le bouton Save Metadata par les métadonnées
+        if (document.getElementById('profileContainer')) {
+            const profileContainer = document.getElementById('profileContainer');
+            const profileCard = document.getElementById('profileCard');
+            
+            if (profile) {
+                profileContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                
+                const beginMessage = document.createElement('p');
+                beginMessage.textContent = '';
+                profileContainer.appendChild(beginMessage);
+            
+                const table = document.createElement('table');
+                table.classList.add('table', 'table-bordered', 'table-striped');
+                const tbody = document.createElement('tbody');
+            
+                const profileRows = [
+                    { label: 'X handle', value: profile.leaderboardUser && profile.leaderboardUser[0] ? profile.leaderboardUser[0].username : 'N/A' },
+                    { label: 'Reset account', value: 'Soon' },
+                    { label: '', value: null },
+                    { 
+                        label: '<span style="color: blue;">Rank</span>', 
+                        value: profile.rank ? `<span style="color: blue;">${profile.rank}</span>` : 'N/A'
+                    },
+                    { 
+                        label: '<span style="color: blue;">PacBoom points</span>', 
+                        value: profile.leaderboardUser && profile.leaderboardUser[0] ? `<span style="color: blue;">${profile.leaderboardUser[0].points}</span>` : 'N/A'
+                    },
+                    { label: '', value: null }
+                ];
+                
+            
+                // Ajouter les lignes de base (Name et Description)
+                profileRows.forEach(rowData => {
+                    const row = document.createElement('tr');
+                    const labelCell = document.createElement('td');
+                    const valueCell = document.createElement('td');
+            
+                    labelCell.style.color = '#000000';
+                    valueCell.style.color = '#000000';
+            
+                    labelCell.innerHTML = rowData.label;
+                    valueCell.innerHTML = rowData.value;
+                    row.appendChild(labelCell);
+                    row.appendChild(valueCell);
+                    tbody.appendChild(row);
+                });
+            
+            
+                table.appendChild(tbody);
+                profileContainer.appendChild(table);
+                
+
+                // Ajouter ici le cas où le bouton Discord est remis à jour dynamiquement
+                const address = localStorage.getItem("userAddress");
+            
+                if (address) {
+                    getDiscordInfos(address);
+                }
+
+                return profile.username;
+
+            } else {
+
+                if (document.getElementById('profileContainer')) {
+                    const profileContainer = document.getElementById('profileContainer');
+    
+                    profileContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                    profileContainer.textContent = 'Please login to see your profile.';
+                }
+                return null;
+            }
+
+        } else {
+            // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+
+            if (document.getElementById('profileContainer')) {
+                const metadataContainer = document.getElementById('profileContainer');
+
+                metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                metadataContainer.textContent = 'Please login to see your profile.';
+            }
+
+            return null;
+        }
+
+    })
+    .catch(error => {
+        console.error('Error retrieving profile:', error);
+    });
+
+
+    let backgroundImage = new Image();
+
+    // Récupérer les métadonnées de l'utilisateur depuis le serveur
+    fetch('/getNub', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            if (response.status === 204) {
+                // Aucune donnée n'est présente, vous pouvez gérer cela comme nécessaire
+                console.log('No nub selected.');
+                return null; // Ou toute autre action que vous souhaitez prendre
+            } else {
+                // Il y a des données dans la réponse, vous pouvez la traiter comme d'habitude
+                return response.json();
+            }
+        } else {
+            //throw new Error('Error retrieving metadata');
+
+            // On enlève l'image du nub sur le petit canvas
+            backgroundImage.src = './img/nub/null.png';
+
+            document.getElementById('secondaryNubCanvas').getContext('2d').clearRect(0, 0, 200, 200);
+            // Attendre que l'image soit chargée
+            backgroundImage.onload = function() {
+                // Dessiner l'image de fond sur le canvas
+                document.getElementById('secondaryNubCanvas').getContext('2d').drawImage(backgroundImage, 0, 0, 200, 200); 
+            };
+            if (document.getElementById('metadataNubContainer')) {
+                const metadataContainer = document.getElementById('metadataNubContainer');
+
+                metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+                metadataContainer.textContent = 'No nub selected. The default Pacman will be used in-game.';
+                
+            }
+            return null;
+        }
+    })
+    .then(async metadata => {
+        // Mettre à jour l'interface utilisateur avec les métadonnées récupérées
+        // Par exemple, remplacer le bouton Save Metadata par les métadonnées
+        if (document.getElementById('metadataNubContainer')) {
+            const metadataContainer = document.getElementById('metadataNubContainer');
+            const metadataCard = document.getElementById('metadataCard');
+
+            if (metadata && metadata.length > 0 && metadata[0].nub_id != null) {
+
+                // Récupération des metadata via l'IPFS
+                const ipfsData = await fetchData(pacArmyIpfs+metadata[0].nub_id);
+        
+                if (ipfsData) {
+                    metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                    
+                    const beginMessage = document.createElement('p');
+                    beginMessage.textContent = 'The metadata you registered:';
+                    metadataContainer.appendChild(beginMessage);
+                
+                    const table = document.createElement('table');
+                    table.classList.add('table', 'table-bordered', 'table-striped');
+                    const tbody = document.createElement('tbody');
+                
+                    const metadataRows = [
+                        { label: 'Name', value: ipfsData.name },
+                        { label: 'Description', value: ipfsData.description },
+                        { label: 'Attributes' },
+                    ];
+                
+                    // Ajouter les lignes de base (Name et Description)
+                    metadataRows.forEach(rowData => {
+                        const row = document.createElement('tr');
+                        const labelCell = document.createElement('td');
+                        const valueCell = document.createElement('td');
+                
+                        labelCell.style.color = '#000000';
+                        valueCell.style.color = '#000000';
+                
+                        labelCell.textContent = rowData.label;
+                        valueCell.textContent = rowData.value;
+                        row.appendChild(labelCell);
+                        row.appendChild(valueCell);
+                        tbody.appendChild(row);
+                    });
+                
+                    // Ajouter les attributs au tableau
+                    ipfsData.attributes.forEach(attribute => {
+                        const row = document.createElement('tr');
+                        const labelCell = document.createElement('td');
+                        const valueCell = document.createElement('td');
+                
+                        labelCell.style.color = '#000000';
+                        valueCell.style.color = '#000000';
+                
+                        labelCell.textContent = attribute.trait_type; // Nom du trait 
+                        valueCell.textContent = attribute.value !== null ? attribute.value : 'N/A'; // Valeur ou 'N/A' si null
+                
+                        row.appendChild(labelCell);
+                        row.appendChild(valueCell);
+                        tbody.appendChild(row);
+                    });
+                
+                    table.appendChild(tbody);
+                    metadataContainer.appendChild(table);
+                }
+                if (document.getElementById('secondaryNubCanvas')) {
+                    backgroundImage.src = config.pacArmyImgIpfs + metadata[0].nub_id +'.png';
+                    document.getElementById('secondaryNubCanvas').getContext('2d').clearRect(0, 0, 200, 200);
+                    backgroundImage.onload = function() {
+                        // Dessiner l'image de fond sur le canvas
+                        document.getElementById('secondaryNubCanvas').getContext('2d').drawImage(backgroundImage, 0, 0, 200, 200); 
+                    };
+                }
+                return metadata[0].nub_id;
+
+            } else {
+                if (document.getElementById('secondaryNubCanvas')) {
+                    backgroundImage.src = './img/nub/null.png';
+                    document.getElementById('secondaryNubCanvas').getContext('2d').clearRect(0, 0, 200, 200);
+                    backgroundImage.onload = function() {
+                        // Dessiner l'image de fond sur le canvas
+                        document.getElementById('secondaryNubCanvas').getContext('2d').drawImage(backgroundImage, 0, 0, 200, 200); 
+                    };
+                }
+                if (document.getElementById('metadataNubContainer')) {
+                    const metadataContainer = document.getElementById('metadataNubContainer');
+    
+                    metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                    metadataContainer.textContent = 'No nub selected. The default Pacman will be used in-game.';
+                }
+                return null;
+            }
+
+        } else {
+            // Aucune métadonnée n'a été récupérée, afficher un message ou effectuer une action appropriée
+
+            if (document.getElementById('secondaryNubCanvas')) {
+                // On enlève l'image du nub sur le petit canvas
+                backgroundImage.src = './img/nub/null.png';
+
+                //console.log("background img:", backgroundImage.src);
+                document.getElementById('secondaryNubCanvas').getContext('2d').clearRect(0, 0, 200, 200);
+                backgroundImage.onload = function() {
+                    // Dessiner l'image de fond sur le canvas
+                    document.getElementById('secondaryNubCanvas').getContext('2d').drawImage(backgroundImage, 0, 0, 200, 200); 
+                };
+
+            }
+            if (document.getElementById('metadataNubContainer')) {
+                const metadataContainer = document.getElementById('metadataNubContainer');
+
+                metadataContainer.innerHTML = ''; // Supprimer tous les éléments enfants
+                metadataContainer.textContent = 'No nub selected. The default Pacman will be used in-game.';
+            }
+
+            return null;
+        }
+
+    })
+    .catch(error => {
+        console.error('Error retrieving nub:', error);
+    });
+}
+
+// Récupère les metadata d'une collection NFT en fonction de l'url indiquée
+async function fetchData(url) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP ! Statut : ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données :', error);
+      return null; // En cas d'erreur, retournez null ou gérez l'erreur selon vos besoins
+    }
+}
+  
+// Appeler handleDiscordCallback() lorsque la page se charge
+/*document.addEventListener('DOMContentLoaded', () => {
+    // Vérifier si l'URL contient les paramètres 
+    if (window.location.search.includes('username') && window.location.search.includes('id')) {
+        // Appeler la fonction handleTwitterCallback() pour finaliser l'authentification
+        handleDiscordCallback();
+    }
+
+});*/

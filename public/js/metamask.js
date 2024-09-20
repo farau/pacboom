@@ -1,1 +1,544 @@
-const a0_0x1f9f63=a0_0x2310;(function(_0x56c9a0,_0x205823){const _0x125220=a0_0x2310,_0x2249c4=_0x56c9a0();while(!![]){try{const _0x2c7afe=-parseInt(_0x125220(0x1e5))/0x1*(parseInt(_0x125220(0x1fc))/0x2)+-parseInt(_0x125220(0x206))/0x3+-parseInt(_0x125220(0x1eb))/0x4+-parseInt(_0x125220(0x232))/0x5*(-parseInt(_0x125220(0x228))/0x6)+parseInt(_0x125220(0x23d))/0x7*(-parseInt(_0x125220(0x244))/0x8)+-parseInt(_0x125220(0x240))/0x9+-parseInt(_0x125220(0x1e4))/0xa*(-parseInt(_0x125220(0x215))/0xb);if(_0x2c7afe===_0x205823)break;else _0x2249c4['push'](_0x2249c4['shift']());}catch(_0x58c54f){_0x2249c4['push'](_0x2249c4['shift']());}}}(a0_0x321b,0x75289));const a0_0x18a8ab=a0_0x4f22;(function(_0x18c1de,_0x56a989){const _0xbdaaab=a0_0x2310,_0x2e2283=a0_0x4f22,_0x437516=_0x18c1de();while(!![]){try{const _0x2c1629=parseInt(_0x2e2283(0xe3))/0x1+parseInt(_0x2e2283(0xbd))/0x2+-parseInt(_0x2e2283(0xdc))/0x3+-parseInt(_0x2e2283(0xa0))/0x4+-parseInt(_0x2e2283(0xc4))/0x5+-parseInt(_0x2e2283(0xd7))/0x6*(parseInt(_0x2e2283(0xec))/0x7)+-parseInt(_0x2e2283(0xc0))/0x8*(-parseInt(_0x2e2283(0xf8))/0x9);if(_0x2c1629===_0x56a989)break;else _0x437516[_0xbdaaab(0x24d)](_0x437516[_0xbdaaab(0x20c)]());}catch(_0x438dfb){_0x437516[_0xbdaaab(0x24d)](_0x437516['shift']());}}}(a0_0x1f79,0x7d2d9));import{getMetadataNub}from'./nub.js';function a0_0x1f79(){const _0x5f3b23=a0_0x2310,_0x39e84c=[_0x5f3b23(0x235),_0x5f3b23(0x246),_0x5f3b23(0x1f6),_0x5f3b23(0x1ea),_0x5f3b23(0x203),'Erreur\x20lors\x20de\x20la\x20génération\x20du\x20JWT',_0x5f3b23(0x21f),_0x5f3b23(0x24c),_0x5f3b23(0x23f),'message','/verify-jwt','style',_0x5f3b23(0x226),_0x5f3b23(0x243),_0x5f3b23(0x21b),'log',_0x5f3b23(0x224),_0x5f3b23(0x211),'reject',_0x5f3b23(0x25d),_0x5f3b23(0x23a),'add',_0x5f3b23(0x256),'classList','getElementById',_0x5f3b23(0x264),'1878980qTDiJw',_0x5f3b23(0x241),_0x5f3b23(0x21d),_0x5f3b23(0x22e),_0x5f3b23(0x24b),'eth_requestAccounts',_0x5f3b23(0x1f9),_0x5f3b23(0x258),_0x5f3b23(0x201),_0x5f3b23(0x21c),_0x5f3b23(0x218),_0x5f3b23(0x22f),'json',_0x5f3b23(0x1fb),_0x5f3b23(0x21a),_0x5f3b23(0x1dd),'Erreur\x20lors\x20de\x20l\x27enregistrement\x20de\x20l\x27utilisateur\x20dans\x20la\x20base\x20de\x20données:',_0x5f3b23(0x24a),'innerHTML',_0x5f3b23(0x217),_0x5f3b23(0x1e6),_0x5f3b23(0x1fd),_0x5f3b23(0x1f2),_0x5f3b23(0x1fe),_0x5f3b23(0x202),_0x5f3b23(0x1e0),'16854pDtosq',_0x5f3b23(0x22c),_0x5f3b23(0x20b),_0x5f3b23(0x260),_0x5f3b23(0x24f),'266640ENDPLV',_0x5f3b23(0x205),'/auth/twitter','white',_0x5f3b23(0x255),_0x5f3b23(0x220),_0x5f3b23(0x248),_0x5f3b23(0x25c),_0x5f3b23(0x1f3),_0x5f3b23(0x20a),_0x5f3b23(0x262),_0x5f3b23(0x1f0),'disabled',_0x5f3b23(0x263),_0x5f3b23(0x1e3),_0x5f3b23(0x1e1),_0x5f3b23(0x23b),'next',_0x5f3b23(0x222),_0x5f3b23(0x251),'wallet_addEthereumChain','toString',_0x5f3b23(0x1ff),_0x5f3b23(0x24e),_0x5f3b23(0x22a),_0x5f3b23(0x1df),_0x5f3b23(0x20e),'Buy\x20one\x20Nub\x20from\x20the\x20PacBoom\x20:\x20Army\x20era\x20Blastr\x20collection',_0x5f3b23(0x234),_0x5f3b23(0x219),_0x5f3b23(0x223),_0x5f3b23(0x1e8),_0x5f3b23(0x210),_0x5f3b23(0x261),'avatarurl','username',_0x5f3b23(0x237),_0x5f3b23(0x227),_0x5f3b23(0x1f7),_0x5f3b23(0x247),_0x5f3b23(0x209),'innerText',_0x5f3b23(0x239),_0x5f3b23(0x216),_0x5f3b23(0x1ed),_0x5f3b23(0x1e2),'textContent','setItem',_0x5f3b23(0x1e9),_0x5f3b23(0x25f),'some',_0x5f3b23(0x254),_0x5f3b23(0x1ef),_0x5f3b23(0x266),_0x5f3b23(0x265),_0x5f3b23(0x238),_0x5f3b23(0x252),_0x5f3b23(0x25b),_0x5f3b23(0x1f1),_0x5f3b23(0x208),_0x5f3b23(0x242),_0x5f3b23(0x245),_0x5f3b23(0x25e),_0x5f3b23(0x230),_0x5f3b23(0x22d)];return a0_0x1f79=function(){return _0x39e84c;},a0_0x1f79();}const connectWallet=document[a0_0x18a8ab(0xbb)](a0_0x18a8ab(0xe2)),provider=new ethers[(a0_0x1f9f63(0x1fa))][(a0_0x1f9f63(0x236))](window[a0_0x18a8ab(0xaa)]),contractAddress=config[a0_0x18a8ab(0xe7)],abi=config[a0_0x18a8ab(0xd1)],contract=new ethers[(a0_0x18a8ab(0xb0))](contractAddress,abi,provider),signerAddress=provider[a0_0x18a8ab(0xf5)]()[a0_0x18a8ab(0xee)]();!signerAddress&&console[a0_0x18a8ab(0xa5)]('No\x20Ethereum\x20address\x20connected.\x20Please\x20connect\x20with\x20your\x20wallet.');export let nubOwned=[];async function handleAccountsChanged(_0x4df2ca){_0x4df2ca['length']===0x0?signOutOfMetaMask():signOutOfMetaMask();}function checkInstalled(){const _0x57952f=a0_0x18a8ab;if(typeof window[_0x57952f(0xaa)]==_0x57952f(0x9c))return connectWallet[_0x57952f(0x105)]=_0x57952f(0xdb),connectWallet[_0x57952f(0xba)][_0x57952f(0xdd)](),connectWallet[_0x57952f(0xba)][_0x57952f(0xb8)](),![];return connectWallet[_0x57952f(0x10c)](_0x57952f(0xc3),connectWalletwithMetaMask),!![];}export async function checkIfUserConnected(){const _0x565f5b=a0_0x1f9f63,_0x4be4a8=a0_0x18a8ab,_0x1b45cd=localStorage[_0x4be4a8(0x9a)](_0x4be4a8(0xd2)),_0x17e0f4=document[_0x4be4a8(0xbb)](_0x4be4a8(0xf9)),_0x2d5438=localStorage[_0x4be4a8(0x9a)](_0x4be4a8(0xbe)),_0x2c21d1=document[_0x4be4a8(0xbb)](_0x4be4a8(0xe2)),_0x53b809=document[_0x4be4a8(0xbb)](_0x565f5b(0x245));if(_0x1b45cd&&_0x2d5438)try{const _0x45ac19=await fetch(_0x4be4a8(0xad),{'method':_0x4be4a8(0xf3),'headers':{'Authorization':''+_0x1b45cd,'Content-Type':_0x4be4a8(0xd0)},'body':JSON[_0x4be4a8(0xa6)]({'userAddress':_0x2d5438})});if(_0x45ac19['ok']){const _0x29753c=await _0x45ac19[_0x4be4a8(0xc9)]();return _0x29753c&&_0x29753c[_0x4be4a8(0xbe)]?(_0x2c21d1[_0x4be4a8(0xcf)]=_0x29753c[_0x4be4a8(0xbe)][_0x565f5b(0x203)](0x0,0x4)+'...'+_0x29753c[_0x565f5b(0x241)][_0x4be4a8(0xa7)](_0x29753c[_0x4be4a8(0xbe)][_0x4be4a8(0xea)]-0x4),_0x53b809[_0x4be4a8(0xae)][_0x4be4a8(0xf6)]=_0x4be4a8(0x102),_0x2c21d1[_0x565f5b(0x255)](_0x565f5b(0x1f9),connectWalletwithMetaMask),_0x2c21d1[_0x4be4a8(0x10c)](_0x4be4a8(0xc3),signOutOfMetaMask),checkNetwork()&&_0x17e0f4&&(_0x17e0f4[_0x4be4a8(0xe8)]=![]),await nubLogin(),!![]):(console['error'](_0x4be4a8(0xb7)),await nubLogout(),![]);}else{const _0x27abf=await _0x45ac19[_0x4be4a8(0xe5)]();return console[_0x4be4a8(0xa5)](_0x4be4a8(0x98),_0x27abf),await nubLogout(),![];}}catch(_0x1d9922){return console[_0x4be4a8(0xa5)](_0x4be4a8(0x98),_0x1d9922),await nubLogout(),![];}else return _0x53b809[_0x565f5b(0x20f)]['display']=_0x4be4a8(0x96),_0x17e0f4&&(_0x17e0f4[_0x4be4a8(0xe8)]=!![]),await nubLogout(),![];}function generateJWT(_0x42de32){const _0x47f5a0=a0_0x1f9f63,_0x3ae818=a0_0x18a8ab;return fetch(_0x3ae818(0xc7),{'method':_0x3ae818(0xf3),'headers':{'Content-Type':_0x3ae818(0xd0)},'body':JSON[_0x47f5a0(0x1ea)]({'userAddress':_0x42de32})})[_0x3ae818(0x109)](_0x5dfa0d=>{const _0x117051=_0x47f5a0,_0x5e37b7=_0x3ae818;if(!_0x5dfa0d['ok'])throw new Error(_0x5e37b7(0xa8));return _0x5dfa0d[_0x117051(0x200)]();})[_0x3ae818(0x109)](_0x48b921=>{const _0x3fb478=_0x47f5a0,_0x35b04a=_0x48b921[_0x3fb478(0x1e7)];return _0x35b04a;})[_0x3ae818(0xb6)](_0x1041e0=>{const _0x4983ef=_0x3ae818;console[_0x4983ef(0xa5)](_0x4983ef(0xd5),_0x1041e0);});}async function connectWalletwithMetaMask(){const _0x44f055=a0_0x1f9f63,_0x12afc5=a0_0x18a8ab;if(typeof window[_0x12afc5(0xaa)]!==_0x12afc5(0x9c))try{const _0x2aba10=localStorage[_0x44f055(0x252)](_0x12afc5(0xe6)),_0x8c6c67=localStorage[_0x12afc5(0x9a)](_0x44f055(0x22f)),_0x470b53=await window[_0x44f055(0x24c)][_0x12afc5(0x9b)]({'method':_0x12afc5(0xc2)});if(!_0x470b53)return;const _0xc5788e=_0x470b53[0x0],_0xf0faed=_0x12afc5(0xcc),_0x41b0e1=await window[_0x12afc5(0xaa)][_0x12afc5(0x9b)]({'method':'personal_sign','params':[_0xf0faed,_0xc5788e]});if(!_0x41b0e1)throw new Error(_0x12afc5(0xc5));const _0x19da98=generateJWT(_0xc5788e)[_0x12afc5(0x109)](_0x4b16c3=>{const _0x4e2d43=_0x12afc5;localStorage[_0x4e2d43(0x10b)](_0x4e2d43(0xd2),_0x4b16c3),saveUserToDatabase(_0x4b16c3,_0xc5788e),getTwitterInfos(_0xc5788e);})[_0x12afc5(0xb6)](_0xdaff48=>{const _0x26e3c1=_0x12afc5;console['error'](_0x26e3c1(0xd5),_0xdaff48);}),_0x126499=_0xc5788e[_0x12afc5(0xa7)](0x0,0x4)+_0x12afc5(0x101)+_0xc5788e[_0x12afc5(0xa7)](_0xc5788e[_0x12afc5(0xea)]-0x4);connectWallet[_0x44f055(0x23e)]=_0x126499,document[_0x12afc5(0xbb)](_0x12afc5(0x9f))[_0x44f055(0x20f)][_0x12afc5(0xf6)]=_0x12afc5(0x102),connectWallet[_0x12afc5(0xe0)](_0x12afc5(0xc3),connectWalletwithMetaMask),setTimeout(()=>{const _0x2930f5=_0x44f055;connectWallet[_0x2930f5(0x1e9)]('click',signOutOfMetaMask);},0xc8),localStorage[_0x12afc5(0x10b)](_0x12afc5(0xe6),_0x12afc5(0x106)),localStorage[_0x44f055(0x249)](_0x12afc5(0xc8),_0x41b0e1),checkUserSignatureDeleted(),await nubLogin(),await updateCanvasBasedOnConnection();}catch(_0x3d42a8){return console[_0x12afc5(0xa5)](_0x3d42a8[_0x12afc5(0xac)]),signOutOfMetaMask(),Promise[_0x12afc5(0xb5)](_0x3d42a8);}return new Promise((_0x1991ba,_0xcc80e9)=>{setTimeout(()=>{_0x1991ba();},0x7d0);});}async function signOutOfMetaMask(){const _0x425b64=a0_0x1f9f63,_0x297969=a0_0x18a8ab;connectWallet[_0x297969(0xe0)](_0x425b64(0x1f9),signOutOfMetaMask),setTimeout(()=>{const _0xa10a35=_0x425b64,_0x2ee9ca=_0x297969;connectWallet[_0x2ee9ca(0x10c)](_0xa10a35(0x1f9),connectWalletwithMetaMask);},0xc8),localStorage[_0x297969(0xbf)](_0x425b64(0x262)),localStorage[_0x297969(0xbf)](_0x297969(0xbe)),localStorage[_0x297969(0xbf)]('userSignature'),localStorage[_0x297969(0xbf)](_0x297969(0xd2)),localStorage[_0x425b64(0x21d)](_0x297969(0xff)),connectWallet[_0x297969(0xcf)]=_0x297969(0xa2),twitterLoginBtn[_0x297969(0xcf)]=_0x297969(0x97),document[_0x425b64(0x23c)](_0x297969(0x9f))[_0x297969(0xae)][_0x297969(0xf6)]=_0x297969(0x96),connectWallet[_0x297969(0x10c)](_0x297969(0xc3),connectWalletwithMetaMask),checkUserSignatureDeleted(),await checkIfUserConnected(),await updateCanvasBasedOnConnection();}function checkNetwork(){const _0x5b14d8=a0_0x1f9f63,_0x3714b5=a0_0x18a8ab,_0x1f2bf7=document['getElementById']('transactionButton');if(typeof window[_0x5b14d8(0x24c)]!==_0x3714b5(0x9c)){const _0x40b8f1=window[_0x3714b5(0xaa)];_0x40b8f1[_0x5b14d8(0x25b)]({'method':_0x5b14d8(0x25a)})[_0x5b14d8(0x1e2)](_0x1fbe90=>{const _0x3eec4e=_0x5b14d8,_0x15851a=_0x3714b5;return _0x1fbe90!==config[_0x15851a(0xd9)]?(document[_0x3eec4e(0x23c)](_0x3eec4e(0x225))[_0x15851a(0xae)][_0x3eec4e(0x20e)]=_0x15851a(0x102),document[_0x15851a(0xbb)](_0x15851a(0xab))[_0x15851a(0x10c)](_0x15851a(0xc3),async()=>{const _0x492d27=_0x3eec4e,_0x59feb4=_0x15851a;try{await window[_0x59feb4(0xaa)][_0x59feb4(0x9b)]({'method':'wallet_switchEthereumChain','params':[{'chainId':config['chain_id']}]}),window[_0x492d27(0x247)][_0x59feb4(0xfc)]();}catch(_0x5dde6f){if(_0x5dde6f[_0x59feb4(0xfd)]===0x1326)try{await window[_0x59feb4(0xaa)][_0x59feb4(0x9b)]({'method':_0x59feb4(0xf0),'params':[{'chainId':config[_0x59feb4(0xd9)],'rpcUrl':_0x59feb4(0xb9),'chainName':_0x59feb4(0xca)}]}),window[_0x59feb4(0x103)][_0x492d27(0x210)]();}catch(_0x3e8e43){console[_0x59feb4(0xa5)](_0x492d27(0x259),_0x3e8e43);}console[_0x59feb4(0xa5)](_0x59feb4(0xfb),_0x5dde6f);}}),_0x1f2bf7&&(_0x1f2bf7['disabled']=!![]),![]):(_0x1f2bf7&&(_0x1f2bf7[_0x3eec4e(0x1ee)]=![]),!![]);})[_0x5b14d8(0x25d)](_0x59ff9b=>{const _0xb89e3d=_0x3714b5;console[_0xb89e3d(0xa5)](_0xb89e3d(0x9d),_0x59ff9b);});}else return console[_0x3714b5(0xa5)](_0x3714b5(0xeb)),_0x1f2bf7&&(_0x1f2bf7[_0x3714b5(0xe8)]=![]),![];}function checkUserSignatureDeleted(){const _0x2f67d6=a0_0x1f9f63,_0x43909e=a0_0x18a8ab,_0x584c2d=localStorage[_0x43909e(0x9a)](_0x2f67d6(0x22f)),_0x33ac31=document[_0x43909e(0xbb)](_0x43909e(0xf9));!_0x584c2d?_0x33ac31&&(_0x33ac31[_0x43909e(0xe8)]=!![]):_0x33ac31&&(_0x33ac31[_0x2f67d6(0x1ee)]=![]);}window[a0_0x18a8ab(0x10c)](a0_0x18a8ab(0xc6),()=>{const _0x3b7163=a0_0x1f9f63,_0xff8ae1=a0_0x18a8ab;checkInstalled(),checkIfUserConnected(),window[_0xff8ae1(0xaa)]['on'](_0xff8ae1(0xf2),handleAccountsChanged),checkNetwork(),window[_0xff8ae1(0xaa)]['on'](_0x3b7163(0x253),checkNetwork);});function a0_0x321b(){const _0x31e093=['getContext','span','GET','You\x20must\x20connect\x20your\x20wallet','error','block','alt','click','providers','Blast','72496YYpMgx','jwtToken','null','accountsChanged','json','La\x20signature\x20n\x27est\x20pas\x20valide.','Erreur\x20lors\x20de\x20la\x20génération\x20du\x20JWT\x20:','substring','username','remove','1707942MEUQRk','img/nub/null.png','Error\x20during\x20retrieval\x20of\x20the\x20network\x20:','status','text','chain_id','shift','height','display','style','reload','Next','Aucune\x20donnée\x20Twitter\x20trouvée','30px','secondaryNubCanvas','4224341TvyBLJ','Avatar','application/json','/create-jwt','transactionButton','src','pacArmyImgIpfs','DOMContentLoaded','removeItem','log','appendChild','href','img','getAddress','parentNode','saveButton','networkModal','HTTP\x20error!\x20status:\x20','...','1614LHuDZn','flex','replaceChild','https://blastr.xyz/pacboom-armyera','width','Connect\x20Wallet','1576GRyWtC','userSignature','clearRect','next','4985dyMJXs','L\x27utilisateur\x20est\x20connecté','75978wfetFf','img/nub/null','Web3Provider','nubCanvas','onload','true','Adresse\x20non\x20trouvée\x20dans\x20la\x20réponse.','2051vtTKDG','getElementById','7fyCAZy','innerHTML','changeNetworkButton','7114077IziSpL','userAddress','Erreur:','Contract','4552136nbcOug','twitterLoginBtn','createElement','location','connectWallet','setItem','.png','color','ethereum','push','POST','MetaMask\x20isnt\x20installed,\x20please\x20install\x20it','target','L\x27utilisateur\x20n\x27est\x20pas\x20connecté','getItem','chainChanged','Erreur\x20lors\x20de\x20l\x27enregistrement\x20de\x20l\x27utilisateur\x20dans\x20la\x20base\x20de\x20données.','removeEventListener','https://rpc.blast.io','alignItems','4337225HofQZy','Erreur\x20lors\x20de\x20l\x27ajout\x20du\x20réseau:','eth_chainId','request','39438furzrV','catch','1399644BvkxFi','drawImage','div','code','isUserConnected','tokensOwnedBy','/getTwitterInfos?address=','Erreur\x20lors\x20de\x20la\x20vérification\x20du\x20JWT:','Link\x20your\x20Twitter','Welcome\x20to\x20PacBoom\x20!\x20Play\x20the\x20game\x20and\x20get\x20the\x20best\x20score\x20!\x20Buy\x20an\x20NFT\x20to\x20get\x20a\x20boost\x20on\x20your\x20score\x20!','/save-user','getSigner','Utilisateur\x20enregistré\x20avec\x20succès:','MetaMask\x20isnt\x20installed.','then','length','70WDPzWn','7XZhRKq','pacNubABI','token','Erreur\x20lors\x20du\x20changement\x20de\x20réseau:','addEventListener','stringify','1176036QnXymC','_blank','cloneNode','disabled','none','pacNubAddress','undefined'];a0_0x321b=function(){return _0x31e093;};return a0_0x321b();}async function saveUserToDatabase(_0x108228,_0x41c8d7){const _0x44cee8=a0_0x1f9f63,_0x11f74b=a0_0x18a8ab;try{const _0x57077c=await fetch(_0x44cee8(0x1de),{'method':_0x11f74b(0xf3),'headers':{'Authorization':''+_0x108228,'Content-Type':_0x11f74b(0xd0)},'body':JSON[_0x11f74b(0xa6)]({'wallet_address':_0x41c8d7})});if(!_0x57077c['ok']){const _0x17d503=await _0x57077c[_0x11f74b(0xc9)]();console[_0x11f74b(0xa5)](_0x11f74b(0xcd),_0x17d503);throw new Error(_0x11f74b(0x95));}else{const _0x1b70c3=await _0x57077c[_0x11f74b(0xc9)]();console[_0x11f74b(0xb2)](_0x11f74b(0xd6),_0x1b70c3),localStorage[_0x44cee8(0x249)](_0x11f74b(0xbe),_0x41c8d7);}}catch(_0x41fa89){console[_0x44cee8(0x1f6)](_0x11f74b(0x9e),_0x41fa89);}}function a0_0x4f22(_0x275885,_0x2b5dcc){const _0x89e34b=a0_0x1f79();return a0_0x4f22=function(_0x2e379,_0x16902a){_0x2e379=_0x2e379-0x94;let _0x5ec96e=_0x89e34b[_0x2e379];return _0x5ec96e;},a0_0x4f22(_0x275885,_0x2b5dcc);}function handleTwitterLoginButtonClick(){const _0x1829ea=a0_0x18a8ab;window[_0x1829ea(0x103)][_0x1829ea(0xe1)]=_0x1829ea(0xde);}function getTwitterInfos(_0x110624){const _0x51120c=a0_0x1f9f63,_0x7bf2ca=a0_0x18a8ab,_0x1c78c0=localStorage[_0x51120c(0x252)](_0x51120c(0x1fd));fetch(_0x7bf2ca(0xbc)+_0x110624,{'method':_0x51120c(0x1f4),'headers':{'Authorization':''+_0x1c78c0,'Content-Type':_0x7bf2ca(0xd0)}})[_0x51120c(0x1e2)](_0x49615b=>{const _0x33d602=_0x51120c,_0x54b42f=_0x7bf2ca;if(_0x49615b[_0x33d602(0x209)]===0xcc)return null;if(!_0x49615b['ok'])throw new Error(_0x54b42f(0xaf)+_0x49615b[_0x54b42f(0x104)]);return _0x49615b[_0x54b42f(0xc9)]();})[_0x7bf2ca(0x109)](_0x4a32f0=>{const _0x4bb70f=_0x51120c,_0x267aa8=_0x7bf2ca;if(_0x4a32f0&&_0x4a32f0['length']>0x0){const _0x2e57e6=_0x4a32f0[0x0],_0x56b9fb=document[_0x267aa8(0xbb)](_0x267aa8(0x9f)),_0x2c874c=document[_0x267aa8(0xa4)](_0x267aa8(0xda));_0x2c874c[_0x267aa8(0xae)][_0x267aa8(0xf6)]=_0x4bb70f(0x229),_0x2c874c[_0x267aa8(0xae)][_0x4bb70f(0x257)]='center';const _0x2408cd=document[_0x267aa8(0xa4)](_0x4bb70f(0x221));_0x2408cd[_0x4bb70f(0x21a)]=_0x2e57e6[_0x267aa8(0xfe)],_0x2408cd[_0x4bb70f(0x1f8)]=_0x267aa8(0x107),_0x2408cd[_0x267aa8(0xae)][_0x267aa8(0xd8)]=_0x4bb70f(0x213);const _0x5344a1=document[_0x267aa8(0xa4)](_0x267aa8(0xe4));_0x5344a1[_0x267aa8(0x105)]=_0x2e57e6[_0x4bb70f(0x204)],_0x2c874c[_0x4bb70f(0x21f)](_0x2408cd),_0x2c874c[_0x267aa8(0xa9)](_0x5344a1),localStorage[_0x4bb70f(0x249)](_0x267aa8(0xff),_0x2e57e6[_0x267aa8(0xff)]),_0x56b9fb[_0x267aa8(0xcf)]='',_0x56b9fb['appendChild'](_0x2c874c);}else console[_0x267aa8(0xb2)](_0x4bb70f(0x212)),document[_0x267aa8(0xbb)](_0x267aa8(0x9f))[_0x267aa8(0x10c)](_0x267aa8(0xc3),handleTwitterLoginButtonClick);})[_0x51120c(0x25d)](_0x4df45d=>console['error'](_0x7bf2ca(0x9e),_0x4df45d));}function a0_0x2310(_0x156f9d,_0x1a9dd3){const _0x321b37=a0_0x321b();return a0_0x2310=function(_0x231048,_0x1f7ad6){_0x231048=_0x231048-0x1dd;let _0x805398=_0x321b37[_0x231048];return _0x805398;},a0_0x2310(_0x156f9d,_0x1a9dd3);}async function nubLogin(){const _0x3067d0=a0_0x1f9f63,_0x579445=a0_0x18a8ab;document[_0x579445(0xbb)](_0x579445(0x100))&&(console[_0x579445(0xb2)](_0x3067d0(0x233)),document[_0x579445(0xbb)](_0x3067d0(0x231))[_0x3067d0(0x20f)]=_0x579445(0x102),document[_0x579445(0xbb)](_0x579445(0xed))[_0x579445(0x105)]=_0x579445(0xb4),document[_0x579445(0xbb)](_0x579445(0xb3))[_0x579445(0xae)]=_0x579445(0x102),document[_0x579445(0xbb)](_0x3067d0(0x231))[_0x579445(0xe8)]=![]);}async function nubLogout(){const _0x48abbb=a0_0x1f9f63,_0x1a296b=a0_0x18a8ab;document[_0x1a296b(0xbb)](_0x1a296b(0x100))&&(console[_0x48abbb(0x21e)](_0x1a296b(0xef)),document[_0x1a296b(0xbb)](_0x1a296b(0xed))[_0x1a296b(0xae)]=_0x48abbb(0x1f7),document['getElementById'](_0x48abbb(0x231))['innerText']=_0x48abbb(0x1f5),document[_0x1a296b(0xbb)](_0x1a296b(0xed))['disabled']=!![],document[_0x48abbb(0x23c)](_0x1a296b(0xb3))[_0x1a296b(0xae)][_0x1a296b(0xf6)]=_0x1a296b(0x96));}let nub_id=null;export async function updateCanvasBasedOnConnection(){const _0x95dd2=a0_0x1f9f63,_0x641f3e=a0_0x18a8ab;let _0x497e4e=0x0;if(document['getElementById'](_0x95dd2(0x237))){let _0x1ab162=await contract[_0x641f3e(0xe9)](provider[_0x95dd2(0x1df)]()[_0x641f3e(0xee)]()),_0x556701=[_0x641f3e(0xd4),..._0x1ab162],_0x4168f7=await checkIfUserConnected(),_0x21bd0f=document[_0x641f3e(0xbb)](_0x641f3e(0x100)),_0x26818c=_0x21bd0f[_0x641f3e(0xd3)]('2d'),_0x31aa53=document[_0x641f3e(0xbb)](_0x95dd2(0x214)),_0x42eb18=_0x31aa53[_0x641f3e(0xd3)]('2d');if(_0x4168f7&&_0x556701[_0x641f3e(0xea)]<=0x1){document[_0x641f3e(0xbb)](_0x641f3e(0xed))[_0x641f3e(0x105)]='';let _0x409607=document[_0x641f3e(0xa4)]('a');_0x409607[_0x95dd2(0x220)]=_0x95dd2(0x22b),_0x409607[_0x641f3e(0x10a)]=_0x641f3e(0xf7),_0x409607[_0x641f3e(0xae)][_0x641f3e(0xc1)]=_0x641f3e(0xdf),_0x409607[_0x95dd2(0x250)]=_0x95dd2(0x1ec),document[_0x641f3e(0xbb)](_0x641f3e(0xed))[_0x641f3e(0xa9)](_0x409607);}else{if(_0x4168f7&&_0x556701[_0x95dd2(0x1e3)]>0x1){const _0x2c8ee4=document[_0x641f3e(0xbb)](_0x641f3e(0xed)),_0xe5953a=_0x2c8ee4[_0x641f3e(0x108)](!![]);_0x2c8ee4[_0x641f3e(0xfa)][_0x641f3e(0xf4)](_0xe5953a,_0x2c8ee4),_0xe5953a['addEventListener'](_0x641f3e(0xc3),function(_0x257b20){const _0x3d2283=_0x95dd2,_0x3c56c3=_0x641f3e;_0x26818c[_0x3c56c3(0xa1)](0x0,0x0,_0x21bd0f[_0x3d2283(0x22c)],_0x21bd0f[_0x3d2283(0x20d)]);const _0x1ebac0=new Image();_0x1ebac0[_0x3c56c3(0xcb)]=(_0x556701[_0x497e4e]!==_0x3d2283(0x1fe)?config[_0x3c56c3(0xb1)]+_0x556701[_0x497e4e]:_0x3c56c3(0xa3))+_0x3c56c3(0xce),_0x1ebac0[_0x3c56c3(0x99)]=function(){const _0x319f9e=_0x3d2283,_0x1dedc7=_0x3c56c3;_0x26818c[_0x1dedc7(0xa1)](0x0,0x0,_0x21bd0f[_0x1dedc7(0xd8)],_0x21bd0f['height']),_0x26818c[_0x1dedc7(0x10d)](_0x1ebac0,0x0,0x0,_0x21bd0f[_0x319f9e(0x22c)],_0x21bd0f[_0x319f9e(0x20d)]);},nub_id=_0x556701[_0x497e4e]!==null?_0x556701[_0x497e4e]:null,showSaveMetaDataButton(),_0x497e4e=(_0x497e4e+0x1)%_0x556701[_0x3c56c3(0xea)];});}else{_0x26818c[_0x95dd2(0x230)](0x0,0x0,_0x21bd0f[_0x641f3e(0xd8)],_0x21bd0f[_0x95dd2(0x20d)]),dontShowSaveMetaDataButton();const _0x5a32e3=new Image();_0x5a32e3[_0x641f3e(0xcb)]=_0x95dd2(0x207),_0x5a32e3[_0x641f3e(0x99)]=function(){const _0x1a7038=_0x95dd2,_0xe0a0bc=_0x641f3e;_0x26818c[_0xe0a0bc(0x10d)](_0x5a32e3,0x0,0x0,_0x21bd0f[_0x1a7038(0x22c)],_0x21bd0f[_0x1a7038(0x20d)]);};}}getMetadataNub();}}const saveButton=document[a0_0x18a8ab(0xbb)](a0_0x18a8ab(0xb3));export function showSaveMetaDataButton(){const _0x363d1c=a0_0x1f9f63,_0x148a20=a0_0x18a8ab;return saveButton[_0x363d1c(0x20f)][_0x363d1c(0x20e)]=_0x148a20(0x102),nub_id==null?null:nub_id;}function dontShowSaveMetaDataButton(){const _0x410cd6=a0_0x18a8ab;saveButton[_0x410cd6(0xae)][_0x410cd6(0xf6)]=_0x410cd6(0x96);}export async function verifyNubOwned(_0x1b26d5){const _0x362a2e=a0_0x18a8ab;let _0x299612=await contract[_0x362a2e(0xe9)](provider[_0x362a2e(0xf5)]()[_0x362a2e(0xee)]());return _0x299612[_0x362a2e(0x94)](_0x22c0f0=>{const _0x17fca5=_0x362a2e,_0x3db94e=parseInt(_0x22c0f0[_0x17fca5(0xf1)](),0xa);return _0x3db94e===_0x1b26d5;});}
+import { getMetadataNub} from "./nub.js";
+import { getTwitterInfos } from "./twitter.js";
+
+const connectWallet = document.getElementById('connectWallet')
+
+// Définition du fournisseur de signer (provider) Ethereum
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+// Chargement de l'adresse du contrat du NFT PacNUB et de l'ABI depuis le fichier de configuration
+const contractAddress = config.pacNubAddress; 
+const abi = config.pacNubABI;
+
+
+// Instanciation du contrat intelligent PacBoomTest
+const contract = new ethers.Contract(contractAddress, abi, provider);
+
+
+// Récupération de l'adresse Ethereum actuellement connectée
+const signerAddress = provider.getSigner().getAddress();
+
+// Vérification si l'adresse est connectée
+if (!signerAddress) {
+    console.error("No Ethereum address connected. Please connect with your wallet.");
+}
+
+export let nubOwned = [];
+
+// Fonction pour écouter les changements de compte MetaMask
+async function handleAccountsChanged(accounts) {
+    if (accounts.length === 0) {
+        // L'utilisateur s'est déconnecté de MetaMask
+        // Mettez à jour l'état de votre application en conséquence
+        signOutOfMetaMask();
+    } else {
+        // L'utilisateur s'est connecté ou a changé de compte
+        // Mettez à jour l'état de votre application si nécessaire
+        signOutOfMetaMask();
+        //await connectWalletwithMetaMask();
+    }
+}
+
+function checkInstalled() {
+    if (typeof window.ethereum == 'undefined') {
+      connectWallet.innerText = 'MetaMask isnt installed, please install it';
+      connectWallet.classList.remove();
+      connectWallet.classList.add();
+      return false;
+    }
+    connectWallet.addEventListener('click', connectWalletwithMetaMask);
+    return true;
+}
+
+// Fonction pour vérifier si l'utilisateur est déjà connecté
+export async function checkIfUserConnected() {
+    const transactionButtonElement = document.getElementById('transactionButton');
+    const userAddress = localStorage.getItem('userAddress');
+    const connectWalletButton = document.getElementById('connectWallet');
+    const twitterLoginBtn = document.getElementById('twitterLoginBtn');
+
+    if (userAddress) {
+        try {
+            // Envoyer une requête au serveur pour vérifier le JWT
+            const response = await fetch('/verify-jwt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userAddress : userAddress})
+            });
+
+            if (response.ok) {
+                // Convertir la réponse en JSON
+                const data = await response.json();
+                
+                if (data && data.userAddress) {
+                    // Afficher les informations de l'utilisateur
+                    connectWalletButton.innerHTML = `${data.userAddress.substring(0, 4)}...${data.userAddress.substring(data.userAddress.length - 4)}`;
+                    
+                    // Activer d'autres fonctionnalités, etc.
+                    // L'utilisateur est connecté, afficher le bouton "Link Twitter Account"
+                    twitterLoginBtn.style.display = 'block';
+                    
+                    // Désactiver l'écouteur de clic pour connecter le portefeuille
+                    connectWalletButton.removeEventListener('click', connectWalletwithMetaMask);
+
+                    // Activer l'écouteur de clic pour se déconnecter du portefeuille
+                    connectWalletButton.addEventListener('click', signOutOfMetaMask);
+                    
+                    // Vérifier le réseau et activer le bouton de transaction si valide
+                    if (checkNetwork() && transactionButtonElement) {
+                        transactionButtonElement.disabled = false;
+                    }
+
+                    await nubLogin();
+
+                    return true; // L'utilisateur est connecté
+                } else {
+                    // Gérer les erreurs si le champ address est manquant
+                    console.error('Adresse not found in the response.');
+                    await nubLogout()
+                    return false; // L'utilisateur n'est pas connecté
+                }
+            } else {
+                // Gérer les erreurs de réponse non OK
+                const errorText = await response.text();
+                console.error('Error during processing of JWT:', errorText);
+                await nubLogout();
+                return false; // L'utilisateur n'est pas connecté
+            }
+        } catch (error) {
+            // Gérer les erreurs de la requête fetch
+            console.error('Error during processing of JWT:', error);
+            await nubLogout();
+            return false; // L'utilisateur n'est pas connecté
+        }
+    } else {
+        twitterLoginBtn.style.display = 'none';
+        if (transactionButtonElement) {
+            transactionButtonElement.disabled = true;
+        }
+        await nubLogout();
+        return false; // L'utilisateur n'est pas connecté
+    }
+}
+
+
+
+// Génére le JWT en appelant la route /loginOrSaveUser sur le serveur
+function loginOrSaveUser(address) {
+    return fetch('/loginOrSaveUser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userAddress: address })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur lors de la génération du JWT');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Erreur lors de la génération du JWT :', error);
+        // Gérer les erreurs si nécessaire
+    });
+}
+
+// Détruit le JWT en appelant la route /logout sur le serveur
+function logoutUser() {
+    return fetch('/logoutUser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error.');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Error during the process of logout:', error);
+        // Gérer les erreurs si nécessaire
+    });
+}
+
+// Fonction qui vérifie la connexion via le wallet 
+async function connectWalletwithMetaMask() {
+    if (typeof window.ethereum !== 'undefined') {
+        try {
+            // Vérifier si l'utilisateur est déjà connecté en consultant le stockage local
+            const isUserConnected = localStorage.getItem('isUserConnected');
+            const userSignature = localStorage.getItem('userSignature');
+         
+            // Demander l'autorisation d'accéder au compte Ethereum
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+            if (!accounts) { return; }
+
+            const address = accounts[0];
+
+            // Message à signer
+            const welcomeMessage = "Welcome to PacBoom ! Play the game and get the best score ! Buy an NFT to get a boost on your score !";
+            const signature = await window.ethereum.request({
+                method: 'personal_sign',
+                params: [welcomeMessage, address],
+            });
+
+            // Si le message n'est pas signé, on quitte la fonction
+            if (!signature) {
+                throw new Error("La signature n'est pas valide.");
+            }
+
+            // Génère le jwt, enregistre l'utilisateur en BDD
+            loginOrSaveUser(address)
+            .then(result => {
+                console.log(result);
+                // On enregistre l'adresse Metamask de l'utilisateur courant dans le localStorage
+                localStorage.setItem("userAddress", address);
+
+                // On tente d'afficher les infos Twitter
+                getTwitterInfos();
+            })
+            .catch(error => {
+                console.error('Error during login process :', error);
+                // Gérer les erreurs si nécessaire
+            });
+
+            // Tronquer l'adresse pour afficher seulement les 3 premiers et 4 derniers caractères
+            const truncatedAddress = `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
+            connectWallet.innerHTML = truncatedAddress;
+
+            // On active le bouton link
+            document.getElementById('twitterLoginBtn').style.display = 'block';
+            
+            // Désactiver l'écouteur de clic pour connecter le portefeuille
+            connectWallet.removeEventListener('click', connectWalletwithMetaMask);
+
+            // Activer l'écouteur de clic pour se déconnecter du portefeuille après la signature
+            setTimeout(() => {
+                connectWallet.addEventListener('click', signOutOfMetaMask);
+            }, 200);
+
+
+            // Enregistrer dans le stockage local pour indiquer que l'utilisateur est connecté
+            localStorage.setItem('isUserConnected', 'true');
+
+            // Enregistrer la signature dans le stockage local
+            localStorage.setItem('userSignature', signature);
+
+            // Vous pouvez maintenant utiliser la signature comme nécessaire dans votre application
+            checkUserSignatureDeleted();
+
+            // On MAJ le canvas et les boutons associés au canvas
+            await nubLogin();
+            await updateCanvasBasedOnConnection();
+
+        } catch (error) {
+            console.error(error.message);
+            signOutOfMetaMask();
+            // Rejeter la promesse avec l'erreur
+            return Promise.reject(error);
+        }
+    }
+    return new Promise((resolve, reject) => {
+        // Simulation d'une attente de 2 secondes
+        setTimeout(() => {
+            resolve(); // Résoudre la promesse lorsque la connexion est réussie
+        }, 2000);
+    });
+}
+
+// Gestion de la déconnexion
+async function signOutOfMetaMask() {
+    try {
+        // Appeler la route pour se logout
+        const result = await logoutUser(); // Assurez-vous que logoutUser retourne une Promise
+
+        // Vérifiez si la réponse est OK
+        if (!result.ok) {
+            throw new Error('Error during logout.');
+        }
+
+        if (result.ok) {
+            console.log(result);
+            connectWallet.removeEventListener('click', signOutOfMetaMask);
+
+            setTimeout(() => {
+                connectWallet.addEventListener('click', connectWalletwithMetaMask);
+            }, 200);
+
+            // Supprimer l'indicateur de connexion et l'adresse dans le stockage local
+            localStorage.removeItem('isUserConnected');
+            localStorage.removeItem('userAddress');
+            // Il faut aussi supprimer la signature de l'user et le jwt token
+            localStorage.removeItem('userSignature');
+            localStorage.removeItem('username');
+            localStorage.removeItem('username_discord'); // discord username
+            
+            // Réinitialiser le bouton connectWallet pour qu'il demande la connexion la prochaine fois
+            connectWallet.innerHTML = 'Connect Wallet';
+            twitterLoginBtn.innerHTML = 'Link your Twitter';
+
+            // On masque le bouton Twitter
+            document.getElementById('twitterLoginBtn').style.display = 'none';
+
+            // Activer l'écouteur de clic pour connecter le portefeuille
+            connectWallet.addEventListener('click', connectWalletwithMetaMask);
+
+            // Vérifiez que la signature utilisateur est supprimée
+            checkUserSignatureDeleted();
+
+            // On MAJ les éléments réactifs : canvas et boutons
+            await checkIfUserConnected();
+            await updateCanvasBasedOnConnection();
+        }
+    } catch (error) {
+        console.error('Error during logout process:', error);
+        // Gérer les erreurs si nécessaire
+    }
+}
+
+
+// Gestion de la chain sélectionnée
+function checkNetwork() {
+    // Vérifier si MetaMask est installé et disponible
+    const transactionButtonElement = document.getElementById('transactionButton');
+
+    if (typeof window.ethereum !== 'undefined') {
+        const ethereum = window.ethereum;
+
+        // Vérifier le réseau au chargement de la page
+        ethereum.request({ method: 'eth_chainId' })
+            .then(chainId => {
+                if (chainId !== config.chain_id) { // Vérifier si le chainId correspond à Step Network Mainnet
+                    // Afficher un message d'erreur ou désactiver les boutons de transaction
+                    document.getElementById('networkModal').style.display = 'block';
+                    
+                    // Ajouter un écouteur pour le bouton de changement de réseau
+                    document.getElementById('changeNetworkButton').addEventListener('click', async () => {
+                        try {
+                            await window.ethereum.request({
+                                method: 'wallet_switchEthereumChain',
+                                params: [{ chainId: config.chain_id }],
+                            });
+                            // Recharger la page après avoir changé de réseau
+                            window.location.reload();
+                        } catch (switchError) {
+                            if (switchError.code === 4902) {
+                                // Si le réseau n'est pas ajouté dans MetaMask
+                                try {
+                                    await window.ethereum.request({
+                                        method: 'wallet_addEthereumChain',
+                                        params: [
+                                            {
+                                                chainId: config.chain_id,
+                                                rpcUrl: 'https://rpc.blast.io', // Remplacez par votre URL RPC
+                                                chainName: 'Blast', // Remplacez par le nom du réseau
+                                            },
+                                        ],
+                                    });
+                                    window.location.reload();
+                                } catch (addError) {
+                                    console.error('Erreur lors de l\'ajout du réseau:', addError);
+                                }
+                            }
+                            console.error('Erreur lors du changement de réseau:', switchError);
+                        }
+                    });
+                    // Désactiver les boutons de transaction (exemple avec un bouton ayant l'ID "transactionButton")
+                    if (transactionButtonElement) {
+                        transactionButtonElement.disabled = true;
+                    }
+                    return false;
+                } else {
+                    // Activer les boutons de transaction si le réseau est Step Network Mainnet
+                    if (transactionButtonElement) {
+                    transactionButtonElement.disabled = false;
+                    }
+                    return true;
+                }
+            })
+            .catch(error => {
+                console.error('Error during retrieval of the network :', error);
+            });
+    } else {
+        // MetaMask n'est pas installé ou n'est pas disponible
+        console.error('MetaMask isnt installed.');
+        if (transactionButtonElement) {
+            transactionButtonElement.disabled = false;
+        }
+        return false;
+    }
+}
+
+
+// Fonction pour vérifier si userSignature est supprimé de la mémoire locale
+function checkUserSignatureDeleted() {
+    const userSignature = localStorage.getItem('userSignature');
+    const transactionButtonElement = document.getElementById('transactionButton');
+    if (!userSignature) {
+        // Désactiver le bouton de transaction si userSignature est supprimé
+        if (transactionButtonElement) {
+            transactionButtonElement.disabled = true;
+        }
+    } else {
+        // Activer le bouton de transaction si userSignature est présent
+        if (transactionButtonElement) {
+            transactionButtonElement.disabled = false;
+        }
+    }
+}
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    checkInstalled();
+    checkIfUserConnected();
+    window.ethereum.on('accountsChanged', handleAccountsChanged);
+    // Écouter les changements de réseau MetaMask
+    checkNetwork();
+    window.ethereum.on('chainChanged', checkNetwork);
+})
+
+
+async function nubLogin() {
+    if (document.getElementById("nubCanvas")) {
+        // Check du bouton NEXT de la page mynub.html
+        // console.log('User logged');
+        document.getElementById("next").style='block';
+        document.getElementById("next").innerText='Next';
+
+        // Le bouton Save doit être visible ici. On veillera à vérifier une condition de compte log et nft en possession pour ajouter le nub ingame
+        document.getElementById("saveButton").style='block';
+        // On réactive le bouton Next si on est log
+        document.getElementById("next").disabled = false;
+    }
+}
+
+async function nubLogout() {
+    if (document.getElementById("nubCanvas")) {
+        // console.log('The user is not logged');
+        // Effectuer des actions pour un utilisateur non connecté
+        document.getElementById("next").style='block';
+        document.getElementById("next").innerText='You must connect your wallet';
+        // On désactive le bouton Next si on est log
+        document.getElementById("next").disabled = true;
+        // Le bouton Save doit être invisible aussi. On veillera à vérifier une condition de compte log et nft en possession pour ajouter le nub ingame
+        document.getElementById("saveButton").style.display = 'none';
+    }
+}
+
+
+
+let nub_id = null; // nub_id par défaut à null
+
+export async function updateCanvasBasedOnConnection() {
+    //console.log("update canvas quand on se log");
+
+    let currentIndex = 0; // index de l'image réinitialisé à chaque appel
+
+    if (document.getElementById("nubCanvas")) {
+        let nubOwned = await contract.tokensOwnedBy(provider.getSigner().getAddress());
+        // Créer une copie du tableau et ajouter 'null' au début
+        let extensibleNubOwned = ['null', ...nubOwned];
+    
+        let isConnected = await checkIfUserConnected();
+    
+        let nubCanvas = document.getElementById('nubCanvas');
+        let ctx = nubCanvas.getContext('2d');
+    
+        let nubSelectedcanvas = document.getElementById('secondaryNubCanvas');
+        let ctx2 = nubSelectedcanvas.getContext('2d');
+    
+        if (isConnected && extensibleNubOwned.length <= 1) {
+            document.getElementById("next").innerText='';
+            // Ajouter un lien vers Blastr.xyz
+            let link = document.createElement('a');
+            link.href = 'https://blastr.xyz/pacboom-armyera';
+            link.textContent = 'Buy one Nub from the PacBoom : Army era Blastr collection';// Appliquer le style en ligne pour rendre le texte blanc
+            link.style.color = 'white';
+            link.target = '_blank'; // Ouvrir dans un nouvel onglet
+
+            // Ajouter le lien à l'élément avec id="next"
+            document.getElementById("next").appendChild(link);
+        }
+        else if (isConnected && extensibleNubOwned.length > 1) {
+    
+            //Si on est connecté on ajoute à la liste nubOwned le nub NULL qui correspond à aucun NFT
+            //console.log("NUB :", nubOwned);
+    
+            // Supprimer l'écouteur précédent (si existant) pour éviter les duplications
+            const nextButton = document.getElementById("next");
+            const newNextButton = nextButton.cloneNode(true); // Créer un nouveau bouton cloné
+            nextButton.parentNode.replaceChild(newNextButton, nextButton); // Remplacer l'ancien par le nouveau
+    
+            // Ajouter un nouvel écouteur d'événement
+            newNextButton.addEventListener("click", function(event) {
+
+                ctx.clearRect(0, 0, nubCanvas.width, nubCanvas.height);
+
+                const backgroundImage = new Image();
+                // modulo ici pour afficher l'image enregistrée sur le serveur entre 0 et 9
+                // BUT : éviter les multi appels ipfs
+                backgroundImage.src = (extensibleNubOwned[currentIndex] !== 'null' ? config.pacArmyImgIpfs+extensibleNubOwned[currentIndex] : 'img/nub/null') + '.png';
+
+                backgroundImage.onload = function() {
+                    ctx.clearRect(0, 0, nubCanvas.width, nubCanvas.height);
+                    ctx.drawImage(backgroundImage, 0, 0, nubCanvas.width, nubCanvas.height);    
+                };
+
+                nub_id = extensibleNubOwned[currentIndex] !== null ? extensibleNubOwned[currentIndex] : null;
+                showSaveMetaDataButton();
+
+                currentIndex = (currentIndex + 1) % extensibleNubOwned.length;
+            });
+        } else {
+            // Effacer tout le canvas
+            ctx.clearRect(0, 0, nubCanvas.width, nubCanvas.height);
+
+            // Ne pas afficher le bouton save
+            dontShowSaveMetaDataButton();
+    
+            // Charger l'image de fond
+            const backgroundImage = new Image();
+            backgroundImage.src = 'img/nub/null.png';
+    
+            // Attendre que l'image soit chargée
+            backgroundImage.onload = function() {
+                // Dessiner l'image de fond sur le canvas
+                ctx.drawImage(backgroundImage, 0, 0, nubCanvas.width, nubCanvas.height);    
+            };
+
+        }
+
+        // Mettre à jour le petit canvas indiquant le nub sélectionné.
+        //console.log("on appelle getMetadataNub ici lors du login");
+        getMetadataNub();
+    }
+}
+
+const saveButton = document.getElementById('saveButton');
+
+// Fonction pour rendre le bouton visible et retourner le nub_id courant
+export function showSaveMetaDataButton() {
+    saveButton.style.display = 'block';
+    return nub_id == null ? null : nub_id; //on fait l'opération de modulo pour afficher les bonnes images dans le petit canvas et le jeu directement.
+}
+
+function dontShowSaveMetaDataButton() {
+    saveButton.style.display = 'none';
+}
+
+export async function verifyNubOwned(nub_id) {
+    let nubOwned = await contract.tokensOwnedBy(provider.getSigner().getAddress());
+
+    // cela teste la condition pour tous les éléments du tableau nubOwned et retourne true si au moins 1 élément nub_id est présent dans nubOwned
+    return nubOwned.some(nub => {
+        const nub_id_owned = parseInt(nub.toString(), 10);
+        return nub_id_owned === nub_id ;
+    });
+
+}

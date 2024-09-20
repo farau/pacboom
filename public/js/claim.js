@@ -1,1 +1,192 @@
-const a0_0x45c5eb=a0_0x1a3a;(function(_0x3a395d,_0x5bab57){const _0x14c48a=a0_0x1a3a,_0x5bba18=_0x3a395d();while(!![]){try{const _0x5d8089=parseInt(_0x14c48a(0xc2))/0x1*(-parseInt(_0x14c48a(0xca))/0x2)+parseInt(_0x14c48a(0xf3))/0x3+-parseInt(_0x14c48a(0xf0))/0x4*(parseInt(_0x14c48a(0xd5))/0x5)+-parseInt(_0x14c48a(0xde))/0x6+parseInt(_0x14c48a(0xd2))/0x7+-parseInt(_0x14c48a(0xce))/0x8+-parseInt(_0x14c48a(0xcb))/0x9*(-parseInt(_0x14c48a(0xeb))/0xa);if(_0x5d8089===_0x5bab57)break;else _0x5bba18['push'](_0x5bba18['shift']());}catch(_0x53aaf9){_0x5bba18['push'](_0x5bba18['shift']());}}}(a0_0x5101,0x6df82));const provider=new ethers[(a0_0x45c5eb(0xd4))][(a0_0x45c5eb(0xd9))](window['ethereum']),contractAddress=config[a0_0x45c5eb(0xee)],abi=config[a0_0x45c5eb(0xe4)],contract=new ethers[(a0_0x45c5eb(0xb5))](contractAddress,abi,provider),signerAddress=await provider[a0_0x45c5eb(0xe9)]()['getAddress']();function a0_0x1a3a(_0x503d49,_0x7fb776){const _0x51018a=a0_0x5101();return a0_0x1a3a=function(_0x1a3a94,_0xfa82e6){_0x1a3a94=_0x1a3a94-0xb1;let _0x364a67=_0x51018a[_0x1a3a94];return _0x364a67;},a0_0x1a3a(_0x503d49,_0x7fb776);}!signerAddress&&console[a0_0x45c5eb(0xbe)](a0_0x45c5eb(0xb3));function a0_0x5101(){const _0x115b06=['POST','MaxUint256','addEventListener','code','timestamp','<span\x20class=\x22spinner-border\x20spinner-border-sm\x22\x20role=\x22status\x22\x20aria-hidden=\x22true\x22></span>\x20Waiting...','No\x20Ethereum\x20address\x20connected.\x20Please\x20connect\x20with\x20your\x20wallet.','<span\x20class=\x22spinner-border\x20spinner-border-sm\x22\x20role=\x22status\x22\x20aria-hidden=\x22true\x22></span>\x20You\x20approved\x20BLAST\x20to\x20be\x20spent\x20for\x20claiming\x20points...\x20you\x20can\x20validate\x20the\x20transaction\x20and\x20pay\x20','Contract','PointsEarned','find','Claim\x20PAC\x20BOOM\x20Points\x20!','signature','innerText','BigNumber','getEntryFee','Claimed\x20','error','Invalid\x20arguments\x20passed\x20to\x20the\x20function.','parseUnits','\x20BLAST\x20now.','254578rHEUfH','getItem','\x22\x20target=\x22_blank\x22>View\x20Transaction</a>','Transaction\x20réussie\x20:','json','1.0','events','allowance','2LPGUIe','27ayKYuV','constants','Error\x20getting\x20signature:','7142376inpDab','\x20PAC\x20BOOM\x20Points\x20!','wait','getElementById','5072802hnPccQ','eth_requestAccounts','providers','5PTJXSJ','connect','request','Failed\x20to\x20get\x20signature','Web3Provider','transactionHash','numberOfNFTsFromACollection','data','0xb1a5700fa2358173fe465e6ea4ff52e36e88e2ad','729006ApqXqB','disabled','approve','args','click','jwtToken','pacBoomABI','gte','Error\x20:\x20','application/json','Missing\x20values\x20in\x20the\x20response','getSigner','function\x20allowance(address\x20owner,\x20address\x20spender)\x20public\x20view\x20returns\x20(uint256)','1265590EBRuzN','claimPoints','function\x20approve(address\x20spender,\x20uint256\x20amount)\x20public\x20returns\x20(bool)','pacBoomAddress','/getSignature','912036hcYCqw','address','txHash','2528868HhzBLs','Error\x20during\x20the\x20transaction:','innerHTML','from','utils'];a0_0x5101=function(){return _0x115b06;};return a0_0x5101();}let nbNFTs='';transactionButton[a0_0x45c5eb(0xfa)](a0_0x45c5eb(0xe2),async()=>{const _0xf6cc3e=a0_0x45c5eb;try{transactionButton[_0xf6cc3e(0xdf)]=!![],transactionButton[_0xf6cc3e(0xf5)]=_0xf6cc3e(0xb2);const _0x36b584=provider['getSigner'](),_0x1c73e9=await _0x36b584['getAddress'](),_0x144126=_0xf6cc3e(0xdd),_0x22798d=new ethers[(_0xf6cc3e(0xb5))](_0x144126,[_0xf6cc3e(0xed),_0xf6cc3e(0xea)],_0x36b584);let _0x304b3d=ethers[_0xf6cc3e(0xf7)][_0xf6cc3e(0xc0)](_0xf6cc3e(0xc7),0x12);const _0x4bd175=await _0x22798d[_0xf6cc3e(0xc9)](_0x1c73e9,contract[_0xf6cc3e(0xf1)]);if(_0x4bd175[_0xf6cc3e(0xe5)](_0x304b3d)){}else{_0x304b3d=ethers[_0xf6cc3e(0xcc)][_0xf6cc3e(0xf9)];const _0x204a64=await _0x22798d[_0xf6cc3e(0xe0)](contract[_0xf6cc3e(0xf1)],_0x304b3d);await _0x204a64['wait']();}const _0x53d3fa=await contract[_0xf6cc3e(0xbc)]()/0xa**0x12;transactionButton[_0xf6cc3e(0xf5)]=_0xf6cc3e(0xb4)+_0x53d3fa+_0xf6cc3e(0xc1);const _0x4635a2=await contract['numberOfNFTsFromACollection'](_0x1c73e9,0x0),_0x2b7d3d=await contract[_0xf6cc3e(0xdb)](_0x1c73e9,0x1),_0x5dad4c=parseInt(document[_0xf6cc3e(0xd1)]('finalScore')[_0xf6cc3e(0xba)],0xa),_0x1c8e2a=await getSignature(_0x5dad4c),_0x3c561a=contract[_0xf6cc3e(0xd6)](_0x36b584),_0x5edfc5=await _0x3c561a[_0xf6cc3e(0xec)](_0x5dad4c,_0x1c8e2a[_0xf6cc3e(0xb1)],_0x1c8e2a[_0xf6cc3e(0xb9)]),_0x48e75f=await _0x5edfc5[_0xf6cc3e(0xd0)](),_0xf10ada=_0x48e75f[_0xf6cc3e(0xda)];console['log']('Transaction\x20Hash:',_0xf10ada);const _0x4e617e=_0x48e75f[_0xf6cc3e(0xc8)]?.[_0xf6cc3e(0xb7)](_0x2e6411=>_0x2e6411['event']===_0xf6cc3e(0xb6))?.[_0xf6cc3e(0xe1)]?.[0x1];nbNFTs='You\x20own\x20'+_0x4635a2+'\x20NFTs\x20from\x20PAC\x20BOOM\x20collection.<br/>Partners\x20:<br/>You\x20own\x20'+_0x2b7d3d+'\x20NFTs\x20from\x20the\x20Wolves\x20collection\x20!',transactionButton[_0xf6cc3e(0xf5)]=_0xf6cc3e(0xbd)+_0x4e617e+_0xf6cc3e(0xcf);const _0x31a2ae='<a\x20href=\x22https://blastscan.io/tx/'+_0xf10ada+_0xf6cc3e(0xc4);document[_0xf6cc3e(0xd1)](_0xf6cc3e(0xf2))['innerHTML']=_0x31a2ae,document['getElementById']('infosUser')[_0xf6cc3e(0xf5)]=nbNFTs;}catch(_0x15fa2b){console[_0xf6cc3e(0xbe)](_0xf6cc3e(0xf4),_0x15fa2b),_0x15fa2b[_0xf6cc3e(0xfb)]===0xfa1?(transactionButton['disabled']=![],transactionButton[_0xf6cc3e(0xf5)]=_0xf6cc3e(0xb8)):(transactionButton[_0xf6cc3e(0xdf)]=![],transactionButton['innerHTML']=_0xf6cc3e(0xe6)+_0x15fa2b[_0xf6cc3e(0xdc)]['message']);}});async function getSignature(_0x55daf6){const _0xdb123c=a0_0x45c5eb;try{const _0x24a859=await ethereum[_0xdb123c(0xd7)]({'method':_0xdb123c(0xd3)}),_0x6c6a84={'score':_0x55daf6},_0x32e7e8=await fetch(_0xdb123c(0xef),{'method':_0xdb123c(0xf8),'headers':{'Content-Type':_0xdb123c(0xe7),'Authorization':''+localStorage[_0xdb123c(0xc3)](_0xdb123c(0xe3))},'body':JSON['stringify'](_0x6c6a84)});if(!_0x32e7e8['ok'])throw new Error(_0xdb123c(0xd8));const _0xd26bf8=await _0x32e7e8[_0xdb123c(0xc6)]();if(!_0xd26bf8['message']||!_0xd26bf8[_0xdb123c(0xb1)]||!_0xd26bf8[_0xdb123c(0xb9)])throw new Error(_0xdb123c(0xe8));return _0xd26bf8;}catch(_0x26c5f7){console[_0xdb123c(0xbe)](_0xdb123c(0xcd),_0x26c5f7);}}async function claimPoints(_0x428079,_0x1b3e17,_0x1c2a97){const _0x49a97a=a0_0x45c5eb;try{if(!_0x428079||!_0x1b3e17||!_0x1c2a97)throw new Error(_0x49a97a(0xbf));const _0x41cd26=ethers['BigNumber'][_0x49a97a(0xf6)](_0x428079),_0x5d3d62=ethers[_0x49a97a(0xbb)][_0x49a97a(0xf6)](_0x1b3e17),_0x59f52a=await await contract[_0x49a97a(0xd6)](provider[_0x49a97a(0xe9)]())[_0x49a97a(0xec)](_0x41cd26,_0x5d3d62,_0x1c2a97),_0x70fc03=await _0x59f52a[_0x49a97a(0xd0)]();console['log'](_0x49a97a(0xc5),_0x70fc03);}catch(_0x50bd70){console['error']('Erreur\x20lors\x20de\x20l\x27appel\x20de\x20claimPoints:',_0x50bd70);}}
+// Définition du fournisseur de signer (provider) Ethereum
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+// Chargement de l'adresse du contrat et de l'ABI depuis le fichier de configuration
+const contractAddress = config.pacBoomAddress;
+const abi = config.pacBoomABI;
+
+// Instanciation du contrat intelligent PacBoomTest
+const contract = new ethers.Contract(contractAddress, abi, provider);
+
+// Récupération de l'adresse Ethereum actuellement connectée
+const signerAddress = await provider.getSigner().getAddress();
+
+// Vérification si l'adresse est connectée
+if (!signerAddress) {
+    console.error("No Ethereum address connected. Please connect with your wallet.");
+}
+
+// Déclaration de nbNFTs
+let nbNFTs = '';
+
+// Écouteur d'événement pour le clic sur le bouton
+transactionButton.addEventListener("click", async () => {
+    try {
+        transactionButton.disabled = true;
+        transactionButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Waiting...';
+
+        const signer = provider.getSigner();
+        const userAddress = await signer.getAddress();
+        
+        // Le contrat ERC20
+        const tokenContractAddress = "0xb1a5700fa2358173fe465e6ea4ff52e36e88e2ad"; // Remplacer par l'adresse du contrat ERC20
+        const tokenContract = new ethers.Contract(tokenContractAddress, [
+            "function approve(address spender, uint256 amount) public returns (bool)",
+            "function allowance(address owner, address spender) public view returns (uint256)"
+        ], signer);
+
+        // Montant à approuver (1 BLAST)
+        let amountToApprove = ethers.utils.parseUnits("1.0", 18); // Montant de 1 BLAST avec 18 décimales
+
+        // Vérifier combien de BLAST ont déjà été approuvés
+        const allowance = await tokenContract.allowance(userAddress, contract.address);
+
+        if (allowance.gte(amountToApprove)) {
+            //console.log("Pas besoin d'approuver, l'allocation est suffisante.");
+        } else {
+            //console.log("L'allocation n'est pas suffisante. Approve nécessaire.");
+            // Approuver la dépense des tokens supplémentairesconst 
+            amountToApprove = ethers.constants.MaxUint256; // Assurez-vous que c'est le bon nombre de décimales
+            const approvalTx = await tokenContract.approve(contract.address, amountToApprove);
+            await approvalTx.wait(); // Attendre la confirmation de l'approbation
+        }
+
+        const entryFee = await contract.getEntryFee() / 10**18; //récupère le prix à payer en Blast
+
+        transactionButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> You approved BLAST to be spent for claiming points... you can validate the transaction and pay ${entryFee} BLAST now.`;
+
+        // Récupérer le score à partir des données
+        const score = parseInt(document.getElementById("finalScore").innerText, 10);
+        await saveScoreAndClaimPoints(score);
+
+    } catch (error) {
+        console.error('Error during the transaction:', error);
+        if (error.code === 4001) {
+            transactionButton.disabled = false;
+            transactionButton.innerHTML = 'Claim PAC BOOM Points !';
+        } else {
+            transactionButton.disabled = false;
+            transactionButton.innerHTML = 'Error : ' + error.data.message;
+        }
+    }
+});
+
+async function saveScoreAndClaimPoints(score) {
+
+    // Récupérer le signer    
+    const signer = provider.getSigner();
+    const userAddress = await signer.getAddress();
+    
+    // Récupérer le nombre de NFTs possédés par le joueur
+    const numberOfNFTs = await contract.numberOfNFTsFromACollection(userAddress, 0); //nombre de NFT de PacBoom
+    const numberOfNFTs2 = await contract.numberOfNFTsFromACollection(userAddress, 1); //nombre de NFT de The Wolve
+    try {
+        // Envoyer la requête POST pour sauvegarder le score
+        const response = await fetch('/verify-score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ score: score })
+        });
+
+        // Vérifier si la requête a réussi
+        if (!response.ok) {
+            throw new Error('Failed to save score');
+        }
+
+        // Lire la réponse JSON
+        const data = await response.json();
+        // Obtenir la signature du score, assurez-vous que getSignature retourne une promesse
+        const signatureData = await getSignature(data.score);
+
+        // Envoyer la transaction pour appeler claimPoints
+        const contractWithSigner = contract.connect(signer);
+        const transaction = await contractWithSigner.claimPoints(data.score, signatureData.timestamp, signatureData.signature);
+
+        // Attendre la confirmation de la transaction
+        const receipt = await transaction.wait();
+
+        // Extraire le hash de la transaction
+        const txHash = receipt.transactionHash;
+        console.log('Transaction Hash:', txHash);
+
+        // Rechercher les points attribués dans les événements
+        const pointsAwarded = receipt.events?.find(event => event.event === "PointsEarned")?.args?.[1];
+
+        // Mettre à jour l'interface utilisateur
+        const nbNFTs = `You own ${numberOfNFTs} NFTs from PAC BOOM collection.<br/>Partners :<br/>You own ${numberOfNFTs2} NFTs from the Wolves collection !`;
+        
+        transactionButton.innerHTML = `Claimed ${pointsAwarded} PAC BOOM Points !`;
+        const txLink = `<a href="https://blastscan.io/tx/${txHash}" target="_blank">View Transaction</a>`;
+        document.getElementById("txHash").innerHTML = txLink;
+        document.getElementById("infosUser").innerHTML = nbNFTs;
+
+    } catch (error) {
+        console.error('Erreur lors de l\'initialisation du score:', error);
+    }
+}
+
+async function getSignature(score) {
+    try {
+        // Récupérer l'adresse du compte connecté avec MetaMask
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+
+        // Créer un objet pour la requête
+        const requestBody = {
+            score: score
+        };
+
+        // Envoyer la requête POST au back-end
+        const response = await fetch('/getSignature', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to get signature');
+        }
+
+        // Récupérer la réponse JSON du serveur
+        const data = await response.json();
+
+        // Utiliser les données retournées (message, signature, timestamp)
+        //console.log("Response from backend:", data);
+
+        if (!data.message || !data.timestamp || !data.signature) {
+            throw new Error("Missing values in the response");
+        }
+        // Vous pouvez maintenant envoyer ces données à votre contrat intelligent
+        return data;
+
+    } catch (error) {
+        console.error('Error getting signature:', error);
+    }
+}
+
+
+// Exemple d'appel de la fonction claimPoints avec des valeurs correctes
+async function claimPoints(score, timestamp, signature) {
+    try {
+        if (!score || !timestamp || !signature) {
+            throw new Error("Invalid arguments passed to the function.");
+        }
+
+        // Assurez-vous que score et timestamp sont correctement définis
+        const bigNumberScore = ethers.BigNumber.from(score); // Convertir en BigNumber si nécessaire
+        const bigNumberTimestamp = ethers.BigNumber.from(timestamp); // Idem pour timestamp
+
+        // Créer la transaction pour appeler claimPoints
+        const transaction = await await contract.connect(provider.getSigner()).claimPoints(bigNumberScore, bigNumberTimestamp, signature);
+
+        // Attendre la confirmation de la transaction
+        const receipt = await transaction.wait();
+        console.log("Transaction réussie :", receipt);
+
+    } catch (error) {
+        console.error("Erreur lors de l'appel de claimPoints:", error);
+    }
+}
