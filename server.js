@@ -331,29 +331,6 @@ app.get('/:page', (req, res, next) => {
 });
 
 
-// Exemple de requête pour récupérer des données depuis PostgreSQL (liste des utilisateurs)
-app.get('/users', async (req, res) => {
-    let client;
-    try {
-        // Obtenez un client de la pool
-        client = await pool.connect();
-
-        // Exécutez la requête SQL pour récupérer les utilisateurs
-        const { rows: users } = await client.query('SELECT * FROM users');
-
-        // Renvoyez la réponse avec les utilisateurs
-        res.status(200).json(users);
-    } catch (err) {
-        console.error('Erreur lors de la récupération des utilisateurs:', err);
-        res.status(500).json({ error: 'Erreur serveur lors de la récupération des utilisateurs' });
-    } finally {
-        // Libérez toujours le client, même en cas d'erreur
-        if (client) client.release();
-    }
-});
-
-
-
 // Route pour sauvegarder lees metadata des users dans la base de données
 app.post('/saveMetadata', async (req, res) => {
     const username = req.body.username;

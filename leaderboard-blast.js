@@ -420,7 +420,7 @@ async function getUsers() {
 
         // Exécutez la requête SQL pour récupérer les utilisateurs
         const { rows: users } = await client.query(`
-            SELECT * 
+            SELECT username, wallet_address 
             FROM users
             WHERE wallet_address = LOWER(wallet_address)
         `);
