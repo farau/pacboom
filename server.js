@@ -22,6 +22,10 @@ app.set('view engine', 'ejs');
 // Indiquer le répertoire où se trouvent vos fichiers EJS
 app.set('views', path.join(__dirname, 'public'));
 
+// Dites à Express de faire confiance aux proxies
+app.set('trust proxy', true);
+
+
 // Middleware pour parser le corps de la requête en JSON
 app.use(express.json(), flash());
 app.use(cookieParser()); // Utiliser cookieParser pour gérer les cookies sécurisés
@@ -941,14 +945,18 @@ app.post('/verify-score', verifyJWT, async (req, res) => {
         if (score > 50000 && timeDiffInMilliseconds < 120000 && timeDiffInMilliseconds > 0) {
             //verifiedScore = 3; // Score renvoyé en cas de tricherie
             cheatIncrement = 1; // Incrémenter le compteur de tricherie
-        } else if (score > 10000 && timeDiffInMilliseconds < 40000 && timeDiffInMilliseconds > 0) {
+        } 
+        if (score > 10000 && timeDiffInMilliseconds < 40000 && timeDiffInMilliseconds > 0) {
             //verifiedScore = 1; // Score renvoyé en cas de tricherie
             cheatIncrement = 1; // Incrémenter le compteur de tricherie
         //Si le cheater passe tous ces contrôles on en met un dernier qui est fatidique... 
         // ---> la condition sera invalidée grâce à notre aléa, on le considère comme cheater .
         // ---> la condition donnera par ex: if(104300+0 != 0) donc condition bien invalidée
-        } else if ((score+req.session.randomValue) != req.session.score) {
-            cheatIncrement = 1
+        } 
+        if ((score+req.session.randomValue) != req.session.score) {
+            cheatIncrement = 1;
+        } else {
+            cheatIncrement = 0;
         }
 
         // Mise à jour de la base de données si nécessaire
