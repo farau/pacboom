@@ -1029,31 +1029,42 @@ app.post('/increment-score', verifyJWT, (req, res) => {
 
 // Route pour sauvegarder l'id du Nub possédé dans la base de données
 app.post('/saveNub', verifyJWT, async (req, res) => {
-
-    // Commencez une nouvelle transaction
     const client = await pool.connect();
 
     try {
         const { nub_id } = req.body;
-        
-        // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
-        const address = req.userAddress.toLowerCase();
-        // Vérifiez si l'adresse est fournie
+
+        // Validation des données d'entrée
+        if (!nub_id || typeof nub_id !== 'number') {
+            return res.status(400).send('Invalid Nub ID provided.');
+        }
+
+        // Récupération de l'adresse MetaMask de l'utilisateur
+        const address = req.userAddress?.toLowerCase();
         if (!address) {
             return res.status(400).send('Address not provided.');
         }
 
+        // Vérification si l'utilisateur existe dans la base de données
+        const userQuery = await client.query(
+            `SELECT * FROM users WHERE wallet_address = LOWER($1);`,
+            [address]
+        );
 
-        // Vérifiez si le nom d'utilisateur est fourni dans la base de données
-        const usernameQuery = await client.query(`
-            SELECT username FROM users
-            WHERE wallet_address = LOWER($1); 
-        `, [address]);
+        if (userQuery.rowCount === 0) {
+            return res.status(404).send('User not found.');
+        }
 
-        // Commencez la transaction
+        // Vérification si le Nub est bien possédé par l'utilisateur
+        const nubOwned = await verifyNubOwned(nub_id, address);
+        if (!nubOwned) {
+            return res.status(400).send('Nub not owned by the user.');
+        }
+
+        // Début de la transaction pour la mise à jour
         await client.query('BEGIN');
 
-        // Mettez à jour le score de l'utilisateur
+        // Mise à jour du Nub ID pour l'utilisateur
         const updateQuery = `
             UPDATE users
             SET nub_id = $1
@@ -1062,73 +1073,124 @@ app.post('/saveNub', verifyJWT, async (req, res) => {
         `;
         const updateResult = await client.query(updateQuery, [nub_id, address]);
 
-        // Validez la transaction
-        await client.query('COMMIT');
-
-        // Vérifiez le succès de la mise à jour
         if (updateResult.rowCount > 0) {
-            res.status(201).json(updateResult.rows);
+            await client.query('COMMIT');
+            res.status(200).json(updateResult.rows[0]); // Renvoie les détails de l'utilisateur mis à jour
         } else {
-            res.status(500).send('Internal Server Error');
+            await client.query('ROLLBACK');
+            res.status(500).send('Failed to update Nub ID.');
         }
     } catch (error) {
-        console.error('Error saving nub id to database:', error);
+        // En cas d'erreur, rollback de la transaction et log de l'erreur
+        await client.query('ROLLBACK');
+        console.error('Error saving Nub ID to database:', error);
         res.status(500).send('Internal Server Error');
     } finally {
-        if (client) {
-            client.release(); // Libérer le client après utilisation
-        }
+        client.release(); // Libère le client après utilisation
     }
 });
 
 
+
 // Route pour récupérer l'id du Nub possédé dans la base de données
 app.post('/getNub', verifyJWT, async (req, res) => {
-
-    // Commencez une nouvelle transaction
     const client = await pool.connect();
+    let nub_id = null; // Initialisation de nub_id pour une utilisation ultérieure
 
     try {
         // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
         const address = req.userAddress.toLowerCase();
+
         // Vérifiez si l'adresse est fournie
         if (!address) {
             return res.status(400).send('Address not provided.');
         }
 
+        // Vérification si l'utilisateur existe dans la base de données
+        const userQuery = await client.query(
+            `SELECT * FROM users WHERE wallet_address = LOWER($1);`,
+            [address]
+        );
 
-        // Commencez la transaction
+        if (userQuery.rowCount === 0) {
+            return res.status(404).send('User not found.');
+        }
+        // Commencez une transaction
         await client.query('BEGIN');
 
-        // Mettez à jour le score de l'utilisateur
-        const updateQuery = `
+        // Sélectionner le nub_id de l'utilisateur dans la base de données
+        const selectQuery = `
             SELECT nub_id
             FROM users
             WHERE wallet_address = $1;
         `;
-        const returnResult = await client.query(updateQuery, [address]);
+        const selectResult = await client.query(selectQuery, [address]);
+
+        // Vérifiez si un nub_id a été trouvé
+        if (selectResult.rowCount > 0) {
+            nub_id = selectResult.rows[0].nub_id;
+            const nub_owned = await verifyNubOwned(nub_id, address);
+            // On vérifie si le Nub est bien possédé dans la blockchain
+            if (nub_id && !nub_owned) {
+                // Si le Nub n'est pas possédé, réinitialiser nub_id à null
+                const updateQuery = `
+                    UPDATE users
+                    SET nub_id = null
+                    WHERE wallet_address = $1
+                    RETURNING *;
+                `;
+                const updateResult = await client.query(updateQuery, [address]);
+                nub_id = updateResult.rows[0].nub_id;
+            }
+        } else {
+            // Si aucun nub_id n'est trouvé
+            await client.query('ROLLBACK');
+            return res.status(404).send('Nub not found for the provided address.');
+        }
 
         // Validez la transaction
         await client.query('COMMIT');
 
-        // Vérifiez le succès de la mise à jour
-        if (returnResult.rowCount > 0) {
-            res.status(201).json(returnResult.rows);
-        } else {
-            res.status(500).send('Internal Server Error');
-        }
+        // Répondez avec le résultat
+        res.status(200).json({ nub_id : nub_id });
     } catch (error) {
-        console.error('Error retrieving nub id for user :', error);
+        // Annulez la transaction en cas d'erreur
+        await client.query('ROLLBACK');
+        console.error('Error retrieving nub id for user:', error);
         res.status(500).send('Internal Server Error');
     } finally {
-        if (client) {
-            client.release(); // Libérer le client après utilisation
-        }
+        // Libérer le client après utilisation
+        client.release();
     }
 });
 
+const config = require('./config.js');
 const privateKey = process.env.PRIVATE_KEY;
 const signer = new Wallet(privateKey);
+
+// Chargement de l'adresse du contrat du NFT PacNUB et de l'ABI depuis le fichier de configuration
+const contractAddress = config.pacNubAddress; 
+const abi = config.pacNubABI;
+
+// Initialisation du provider (vous pouvez utiliser Infura, Alchemy, ou un autre service)
+const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL); // Assurez-vous que `RPC_URL` est défini dans votre .env
+
+
+// Instanciation du contrat intelligent PacBoomTest
+const contract = new ethers.Contract(contractAddress, abi, provider);
+
+
+// Fonction pour vérifier si un Nub est possédé
+async function verifyNubOwned(nub_id, address) {
+    let nubOwned = await contract.tokensOwnedBy(address);
+
+    // cela teste la condition pour tous les éléments du tableau nubOwned et retourne true si au moins 1 élément nub_id est présent dans nubOwned
+    return nubOwned.some(nub => {
+        const nub_id_owned = parseInt(nub.toString(), 10);
+        return nub_id_owned === nub_id ;
+    });
+
+}
 
 // Route pour récupérer la signature servant à valider le claim de PB points
 app.post('/getSignature', verifyJWT, async (req, res) => {
