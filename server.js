@@ -1034,11 +1034,6 @@ app.post('/saveNub', verifyJWT, async (req, res) => {
     try {
         const { nub_id } = req.body;
 
-        // Validation des données d'entrée
-        if (!nub_id || typeof nub_id !== 'number') {
-            return res.status(400).send('Invalid Nub ID provided.');
-        }
-
         // Récupération de l'adresse MetaMask de l'utilisateur
         const address = req.userAddress?.toLowerCase();
         if (!address) {
@@ -1182,6 +1177,10 @@ const contract = new ethers.Contract(contractAddress, abi, provider);
 
 // Fonction pour vérifier si un Nub est possédé
 async function verifyNubOwned(nub_id, address) {
+
+    if (nub_id == null) {
+        return true;
+    }
     let nubOwned = await contract.tokensOwnedBy(address);
 
     // cela teste la condition pour tous les éléments du tableau nubOwned et retourne true si au moins 1 élément nub_id est présent dans nubOwned
