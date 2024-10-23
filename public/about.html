@@ -32,6 +32,12 @@
                         <a class="nav-link" href="myaccount">My account</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="myboost">My boosts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="arena">Arena</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="about">About</a>
                     </li>
                     <li class="nav-item">
@@ -45,7 +51,21 @@
                         <a class="nav-link" id="twitterLoginBtn" style="display: none;">Link your Twitter</a>
                     </li>
                     <li class="nav-item d-sm-block d-lg-inline">
-                        <button id="connectWallet">Connect Wallet</button>
+                        <div class="dropdown">
+                            <button id="connectWallet">Connect Wallet</button>
+                            <div id="walletInfo" class="dropdown-content" style="display: none;">
+                                <p>PB points:<span id="mypbpoints"></span></p>
+                                <p>Boosts:<span id="myboost"></span></p>
+                                <p>Level:<span id="player-level-text"></span></p>
+                                <div class="d-flex align-items-center mb-2">
+                                    <span id="exp-label" class="mr-2">EXP:</span> <!-- Le label EXP -->
+                                    <div class="progress w-100">
+                                        <div id="player-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 1%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                    </div>
+                                </div>                                
+                                <p id="logoutWallet" style="display: none;">Logout</p>
+                            </div>
+                        </div>
                     </li>
                 
                 </ul>
@@ -55,7 +75,7 @@
 
     <div id="networkModal" class="network-modal">
         <div class="network-modal-content">
-            <img src="img/logo.gif" height="70" class="d-inline-block align-top">
+            <img src="img/logo.gif" height="70" class="img-fluid d-inline-block align-top">
             <p>Wrong network. Please change the network.</p>
             <button id="changeNetworkButton">Change</button>
         </div>
@@ -93,7 +113,7 @@
                 <tbody>
                     <tr class="white-text">
                         <td>PacBoom contract address</td>
-                        <td>0x3743E1dFC5D91BA60c8B9561A436982f92866843</td>
+                        <td>0x17a51b837db44c390159218d30174ebeda2675f4</td>
                     </tr>
                     <tr class="white-text">
                         <td>PacBoom points operator address</td>
@@ -105,67 +125,80 @@
 
     </div>
 
-    <div class="container mt-5 mb-5 text-center">
+    <div class="container mt-5 mb-5">
         <h2 class="text-center">PacBoom join the <img src="img/blast_name.svg" alt="Blast name" style="max-width: 150px;"> party !</h1><br>
         <p>
             Support the Blast ecosystem and achieve the best score to receive PAC BOOM points.
         </p>
-        <p>Score less than 10,000 at PacBoom game and interact with Blast blockchain to receive 3 PAC BOOM points !</p>
-        <p>Score more than 10,000 and less than 50 000 at PacBoom game and interact with Blast blockchain to receive 10 PAC BOOM points !</p>
-        <p>Score more than 50,000 and less than 100 000 at PacBoom game and interact with Blast blockchain to receive 50 PAC BOOM points !</p>
-        <p>If you reach 100,000 at PacBoom game and interact with Blast blockchain you will receive 100 PAC BOOM points !</p>
-        <br/>
         <p style="color: #FCFC03;">
-            <i>Pac Boom has just secured 10,000 Blast Gold — now it's your chance to claim some !<br/> 
-            Score and get PacBoom points for 1 BLAST and become eligible to receive Blast Gold !</i>
-        </p>
+            Score and earn PacBoom points by paying for 1 to 3 BLAST, and become eligible to receive Blast Gold, Blast Tokens, or other special prizes!
+        </p>        
         <h2 class="text-center mt-5">Introducing PacBoom NFT </h1><br>
         <div class="text-center mb-5">
             <img src="img/pacboom-nfts.gif" alt="PAC BOOM NFTs" style="max-width: 150px;">
+            <p>Buy a <i>refundable</i> NFT from PAC BOOM collection on <a href="https://blastr.xyz/pacboom">Blastr</a> to get a bonus on PAC BOOM game.</p>
+            <p>The supply of the collection is 1800 NFTs characterized by different traits.</p>
+            <p>You can get an additional bonus if you hold more than 5 NFTs.</p>    
         </div>
-        <p>Buy a <i>refundable</i> NFT from PAC BOOM collection on <a href="https://blastr.xyz/pacboom">Blastr</a> to get a bonus on PAC BOOM game.</p>
-        <p>The supply of the collection is 1800 NFTs characterized by different traits.</p>
-        <p>For each NFT held, you will get a bonus of 100%.</p>
-        <p>If you have 3 NFT you will receive a bonus of 300% and <i>the maximum bonus you can get is 1000% with 10 NFTs.</i></p>
 
-        <div class="table-responsive mt-5">
-            <table class="table table-striped">
+        <h2 class="text-center mt-5">Have more fun with PacBoom Army NFT !</h1><br>
+        <div class="text-center mb-5">
+            <img src="img/pacboom-army.gif" alt="PAC BOOM Army NFTs" style="max-width: 150px;">
+            <p>Buy a <i>refundable</i> NFT from PAC BOOM Army collection on <a href="https://blastr.xyz/pacboom-armyera">Blastr</a> and unlock additional gameplay on PacBoom!</p>
+            <p>The supply of the collection is 800 NFTs characterized by different traits.</p>
+            <p>Traits with army gives you the ability to shoot your ennemies!</p>
+            <p>Other traits may unlock new abilities in the future 👀</p>
+            <p>You get a x2 bonus multiplier on your score when you play with a Nub.</p>
+        </div>
+
+    
+        <h2 class="text-center mt-5">Introducing the Arena Mode !</h1><br>
+        <div class="text-center mb-5">
+            <p>A new way to spend your PacBoom points and earn special prizes.</p>
+            <img src="img/konk.webp" alt="Konk boss" style="max-width: 150px;"> 
+        </div>
+
+        <div class="container mt-4">
+            <h4 class="text-center">Boss Statistics</h3>
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr class="white-text">
-                        <th scope="col">Score</th>
-                        <th scope="col">PB points without NFT</th>
-                        <th scope="col">PB points with 1 NFT</th>
-                        <th scope="col">PB points with 10 NFT</th>
+                        <th>Statistic</th>
+                        <th>Description</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="white-text">
-                        <td>&lt; 10,000</td>
-                        <td>3</td>
-                        <td>6</td>
-                        <td>33</td>
+                        <td>Serial</td>
+                        <td>The serial number that identifies the boss.</td>
                     </tr>
                     <tr class="white-text">
-                        <td>between 10,000 and 50,000</td>
-                        <td>10</td>
-                        <td>20</td>
-                        <td>110</td>
+                        <td>Life</td>
+                        <td>The remaining life of the boss.</td>
                     </tr>
                     <tr class="white-text">
-                        <td>between 50,000 and 100,000</td>
-                        <td>50</td>
-                        <td>100</td>
-                        <td>550</td>
+                        <td>Prize</td>
+                        <td>The prize associated with the boss. The prize will be awarded to the killer of the boss!</td>
                     </tr>
                     <tr class="white-text">
-                        <td>&gt; 100,000</td>
-                        <td>100</td>
-                        <td>200</td>
-                        <td>1100</td>
+                        <td>Entry Fee</td>
+                        <td>The cost in Blast tokens to attack the boss.</td>
+                    </tr>
+                    <tr class="white-text">
+                        <td>Damage</td>
+                        <td>The damage dealt by the boss in PacBoom points. This means that each time you attack the boss, your number of PB points will be decreased by this damage.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <p>To attack the boss, you need to have a number of PacBoom points greater than the damage statistic; otherwise, you won't be able to attack it.</p>
+        
+        <h2 class="text-center mt-5">Artwork</h1><br>
+        <div class="text-center mb-5">
+            <img src="img/artwork-pacboom.png" alt="PAC BOOM artwork" class="img-fluid rounded shadow" style="max-width: 40%; height: auto;">
+            <p class="text-muted">Explore the exciting world of PAC BOOM!</p>
+        </div>
+        
 
     </div>
 

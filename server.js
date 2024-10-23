@@ -16,6 +16,24 @@ const { ethers, Wallet } = require('ethers');
 
 require('dotenv').config();
 
+const config = require('./config.js');
+const privateKey = process.env.PRIVATE_KEY;
+const signer = new Wallet(privateKey);
+
+// Chargement de l'adresse du contrat du NFT PacNUB et de l'ABI depuis le fichier de configuration
+const contractAddress = config.pacNubAddress; 
+const abi = config.pacNubABI;
+
+const pacboomAddress = config.pacBoomAddress; 
+const pacboomAbi = config.pacBoomABI;
+// Initialisation du provider (vous pouvez utiliser Infura, Alchemy, ou un autre service)
+const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL); // Assurez-vous que `RPC_URL` est défini dans votre .env
+
+// Instanciation du contrat intelligent PacNub
+const contractPacNub = new ethers.Contract(contractAddress, abi, provider);
+// Instanciation du contrat intelligent PacBoom
+const contractPacBoom = new ethers.Contract(pacboomAddress, pacboomAbi, provider);
+
 // Configurer le moteur EJS pour rendu dynamique des pages html/css
 app.set('view engine', 'ejs');
 
@@ -264,8 +282,8 @@ async function saveLeaderboardToFile() {
 // Appeler immédiatement la fonction pour calculer et stocker le leaderboard au démarrage du serveur
 saveLeaderboardToFile();
 
-// Mettre à jour le leaderboard toutes les 15 minutes
-setInterval(saveLeaderboardToFile, 15 * 60 * 1000);
+// Mettre à jour le leaderboard toutes les 10 minutes
+setInterval(saveLeaderboardToFile, 10 * 60 * 1000);
 
 // Route pour renvoyer les données du leaderboard
 app.get('/getLeaderboard', (req, res) => {
@@ -315,7 +333,34 @@ app.post('/getUserLeaderboard', verifyJWT, (req, res) => {
     }
 });
 
-// -----------------------
+// TOTAL ETH LOCKED ---------------------------
+let totallockedEth = 0;
+
+// Fonction pour sauvegarder le leaderboard dans un fichier JSON
+async function saveTotalEthLocked() {
+    try {
+        totallockedEth = await contractPacBoom.getTotalLockedEtherAllPlayers();  // Récupérer les Eth locked
+        totallockedEth = parseInt(totallockedEth.toString());
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour de la TVL de la dApp', error);
+    }
+}
+// Mettre à jour la TVL toutes les 30 secondes
+setInterval(saveTotalEthLocked, 30 * 1000);
+
+// Route pour récupérer les total eth locked
+app.post('/get-total-eth-locked', (req, res) => {
+    //On récupère le nb total d'eth lock dans la platform
+    try {
+        const value = totallockedEth;
+        res.status(200).json({value});
+    } catch {
+        console.error('Error fetching total value locked');
+        res.status(500).json({ error: 'Error fetching total value locked' });
+    }
+});
+
+// --------------------------------------------
 
 
 // Middleware pour servir les fichiers statiques (HTML, CSS, JavaScript, images, etc.)
@@ -943,11 +988,11 @@ app.post('/verify-score', verifyJWT, async (req, res) => {
 
     try {
         if (score > 50000 && timeDiffInMilliseconds < 120000 && timeDiffInMilliseconds > 0) {
-            //verifiedScore = 3; // Score renvoyé en cas de tricherie
+            //verifiedScore = 1; // Score renvoyé en cas de tricherie
             cheatIncrement = 1; // Incrémenter le compteur de tricherie
         } 
-        if (score > 10000 && timeDiffInMilliseconds < 40000 && timeDiffInMilliseconds > 0) {
-            //verifiedScore = 1; // Score renvoyé en cas de tricherie
+        if (score > 10000 && timeDiffInMilliseconds < 30000 && timeDiffInMilliseconds > 0) {
+            //verifiedScore = 2; // Score renvoyé en cas de tricherie
             cheatIncrement = 1; // Incrémenter le compteur de tricherie
         //Si le cheater passe tous ces contrôles on en met un dernier qui est fatidique... 
         // ---> la condition sera invalidée grâce à notre aléa, on le considère comme cheater .
@@ -1159,29 +1204,13 @@ app.post('/getNub', verifyJWT, async (req, res) => {
     }
 });
 
-const config = require('./config.js');
-const privateKey = process.env.PRIVATE_KEY;
-const signer = new Wallet(privateKey);
-
-// Chargement de l'adresse du contrat du NFT PacNUB et de l'ABI depuis le fichier de configuration
-const contractAddress = config.pacNubAddress; 
-const abi = config.pacNubABI;
-
-// Initialisation du provider (vous pouvez utiliser Infura, Alchemy, ou un autre service)
-const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL); // Assurez-vous que `RPC_URL` est défini dans votre .env
-
-
-// Instanciation du contrat intelligent PacBoomTest
-const contract = new ethers.Contract(contractAddress, abi, provider);
-
-
 // Fonction pour vérifier si un Nub est possédé
 async function verifyNubOwned(nub_id, address) {
 
     if (nub_id == null) {
         return true;
     }
-    let nubOwned = await contract.tokensOwnedBy(address);
+    let nubOwned = await contractPacNub.tokensOwnedBy(address);
 
     // cela teste la condition pour tous les éléments du tableau nubOwned et retourne true si au moins 1 élément nub_id est présent dans nubOwned
     return nubOwned.some(nub => {
@@ -1250,10 +1279,45 @@ app.post('/getSignature', verifyJWT, async (req, res) => {
                 client.release();
             }
         }
+        // Si tentative de triche
+        if ((score+req.session.randomValue) != req.session.score) {
+            req.session.score = 1;
+        } 
+        // Générer un message
+        const timestamp = Math.floor(Date.now() / 1000);
+        const message = `${timestamp}${address}${req.session.score}`;
+
+        // Signer le message
+        const messageHash = ethers.utils.id(message);
+        const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
+
+        // Envoyer la signature et le message signé au client
+        res.status(200).json({
+            score: req.session.score,
+            message,
+            signature,
+            timestamp
+        });
+    } catch (error) {
+        console.error('Error sending signature:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Route pour récupérer la signature servant à valider l'attaque d'un boss
+app.post('/getSignatureBoss', verifyJWT, async (req, res) => {
+    try {
+        // Récupérez l'adresse MetaMask de l'utilisateur depuis la requête
+        const address = req.userAddress.toLowerCase();
+
+        // Vérifiez si l'adresse est fournie
+        if (!address) {
+            return res.status(400).send('Address not provided.');
+        }
 
         // Générer un message
         const timestamp = Math.floor(Date.now() / 1000);
-        const message = `${timestamp}${address}${score}`;
+        const message = `${timestamp}${address}`;
 
         // Signer le message
         const messageHash = ethers.utils.id(message);
@@ -1461,7 +1525,7 @@ app.get('/getDiscordInfos', verifyJWT, async (req, res) => {
     const address = req.userAddress.toLowerCase();
 
     if (!address) {
-        return res.status(400).send('Adresse manquante');
+        return res.status(400).send('Address is missing');
     }
 
     const client = await pool.connect();
@@ -1601,7 +1665,83 @@ app.get('/myaccount', (req, res) => {
     });
 });
 
+// Fonction de calcul de progression
+function getPointsToNextLevel(level) {
+    const basePoints = 30; // Ajusté pour la moyenne des points par partie
+    const difficultyFactor = 1.5; // Facteur pour augmenter la difficulté progressivement
+    const maxLevel = 100; // Niveau maximum
 
+    if (level >= maxLevel) {
+        return 0; // Aucun point nécessaire si le joueur a atteint le niveau max
+    }
+
+    // Progression quadratique ajustée avec facteur de difficulté
+    const pointsToNextLevel = basePoints * Math.pow(level, difficultyFactor);
+
+    return Math.round(pointsToNextLevel); // Arrondir pour avoir des valeurs entières
+}
+
+// Fonction de récupération des points pour le prochain niveau
+function getPointsToNextLevel(level) {
+    const basePoints = 30; // Ajusté pour la moyenne des points par partie
+    const difficultyFactor = 1.5; // Facteur pour augmenter la difficulté progressivement
+    const maxLevel = 100; // Niveau maximum
+
+    if (level >= maxLevel) {
+        return 0; // Aucun point nécessaire si le joueur a atteint le niveau max
+    }
+
+    // Progression quadratique ajustée avec facteur de difficulté
+    const pointsToNextLevel = basePoints * Math.pow(level, difficultyFactor);
+
+    return Math.round(pointsToNextLevel); // Arrondir pour avoir des valeurs entières
+}
+
+// Fonction pour récupérer les points et calculer dynamiquement le niveau
+function getPlayerLevel(points) {
+    let level = 0;
+    let pointsToNextLevel = 0;
+    
+    while (points >= pointsToNextLevel) {
+        points -= pointsToNextLevel;
+        level++;
+        pointsToNextLevel = getPointsToNextLevel(level); // Fonction qui retourne les points nécessaires pour le prochain niveau
+    }
+    
+    return level;
+}
+
+
+// Fonction pour récupérer le niveau d'un user
+app.post('/get-player-level', verifyJWT, async (req, res) => {
+    const address = req.userAddress.toLowerCase(); // L'adresse du wallet utilisateur, extraite via verifyJWT
+    const points = req.body.points;
+    
+    // Vérifiez si l'adresse est fournie
+    if (!address) {
+        return res.status(400).send('Address not provided.');
+    }
+    if (points === null || points === undefined) {
+        return res.status(400).send('Points not provided.');
+    }
+    try {
+        // Charger les données du leaderboard (stockées dans leaderboardData par exemple)
+        const leaderboardUser = leaderboardData.userData.filter(user => user.address === address);
+
+        if (!leaderboardUser) {
+            // Si aucun utilisateur trouvé avec cette adresse
+            return res.status(404).json({ error: 'User not found.' });
+        }
+        
+        const levelUser = getPlayerLevel(points); // on convertit en int car points est BigNumber
+        // Envoyer la réponse avec le niveau de l'utilisateur
+        return res.status(200).json({ level: levelUser, currentPoints : points , pointsToNextLevel: getPointsToNextLevel(levelUser)});
+
+    } catch (error) {
+        console.error('Error retrieving the player level:', error);
+        return res.status(500).json({ error: 'Server error.' });
+    } 
+});
 
 
 // Démarre le serveur Express

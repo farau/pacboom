@@ -135,5 +135,9 @@ dist
 .pnp.*
 
 .DS_Store
+
+# Other files 
 log.txt
 leaderboard.json
+gold-september.js
+output_leaderboard.csv

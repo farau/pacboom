@@ -478,3 +478,78 @@ footer a:active {
     box-shadow: none; /* Enlève la surbrillance bleue */
     background: transparent; /* Assure qu'il n'y a pas de fond sur hover */
 }
+
+/* Style pour les boutons unlock ether */
+.unlockButton {
+    background-color: #FCFC03; /* Yellow background */
+    border: none; /* No border */
+    color: rgb(0, 0, 0); /* Black text */
+    padding: 8px 16px; /* Inner spacing */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Display inline */
+    font-size: 14px; /* Font size */
+    margin: 4px 2px; /* Outer margin */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.unlockButton:hover {
+    background-color: #ecec00; /* Change background color on hover */
+}
+
+/* Surcharge pour le bouton de lock*/
+.btn-lock {
+    background-color: #FCFC03; /* Couleur de fond jaune */
+    color: rgb(0, 0, 0); /* Couleur du texte noir */
+    border: none; /* Pas de bordure */
+}
+
+.btn-lock:hover {
+    background-color: #ecec00; /* Couleur au survol */
+}
+
+
+/* Surcharge pour le bouton de attack boss*/
+.btn-attack-boss {
+    background-color: #FCFC03; /* Couleur de fond jaune */
+    color: rgb(0, 0, 0); /* Couleur du texte noir */
+    border: none; /* Pas de bordure */
+}
+
+.btn-attack-boss:hover {
+    background-color: #ecec00; /* Couleur au survol */
+}
+
+/* Style pour le dropdown (menu déroulant) */
+#walletInfo {
+    background-color: #000000;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Ombre douce */
+    margin-top: 5px;
+    position: absolute;
+    z-index: 100;
+    min-width: 150px;
+    display: none;
+    text-align: center;
+    border: 2px solid #000; /* Bordure noire pour correspondre à la trame */
+}
+
+/* Style du bouton de logout */
+#logoutWallet {
+    background-color: #FCFC03;
+    border: 2px solid #000; /* Bordure pour correspondre au thème */
+    color: #000;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#logoutWallet:hover {
+    background-color: #e0e0e0; /* Effet d'éclaircissement au survol */
+}

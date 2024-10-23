@@ -30,6 +30,12 @@
                         <a class="nav-link" href="myaccount">My account</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="myboost">My boosts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="arena">Arena</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="about">About</a>
                     </li>
                     <li class="nav-item">
@@ -43,7 +49,21 @@
                         <a class="nav-link" id="twitterLoginBtn" style="display: none;">Link your Twitter</a>
                     </li>
                     <li class="nav-item d-sm-block d-lg-inline">
-                        <button id="connectWallet">Connect Wallet</button>
+                        <div class="dropdown">
+                            <button id="connectWallet">Connect Wallet</button>
+                            <div id="walletInfo" class="dropdown-content" style="display: none;">
+                                <p>PB points:<span id="mypbpoints"></span></p>
+                                <p>Boosts:<span id="myboost"></span></p>
+                                <p>Level:<span id="player-level-text"></span></p>
+                                <div class="d-flex align-items-center mb-2">
+                                    <span id="exp-label" class="mr-2">EXP:</span> <!-- Le label EXP -->
+                                    <div class="progress w-100">
+                                        <div id="player-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 1%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                    </div>
+                                </div>                                
+                                <p id="logoutWallet" style="display: none;">Logout</p>
+                            </div>
+                        </div>
                     </li>
                 
                 </ul>
@@ -82,32 +102,32 @@
             <div class="col-md-6 order-1 order-md-1 mt-0 mb-5" id="conceptDescription" style="margin-top: 500px;">
                 <h3 class="text-center">How to play ?</h3>
                 <br>
-                <p>Try to achieve the best score to be fully-endorsed by Pacmoon and recognized as a real member of that beautiful community !</p>
-                <p>Connect your Twitter account to have your place on the leaderboard !</p>
+                <p>Connect your wallet, eat the enemies, and score high to earn PacBoom points!</p> 
+                <p>Choose wisely how to spend your PB points: attack the boss in the Arena section to claim the associated prize, or save your PB points to climb the leaderboard!</p>
                 <ul>
                     <li class="mb-3">
-                        <img src="img/ghost.png" alt="Ghost" style="width: 30px; height: 30px; margin-right: 10px;">
+                        <img src="img/ghost.png" alt="Ghost" style="width: 25px; height: 25px; margin-right: 10px;">
                         Ghost : Also known as a <a href="https://ghostblast.xyz/">memecoin</a> of the Blast ecosystem, the first to emerge from the Tornado Blast launcher. It aims to chase Pacman and earn gold ! Eat it to <b>get 100 points.</b>
                     </li>
                     <li class="mb-3">
-                        <img src="img/french.png" alt="French government men" style="width: 50px; height: 50px;">
-                        <b style="color: red;">French government men :</b> They arrested a man who did nothing except guarantee our freedom of expression. Liberté ? <br/>Don't try to eat them or ... you will REGRET IT ! But now you can shoot them !
+                        <img src="img/konk.webp" alt="Konk" style="width: 30px; height: 30px; margin-right: 10px;">
+                        <b style="color: red;">Konk :</b> Let's konk the world! Don't eat those crazy Konkers or you will die!
                     </li>
                     <li class="mb-3">
-                        <img src="img/durov.png" alt="Durov" style="width: 30px; height: 30px; margin-right: 10px;">
-                        <b style="color: green;">Durov :</b> He is protecting our right to freedom of speech and has been arrested recently. ARMY community and most of crypto use Telegram everyday, let's support him. #FreeDurov. <br/>Eat it to get 500 points and the special ability to eat those <b>french government men</b> spamming the map ! But be careful, the ability doesn't last long !
+                        <img src="img/adam.jpg" alt="Untamed Adam" style="width: 30px; height: 30px; margin-right: 10px;">
+                        <b style="color: green;">Adam :</b> He and his wolves are fully part of the Blast community. Enjoy his daily news! <br/>Eat it to get 500 points and the special ability to eat those <b>Konkers</b> spamming the map! But be careful, the ability doesn't last long!
                     </li>
                     <li class="mb-3">
-                        <img src="img/pacmoon.png" alt="Pacmoon" style="width: 30px; height: 30px; margin-right: 10px;">
-                        Pacmoon : sometimes our dear Pacmoon can appear, just eat it because he is now dead and <b>get 300 points</b> !
+                        <img src="img/candy.png" alt="Candy" style="width: 30px; height: 30px; margin-right: 10px;">
+                        Candy : sometimes a candy can appear, just eat it and <b>get 300 points</b>!
                     </li>
                     <li class="mb-3">
-                        <img src="img/lamboland.png" alt="Lamboland" style="width: 30px; height: 30px; margin-right: 10px;">
-                        Lamboland : the marketing mastermind behind ARMY. As he said "New pfp. New name. New era.". Don't try to eat it because it will take time to digest !
+                        <img src="img/pumpkin.png" alt="Pumpkin" style="width: 30px; height: 30px; margin-right: 10px;">
+                        Pumpkin : Don't try to eat it because it will take time to digest!
                     </li>
                     <li class="mb-3">
                         <img src="img/jenndefer.png" alt="Jenndefer" style="width: 30px; height: 30px; margin-right: 10px;">
-                        Jenndefer : she is a well-known influencer who often shares advice and tweets about the Blast ecosystem. Eat it to get 1000 points but you will become bigger, so take care of those Boobies ! The ability doesn't last long.
+                        Jenndefer : she is a well-known influencer who often shares advice and tweets about the Blast ecosystem. Eat it to get 1000 points but you will become bigger, so take care of those Konkers! The ability doesn't last long.
                     </li>
                 </ul>
 
@@ -144,7 +164,7 @@
                     <a href="#" class="btn btn-success d-block mx-auto mt-3" id="shareTwitterBtn">Share on Twitter</a>
                     <button id="transactionButton" class="btn btn-success d-block mx-auto mt-3">Get your PAC BOOM points !</button>
                     <p class="text-center">
-                        Price: 1 <img src="./img/logomark_blast.png" alt="Blast logo" style="width: 20px; height: 20px;">
+                        Price: <span id="entryFeeGame"></span> <img src="./img/logomark_blast.png" alt="Blast logo" style="width: 20px; height: 20px;">
                     </p>                    
                     <p class="text-center">Don't close the modal until the transaction is finished!</p>
                     <span id="txHash"></span><br/>
@@ -160,7 +180,7 @@
             <div class="modal-content">
                 <!-- Modal header -->
                 <div class="modal-header text-center">
-                    <h4 class="modal-title mx-auto"><img src="img/logo.png" height="70" class="img-fluidd-inline-block align-top" alt="Logo"></h4>
+                    <h4 class="modal-title mx-auto"><img src="img/logo.png" height="70" class="img-fluid d-inline-block align-top" alt="Logo"></h4>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">

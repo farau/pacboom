@@ -1,1 +1,84 @@
-const a0_0x595ef1=a0_0x39fa;function a0_0x39fa(_0x54e7d3,_0x484132){const _0x10e69d=a0_0x10e6();return a0_0x39fa=function(_0x39fa0c,_0x280ca7){_0x39fa0c=_0x39fa0c-0xb0;let _0x4f85c7=_0x10e69d[_0x39fa0c];return _0x4f85c7;},a0_0x39fa(_0x54e7d3,_0x484132);}(function(_0x1acbec,_0x3dc7f2){const _0x1b6a1e=a0_0x39fa,_0x142eff=_0x1acbec();while(!![]){try{const _0x2e3373=parseInt(_0x1b6a1e(0xbb))/0x1+parseInt(_0x1b6a1e(0xb3))/0x2*(-parseInt(_0x1b6a1e(0xb1))/0x3)+-parseInt(_0x1b6a1e(0xc7))/0x4*(parseInt(_0x1b6a1e(0xb9))/0x5)+-parseInt(_0x1b6a1e(0xbf))/0x6*(-parseInt(_0x1b6a1e(0xda))/0x7)+parseInt(_0x1b6a1e(0xd9))/0x8+-parseInt(_0x1b6a1e(0xcd))/0x9+parseInt(_0x1b6a1e(0xd4))/0xa;if(_0x2e3373===_0x3dc7f2)break;else _0x142eff['push'](_0x142eff['shift']());}catch(_0x1c382d){_0x142eff['push'](_0x142eff['shift']());}}}(a0_0x10e6,0xdbf37));export function handleTwitterLoginButtonClick(){const _0x9d9717=a0_0x39fa,_0x1f973c=_0x9d9717(0xcc);window['location']['href']=_0x1f973c;}function a0_0x10e6(){const _0xbd2d2c=['then','28201070cVQGnK','show','username','log','/getTwitterInfos','5751624ODQQeE','599305izlugU','div','alignItems','status','center','60993OHmrEk','error','122MVtzgc','display','avatarurl','removeEventListener','DOMContentLoaded','Avatar','10LxDGXH','Modal','841270IENpSx','createElement','Erreur:','json','12wNVuvg','alt','HTTP\x20error!\x20status:\x20','style','getElementById','location','click','twitterLoginBtn','2622072KjpwYc','appendChild','innerText','width','addEventListener','/auth/twitter','9894726rBdAJh','application/json','GET','img','span','Aucune\x20donnée\x20Twitter\x20trouvée'];a0_0x10e6=function(){return _0xbd2d2c;};return a0_0x10e6();}export function getTwitterInfos(){const _0x578cad=a0_0x39fa;fetch(_0x578cad(0xd8),{'method':_0x578cad(0xcf),'headers':{'Content-Type':_0x578cad(0xce)}})[_0x578cad(0xd3)](_0x5793ca=>{const _0x46fe89=_0x578cad;if(_0x5793ca[_0x46fe89(0xdd)]===0xcc)return null;if(!_0x5793ca['ok'])throw new Error(_0x46fe89(0xc1)+_0x5793ca['status']);return _0x5793ca[_0x46fe89(0xbe)]();})[_0x578cad(0xd3)](_0x360aab=>{const _0x500869=_0x578cad;if(_0x360aab&&_0x360aab[0x0][_0x500869(0xd6)]&&_0x360aab[0x0][_0x500869(0xb5)]){const _0x373153=_0x360aab[0x0],_0x35f3f7=document['getElementById']('twitterLoginBtn'),_0x166bbc=document['createElement'](_0x500869(0xdb));_0x166bbc[_0x500869(0xc2)][_0x500869(0xb4)]='flex',_0x166bbc[_0x500869(0xc2)][_0x500869(0xdc)]=_0x500869(0xb0);const _0x143612=document[_0x500869(0xbc)](_0x500869(0xd0));_0x143612['src']=_0x373153[_0x500869(0xb5)],_0x143612[_0x500869(0xc0)]=_0x500869(0xb8),_0x143612['style'][_0x500869(0xca)]='30px';const _0xbd0179=document['createElement'](_0x500869(0xd1));_0xbd0179[_0x500869(0xc9)]=_0x373153[_0x500869(0xd6)],localStorage['setItem'](_0x500869(0xd6),_0x373153[_0x500869(0xd6)]),_0x166bbc[_0x500869(0xc8)](_0x143612),_0x166bbc[_0x500869(0xc8)](_0xbd0179),_0x35f3f7['innerHTML']='',_0x35f3f7['appendChild'](_0x166bbc),_0x35f3f7[_0x500869(0xb6)](_0x500869(0xc5),handleTwitterLoginButtonClick);}else console[_0x500869(0xd7)](_0x500869(0xd2)),document[_0x500869(0xc3)](_0x500869(0xc6))['addEventListener']('click',handleTwitterLoginButtonClick);})['catch'](_0x3b5890=>console[_0x578cad(0xb2)](_0x578cad(0xbd),_0x3b5890));}function showModalTwitterAlreadyLinked(){const _0x468499=a0_0x39fa,_0x5f757f=document[_0x468499(0xc3)]('twitterAlreadyLinkedModal'),_0x517771=new bootstrap[(_0x468499(0xba))](_0x5f757f);_0x517771[_0x468499(0xd5)](),setTimeout(()=>{const _0x2d0b94=_0x468499;window[_0x2d0b94(0xc4)]['href']='index.html';},0x7d0);}document[a0_0x595ef1(0xcb)](a0_0x595ef1(0xb7),()=>{getTwitterInfos();});
+export function handleTwitterLoginButtonClick() {
+    const twitterAuthUrl = '/auth/twitter';
+    window.location.href = twitterAuthUrl;
+}
+
+
+export function getTwitterInfos() {
+    fetch(`/getTwitterInfos`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        
+        if (response.status === 204) {
+            return null; // Pas de contenu
+        }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json(); // Convertir la réponse en JSON
+    })
+    .then(data => {
+        if (data && data[0].username && data[0].avatarurl) {
+            const userData = data[0]; // Assumant que vous renvoyez un tableau de résultats
+
+            const twitterLoginBtn = document.getElementById("twitterLoginBtn");
+
+            // Créer un conteneur flex pour l'avatar et le texte
+            const flexContainer = document.createElement('div');
+            flexContainer.style.display = 'flex';
+            flexContainer.style.alignItems = 'center';
+
+            // Créer l'élément d'image pour l'avatar
+            const avatarImg = document.createElement('img');
+            avatarImg.src = userData.avatarurl; // Utiliser l'URL de l'avatar fournie
+            avatarImg.alt = 'Avatar';
+            avatarImg.style.width = '30px'; // Ajuster la taille de l'avatar si nécessaire
+
+            // Créer un élément span pour le nom d'utilisateur
+            const usernameSpan = document.createElement('span');
+            usernameSpan.innerText = userData.username;
+            localStorage.setItem('username', userData.username);
+            // Ajouter l'image d'avatar et le nom d'utilisateur au conteneur flex
+            flexContainer.appendChild(avatarImg);
+            flexContainer.appendChild(usernameSpan);
+
+            // Effacer le contenu existant du bouton et ajouter le conteneur flex
+            twitterLoginBtn.innerHTML = ''; // Effacer le contenu existant du bouton
+            twitterLoginBtn.appendChild(flexContainer);
+            twitterLoginBtn.removeEventListener("click", handleTwitterLoginButtonClick);
+        } else {
+            console.log("No Twitter/X data found");
+            document.getElementById("twitterLoginBtn").addEventListener("click", handleTwitterLoginButtonClick);
+        }
+    })
+    .catch(error => console.error('Erreur:', error));
+}
+
+// Fonction pour afficher la modale
+function showModalTwitterAlreadyLinked() {
+    const modalElement = document.getElementById('twitterAlreadyLinkedModal');
+    const modal = new bootstrap.Modal(modalElement);
+
+    modal.show();
+    // Rediriger vers 'index.html' après un délai de 2 secondes
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 2000);
+
+}
+
+
+// Appeler handleTwitterCallback() lorsque la page se charge
+document.addEventListener('DOMContentLoaded', () => {
+    getTwitterInfos();
+});
+
+
+
+
+
+
