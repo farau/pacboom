@@ -294,6 +294,9 @@ app.get('/getLeaderboard', (req, res) => {
         const startIndex = (page - 1) * pageSize;
         const endIndex = page * pageSize;
         
+        // Lire et parser les données du fichier JSON
+        const leaderboardData = JSON.parse(fs.readFileSync('leaderboard.json', 'utf8'));
+
         // Charger les données du leaderboard (stockées dans leaderboardData par exemple)
         const leaderboard = leaderboardData.userData.slice(startIndex, endIndex);  // Extraire la portion paginée
         const last_refresh = leaderboardData.date;
@@ -345,8 +348,8 @@ async function saveTotalEthLocked() {
         console.error('Erreur lors de la mise à jour de la TVL de la dApp', error);
     }
 }
-// Mettre à jour la TVL toutes les 30 secondes
-setInterval(saveTotalEthLocked, 30 * 1000);
+// Mettre à jour la TVL toutes les 5 minutes secondes
+setInterval(saveTotalEthLocked, 5 * 60 * 1000);
 
 // Route pour récupérer les total eth locked
 app.post('/get-total-eth-locked', (req, res) => {
