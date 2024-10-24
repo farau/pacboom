@@ -67,7 +67,7 @@ async function getUserData() {
             const username = user.username;
             // Appeler les fonctions du contrat Ethereum pour récupérer les données
             const points = ethers.utils.formatUnits(await contract.getPlayerPoints(address), 18) * 10**18; // Supposons que les points soient en Wei
-            const nfts = ethers.utils.formatUnits(await contract.numberOfNFTsFromACollection(address, 0), 18) * 10**18;
+            //const nfts = ethers.utils.formatUnits(await contract.numberOfNFTsFromACollection(address, 0), 18) * 10**18;
             const kills = ethers.utils.formatUnits(await contract.getPlayerBossKills(address), 18) * 10**18;
             // Conversion pour l'affichage
 
@@ -81,7 +81,7 @@ async function getUserData() {
 
             //console.log("address :", address, " bonus : ", bonus, " points : ", points, " nfts : ", nfts);
             // Ajouter les données de l'utilisateur au tableau
-            userData.push({ address, username,  points : pointsRounded, nfts: nfts, killedBoss: kills });
+            userData.push({ address, username,  points : pointsRounded, killedBoss: kills });
 
             i++;
         }
