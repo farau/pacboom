@@ -323,6 +323,9 @@ app.post('/getUserLeaderboard', verifyJWT, (req, res) => {
         }
 
         // Charger les données du leaderboard (stockées dans leaderboardData par exemple)
+        // Lire et parser les données du fichier JSON
+        const leaderboardData = JSON.parse(fs.readFileSync('leaderboard.json', 'utf8'));
+
         const leaderboardUser = leaderboardData.userData.filter(user => user.address === address);
 
         // Trouver l'index de l'utilisateur dans le leaderboard
@@ -1728,6 +1731,9 @@ app.post('/get-player-level', verifyJWT, async (req, res) => {
         return res.status(400).send('Points not provided.');
     }
     try {
+        // Lire et parser les données du fichier JSON
+        const leaderboardData = JSON.parse(fs.readFileSync('leaderboard.json', 'utf8'));
+
         // Charger les données du leaderboard (stockées dans leaderboardData par exemple)
         const leaderboardUser = leaderboardData.userData.filter(user => user.address === address);
 
