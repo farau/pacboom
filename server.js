@@ -920,6 +920,8 @@ app.post('/initialize-score', verifyJWT, (req, res) => {
     // Stocker le timestamp actuel dans la session de l'utilisateur
     req.session.scoreInitializedAt = new Date().toISOString(); // Stocke le timestamp en format ISO
 
+    // On stocke l'user address pour vérifier qu'il n'y a pas de triche au niveau de l'addresse aussi
+    req.session.userAddress = req.userAddress;
     res.send({ score: req.session.score });
     
 });
@@ -980,6 +982,11 @@ app.post('/verify-score', verifyJWT, async (req, res) => {
         req.session.endedAt = timestamp_cheat; 
     }
 
+    // On teste si l'utilisateur est connecté en tentant le claim.
+    if (!req.session.userAddress) {
+        req.session.userAddress = 0;
+    }
+
     const initializedTimestamp = req.session.scoreInitializedAt; // Récupérer le timestamp de l'initialisation
     const initializedDate = new Date(initializedTimestamp);
     
@@ -1028,6 +1035,11 @@ app.post('/verify-score', verifyJWT, async (req, res) => {
             } finally {
                 client.release();
             }
+        }
+
+        // On vérifie si un utilisateur tente de changer son addresse 
+        if (req.session.userAddress != req.userAddress) {
+            verifiedScore = "Don't change your address during the game!";
         }
 
         res.status(200).json({ score: verifiedScore });
