@@ -1,1 +1,295 @@
-const a0_0x453485=a0_0xcc23;(function(_0x4c924b,_0x36864f){const _0x58155a=a0_0xcc23,_0x10806b=_0x4c924b();while(!![]){try{const _0x2396d4=-parseInt(_0x58155a(0x1f9))/0x1+parseInt(_0x58155a(0x1af))/0x2*(parseInt(_0x58155a(0x1f0))/0x3)+-parseInt(_0x58155a(0x1a6))/0x4+parseInt(_0x58155a(0x1c0))/0x5+-parseInt(_0x58155a(0x1e6))/0x6+parseInt(_0x58155a(0x1c3))/0x7+-parseInt(_0x58155a(0x1bd))/0x8*(-parseInt(_0x58155a(0x1b9))/0x9);if(_0x2396d4===_0x36864f)break;else _0x10806b['push'](_0x10806b['shift']());}catch(_0x20ef66){_0x10806b['push'](_0x10806b['shift']());}}}(a0_0x41df,0x2d925));import{updateArenaPageBasedOnConnection}from'./metamask.js';function a0_0xcc23(_0x2a1501,_0x33ad53){const _0x41dfd8=a0_0x41df();return a0_0xcc23=function(_0xcc2362,_0x22ac5a){_0xcc2362=_0xcc2362-0x1a3;let _0x1a68b1=_0x41dfd8[_0xcc2362];return _0x1a68b1;},a0_0xcc23(_0x2a1501,_0x33ad53);}let provider=new ethers[(a0_0x453485(0x1fb))][(a0_0x453485(0x1d7))](window['ethereum']),signer=provider[a0_0x453485(0x1bb)]();const contractAddress=config[a0_0x453485(0x1fc)],abi=config[a0_0x453485(0x1f3)];let contract;function createBossCard(_0x20666c,_0xafa6a4){const _0x48d9f1=a0_0x453485;if(_0x20666c[_0x48d9f1(0x1db)]==0x0)return _0x48d9f1(0x1e0)+_0xafa6a4+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Kiyosonk\x20#'+_0xafa6a4+'</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Life:\x20'+_0x20666c[_0x48d9f1(0x1be)]+_0x48d9f1(0x1c8)+_0x20666c[_0x48d9f1(0x1bc)]+_0x48d9f1(0x1c1)+_0x20666c['entryFeeBoss']/0xa**0x12+_0x48d9f1(0x1b1)+_0x20666c[_0x48d9f1(0x1cf)]+_0x48d9f1(0x1a4)+_0xafa6a4+_0x48d9f1(0x1f5);else{if(_0x20666c[_0x48d9f1(0x1db)]==0x1)return _0x48d9f1(0x1e3)+_0xafa6a4+')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Boss\x20#'+_0xafa6a4+_0x48d9f1(0x1bf)+_0x20666c['life']+_0x48d9f1(0x1f4)+_0x20666c['damage']+'\x20PB\x20points</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22entry-fee\x22>Entry\x20fee:\x20'+_0x20666c[_0x48d9f1(0x1b2)]/0xa**0x12+'\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22prize\x22>Prize:\x20'+_0x20666c[_0x48d9f1(0x1cf)]+_0x48d9f1(0x1de)+_0xafa6a4+_0x48d9f1(0x1cb);else{if(_0x20666c[_0x48d9f1(0x1db)]==0x2)return _0x48d9f1(0x1cd)+_0xafa6a4+_0x48d9f1(0x1f8)+_0xafa6a4+'</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Life:\x20'+_0x20666c[_0x48d9f1(0x1be)]+_0x48d9f1(0x1f4)+_0x20666c[_0x48d9f1(0x1bc)]+'\x20PB\x20points</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22entry-fee\x22>Entry\x20fee:\x20'+_0x20666c['entryFeeBoss']/0xa**0x12+_0x48d9f1(0x1d1)+_0x20666c[_0x48d9f1(0x1cf)]+_0x48d9f1(0x1aa)+_0xafa6a4+_0x48d9f1(0x1cb);}}}function createKilledBossCard(_0x358ff7,_0x56c41b,_0x4861af){const _0xe845ce=a0_0x453485;if(_0x358ff7[_0xe845ce(0x1db)]==0x0)return'\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/konk.webp\x22\x20class=\x22img-fluid\x22\x20alt=\x22Boss\x20'+_0x56c41b+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Boss\x20#'+_0x56c41b+_0xe845ce(0x1bf)+_0x358ff7[_0xe845ce(0x1be)]+_0xe845ce(0x1f4)+_0x358ff7[_0xe845ce(0x1bc)]+_0xe845ce(0x1df)+_0x358ff7[_0xe845ce(0x1b2)]/0xa**0x12+_0xe845ce(0x1d1)+_0x358ff7[_0xe845ce(0x1cf)]+_0xe845ce(0x1f7)+_0x4861af+_0xe845ce(0x1d5);else{if(_0x358ff7[_0xe845ce(0x1db)]==0x1)return _0xe845ce(0x1d2)+_0x56c41b+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Boss\x20#'+_0x56c41b+_0xe845ce(0x1bf)+_0x358ff7['life']+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Damage:\x20'+_0x358ff7['damage']+_0xe845ce(0x1df)+_0x358ff7[_0xe845ce(0x1b2)]/0xa**0x12+_0xe845ce(0x1d1)+_0x358ff7['prize']+_0xe845ce(0x1ba)+_0x4861af+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20';else{if(_0x358ff7['category']==0x2)return _0xe845ce(0x1d2)+_0x56c41b+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Boss\x20#'+_0x56c41b+_0xe845ce(0x1bf)+_0x358ff7['life']+_0xe845ce(0x1f4)+_0x358ff7[_0xe845ce(0x1bc)]+'\x20PB\x20points</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22entry-fee\x22>Entry\x20fee:\x20'+_0x358ff7[_0xe845ce(0x1b2)]/0xa**0x12+_0xe845ce(0x1d1)+_0x358ff7[_0xe845ce(0x1cf)]+_0xe845ce(0x1f1)+_0x4861af+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20';}}}export async function displayBosses(){const _0x5945e0=a0_0x453485;provider=new ethers['providers'][(_0x5945e0(0x1d7))](window[_0x5945e0(0x1d8)]),signer=provider['getSigner'](),contract=new ethers[(_0x5945e0(0x1b4))](contractAddress,abi,signer);const _0x3e2ff0=await contract[_0x5945e0(0x1ea)](),_0x3b6c66=await contract[_0x5945e0(0x1a9)]();let _0x404931=[];const _0xe97496=_0x3e2ff0['map'](_0x2f037b=>_0x2f037b[_0x5945e0(0x1a8)]()),_0x5032db=_0x3b6c66[_0x5945e0(0x1c9)](_0x5d223c=>_0x5d223c['toNumber']());for(const _0x3c6983 of _0xe97496){if(!_0x5032db[_0x5945e0(0x1ec)](_0x3c6983)){const _0x14f9ec=ethers[_0x5945e0(0x1b8)][_0x5945e0(0x1b6)](_0x3c6983);_0x404931[_0x5945e0(0x1eb)](_0x14f9ec);}}const _0x3a53dd=document[_0x5945e0(0x1e2)](_0x5945e0(0x1b3));if(_0x3a53dd&&_0x404931[_0x5945e0(0x1c2)]>0x0){_0x3a53dd[_0x5945e0(0x1b5)]='';for(const _0x22b5a1 of _0x404931){try{const _0x4a7257=await contract[_0x5945e0(0x1c6)](_0x22b5a1);_0x3a53dd[_0x5945e0(0x1b5)]+=createBossCard(_0x4a7257,_0x22b5a1);}catch(_0x44df94){console[_0x5945e0(0x1ab)](_0x5945e0(0x1e8)+_0x22b5a1+':',_0x44df94);}}}const _0x2acd9b=document['getElementById'](_0x5945e0(0x1e4));if(_0x2acd9b&&_0x3b6c66[_0x5945e0(0x1c2)]>0x0){_0x2acd9b[_0x5945e0(0x1b5)]='';for(const _0x5bcf97 of _0x3b6c66){try{const _0x4601e6=await contract['getBoss'](_0x5bcf97),_0x3d752d=await contract[_0x5945e0(0x1ef)](_0x5bcf97),_0x4afe67=_0x3d752d['slice'](0x0,0x4)+_0x5945e0(0x1d3)+_0x3d752d[_0x5945e0(0x1da)](-0x4);_0x2acd9b[_0x5945e0(0x1b5)]+=createKilledBossCard(_0x4601e6,_0x5bcf97,_0x4afe67);}catch(_0x36d671){console[_0x5945e0(0x1ab)](_0x5945e0(0x1c4)+_0x5bcf97+':',_0x36d671);}}}}function a0_0x41df(){const _0xe42a4e=['providers','pacBoomAddress','address','function\x20approve(address\x20spender,\x20uint256\x20amount)\x20public\x20returns\x20(bool)','\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22attack-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22','POST','1351868vbTjor','allowance','toNumber','getListBossKilledSerials','\x20DJENNCOIN</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22attack-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22','error','click','DOMContentLoaded','.attack-btn','1074dxAjeO','wait','\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22prize\x22>Prize:\x20','entryFeeBoss','boss-container','Contract','innerHTML','from','Connect\x20your\x20wallet','BigNumber','5063211keUmRp','\x20<img\x20src=\x22./img/gold.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:\x20red\x22>Killed\x20by\x20','getSigner','damage','8VLmUAk','life','</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Life:\x20','307975qeKopq','\x20PB\x20points</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22entry-fee\x22>Entry\x20fee:\x20','length','2094946TsMjyY','Error\x20when\x20retrieving\x20Boss\x20Killed\x20ID\x20','Attacked\x20!','getBoss','0xb1a5700fa2358173fe465e6ea4ff52e36e88e2ad','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Damage:\x20','map','<span\x20class=\x22spinner-border\x20spinner-border-sm\x22\x20role=\x22status\x22\x20aria-hidden=\x22true\x22></span>\x20Attacking...','\x22\x20disabled=true>Connect\x20your\x20wallet</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','forEach','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/djennboss.png\x22\x20class=\x22img-fluid\x22\x20alt=\x22Boss\x20','data','prize','message','\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22prize\x22>Prize:\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/konk.webp\x22\x20class=\x22img-fluid\x22\x20alt=\x22Boss\x20','...','<span\x20class=\x22spinner-border\x20spinner-border-sm\x22\x20role=\x22status\x22\x20aria-hidden=\x22true\x22></span>\x20You\x20approved\x20BLAST\x20to\x20be\x20spent\x20for\x20claiming\x20points...\x20you\x20can\x20validate\x20the\x20transaction\x20and\x20pay\x20','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','cloneNode','Web3Provider','ethereum','Error\x20retrieving\x20the\x20signature.','slice','category','\x20BLAST\x20now.','constants','\x20<img\x20src=\x22./img/gold.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22attack-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22','\x20PB\x20points</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22entry-fee\x22>Entry\x20fee:\x20','\x0a\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/konk.webp\x22\x20class=\x22img-fluid\x22\x20alt=\x22Boss\x20','querySelectorAll','getElementById','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/konk.webp\x22\x20class=\x22img-fluid\x22\x20alt=\x22Kiyosonk\x20(Boss\x20#','boss-killed-container','MaxUint256','2053302BSuhyh','target','Error\x20when\x20retrieving\x20Boss\x20ID\x20','Transaction\x20failed','getListBossSerials','push','includes','function\x20allowance(address\x20owner,\x20address\x20spender)\x20public\x20view\x20returns\x20(uint256)','Attack!','getWhoKilledBoss','357WqIeAj','\x20KONK</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:\x20red\x22>Killed\x20by\x20','disabled','pacBoomABI','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Damage:\x20','\x22\x20disabled=true>Connect\x20your\x20wallet</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','json','\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:\x20red\x22>Killed\x20by\x20','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Djenn\x20Jong-Un\x20#','120510tmziQY','connect'];a0_0x41df=function(){return _0xe42a4e;};return a0_0x41df();}async function attackBoss(_0x21e0d0,_0x5ec089){const _0x5edf59=a0_0x453485;provider=new ethers['providers']['Web3Provider'](window[_0x5edf59(0x1d8)]),signer=provider['getSigner'](),contract=new ethers[(_0x5edf59(0x1b4))](contractAddress,abi,signer);try{_0x5ec089[_0x5edf59(0x1f2)]=!![],_0x5ec089[_0x5edf59(0x1b5)]=_0x5edf59(0x1ca);const _0x5b05f4=provider[_0x5edf59(0x1bb)](),_0x16e0e6=await _0x5b05f4['getAddress'](),_0x25754b=ethers[_0x5edf59(0x1b8)][_0x5edf59(0x1b6)](_0x21e0d0),_0x21a92c=await contract['getBoss'](_0x25754b),_0x17c9c0=_0x5edf59(0x1c7),_0x6de3fa=new ethers[(_0x5edf59(0x1b4))](_0x17c9c0,[_0x5edf59(0x1a3),_0x5edf59(0x1ed)],_0x5b05f4);let _0x19a958=_0x21a92c[_0x5edf59(0x1b2)];const _0x323bab=await _0x6de3fa[_0x5edf59(0x1a7)](_0x16e0e6,contract[_0x5edf59(0x1fd)]);if(_0x323bab['gte'](_0x19a958)){}else{_0x19a958=ethers[_0x5edf59(0x1dd)][_0x5edf59(0x1e5)];const _0x11ec50=await _0x6de3fa['approve'](contract[_0x5edf59(0x1fd)],_0x19a958);await _0x11ec50[_0x5edf59(0x1b0)]();}_0x5ec089[_0x5edf59(0x1b5)]=_0x5edf59(0x1d4)+_0x19a958/0xa**0x12+_0x5edf59(0x1dc);const _0x5ebc79=await fetch('/getSignatureBoss',{'method':_0x5edf59(0x1a5),'headers':{'Content-Type':'application/json'}});if(!_0x5ebc79['ok'])throw new Error(_0x5edf59(0x1d9));const {message:_0x3cbad2,timestamp:_0x11b7ea,signature:_0x3ee6b4}=await _0x5ebc79[_0x5edf59(0x1f6)](),_0x45ae89=ethers['BigNumber']['from'](_0x11b7ea),_0x143c17=await contract[_0x5edf59(0x1fa)](provider[_0x5edf59(0x1bb)]())['attackBoss'](_0x25754b,_0x45ae89,_0x3ee6b4);await _0x143c17['wait'](),_0x5ec089[_0x5edf59(0x1b5)]=_0x5edf59(0x1c5),_0x5ec089[_0x5edf59(0x1f2)]=![],setTimeout(async function(){await displayBosses(),await updateArenaPageBasedOnConnection();},0x7d0);}catch(_0x56a353){console[_0x5edf59(0x1ab)]('Error\x20during\x20attack\x20of\x20the\x20boss\x20:',_0x56a353),_0x5ec089[_0x5edf59(0x1b5)]=_0x56a353[_0x5edf59(0x1ce)]?.[_0x5edf59(0x1d0)]||_0x5edf59(0x1e9),_0x5ec089[_0x5edf59(0x1f2)]=![];}}export function addWalletDataBoss(){const _0x2ac625=a0_0x453485;document[_0x2ac625(0x1e1)](_0x2ac625(0x1ae))[_0x2ac625(0x1cc)](_0x1e34b8=>{const _0x3c5a9e=_0x2ac625,_0x56e268=_0x1e34b8[_0x3c5a9e(0x1d6)](!![]);_0x1e34b8['replaceWith'](_0x56e268),_0x56e268['addEventListener'](_0x3c5a9e(0x1ac),async _0x1a5025=>{const _0x31921e=_0x3c5a9e,_0x204043=_0x1a5025[_0x31921e(0x1e7)]['getAttribute']('data-serial');await attackBoss(_0x204043,_0x1a5025[_0x31921e(0x1e7)]);}),_0x56e268[_0x3c5a9e(0x1f2)]=![],_0x56e268[_0x3c5a9e(0x1b5)]=_0x3c5a9e(0x1ee);});}export function clearWalletDataBoss(){const _0x54ed8b=a0_0x453485;document[_0x54ed8b(0x1e1)](_0x54ed8b(0x1ae))['forEach'](_0x135fc8=>{const _0x9f06f8=_0x54ed8b;_0x135fc8[_0x9f06f8(0x1f2)]=!![],_0x135fc8[_0x9f06f8(0x1b5)]=_0x9f06f8(0x1b7);});}document['addEventListener'](a0_0x453485(0x1ad),async _0x4d11cb=>{await displayBosses(),await updateArenaPageBasedOnConnection();});
+import { updateArenaPageBasedOnConnection } from './metamask.js';
+
+let provider = new ethers.providers.Web3Provider(window.ethereum);
+let signer = provider.getSigner();
+const contractAddress = config.pacBoomAddress; // Replace with your contract address
+const abi = config.pacBoomABI;
+let contract;
+
+
+// Fonction pour créer une carte de boss avec un bouton d'attaque
+function createBossCard(boss, serial) {
+    if (boss.category == 0) {
+    return `
+    <div class="boss-card">
+        <img src="./img/konk.webp" class="img-fluid" alt="Boss ${serial}">
+        <div class="boss-info">
+            <h2>Kiyosonk #${serial}</h2>
+            <p>Life: ${boss.life}</p>
+            <p>Damage: ${boss.damage} PB points</p>
+            <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+            <p class="prize">Prize: ${boss.prize} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+            <button class="attack-btn btn btn-attack-boss" data-serial="${serial}" disabled=true>Connect your wallet</button>
+        </div>
+    </div>
+    `;
+    } else if (boss.category == 1) {
+        return `
+        <div class="boss-card">
+            <img src="./img/konk.webp" class="img-fluid" alt="Kiyosonk (Boss #${serial})">
+            <div class="boss-info">
+                <h2>Boss #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} <img src="./img/gold.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <button class="attack-btn btn btn-attack-boss" data-serial="${serial}" disabled=true>Connect your wallet</button>
+            </div>
+        </div>
+        `; 
+    } else if (boss.category == 2) {
+        return `
+        <div class="boss-card">
+            <img src="./img/djennboss.png" class="img-fluid" alt="Boss ${serial}">
+            <div class="boss-info">
+                <h2>Djenn Jong-Un #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} DJENNCOIN</p>
+                <button class="attack-btn btn btn-attack-boss" data-serial="${serial}" disabled=true>Connect your wallet</button>
+            </div>
+        </div>
+        `; 
+    } 
+}
+
+
+function createKilledBossCard(boss, serial, killer) {
+    if (boss.category == 0) {
+        return `
+        <div class="boss-card">
+            <img src="./img/konk.webp" class="img-fluid" alt="Boss ${serial}">
+            <div class="boss-info">
+                <h2>Boss #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p style="color: red">Killed by ${killer}</p>
+            </div>
+        </div>
+        `;
+    } else if (boss.category == 1) {
+        return `
+        <div class="boss-card">
+            <img src="./img/konk.webp" class="img-fluid" alt="Boss ${serial}">
+            <div class="boss-info">
+                <h2>Boss #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} <img src="./img/gold.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p style="color: red">Killed by ${killer}</p>
+            </div>
+        </div>
+        `;
+    } else if (boss.category == 2) {
+        return `
+        <div class="boss-card">
+            <img src="./img/djennboss.png" class="img-fluid" alt="Boss ${serial}">
+            <div class="boss-info">
+                <h2>Djenn Jong-Un #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} DJENNCOIN</p>
+                <p style="color: red">Killed by ${killer}</p>
+            </div>
+        </div>
+        `; 
+    } 
+}
+
+// Fonction pour récupérer les informations des boss et afficher les cartes
+export async function displayBosses() {
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+    
+    contract = new ethers.Contract(contractAddress, abi, signer);
+
+    // Récupérer les serials des boss vivants
+    const bossSerials = await contract.getListBossSerials();
+    // Récupérer les serials des boss tués
+    const bossKilledSerials = await contract.getListBossKilledSerials();
+
+    let bossAlive = [];
+    const bossSerialsAsInt = bossSerials.map(serial => serial.toNumber());
+    const bossKilledSerialsAsInt = bossKilledSerials.map(serial => serial.toNumber());
+    for (const serial of bossSerialsAsInt) {
+        // si un serial de alive est dans killed on le supprime de bossAlive
+        if (!bossKilledSerialsAsInt.includes(serial)) {
+            const bigNumberSerial = ethers.BigNumber.from(serial);
+            bossAlive.push(bigNumberSerial);
+        }
+    }
+    
+    /*
+    console.log("boss au complet:", bossSerialsAsInt);
+    console.log("boss morts:", bossKilledSerialsAsInt);
+    console.log("boss vivants:", bossAlive);
+    */
+
+    const container = document.getElementById('boss-container');
+
+    if (container && bossAlive.length > 0) {
+        container.innerHTML = '';
+
+        for (const serial of bossAlive) {
+            try {
+                const boss = await contract.getBoss(serial);
+                //console.log("boss vivants:", boss);
+                // Ajouter chaque carte dans une colonne Bootstrap (par ex. col-md-4 pour 3 cartes par ligne)
+                container.innerHTML += createBossCard(boss, serial);
+            } catch (error) {
+                console.error(`Error when retrieving Boss ID ${serial}:`, error);
+            }
+        }
+    }
+
+    // Afficher la longueur du tableau (nombre de boss)
+    const containerKilled = document.getElementById('boss-killed-container');
+    if (containerKilled && bossKilledSerials.length > 0) {
+        containerKilled.innerHTML = '';
+
+        for (const serial of bossKilledSerials) {
+            try {
+                const boss = await contract.getBoss(serial);
+                const killer = await contract.getWhoKilledBoss(serial);
+                const killerShort = `${killer.slice(0, 4)}...${killer.slice(-4)}`;
+
+                containerKilled.innerHTML += createKilledBossCard(boss, serial, killerShort);
+            } catch (error) {
+                console.error(`Error when retrieving Boss Killed ID ${serial}:`, error);
+            }
+        } 
+    }
+
+
+}
+
+
+// Fonction pour attaquer un boss
+async function attackBoss(serial, attackBtn) {
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+    
+    contract = new ethers.Contract(contractAddress, abi, signer);
+
+    try {
+
+        attackBtn.disabled = true;
+        attackBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Attacking...`;
+
+        const signer = provider.getSigner();
+        const userAddress = await signer.getAddress();
+        
+        // On converti serial en BigNumber
+        const serialBigNumber = ethers.BigNumber.from(serial);
+        //On récupère les infos du boss courant
+        const currBoss = await contract.getBoss(serialBigNumber);
+
+        // Le contrat ERC20
+        const tokenContractAddress = "0xb1a5700fa2358173fe465e6ea4ff52e36e88e2ad"; // Remplacer par l'adresse du contrat ERC20
+        const tokenContract = new ethers.Contract(tokenContractAddress, [
+            "function approve(address spender, uint256 amount) public returns (bool)",
+            "function allowance(address owner, address spender) public view returns (uint256)"
+        ], signer);
+
+        // Montant à approuver (entryFeeBoss BLAST)
+        let amountToApprove = currBoss.entryFeeBoss;//ethers.utils.parseUnits("1.0", 18); // Montant de 1 BLAST avec 18 décimales
+
+        // Vérifier combien de BLAST ont déjà été approuvés
+        const allowance = await tokenContract.allowance(userAddress, contract.address);
+
+        if (allowance.gte(amountToApprove)) {
+            //console.log("Pas besoin d'approuver, l'allocation est suffisante.");
+        } else {
+            //console.log("L'allocation n'est pas suffisante. Approve nécessaire.");
+            // Approuver la dépense des tokens supplémentairesconst 
+            amountToApprove = ethers.constants.MaxUint256; // Assurez-vous que c'est le bon nombre de décimales
+            const approvalTx = await tokenContract.approve(contract.address, amountToApprove);
+            await approvalTx.wait(); // Attendre la confirmation de l'approbation
+        }
+
+        attackBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> You approved BLAST to be spent for claiming points... you can validate the transaction and pay ${amountToApprove/10**18} BLAST now.`;
+
+        // Obtenir le timestamp actuel (en secondes)
+        const response = await fetch('/getSignatureBoss', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Error retrieving the signature.');
+        }
+
+        // Convertir la réponse en JSON
+        const { message, timestamp, signature } = await response.json(); // Déstructuration correcte du JSON retourné
+
+        // Convertir timestamp en BigNumber
+        const bigNumberTimestamp = ethers.BigNumber.from(timestamp);
+
+        // Appel de la fonction `attackBoss` sur le contrat
+        const tx = await contract.connect(provider.getSigner()).attackBoss(serialBigNumber, bigNumberTimestamp, signature);
+
+        // Attente de la confirmation de la transaction
+        await tx.wait();
+
+        // Update the UI on success
+        attackBtn.innerHTML = 'Attacked !';
+        attackBtn.disabled = false;  // Optionally, hide or disable the button after unlocking if no longer needed
+        
+        setTimeout(async function() {
+            // Code à exécuter après 2 secondes
+            // Mettre à jour l'affichage des boss après l'attaque
+            await displayBosses();
+            await updateArenaPageBasedOnConnection();
+        }, 2000);
+        
+
+    } catch (error) {
+        console.error("Error during attack of the boss :", error);
+        // Show the error message on the specific unlock button
+        attackBtn.innerHTML = error.data?.message || 'Transaction failed';
+        attackBtn.disabled = false; // Re-enable the button for retry
+    }
+}
+
+
+export function addWalletDataBoss() {
+    document.querySelectorAll('.attack-btn').forEach(button => {
+        // Clone the button to remove previous event listeners
+        const newButton = button.cloneNode(true);
+
+        // Replace the original button with the cloned one
+        button.replaceWith(newButton);
+
+        // Add new event listener
+        newButton.addEventListener('click', async (e) => {
+            const serial = e.target.getAttribute('data-serial');
+            await attackBoss(serial, e.target);
+        });
+
+        // Enable the button and set the innerHTML
+        newButton.disabled = false;
+        newButton.innerHTML = "Attack!";
+    });
+}
+
+export function clearWalletDataBoss() {
+
+    // Bouton d'attack à griser
+    // Ajoutez un listener sur les boutons "Attack Boss"
+    document.querySelectorAll('.attack-btn').forEach(button => {
+        button.disabled = true;
+        button.innerHTML = "Connect your wallet";
+    });  
+}
+
+document.addEventListener("DOMContentLoaded", async (event) => {   
+    await displayBosses();
+    await updateArenaPageBasedOnConnection();
+});
