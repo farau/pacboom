@@ -2,8 +2,8 @@
 
 const config = {
     chain_id : '0x13e31',//'0x13e31', //Blast mainnet
-	pacArmyIpfs : 'https://bafybeihaicjjn6hq7afybcjcqdpwwvjbjz4q6etnzbhvli6mmtn7w76fxm.ipfs.dweb.link/', //adresse ipfs metadata pac army
-	pacArmyImgIpfs : 'https://bafybeifssnwvx3rnt6gbblgcrnj5wvofb4l264uqftjl25jy6weit23zla.ipfs.dweb.link/', //adresse ipfs image pac army
+	pacArmyIpfs : 'https://ipfs.io/ipfs/bafybeihaicjjn6hq7afybcjcqdpwwvjbjz4q6etnzbhvli6mmtn7w76fxm/', //adresse ipfs metadata pac army
+	pacArmyImgIpfs : 'https://ipfs.io/ipfs/bafybeifssnwvx3rnt6gbblgcrnj5wvofb4l264uqftjl25jy6weit23zla/', //adresse ipfs image pac army
     pacBoomAddress: '0x17a51b837db44c390159218d30174ebeda2675f4',
     pacBoomABI : [
 		{
