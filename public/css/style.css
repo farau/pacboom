@@ -553,3 +553,16 @@ footer a:active {
 #logoutWallet:hover {
     background-color: #e0e0e0; /* Effet d'éclaircissement au survol */
 }
+
+/* Modal pour afficher les rewards des Boss */
+.modal-content {
+    background-color: #333; /* Fond gris foncé */
+    color: #fff; /* Texte en blanc */
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #ccc; /* Bords gris clairs */
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 10px; /* Coins arrondis */
+}

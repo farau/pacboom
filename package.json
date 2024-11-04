@@ -29,6 +29,7 @@
     "express-session": "^1.18.0",
     "flash": "^1.1.0",
     "fs": "^0.0.1-security",
+    "graphql-request": "^7.1.2",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "node-cron": "^3.0.3",

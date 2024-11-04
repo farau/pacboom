@@ -14,9 +14,11 @@ const jwt = require('jsonwebtoken');
 const { Strategy } = require('@superfaceai/passport-twitter-oauth2');
 const { ethers, Wallet } = require('ethers');
 
+const config = require('./config.js');
+
 require('dotenv').config();
 
-const config = require('./config.js');
+
 const privateKey = process.env.PRIVATE_KEY;
 const signer = new Wallet(privateKey);
 
@@ -129,6 +131,106 @@ const pool = new Pool({
     password: process.env.DB_PASSWORD,
     port: 5432 // Port par défaut de PostgreSQL
 });
+
+
+(async () => {
+    const { gql, request } = await import('graphql-request');
+
+    const url = 'https://api.studio.thegraph.com/query/93386/pacboom/version/latest';
+
+    const query = gql`
+      query GetBossAttacks {
+        bossAttackeds {
+          serial
+          player
+          damage
+        }
+      }
+    `;
+
+    // Fonction pour appeler le graphe et récupérer les données de damage par addresses de joueur
+    async function fetchSubgraphData() {
+        try {
+            const data = await request(url, query);
+            return data;
+        } catch (error) {
+            console.error("Erreur lors de la récupération des données :", error);
+        }
+    }
+
+    // Fonction pour agréger les données
+    function aggregateDamageBySerial(damageData, targetSerial) {
+        // Filtrer les attaques par le serial cible
+        const filteredAttacks = damageData.bossAttackeds.filter(attack => attack.serial === targetSerial);
+    
+        // Agréger les dégâts des attaques filtrées
+        const aggregatedDamage = filteredAttacks.reduce((acc, attack) => {
+            const key = `${attack.player}-${attack.serial}`; // Clé unique pour chaque utilisateur et serial
+            if (!acc[key]) {
+                acc[key] = {
+                    player: attack.player,
+                    serial: attack.serial,
+                    totalDamage: 0, // Initialiser le total des dégâts
+                };
+            }
+    
+            // Ajouter le dommage total
+            acc[key].totalDamage += parseInt(attack.damage, 10); // Ajouter le dommage
+    
+            return acc;
+        }, {});
+    
+        // Convertir l'objet d'agrégation en tableau et trier par totalDamage
+        const sortedDamage = Object.values(aggregatedDamage).sort((a, b) => b.totalDamage - a.totalDamage);
+    
+        // Ajouter le rang
+        const rankedDamage = sortedDamage.map((entry, index) => ({
+            ...entry,
+            rank: index + 1, // Le rang commence à 1
+        }));
+    
+        // Calculer le total des dégâts pour le serial ciblé
+        const totalDamage = rankedDamage.reduce((sum, entry) => sum + entry.totalDamage, 0);
+    
+        // Calculer la répartition des dégâts en pourcentage
+        const damageDistribution = {};
+        rankedDamage.forEach(entry => {
+            const percentage = (entry.totalDamage / totalDamage) * 100;
+            damageDistribution[entry.player] = {
+                player: entry.player, // Adresse du joueur
+                percentage: percentage.toFixed(2), // Arrondir à deux décimales
+                rank: entry.rank // Inclure le rang
+            };
+        });
+    
+        // Ajouter la répartition au résultat
+        return {
+            totalDamage,
+            damageDistribution: Object.values(damageDistribution), // On renvoie un tableau de la répartition
+        };
+    }
+    
+    
+
+    app.post('/fetchDamagePlayers', async (req,res) => {
+
+        try {
+            const damageData = await fetchSubgraphData();
+            
+            // On récupère le serial pour lequel on veut les statistiques de damages par player
+            const serial = req.body.serial;
+            
+            // Fonction pour agréger les données
+            const aggregatedDamage = aggregateDamageBySerial(damageData, serial);
+            res.status(200).json({aggregatedDamage});
+
+        } catch {
+            console.error('Error fetching damage per player');
+            res.status(500).json({ error: 'Error fetching damage per player' });
+        }
+});
+})();
+
 
 
 // Route pour commencer l'authentification avec Twitter
@@ -1699,21 +1801,6 @@ function getPointsToNextLevel(level) {
     return Math.round(pointsToNextLevel); // Arrondir pour avoir des valeurs entières
 }
 
-// Fonction de récupération des points pour le prochain niveau
-function getPointsToNextLevel(level) {
-    const basePoints = 30; // Ajusté pour la moyenne des points par partie
-    const difficultyFactor = 1.5; // Facteur pour augmenter la difficulté progressivement
-    const maxLevel = 100; // Niveau maximum
-
-    if (level >= maxLevel) {
-        return 0; // Aucun point nécessaire si le joueur a atteint le niveau max
-    }
-
-    // Progression quadratique ajustée avec facteur de difficulté
-    const pointsToNextLevel = basePoints * Math.pow(level, difficultyFactor);
-
-    return Math.round(pointsToNextLevel); // Arrondir pour avoir des valeurs entières
-}
 
 // Fonction pour récupérer les points et calculer dynamiquement le niveau
 function getPlayerLevel(points) {
