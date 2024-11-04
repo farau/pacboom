@@ -555,7 +555,7 @@ footer a:active {
 }
 
 /* Modal pour afficher les rewards des Boss */
-.modal-content {
+.modal-reward-content {
     background-color: #333; /* Fond gris foncé */
     color: #fff; /* Texte en blanc */
     margin: 15% auto;
