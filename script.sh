@@ -7,7 +7,7 @@ OUTPUT_DIR="public/js-obfuscated"
 mkdir -p "$OUTPUT_DIR"
 
 # Loop through all JavaScript files in input directory
-for file in "$INPUT_DIR"/metamask.js; do
+for file in "$INPUT_DIR"/boss.js; do
   # Get the filename without the extension
   filename=$(basename "$file" .js)
 
