@@ -138,19 +138,19 @@ const pool = new Pool({
 
     const url = 'https://api.studio.thegraph.com/query/93386/pacboom/version/latest';
 
-    const query = gql`
-      query GetBossAttacks {
-        bossAttackeds {
-          serial
-          player
-          damage
-        }
-      }
-    `;
-
     // Fonction pour appeler le graphe et récupérer les données de damage par addresses de joueur
-    async function fetchSubgraphData() {
+    async function fetchSubgraphData(serial) {
         try {
+
+            const query = gql`
+                query GetBossAttacks {
+                    bossAttackeds(where : { serial : ${serial} } ) {
+                        serial
+                        player
+                        damage
+                    }
+                }
+            `;
             const data = await request(url, query);
             return data;
         } catch (error) {
@@ -215,10 +215,11 @@ const pool = new Pool({
     app.post('/fetchDamagePlayers', async (req,res) => {
 
         try {
-            const damageData = await fetchSubgraphData();
-            
+
             // On récupère le serial pour lequel on veut les statistiques de damages par player
             const serial = req.body.serial;
+
+            const damageData = await fetchSubgraphData(serial);
             
             // Fonction pour agréger les données
             const aggregatedDamage = aggregateDamageBySerial(damageData, serial);
