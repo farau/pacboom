@@ -1,1 +1,536 @@
-const a0_0x3f0bcf=a0_0xaef6;(function(_0x1365fe,_0x4269e7){const _0x3780b5=a0_0xaef6,_0x32209a=_0x1365fe();while(!![]){try{const _0x255f30=-parseInt(_0x3780b5(0x239))/0x1+-parseInt(_0x3780b5(0x213))/0x2+-parseInt(_0x3780b5(0x21c))/0x3*(-parseInt(_0x3780b5(0x232))/0x4)+parseInt(_0x3780b5(0x240))/0x5*(-parseInt(_0x3780b5(0x24f))/0x6)+-parseInt(_0x3780b5(0x205))/0x7+parseInt(_0x3780b5(0x1d4))/0x8+parseInt(_0x3780b5(0x223))/0x9;if(_0x255f30===_0x4269e7)break;else _0x32209a['push'](_0x32209a['shift']());}catch(_0x4964b7){_0x32209a['push'](_0x32209a['shift']());}}}(a0_0x124f,0xcdda6));import{updateArenaPageBasedOnConnection}from'./metamask.js';let provider=new ethers['providers'][(a0_0x3f0bcf(0x1ff))](window['ethereum']),signer=provider[a0_0x3f0bcf(0x22f)]();const contractAddress=config[a0_0x3f0bcf(0x1da)],abi=config[a0_0x3f0bcf(0x21b)];let contract;function createBossCard(_0x23f689,_0x19a2c5){const _0x324cb7=a0_0x3f0bcf;if(_0x23f689[_0x324cb7(0x22a)]==0x0)return'\x0a\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/konk.webp\x22\x20class=\x22img-fluid\x22\x20alt=\x22Boss\x20'+_0x19a2c5+_0x324cb7(0x1e7)+_0x19a2c5+_0x324cb7(0x241)+_0x23f689[_0x324cb7(0x20e)]+_0x324cb7(0x211)+_0x23f689[_0x324cb7(0x23f)]+'\x20PB\x20points</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22entry-fee\x22>Entry\x20fee:\x20'+_0x23f689['entryFeeBoss']/0xa**0x12+_0x324cb7(0x20d)+_0x23f689[_0x324cb7(0x245)]+'\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22attack-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22'+_0x19a2c5+'\x22\x20disabled=true>Connect\x20your\x20wallet</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22reward-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22'+_0x19a2c5+'\x22>Live\x20rewards</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20';else{if(_0x23f689[_0x324cb7(0x22a)]==0x1)return _0x324cb7(0x1d1)+_0x19a2c5+_0x324cb7(0x228)+_0x19a2c5+_0x324cb7(0x1f5)+_0x23f689[_0x324cb7(0x20e)]+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Damage:\x20'+_0x23f689[_0x324cb7(0x23f)]+_0x324cb7(0x204)+_0x23f689['entryFeeBoss']/0xa**0x12+'\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22prize\x22>Prize:\x20'+_0x23f689[_0x324cb7(0x245)]+_0x324cb7(0x202)+_0x19a2c5+_0x324cb7(0x250)+_0x19a2c5+_0x324cb7(0x203);else{if(_0x23f689['category']==0x2)return _0x324cb7(0x210)+_0x19a2c5+_0x324cb7(0x246)+_0x19a2c5+_0x324cb7(0x1f5)+_0x23f689['life']+_0x324cb7(0x1fb)+_0x23f689[_0x324cb7(0x23f)]+_0x324cb7(0x204)+_0x23f689[_0x324cb7(0x22e)]/0xa**0x12+_0x324cb7(0x208)+_0x23f689[_0x324cb7(0x245)]+_0x324cb7(0x1ea)+_0x19a2c5+'\x22\x20disabled=true>Connect\x20your\x20wallet</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22reward-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22'+_0x19a2c5+_0x324cb7(0x22d);}}}function createKilledBossCard(_0x1cfc4e,_0x378312,_0x22216f){const _0x242220=a0_0x3f0bcf;if(_0x1cfc4e[_0x242220(0x22a)]==0x0)return'\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/konk.webp\x22\x20class=\x22img-fluid\x22\x20alt=\x22Boss\x20'+_0x378312+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Boss\x20#'+_0x378312+_0x242220(0x1f5)+_0x1cfc4e['life']+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Damage:\x20'+_0x1cfc4e['damage']+_0x242220(0x204)+_0x1cfc4e['entryFeeBoss']/0xa**0x12+_0x242220(0x208)+_0x1cfc4e[_0x242220(0x245)]+_0x242220(0x230)+_0x22216f+_0x242220(0x234)+_0x378312+_0x242220(0x238);else{if(_0x1cfc4e['category']==0x1)return _0x242220(0x1e2)+_0x378312+_0x242220(0x247)+_0x378312+_0x242220(0x1f5)+_0x1cfc4e[_0x242220(0x20e)]+_0x242220(0x1fb)+_0x1cfc4e[_0x242220(0x23f)]+_0x242220(0x204)+_0x1cfc4e['entryFeeBoss']/0xa**0x12+_0x242220(0x208)+_0x1cfc4e['prize']+_0x242220(0x252)+_0x22216f+_0x242220(0x234)+_0x378312+_0x242220(0x238);else{if(_0x1cfc4e[_0x242220(0x22a)]==0x2)return _0x242220(0x210)+_0x378312+_0x242220(0x246)+_0x378312+_0x242220(0x1f5)+_0x1cfc4e['life']+_0x242220(0x1fb)+_0x1cfc4e[_0x242220(0x23f)]+'\x20PB\x20points</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22entry-fee\x22>Entry\x20fee:\x20'+_0x1cfc4e[_0x242220(0x22e)]/0xa**0x12+'\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22prize\x22>Prize:\x20'+_0x1cfc4e['prize']+_0x242220(0x212)+_0x22216f+'</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22reward-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22'+_0x378312+'\x22>Rewards</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20';}}}export async function displayBosses(){const _0x10d4ea=a0_0x3f0bcf;provider=new ethers[(_0x10d4ea(0x1d7))]['Web3Provider'](window[_0x10d4ea(0x24d)]),signer=provider['getSigner'](),contract=new ethers[(_0x10d4ea(0x21d))](contractAddress,abi,signer);const _0xd0e1d8=await contract[_0x10d4ea(0x23d)](),_0x59395f=await contract[_0x10d4ea(0x1ee)]();let _0x54edb5=[];const _0x38c25e=_0xd0e1d8[_0x10d4ea(0x249)](_0x3e5c5c=>_0x3e5c5c['toNumber']()),_0x31d3a7=_0x59395f['map'](_0x2a93ee=>_0x2a93ee['toNumber']());for(const _0x117174 of _0x38c25e){if(!_0x31d3a7[_0x10d4ea(0x20a)](_0x117174)){const _0x392072=ethers[_0x10d4ea(0x1f7)][_0x10d4ea(0x1e5)](_0x117174);_0x54edb5[_0x10d4ea(0x1dc)](_0x392072);}}const _0x5a2476=document[_0x10d4ea(0x253)](_0x10d4ea(0x244));if(_0x5a2476&&_0x54edb5[_0x10d4ea(0x1f6)]>0x0){_0x5a2476[_0x10d4ea(0x22c)]='';for(const _0x57188e of _0x54edb5){try{const _0x1663a5=await contract[_0x10d4ea(0x1ef)](_0x57188e);_0x5a2476['innerHTML']+=createBossCard(_0x1663a5,_0x57188e);}catch(_0x51ca75){console['error'](_0x10d4ea(0x218)+_0x57188e+':',_0x51ca75);}}}const _0x357471=document[_0x10d4ea(0x253)](_0x10d4ea(0x248));if(_0x357471&&_0x59395f['length']>0x0){_0x357471[_0x10d4ea(0x22c)]='';for(const _0x5b9a6e of _0x59395f){try{const _0x5465e9=await contract[_0x10d4ea(0x1ef)](_0x5b9a6e),_0x1ae900=await contract[_0x10d4ea(0x209)](_0x5b9a6e),_0x4a0e1a=_0x1ae900['slice'](0x0,0x4)+_0x10d4ea(0x23b)+_0x1ae900[_0x10d4ea(0x217)](-0x4);_0x357471[_0x10d4ea(0x22c)]+=createKilledBossCard(_0x5465e9,_0x5b9a6e,_0x4a0e1a);}catch(_0x4aa55a){console[_0x10d4ea(0x220)](_0x10d4ea(0x1f0)+_0x5b9a6e+':',_0x4aa55a);}}}}async function attackBoss(_0x25d444,_0x4954c5){const _0x4ef3ff=a0_0x3f0bcf;provider=new ethers[(_0x4ef3ff(0x1d7))][(_0x4ef3ff(0x1ff))](window[_0x4ef3ff(0x24d)]),signer=provider['getSigner'](),contract=new ethers['Contract'](contractAddress,abi,signer);try{_0x4954c5['disabled']=!![],_0x4954c5['innerHTML']=_0x4ef3ff(0x206);const _0x3e3574=provider['getSigner'](),_0x1c7775=await _0x3e3574[_0x4ef3ff(0x215)](),_0x4b55bc=ethers[_0x4ef3ff(0x1f7)][_0x4ef3ff(0x1e5)](_0x25d444),_0x4b3190=await contract[_0x4ef3ff(0x1ef)](_0x4b55bc),_0x4e7c72='0xb1a5700fa2358173fe465e6ea4ff52e36e88e2ad',_0x48a0f4=new ethers[(_0x4ef3ff(0x21d))](_0x4e7c72,[_0x4ef3ff(0x1e1),_0x4ef3ff(0x1d5)],_0x3e3574);let _0x255523=_0x4b3190[_0x4ef3ff(0x22e)];const _0xd02029=await _0x48a0f4[_0x4ef3ff(0x207)](_0x1c7775,contract[_0x4ef3ff(0x1fd)]);if(_0xd02029[_0x4ef3ff(0x221)](_0x255523)){}else{_0x255523=ethers[_0x4ef3ff(0x1e4)][_0x4ef3ff(0x1eb)];const _0x510333=await _0x48a0f4['approve'](contract[_0x4ef3ff(0x1fd)],_0x255523);await _0x510333[_0x4ef3ff(0x1f4)]();}_0x4954c5[_0x4ef3ff(0x22c)]='<span\x20class=\x22spinner-border\x20spinner-border-sm\x22\x20role=\x22status\x22\x20aria-hidden=\x22true\x22></span>\x20You\x20approved\x20BLAST\x20to\x20be\x20spent\x20for\x20claiming\x20points...\x20you\x20can\x20validate\x20the\x20transaction\x20and\x20pay\x20'+_0x255523/0xa**0x12+_0x4ef3ff(0x23a);const _0x259edb=await fetch(_0x4ef3ff(0x235),{'method':_0x4ef3ff(0x1df),'headers':{'Content-Type':'application/json'}});if(!_0x259edb['ok'])throw new Error(_0x4ef3ff(0x214));const {message:_0x43579e,timestamp:_0xb052e5,signature:_0x2e8011}=await _0x259edb[_0x4ef3ff(0x1d6)](),_0x2c9387=ethers[_0x4ef3ff(0x1f7)][_0x4ef3ff(0x1e5)](_0xb052e5),_0x1360a5=await contract[_0x4ef3ff(0x1ed)](provider[_0x4ef3ff(0x22f)]())['attackBoss'](_0x4b55bc,_0x2c9387,_0x2e8011);await _0x1360a5['wait'](),_0x4954c5['innerHTML']='Attacked\x20!',_0x4954c5[_0x4ef3ff(0x21a)]=![],setTimeout(async function(){await displayBosses(),await updateArenaPageBasedOnConnection();},0x7d0);}catch(_0x2a6497){console[_0x4ef3ff(0x220)]('Error\x20during\x20attack\x20of\x20the\x20boss\x20:',_0x2a6497),_0x4954c5[_0x4ef3ff(0x22c)]=_0x2a6497[_0x4ef3ff(0x222)]?.[_0x4ef3ff(0x24c)]||_0x4ef3ff(0x1e3),_0x4954c5[_0x4ef3ff(0x21a)]=![];}}async function viewDamage(_0x3db006,_0x7459e4){const _0x35352e=a0_0x3f0bcf;try{const _0x538b4d=await fetch(_0x35352e(0x22b),{'method':_0x35352e(0x1df),'headers':{'Content-Type':_0x35352e(0x1f3)},'body':JSON[_0x35352e(0x200)]({'serial':_0x3db006})});if(!_0x538b4d['ok'])throw new Error(_0x35352e(0x1dd));const _0x288ffa=await _0x538b4d[_0x35352e(0x1d6)]();return _0x288ffa;}catch(_0x18ccfc){console[_0x35352e(0x220)](_0x35352e(0x1d8),_0x18ccfc);}}export function addWalletDataBoss(){const _0x514c68=a0_0x3f0bcf;document[_0x514c68(0x21f)](_0x514c68(0x251))[_0x514c68(0x1f2)](_0x4730b5=>{const _0x29a66c=_0x514c68,_0x1a71bf=_0x4730b5[_0x29a66c(0x1e6)](!![]);_0x4730b5[_0x29a66c(0x21e)](_0x1a71bf),_0x1a71bf['addEventListener'](_0x29a66c(0x1fc),async _0x2c1de0=>{const _0x5be1a1=_0x29a66c,_0x569b22=_0x2c1de0[_0x5be1a1(0x216)]['getAttribute'](_0x5be1a1(0x1db));await attackBoss(_0x569b22,_0x2c1de0[_0x5be1a1(0x216)]);}),_0x1a71bf['disabled']=![],_0x1a71bf[_0x29a66c(0x22c)]=_0x29a66c(0x20b);}),document[_0x514c68(0x21f)]('.reward-btn')[_0x514c68(0x1f2)](_0xaba5e3=>{const _0x4d8a0c=_0x514c68,_0x29be39=_0xaba5e3[_0x4d8a0c(0x1e6)](!![]);_0xaba5e3['replaceWith'](_0x29be39),_0x29be39[_0x4d8a0c(0x20f)](_0x4d8a0c(0x1fc),async _0x3dae1b=>{const _0x500aa2=_0x4d8a0c;try{const _0x58bc0a=_0x3dae1b[_0x500aa2(0x216)]['getAttribute'](_0x500aa2(0x1db)),_0x43b854=await viewDamage(_0x58bc0a,_0x3dae1b['target']);if(_0x43b854&&Object[_0x500aa2(0x242)](_0x43b854)['length']>0x0){const _0x2d0315=_0x43b854[_0x500aa2(0x24b)]['damageDistribution'];fillDamageTable(_0x2d0315),$(_0x500aa2(0x226))['modal']('show');}else console['log']('No\x20damage\x20data\x20available\x20for\x20this\x20serial.');}catch(_0x398db0){console['error'](_0x500aa2(0x1f9),_0x398db0);}});});}export function clearWalletDataBoss(){const _0x34271c=a0_0x3f0bcf;document['querySelectorAll'](_0x34271c(0x251))['forEach'](_0x2522f7=>{const _0x1c5cd0=_0x34271c;_0x2522f7[_0x1c5cd0(0x21a)]=!![],_0x2522f7[_0x1c5cd0(0x22c)]=_0x1c5cd0(0x24e);}),document[_0x34271c(0x21f)](_0x34271c(0x1f8))[_0x34271c(0x1f2)](_0x2ed94d=>{const _0x1bcafe=_0x34271c,_0x5b4220=_0x2ed94d[_0x1bcafe(0x1e6)](!![]);_0x2ed94d[_0x1bcafe(0x21e)](_0x5b4220),_0x5b4220['addEventListener'](_0x1bcafe(0x1fc),async _0x2d6b4c=>{const _0x28757a=_0x1bcafe;try{const _0x446f0a=_0x2d6b4c[_0x28757a(0x216)]['getAttribute'](_0x28757a(0x1db)),_0x245685=await viewDamage(_0x446f0a,_0x2d6b4c[_0x28757a(0x216)]);if(_0x245685&&Object['keys'](_0x245685)[_0x28757a(0x1f6)]>0x0){const _0x164e3e=_0x245685['aggregatedDamage'][_0x28757a(0x225)];fillDamageTable(_0x164e3e),$('#damageModal')[_0x28757a(0x20c)](_0x28757a(0x243)),document[_0x28757a(0x253)](_0x28757a(0x1de))[_0x28757a(0x20f)](_0x28757a(0x1fc),goToPreviousPage),document[_0x28757a(0x253)](_0x28757a(0x1d9))[_0x28757a(0x20f)](_0x28757a(0x1fc),goToNextPage);}else console[_0x28757a(0x227)](_0x28757a(0x23e));}catch(_0x1d815f){console[_0x28757a(0x220)](_0x28757a(0x1f9),_0x1d815f);}});});}function shortenAddress(_0xfc416){const _0x4541a5=a0_0x3f0bcf;return _0xfc416[_0x4541a5(0x217)](0x0,0x4)+_0x4541a5(0x23b)+_0xfc416[_0x4541a5(0x217)](-0x4);}function a0_0xaef6(_0x44f79a,_0x50c563){const _0x124f9c=a0_0x124f();return a0_0xaef6=function(_0xaef685,_0x195c08){_0xaef685=_0xaef685-0x1d1;let _0x27d84a=_0x124f9c[_0xaef685];return _0x27d84a;},a0_0xaef6(_0x44f79a,_0x50c563);}const modal=document[a0_0x3f0bcf(0x253)](a0_0x3f0bcf(0x1f1)),modalContent=document[a0_0x3f0bcf(0x253)](a0_0x3f0bcf(0x1e0));window[a0_0x3f0bcf(0x1d2)]=function(_0xef94d2){const _0x2ed8e4=a0_0x3f0bcf;_0xef94d2[_0x2ed8e4(0x216)]===modal&&!modalContent[_0x2ed8e4(0x224)](_0xef94d2['target'])&&$(_0x2ed8e4(0x226))['modal'](_0x2ed8e4(0x1e9));};let currentPage=0x0;const entriesPerPage=0x5;let damageDistribution=[];function fillDamageTable(_0x276987){damageDistribution=_0x276987,currentPage=0x0,renderTable();}function renderTable(){const _0xc423d3=a0_0x3f0bcf,_0x5bbb79=document['getElementById'](_0xc423d3(0x237));_0x5bbb79[_0xc423d3(0x22c)]='';const _0x42d702=currentPage*entriesPerPage,_0x28aea6=_0x42d702+entriesPerPage;damageDistribution[_0xc423d3(0x217)](_0x42d702,_0x28aea6)[_0xc423d3(0x1f2)](_0x41c6fd=>{const _0xdb1095=_0xc423d3,_0x25d7ef=document[_0xdb1095(0x1e8)]('tr'),_0x2ed176=document['createElement']('td');_0x2ed176['className']=_0xdb1095(0x1ec),_0x2ed176['textContent']=''+_0x41c6fd[_0xdb1095(0x1fe)];const _0x23f6aa=document[_0xdb1095(0x1e8)]('td');_0x23f6aa[_0xdb1095(0x231)]=_0xdb1095(0x1ec),_0x23f6aa['textContent']=_0x41c6fd[_0xdb1095(0x236)][_0xdb1095(0x217)](0x0,0x4)+_0xdb1095(0x23b)+_0x41c6fd[_0xdb1095(0x236)]['slice'](-0x4);const _0x52c27=document['createElement']('td');_0x52c27[_0xdb1095(0x231)]=_0xdb1095(0x1ec),_0x52c27[_0xdb1095(0x201)]=_0x41c6fd[_0xdb1095(0x229)]+'%',_0x25d7ef['appendChild'](_0x2ed176),_0x25d7ef['appendChild'](_0x23f6aa),_0x25d7ef[_0xdb1095(0x233)](_0x52c27),_0x5bbb79[_0xdb1095(0x233)](_0x25d7ef);}),updatePaginationControls();}function updatePaginationControls(){const _0x287d58=a0_0x3f0bcf,_0xab1a73=document[_0x287d58(0x253)](_0x287d58(0x1de)),_0x202741=document[_0x287d58(0x253)](_0x287d58(0x1d9));_0xab1a73[_0x287d58(0x1d3)][_0x287d58(0x219)]=currentPage===0x0?_0x287d58(0x1fa):_0x287d58(0x23c),_0x202741[_0x287d58(0x1d3)][_0x287d58(0x219)]=(currentPage+0x1)*entriesPerPage>=damageDistribution[_0x287d58(0x1f6)]?_0x287d58(0x1fa):_0x287d58(0x23c);}function goToPreviousPage(){currentPage>0x0&&(currentPage--,renderTable());}function goToNextPage(){const _0x445de1=a0_0x3f0bcf;(currentPage+0x1)*entriesPerPage<damageDistribution[_0x445de1(0x1f6)]&&(currentPage++,renderTable());}document[a0_0x3f0bcf(0x20f)](a0_0x3f0bcf(0x24a),async _0x345b82=>{await displayBosses(),await updateArenaPageBasedOnConnection();});function a0_0x124f(){const _0x390992=['data-serial','push','Error\x20retrieving\x20data.','prevButton','POST','modalContent','function\x20approve(address\x20spender,\x20uint256\x20amount)\x20public\x20returns\x20(bool)','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/konk.webp\x22\x20class=\x22img-fluid\x22\x20alt=\x22Boss\x20','Transaction\x20failed','constants','from','cloneNode','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Kiyosonk\x20#','createElement','hide','\x20DJENNCOIN</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22attack-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22','MaxUint256','white-text','connect','getListBossKilledSerials','getBoss','Error\x20when\x20retrieving\x20Boss\x20Killed\x20ID\x20','damageModal','forEach','application/json','wait','</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Life:\x20','length','BigNumber','.reward-btn','Error\x20during\x20retrieving\x20of\x20damaga\x20data:','none','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Damage:\x20','click','address','rank','Web3Provider','stringify','textContent','\x20<img\x20src=\x22./img/gold.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22attack-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22','\x22>Live\x20rewards</button><\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','\x20PB\x20points</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22entry-fee\x22>Entry\x20fee:\x20','1318842Ksxfmi','<span\x20class=\x22spinner-border\x20spinner-border-sm\x22\x20role=\x22status\x22\x20aria-hidden=\x22true\x22></span>\x20Attacking...','allowance','\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22prize\x22>Prize:\x20','getWhoKilledBoss','includes','Attack!','modal','\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20class=\x22prize\x22>Prize:\x20','life','addEventListener','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/djennboss.png\x22\x20class=\x22img-fluid\x22\x20alt=\x22Boss\x20','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Damage:\x20','\x20DJENNCOIN</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:\x20red\x22>Killed\x20by\x20','973832AtJApD','Error\x20retrieving\x20the\x20signature.','getAddress','target','slice','Error\x20when\x20retrieving\x20Boss\x20ID\x20','display','disabled','pacBoomABI','607407pTnxcK','Contract','replaceWith','querySelectorAll','error','gte','data','15175827sZbtrs','contains','damageDistribution','#damageModal','log',')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Boss\x20#','percentage','category','fetchDamagePlayers','innerHTML','\x22>Live\x20rewards</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','entryFeeBoss','getSigner','\x20<img\x20src=\x22./img/logomark_blast.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:\x20red\x22>Killed\x20by\x20','className','12bOECWP','appendChild','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22reward-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22','/getSignatureBoss','player','damageTableBody','\x22>Rewards</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','1369676nwfStu','\x20BLAST\x20now.','...','inline-block','getListBossSerials','No\x20damage\x20data\x20available\x20for\x20this\x20serial.','damage','160LzUMvw','</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Life:\x20','keys','show','boss-container','prize','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Djenn\x20Jong-Un\x20#','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Boss\x20#','boss-killed-container','map','DOMContentLoaded','aggregatedDamage','message','ethereum','Connect\x20your\x20wallet','82980VnnUDz','\x22\x20disabled=true>Connect\x20your\x20wallet</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22reward-btn\x20btn\x20btn-attack-boss\x22\x20data-serial=\x22','.attack-btn','\x20<img\x20src=\x22./img/gold.png\x22\x20class=\x22img-fluid\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x22></p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:\x20red\x22>Killed\x20by\x20','getElementById','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22boss-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22./img/konk.webp\x22\x20class=\x22img-fluid\x22\x20alt=\x22Kiyosonk\x20(Boss\x20#','onclick','style','8296976HUsUeK','function\x20allowance(address\x20owner,\x20address\x20spender)\x20public\x20view\x20returns\x20(uint256)','json','providers','Error\x20during\x20retrieving\x20of\x20data\x20from\x20Graph\x20:','nextButton','pacBoomAddress'];a0_0x124f=function(){return _0x390992;};return a0_0x124f();}
+import { updateArenaPageBasedOnConnection } from './metamask.js';
+
+let provider = new ethers.providers.Web3Provider(window.ethereum);
+let signer = provider.getSigner();
+const contractAddress = config.pacBoomAddress; // Replace with your contract address
+const abi = config.pacBoomABI;
+let contract;
+
+
+// Fonction pour créer une carte de boss avec un bouton d'attaque
+function createBossCard(boss, serial) {
+    if (boss.category == 0) {
+    return `
+    <div class="boss-card">
+        <img src="./img/konk.webp" class="img-fluid" alt="Boss ${serial}">
+        <div class="boss-info">
+            <h2>Kiyosonk #${serial}</h2>
+            <p>Life: ${boss.life}</p>
+            <p>Damage: ${boss.damage} PB points</p>
+            <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+            <p class="prize">Prize: ${boss.prize} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+            <button class="attack-btn btn btn-attack-boss" data-serial="${serial}" disabled=true>Connect your wallet</button>
+            <p></p>
+            <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Live rewards</button>
+        </div>
+    </div>
+    `;
+    } else if (boss.category == 1) {
+        return `
+        <div class="boss-card">
+            <img src="./img/blastr.jpg" class="img-fluid" alt="Blastr (Boss #${serial})">
+            <div class="boss-info">
+                <h2>Boss #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} <img src="./img/gold.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <button class="attack-btn btn btn-attack-boss" data-serial="${serial}" disabled=true>Connect your wallet</button>
+                <p></p>
+                <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Live rewards</button><
+            </div>
+        </div>
+        `; 
+    } else if (boss.category == 2) {
+        return `
+        <div class="boss-card">
+            <img src="./img/djennboss.png" class="img-fluid" alt="Boss ${serial}">
+            <div class="boss-info">
+                <h2>Djenn Jong-Un #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} DJENNCOIN</p>
+                <button class="attack-btn btn btn-attack-boss" data-serial="${serial}" disabled=true>Connect your wallet</button>
+                <p></p>
+                <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Live rewards</button>
+            </div>
+        </div>
+        `; 
+    } else if (boss.category == 3) {
+        return `
+        <div class="boss-card">
+            <img src="./img/konk.webp" class="img-fluid" alt="Kiyosonk (Boss #${serial})">
+            <div class="boss-info">
+                <h2>Boss #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} KONK</p>
+                <button class="attack-btn btn btn-attack-boss" data-serial="${serial}" disabled=true>Connect your wallet</button>
+                <p></p>
+                <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Live rewards</button><
+            </div>
+        </div>
+        `; 
+    } else if (boss.category == 4) {
+        return `
+        <div class="boss-card">
+            <img src="./img/satsy.jpg" class="img-fluid" alt="Fenix ${serial}">
+            <div class="boss-info">
+                <h2>Fenix #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize}$ of FNX</p>
+                <button class="attack-btn btn btn-attack-boss" data-serial="${serial}" disabled=true>Connect your wallet</button>
+                <p></p>
+                <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Live rewards</button>
+            </div>
+        </div>
+        `; 
+    } 
+}
+
+
+function createKilledBossCard(boss, serial, killer) {
+    if (boss.category == 0) {
+        return `
+        <div class="boss-card">
+            <img src="./img/konk.webp" class="img-fluid" alt="Boss ${serial}">
+            <div class="boss-info">
+                <h2>Boss #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p style="color: red">Killed by ${killer}</p>
+                <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Rewards</button>
+            </div>
+        </div>
+        `;
+    } else if (boss.category == 1) {
+        return `
+        <div class="boss-card">
+            <img src="./img/blastr.jpg" class="img-fluid" alt="Blastr (Boss #${serial})">
+            <div class="boss-info">
+                <h2>Boss #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} <img src="./img/gold.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p style="color: red">Killed by ${killer}</p>
+                <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Rewards</button>
+            </div>
+        </div>
+        `;
+    } else if (boss.category == 2) {
+        return `
+        <div class="boss-card">
+            <img src="./img/djennboss.png" class="img-fluid" alt="Boss ${serial}">
+            <div class="boss-info">
+                <h2>Djenn Jong-Un #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} DJENNCOIN</p>
+                <p style="color: red">Killed by ${killer}</p>
+                <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Rewards</button>
+            </div>
+        </div>
+        `; 
+    } else if (boss.category == 3) {
+        return `
+        <div class="boss-card">
+            <img src="./img/konk.webp" class="img-fluid" alt="Kiyosonk ${serial}">
+            <div class="boss-info">
+                <h2>Konk #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize} KONK</p>
+                <p style="color: red">Killed by ${killer}</p>
+                <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Rewards</button>
+            </div>
+        </div>
+        `; 
+    } else if (boss.category == 4) {
+        return `
+        <div class="boss-card">
+            <img src="./img/satsy.jpg" class="img-fluid" alt="Fenix ${serial}">
+            <div class="boss-info">
+                <h2>Fenix #${serial}</h2>
+                <p>Life: ${boss.life}</p>
+                <p>Damage: ${boss.damage} PB points</p>
+                <p class="entry-fee">Entry fee: ${boss.entryFeeBoss/10**18} <img src="./img/logomark_blast.png" class="img-fluid" style="width: 20px; height: 20px;"></p>
+                <p class="prize">Prize: ${boss.prize}$ of FNX</p>
+                <p style="color: red">Killed by ${killer}</p>
+                <button class="reward-btn btn btn-attack-boss" data-serial="${serial}">Rewards</button>
+            </div>
+        </div>
+        `; 
+    } 
+}
+
+// Fonction pour récupérer les informations des boss et afficher les cartes
+export async function displayBosses() {
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+    
+    contract = new ethers.Contract(contractAddress, abi, signer);
+
+    // Récupérer les serials des boss vivants
+    const bossSerials = await contract.getListBossSerials();
+    // Récupérer les serials des boss tués
+    const bossKilledSerials = await contract.getListBossKilledSerials();
+
+    let bossAlive = [];
+    const bossSerialsAsInt = bossSerials.map(serial => serial.toNumber());
+    const bossKilledSerialsAsInt = bossKilledSerials.map(serial => serial.toNumber());
+    for (const serial of bossSerialsAsInt) {
+        // si un serial de alive est dans killed on le supprime de bossAlive
+        if (!bossKilledSerialsAsInt.includes(serial)) {
+            const bigNumberSerial = ethers.BigNumber.from(serial);
+            bossAlive.push(bigNumberSerial);
+        }
+    }
+
+    const container = document.getElementById('boss-container');
+
+    if (container && bossAlive.length > 0) {
+        container.innerHTML = '';
+
+        for (const serial of bossAlive) {
+            try {
+                const boss = await contract.getBoss(serial);
+                //console.log("boss vivants:", boss);
+                // Ajouter chaque carte dans une colonne Bootstrap (par ex. col-md-4 pour 3 cartes par ligne)
+                container.innerHTML += createBossCard(boss, serial);
+            } catch (error) {
+                console.error(`Error when retrieving Boss ID ${serial}:`, error);
+            }
+        }
+    }
+
+    // Afficher la longueur du tableau (nombre de boss)
+    const containerKilled = document.getElementById('boss-killed-container');
+    if (containerKilled && bossKilledSerials.length > 0) {
+        containerKilled.innerHTML = '';
+
+        for (const serial of bossKilledSerials) {
+            try {
+                const boss = await contract.getBoss(serial);
+                const killer = await contract.getWhoKilledBoss(serial);
+                const killerShort = `${killer.slice(0, 4)}...${killer.slice(-4)}`;
+
+                containerKilled.innerHTML += createKilledBossCard(boss, serial, killerShort);
+            } catch (error) {
+                console.error(`Error when retrieving Boss Killed ID ${serial}:`, error);
+            }
+        } 
+    }
+
+
+}
+
+
+// Fonction pour attaquer un boss
+async function attackBoss(serial, attackBtn) {
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+    
+    contract = new ethers.Contract(contractAddress, abi, signer);
+
+    try {
+
+        attackBtn.disabled = true;
+        attackBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Attacking...`;
+
+        const signer = provider.getSigner();
+        const userAddress = await signer.getAddress();
+        
+        // On converti serial en BigNumber
+        const serialBigNumber = ethers.BigNumber.from(serial);
+        //On récupère les infos du boss courant
+        const currBoss = await contract.getBoss(serialBigNumber);
+
+        // Le contrat ERC20
+        const tokenContractAddress = "0xb1a5700fa2358173fe465e6ea4ff52e36e88e2ad"; // Remplacer par l'adresse du contrat ERC20
+        const tokenContract = new ethers.Contract(tokenContractAddress, [
+            "function approve(address spender, uint256 amount) public returns (bool)",
+            "function allowance(address owner, address spender) public view returns (uint256)"
+        ], signer);
+
+        // Montant à approuver (entryFeeBoss BLAST)
+        let amountToApprove = currBoss.entryFeeBoss;//ethers.utils.parseUnits("1.0", 18); // Montant de 1 BLAST avec 18 décimales
+
+        // Vérifier combien de BLAST ont déjà été approuvés
+        const allowance = await tokenContract.allowance(userAddress, contract.address);
+
+        if (allowance.gte(amountToApprove)) {
+            //console.log("Pas besoin d'approuver, l'allocation est suffisante.");
+        } else {
+            //console.log("L'allocation n'est pas suffisante. Approve nécessaire.");
+            // Approuver la dépense des tokens supplémentairesconst 
+            amountToApprove = ethers.constants.MaxUint256; // Assurez-vous que c'est le bon nombre de décimales
+            const approvalTx = await tokenContract.approve(contract.address, amountToApprove);
+            await approvalTx.wait(); // Attendre la confirmation de l'approbation
+        }
+
+        attackBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> You approved BLAST to be spent for claiming points... you can validate the transaction and pay ${amountToApprove/10**18} BLAST now.`;
+
+        // Obtenir le timestamp actuel (en secondes)
+        const response = await fetch('/getSignatureBoss', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Error retrieving the signature.');
+        }
+
+        // Convertir la réponse en JSON
+        const { message, timestamp, signature } = await response.json(); // Déstructuration correcte du JSON retourné
+
+        // Convertir timestamp en BigNumber
+        const bigNumberTimestamp = ethers.BigNumber.from(timestamp);
+
+        // Appel de la fonction `attackBoss` sur le contrat
+        const tx = await contract.connect(provider.getSigner()).attackBoss(serialBigNumber, bigNumberTimestamp, signature);
+
+        // Attente de la confirmation de la transaction
+        await tx.wait();
+
+        // Update the UI on success
+        attackBtn.innerHTML = 'Attacked !';
+        attackBtn.disabled = false;  // Optionally, hide or disable the button after unlocking if no longer needed
+        
+        setTimeout(async function() {
+            // Code à exécuter après 2 secondes
+            // Mettre à jour l'affichage des boss après l'attaque
+            await displayBosses();
+            await updateArenaPageBasedOnConnection();
+        }, 2000);
+        
+
+    } catch (error) {
+        console.error("Error during attack of the boss :", error);
+        // Show the error message on the specific unlock button
+        attackBtn.innerHTML = error.data?.message || 'Transaction failed';
+        attackBtn.disabled = false; // Re-enable the button for retry
+    }
+}
+
+// Fonction pour récupérer et transformer les data de damage/player
+async function viewDamage(serial, rewardBtn) {
+
+    try {
+        const response = await fetch('fetchDamagePlayers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ serial: serial })
+        });
+        if (!response.ok) {
+            throw new Error('Error retrieving data.');
+        }
+        const data = await response.json();
+
+        return data;
+
+    } catch (error) {
+        console.error("Error during retrieving of data from Graph :", error);
+    }
+}
+
+
+export function addWalletDataBoss() {
+    // On ajoute les events pour le bouton Attack de chaque boss
+    document.querySelectorAll('.attack-btn').forEach(button => {
+        // Clone the button to remove previous event listeners
+        const newButton = button.cloneNode(true);
+
+        // Replace the original button with the cloned one
+        button.replaceWith(newButton);
+
+        // Add new event listener
+        newButton.addEventListener('click', async (e) => {
+            const serial = e.target.getAttribute('data-serial');
+            await attackBoss(serial, e.target);
+        });
+
+        // Enable the button and set the innerHTML
+        newButton.disabled = false;
+        newButton.innerHTML = "Attack!";
+    });
+
+    // On ajoute les events pour le bouton Rewards de chaque boss
+    document.querySelectorAll('.reward-btn').forEach(button => {
+        // Clone the button to remove previous event listeners
+        const newButton = button.cloneNode(true);
+
+        // Replace the original button with the cloned one
+        button.replaceWith(newButton);
+
+        // Add new event listener
+        newButton.addEventListener('click', async (e) => {
+            try {
+                const serial = e.target.getAttribute('data-serial');
+                const damageByPlayers = await viewDamage(serial, e.target);
+                if (damageByPlayers && Object.keys(damageByPlayers).length > 0) {
+                    // Remplir le tableau avec les données de dégâts
+                    const dataDamage = damageByPlayers.aggregatedDamage.damageDistribution;
+                    fillDamageTable(dataDamage);
+                    // Afficher la modale avec Bootstrap
+                    $('#damageModal').modal('show');
+                } else {
+                    console.log("No damage data available for this serial.");
+                }
+            } catch (err) {
+                console.error("Error during retrieving of damaga data:", err);
+            }
+        });
+
+    });
+}
+
+
+export function clearWalletDataBoss() {
+
+    // Bouton d'attack à griser
+    // Ajoutez un listener sur les boutons "Attack Boss"
+    document.querySelectorAll('.attack-btn').forEach(button => {
+        button.disabled = true;
+        button.innerHTML = "Connect your wallet";
+    });  
+
+    // On ajoute les events pour le bouton Rewards de chaque boss
+    document.querySelectorAll('.reward-btn').forEach(button => {
+        // Clone the button to remove previous event listeners
+        const newButton = button.cloneNode(true);
+
+        // Replace the original button with the cloned one
+        button.replaceWith(newButton);
+
+        // Add new event listener
+        newButton.addEventListener('click', async (e) => {
+            try {
+                const serial = e.target.getAttribute('data-serial');
+                const damageByPlayers = await viewDamage(serial, e.target);
+                if (damageByPlayers && Object.keys(damageByPlayers).length > 0) {
+                    // Remplir le tableau avec les données de dégâts
+                    const dataDamage = damageByPlayers.aggregatedDamage.damageDistribution;
+                    fillDamageTable(dataDamage);
+                    // Afficher la modale avec Bootstrap
+                    $('#damageModal').modal('show');
+                    
+                    // Evenements d'écoute des boutons de pagination
+                    document.getElementById('prevButton').addEventListener('click', goToPreviousPage);
+                    document.getElementById('nextButton').addEventListener('click', goToNextPage);
+
+                } else {
+                    console.log("No damage data available for this serial.");
+                }
+            } catch (err) {
+                console.error("Error during retrieving of damaga data:", err);
+            }
+        });
+
+    });
+}
+
+
+// Fonction pour réduire l'adresse
+function shortenAddress(address) {
+    return address.slice(0, 4) + '...' + address.slice(-4);
+}
+
+// Gérer l'ouverture et la fermeture de la modale
+const modal = document.getElementById("damageModal");
+const modalContent = document.getElementById("modalContent");
+
+// Fermer la modale si l'utilisateur clique à l'extérieur de la modale
+window.onclick = function(event) {
+    if (event.target === modal && !modalContent.contains(event.target)) {
+        $('#damageModal').modal('hide');
+    }
+};
+
+
+let currentPage = 0; // Page courante
+const entriesPerPage = 5; // Nombre d'entrées par page
+let damageDistribution = []; // Répartition des dégâts à afficher
+
+function fillDamageTable(distribution) {
+    damageDistribution = distribution; // Stocker les données de répartition
+    currentPage = 0; // Réinitialiser la page courante à 0
+    renderTable(); // Afficher le tableau avec les données de la page courante
+}
+
+function renderTable() {
+    const damageTableBody = document.getElementById('damageTableBody');
+    damageTableBody.innerHTML = ''; // Vider le corps du tableau avant de le remplir
+
+    // Calculer l'index de début et de fin pour les entrées de la page courante
+    const start = currentPage * entriesPerPage;
+    const end = start + entriesPerPage;
+
+    // Parcourir chaque entrée pour la page courante
+    damageDistribution.slice(start, end).forEach(entry => {
+        const row = document.createElement('tr');
+
+        const cellRank = document.createElement('td');
+        cellRank.className = 'white-text';
+        cellRank.textContent = `${entry.rank}`;
+
+        const cellAddress = document.createElement('td');
+        cellAddress.className = 'white-text';
+        cellAddress.textContent = `${entry.player.slice(0, 4)}...${entry.player.slice(-4)}`;
+
+        const cellPercentage = document.createElement('td');
+        cellPercentage.className = 'white-text';
+        cellPercentage.textContent = `${entry.percentage}%`;
+
+        row.appendChild(cellRank);
+        row.appendChild(cellAddress);
+        row.appendChild(cellPercentage);
+        damageTableBody.appendChild(row);
+    });
+
+    updatePaginationControls(); // Mettre à jour les contrôles de pagination
+}
+
+function updatePaginationControls() {
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    // Afficher ou masquer le bouton "Précédent"
+    prevButton.style.display = currentPage === 0 ? 'none' : 'inline-block';
+
+    // Afficher ou masquer le bouton "Suivant"
+    nextButton.style.display = (currentPage + 1) * entriesPerPage >= damageDistribution.length ? 'none' : 'inline-block';
+}
+
+// Fonction pour aller à la page précédente
+function goToPreviousPage() {
+    if (currentPage > 0) {
+        currentPage--;
+        renderTable(); // Rendre le tableau avec la page précédente
+    }
+}
+
+// Fonction pour aller à la page suivante
+function goToNextPage() {
+    if ((currentPage + 1) * entriesPerPage < damageDistribution.length) {
+        currentPage++;
+        renderTable(); // Rendre le tableau avec la page suivante
+    }
+}
+
+document.addEventListener("DOMContentLoaded", async (event) => {   
+    await displayBosses();
+    await updateArenaPageBasedOnConnection();
+});
