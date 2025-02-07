@@ -921,7 +921,7 @@ async function saveAccessToken(userName, userId, avatarUrl, req) {
             client.release(); // Libérer le client après utilisation
         }
     }
-  }
+}
 
 
 // Route pour récupérer les scores de fidélité (pac_fidelity) agrégés par utilisateur
