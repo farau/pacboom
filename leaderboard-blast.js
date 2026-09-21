@@ -4,7 +4,7 @@ const config = require('./config.js');
 require('dotenv').config();
 
 // Connexion au provider (par exemple, Infura ou un nœud local)
-const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
+const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
 
 // Chargement de l'adresse du contrat et de l'ABI depuis le fichier de configuration
 const contractAddress = config.pacBoomAddress;
@@ -66,9 +66,9 @@ async function getUserData() {
             
             const username = user.username;
             // Appeler les fonctions du contrat Ethereum pour récupérer les données
-            const points = ethers.utils.formatUnits(await contract.getPlayerPoints(address), 18) * 10**18; // Supposons que les points soient en Wei
+            const points = ethers.formatUnits(await contract.getPlayerPoints(address), 18) * 10**18; // Supposons que les points soient en Wei
             //const nfts = ethers.utils.formatUnits(await contract.numberOfNFTsFromACollection(address, 0), 18) * 10**18;
-            const kills = ethers.utils.formatUnits(await contract.getPlayerBossKills(address), 18) * 10**18;
+            const kills = ethers.formatUnits(await contract.getPlayerBossKills(address), 18) * 10**18;
             // Conversion pour l'affichage
 
             // Convertir la chaîne en nombre flottant

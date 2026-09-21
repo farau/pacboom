@@ -1,8 +1,12 @@
+require('dotenv').config();
+
 const express = require('express');
+const next = require('next');
 const { Pool } = require('pg');
 const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
+const PgSession = require('connect-pg-simple')(session);
 
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -16,7 +20,18 @@ const { ethers, Wallet } = require('ethers');
 
 const config = require('./config.js');
 
-require('dotenv').config();
+const dev = process.env.NODE_ENV !== 'production';
+const nextApp = next({ dev });
+const handleNextRequest = nextApp.getRequestHandler();
+
+// Connexion partagée par les routes applicatives et le store de sessions.
+const pool = new Pool({
+    user: process.env.USR_DATABASE,
+    host: process.env.DB_HOST || 'localhost',
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: Number(process.env.DB_PORT || 5432)
+});
 
 
 const privateKey = process.env.PRIVATE_KEY;
@@ -29,18 +44,12 @@ const abi = config.pacNubABI;
 const pacboomAddress = config.pacBoomAddress; 
 const pacboomAbi = config.pacBoomABI;
 // Initialisation du provider (vous pouvez utiliser Infura, Alchemy, ou un autre service)
-const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL); // Assurez-vous que `RPC_URL` est défini dans votre .env
+const provider = new ethers.JsonRpcProvider(process.env.RPC_URL); // Assurez-vous que `RPC_URL` est défini dans votre .env
 
 // Instanciation du contrat intelligent PacNub
 const contractPacNub = new ethers.Contract(contractAddress, abi, provider);
 // Instanciation du contrat intelligent PacBoom
 const contractPacBoom = new ethers.Contract(pacboomAddress, pacboomAbi, provider);
-
-// Configurer le moteur EJS pour rendu dynamique des pages html/css
-app.set('view engine', 'ejs');
-
-// Indiquer le répertoire où se trouvent vos fichiers EJS
-app.set('views', path.join(__dirname, 'public'));
 
 // Dites à Express de faire confiance aux proxies
 app.set('trust proxy', true);
@@ -59,6 +68,7 @@ const CALLBACK_URL = process.env.CALLBACK_URL;
 //app.use(session({ secret: 'votre_secret_de_session' , resave: true, saveUninitialized: true }));
 app.use(
     session({
+      store: new PgSession({ pool, createTableIfMissing: true }),
       secret: process.env.SECRET_EXPRESS_SESSION, // Clé secrète pour signer le cookie de session
       resave: false, // Ne pas resauvegarder la session si elle n'est pas modifiée
       saveUninitialized: false, // Ne pas sauvegarder la session si elle est vide
@@ -121,16 +131,6 @@ const router = express.Router();
 
 // Autres routes et configurations de votre application Express...
 module.exports = router;
-
-
-// Configuration de la connexion PostgreSQL
-const pool = new Pool({
-    user: process.env.USR_DATABASE,
-    host: 'localhost',
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: 5432 // Port par défaut de PostgreSQL
-});
 
 
 (async () => {
@@ -359,7 +359,9 @@ async function createTables() {
 }
 
 // Appel de la fonction pour créer les tables au démarrage du serveur
-createTables();
+createTables().catch((error) => {
+    console.error('La base de données est indisponible au démarrage:', error.message);
+});
 
 
 // LEADERBOARD -----------
@@ -472,22 +474,8 @@ app.post('/get-total-eth-locked', (req, res) => {
 // --------------------------------------------
 
 
-// Middleware pour servir les fichiers statiques (HTML, CSS, JavaScript, images, etc.)
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Middleware pour permettre d'accéder aux fichiers sans l'extension .html
-app.get('/:page', (req, res, next) => {
-    const page = req.params.page;
-    const filePath = path.join(__dirname, 'public', `${page}.html`);
-
-    // Vérifier si le fichier .html existe et le renvoyer
-    res.sendFile(filePath, (err) => {
-        if (err) {
-            next(); // Si le fichier n'existe pas, continuer le flux normal
-        }
-    });
-});
-
+// Servir uniquement les médias statiques ; toutes les pages sont rendues par Next.js.
+app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 
 // Route pour sauvegarder lees metadata des users dans la base de données
 app.post('/saveMetadata', async (req, res) => {
@@ -613,7 +601,23 @@ async function saveUser(userAddress) {
 
 // Route pour créer le JWT et sauvegarder l'utilisateur
 app.post('/loginOrSaveUser', async (req, res) => {
-    const userAddress = req.body.userAddress.toLowerCase();
+    const { userAddress: rawAddress, message, signature } = req.body;
+    const loginMessage = 'Welcome to PacBoom! Sign this message to save scores and claim PAC BOOM points. This request does not trigger a blockchain transaction.';
+
+    if (!rawAddress || !ethers.isAddress(rawAddress) || message !== loginMessage || !signature) {
+        return res.status(400).json({ message: 'Invalid wallet authentication payload.' });
+    }
+
+    const userAddress = rawAddress.toLowerCase();
+
+    try {
+        const recoveredAddress = ethers.verifyMessage(message, signature).toLowerCase();
+        if (recoveredAddress !== userAddress) {
+            return res.status(401).json({ message: 'The wallet signature does not match the address.' });
+        }
+    } catch {
+        return res.status(401).json({ message: 'Invalid wallet signature.' });
+    }
 
     // Remplacez 'votre_clé_secrète' par votre propre clé secrète sécurisée
     const secretKey = process.env.SECRET_KEY;
@@ -1409,8 +1413,8 @@ app.post('/getSignature', verifyJWT, async (req, res) => {
         const message = `${timestamp}${address}${req.session.score}`;
 
         // Signer le message
-        const messageHash = ethers.utils.id(message);
-        const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
+        const messageHash = ethers.id(message);
+        const signature = await signer.signMessage(ethers.getBytes(messageHash));
 
         // Envoyer la signature et le message signé au client
         res.status(200).json({
@@ -1441,8 +1445,8 @@ app.post('/getSignatureBoss', verifyJWT, async (req, res) => {
         const message = `${timestamp}${address}`;
 
         // Signer le message
-        const messageHash = ethers.utils.id(message);
-        const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
+        const messageHash = ethers.id(message);
+        const signature = await signer.signMessage(ethers.getBytes(messageHash));
 
         // Envoyer la signature et le message signé au client
         res.status(200).json({
@@ -1775,17 +1779,6 @@ app.post('/unlink-discord', verifyJWT, async (req, res) => {
 });
 
 
-// Route pour afficher la page "myaccount"
-app.get('/myaccount', (req, res) => {
-    const errorMessage = req.flash('error'); // Récupération du message d'erreur flash
-    const successMessage = req.flash('success'); // Récupération du message de succès flash
-
-    res.render('myaccount', { 
-        errorMessage: errorMessage.length > 0 ? errorMessage[0] : null, // Si un message existe
-        successMessage: successMessage.length > 0 ? successMessage[0] : null // Si un message existe
-    });
-});
-
 // Fonction de calcul de progression
 function getPointsToNextLevel(level) {
     const basePoints = 30; // Ajusté pour la moyenne des points par partie
@@ -1853,8 +1846,14 @@ app.post('/get-player-level', verifyJWT, async (req, res) => {
 });
 
 
-// Démarre le serveur Express
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, 'localhost', () => {
-    console.log(`Serveur démarré sur le port ${PORT}`);
+
+nextApp.prepare().then(() => {
+    app.use((req, res) => handleNextRequest(req, res));
+    app.listen(PORT, 'localhost', () => {
+        console.log(`PacBoom Next.js démarré sur http://localhost:${PORT}`);
+    });
+}).catch((error) => {
+    console.error('Impossible de démarrer Next.js:', error);
+    process.exit(1);
 });
